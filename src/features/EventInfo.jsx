@@ -10,6 +10,7 @@ import {
   CardActions,
   Button,
 } from "@mui/material";
+import { Description, Event, Place, Info } from "@mui/icons-material";
 
 const EventInfo = ({ description, date, venue }) => {
   return (
@@ -18,21 +19,27 @@ const EventInfo = ({ description, date, venue }) => {
         <List>
           <ListItem>
             <ListItemAvatar>
-              <Avatar />
+              <Avatar>
+                <Info />
+              </Avatar>
             </ListItemAvatar>
-            <ListItemText primary={description} />
+            <ListItemText primary={"Information"} secondary={description} />
           </ListItem>
           <ListItem>
             <ListItemAvatar>
-              <Avatar />
+              <Avatar>
+                <Event />
+              </Avatar>
             </ListItemAvatar>
-            <ListItemText primary={date} />
+            <ListItemText primary={"Date"} secondary={date} />
           </ListItem>
           <ListItem>
             <ListItemAvatar>
-              <Avatar />
+              <Avatar>
+                <Place />
+              </Avatar>
             </ListItemAvatar>
-            <ListItemText primary={venue} />
+            <ListItemText primary={"Location"} secondary={venue} />
           </ListItem>
           <Divider />
         </List>
