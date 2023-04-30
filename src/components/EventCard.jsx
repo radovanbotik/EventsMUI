@@ -8,7 +8,6 @@ import {
   CardContent,
   List,
   ListItem,
-  ListItemAvatar,
   ListItemText,
   Avatar,
   AvatarGroup,
@@ -16,6 +15,8 @@ import {
   Typography,
 } from "@mui/material";
 import { MoreVert } from "@mui/icons-material";
+import { useDispatch } from "react-redux";
+import { deleteEvent } from "../store/slice";
 
 const EventCard = ({
   attendees,
@@ -36,6 +37,8 @@ const EventCard = ({
   currentEvent,
   setCurrentEvent,
 }) => {
+  const dispatch = useDispatch();
+  console.log(formOpen);
   return (
     <Card>
       <CardHeader
@@ -81,7 +84,6 @@ const EventCard = ({
           size="small"
           disabled={formOpen}
           onClick={() => {
-            console.log(formOpen);
             if (formOpen === false) {
               setFormOpen(true);
               setEditing(true);
@@ -90,13 +92,22 @@ const EventCard = ({
             }
             if (formOpen === true) {
               setFormOpen(false);
-
-              console.log("it is opened already");
               return;
             }
           }}
         >
           Edit
+        </Button>
+        <Button
+          color="error"
+          size="small"
+          onClick={() => {
+            setFormOpen(false);
+            setCurrentEvent("");
+            dispatch(deleteEvent({ id: id }));
+          }}
+        >
+          Delete
         </Button>
       </CardActions>
     </Card>

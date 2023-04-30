@@ -1,52 +1,22 @@
-import PropTypes from "prop-types";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
-import Divider from "@mui/material/Divider";
-import Drawer from "@mui/material/Drawer";
-import IconButton from "@mui/material/IconButton";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import List from "@mui/material/List";
-import { Button, ListSubheader, Menu, MenuItem } from "@mui/material";
-import AccountCircle from "@mui/icons-material/AccountCircle";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import MailIcon from "@mui/icons-material/Mail";
-import MenuIcon from "@mui/icons-material/Menu";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
+import { AppBar, Box, Typography, Toolbar, Drawer, IconButton, Menu, MenuItem } from "@mui/material";
+import { Event, People, AccountCircle, Menu as MenuIcon } from "@mui/icons-material";
 import { Outlet } from "react-router-dom";
 import { useState } from "react";
-import { Link } from "react-router-dom";
-
-import { createEvent } from "../store/slice";
-import { useDispatch } from "react-redux";
+import DrawerContent from "../features/DrawerContent";
 
 const drawerWidth = 240;
-
-// export const action = async ({ request }) => {
-//   console.log(request);
-//   return null;
-// };
-
-// export const loader = async () => {
-//   console.log("loaded");
-//   return null;
-// };
 
 function ResponsiveDrawer(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = useState(false);
   const [auth, setAuth] = useState(true);
   const [anchorEl, setAnchorEl] = useState(null);
+
+  // form states
   const [formOpen, setFormOpen] = useState(false);
   const [editing, setEditing] = useState(false);
   const [currentEvent, setCurrentEvent] = useState("");
-
-  const dispatch = useDispatch();
-
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
@@ -59,52 +29,10 @@ function ResponsiveDrawer(props) {
     setAnchorEl(null);
   };
 
-  const actions = [
-    { id: "a", name: "See Events" },
-    {
-      id: "b",
-      name: "Create Event",
-      action: function createEvent() {
-        setFormOpen(true);
-      },
-    },
+  const routes = [
+    { id: "a", name: "See Events", route: "/events", icon: <Event /> },
+    { id: "b", name: "See People", route: "/people", icon: <People /> },
   ];
-
-  const drawer = (
-    <div>
-      <Toolbar>
-        <Typography variant="h5">ImportantLogo</Typography>
-      </Toolbar>
-      <Divider />
-      <List
-        subheader={
-          <ListSubheader component="div" id="nested-list-subheader">
-            Actions
-          </ListSubheader>
-        }
-      >
-        {actions.map((action, index) => (
-          <ListItem key={action.id} disablePadding>
-            <ListItemButton onClick={action.action} component={Link} to="/events">
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-              <ListItemText primary={action.name} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
-      <Divider />
-      {/* <List>
-        {["All mail", "Trash", "Spam"].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List> */}
-    </div>
-  );
 
   const container = window !== undefined ? () => window().document.body : undefined;
 
@@ -180,7 +108,7 @@ function ResponsiveDrawer(props) {
             "& .MuiDrawer-paper": { boxSizing: "border-box", width: drawerWidth },
           }}
         >
-          {drawer}
+          <DrawerContent setFormOpen={setFormOpen} routes={routes} />
         </Drawer>
         <Drawer
           variant="permanent"
@@ -190,7 +118,7 @@ function ResponsiveDrawer(props) {
           }}
           open
         >
-          {drawer}
+          <DrawerContent setFormOpen={setFormOpen} routes={routes} />
         </Drawer>
       </Box>
       <Box component="main" sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}>
