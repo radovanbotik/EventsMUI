@@ -3,7 +3,7 @@ import Index, { loader as loadEvents } from "./pages/Index";
 import Landing from "./pages/Landing";
 import Layout from "./components/Layout";
 import Error from "./pages/Error";
-import Event from "./pages/Event";
+import Event, { loader as loadEvent } from "./pages/Event";
 import { action as createEvent } from "./routes/createEvent";
 
 const router = createBrowserRouter([
@@ -24,6 +24,7 @@ const router = createBrowserRouter([
           {
             path: ":id",
             element: <Event />,
+            loader: loadEvent,
           },
           {
             path: "new-event",
