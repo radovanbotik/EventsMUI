@@ -3,6 +3,6 @@ import slice from "./slice";
 
 export default configureStore({
   reducer: {
-    slicyslice: slice,
+    eventReducer: slice,
   },
 });

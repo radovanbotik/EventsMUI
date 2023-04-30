@@ -5,5 +5,5 @@ export async function action({ request }) {
   const submission = Object.fromEntries(formData);
   console.log(submission);
   console.log("triggered");
-  return redirect("/home");
+  return redirect("/events");
 }

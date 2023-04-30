@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { compareAsc, format } from "date-fns";
+import { format } from "date-fns";
 import {
   Box,
   Button,
@@ -9,9 +9,7 @@ import {
   TextField,
   Typography,
   Toolbar,
-  FormControlLabel,
   Checkbox,
-  FormGroup,
   FormControl,
   InputLabel,
   Select,
@@ -20,10 +18,11 @@ import {
   ListItemText,
 } from "@mui/material";
 import EventCard from "../components/EventCard";
-import { sampleData } from "../sampleData";
 import { useOutletContext } from "react-router-dom";
 import { Country, State, City } from "country-state-city";
 import { Form } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { createEvent, updateEvent } from "../store/slice";
 
 const categories = [
   {
@@ -73,6 +72,7 @@ export const loader = async ({ request }) => {
 };
 
 const Index = () => {
+  const dispatch = useDispatch();
   const initialValues = {
     title: "",
     country: "SK",
@@ -83,7 +83,7 @@ const Index = () => {
   };
 
   const { formOpen, setFormOpen, editing, setEditing, currentEvent, setCurrentEvent } = useOutletContext();
-  const [events, setEvents] = useState(sampleData);
+  const { events } = useSelector(store => store.eventReducer);
   const [values, setValues] = useState(initialValues);
 
   function handleChange(e) {
@@ -262,8 +262,16 @@ const Index = () => {
                   type="submit"
                   variant="contained"
                   onClick={() => {
-                    console.log("submitted");
-                    // setEvents((prev)=>({...prev,}))
+                    if (!editing) {
+                      dispatch(createEvent(values));
+                      setFormOpen(false);
+                      return;
+                    }
+                    if (editing) {
+                      dispatch(updateEvent(values));
+                      setFormOpen(false);
+                      return;
+                    }
                   }}
                 >
                   Submit

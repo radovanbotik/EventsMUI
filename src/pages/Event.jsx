@@ -13,10 +13,8 @@ import {
   CardActions,
   Button,
   Divider,
-  Paper,
 } from "@mui/material";
-import { Box, Stack, fontWeight } from "@mui/system";
-import React from "react";
+import { Box, Stack } from "@mui/system";
 
 const Event = () => {
   return (

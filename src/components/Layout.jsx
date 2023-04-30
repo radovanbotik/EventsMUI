@@ -7,7 +7,7 @@ import Drawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import List from "@mui/material/List";
-import { ListSubheader, Menu, MenuItem } from "@mui/material";
+import { Button, ListSubheader, Menu, MenuItem } from "@mui/material";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
@@ -20,6 +20,9 @@ import Typography from "@mui/material/Typography";
 import { Outlet } from "react-router-dom";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+
+import { createEvent } from "../store/slice";
+import { useDispatch } from "react-redux";
 
 const drawerWidth = 240;
 
@@ -41,6 +44,8 @@ function ResponsiveDrawer(props) {
   const [formOpen, setFormOpen] = useState(false);
   const [editing, setEditing] = useState(false);
   const [currentEvent, setCurrentEvent] = useState("");
+
+  const dispatch = useDispatch();
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);

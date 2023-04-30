@@ -39,25 +39,33 @@ const EventCard = ({
   return (
     <Card>
       <CardHeader
-        avatar={<Avatar aria-label="host" src={hostPhotoURL}></Avatar>}
+        avatar={<Avatar aria-label="host" src={hostPhotoURL} /> || <Avatar />}
         action={
           <IconButton aria-label="options">
             <MoreVert />
           </IconButton>
         }
         title={title}
-        subheader={`by ${hostedBy}`}
+        subheader={`by ${hostedBy || "anonymous"}`}
       ></CardHeader>
-      <CardMedia component="img" image={eventPhotoURL} alt="event image" height={300}></CardMedia>
+      <CardMedia
+        component="img"
+        image={
+          eventPhotoURL ||
+          "https://media.istockphoto.com/id/513822999/photo/garbage-bin-outdoors-overflowing-with-trash.jpg?s=1024x1024&w=is&k=20&c=UDDkN_RligWzBQlJKApvm4vPP-4if9eNJb_-8hm9rrc="
+        }
+        alt="event image"
+        height={300}
+      ></CardMedia>
       <CardContent>
         <List dense>
           <ListItem>
             <AvatarGroup>
-              {attendees.map(attendee => {
+              {attendees?.map(attendee => {
                 return <Avatar key={attendee.id} alt="Guest" src={attendee.photoURL} sx={{ width: 24, height: 24 }} />;
               })}
             </AvatarGroup>
-            <ListItemText primary={`${attendees[0].name} and others`}></ListItemText>
+            <ListItemText primary={`${attendees?.[0].name} and others`}></ListItemText>
             <Typography>{city}</Typography>
             <Divider>on</Divider>
             <Typography>{date}</Typography>
