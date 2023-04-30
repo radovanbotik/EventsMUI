@@ -12,7 +12,7 @@ const slice = createSlice({
   reducers: {
     createEvent: {
       reducer: (state, action) => {
-        state.events.push(action.payload);
+        state.events.unshift(action.payload);
       },
       prepare: event => {
         const id = uuid();

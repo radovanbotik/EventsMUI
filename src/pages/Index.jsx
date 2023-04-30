@@ -19,11 +19,12 @@ export const loader = async ({ request }) => {
 const Index = () => {
   const { formOpen, setFormOpen, editing, setEditing, currentEvent, setCurrentEvent } = useOutletContext();
   const { events } = useSelector(store => store.eventReducer);
+  const { isOpen } = useSelector(store => store.formReducer);
 
   return (
     <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={8} columns={{ xs: 6, lg: 12 }}>
-        <Grid item lg={Number(`${formOpen ? 8 : 12}`)} xs={6}>
+        <Grid item lg={Number(`${isOpen ? 8 : 12}`)} xs={6}>
           <Paper>
             <Stack spacing={4}>
               <Toolbar>
@@ -33,7 +34,7 @@ const Index = () => {
                 return (
                   <EventCard
                     key={entry.id}
-                    {...entry}
+                    event={entry}
                     editing={editing}
                     setEditing={setEditing}
                     formOpen={formOpen}
@@ -46,7 +47,7 @@ const Index = () => {
             </Stack>
           </Paper>
         </Grid>
-        {formOpen && (
+        {isOpen && (
           <Grid item lg={4} xs={6} sx={{ position: "sticky", top: 0, alignSelf: "flex-start" }}>
             <EventForm props={{ events, formOpen, setFormOpen, editing, setEditing, currentEvent, setCurrentEvent }} />
           </Grid>

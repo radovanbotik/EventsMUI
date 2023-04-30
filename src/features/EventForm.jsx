@@ -12,11 +12,10 @@ import {
   Checkbox,
   ListItemText,
 } from "@mui/material";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { createEvent, updateEvent } from "../store/slice";
+import { setFormClosed, setEditingFalse, resetEvent, setValues, resetValues } from "../store/formSlice";
 import { Form } from "react-router-dom";
-import { useState, useEffect } from "react";
-import getTodaysDate from "../utility/getTodaysDate";
 import getCities from "../utility/getCities";
 import getCountries from "../utility/getCountries";
 import { tags } from "../utility/tags";
@@ -33,49 +32,19 @@ const MenuProps = {
   },
 };
 
-const initialValues = {
-  title: "",
-  country: "SK",
-  city: "",
-  date: getTodaysDate(),
-  tags: [],
-  description: "",
-};
-
-const EventForm = ({ props }) => {
-  const { setFormOpen, setCurrentEvent, editing, currentEvent, events, setEditing } = props;
-  console.log(editing);
-  const [values, setValues] = useState(initialValues);
+const EventForm = () => {
+  const { values, isEditing, event } = useSelector(store => store.formReducer);
 
   function handleChange(e) {
     const { name, value } = e.target;
-    setValues(prev => ({ ...prev, [name]: value }));
-    if (name === "country") {
-      setValues(prev => ({ ...prev, country: value, city: "" }));
-    }
-    if (name === "tags") {
-      setValues(prev => ({
-        ...prev,
-        tags: typeof value === "string" ? value.split(",") : value,
-      }));
-    }
-  }
-  function resetValues() {
-    setValues(initialValues);
+    dispatch(setValues({ name, value }));
   }
 
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    if (editing === true && currentEvent) {
-      const editedEvent = events.find(event => event.id === currentEvent);
-      setValues(editedEvent);
-    }
-  }, [editing, currentEvent, events]);
-
   return (
     <Paper sx={{ display: "flex", flexDirection: "column", p: 2 }} component={Form} method="post" action="new-event">
-      <Typography variant="h5">{editing ? "Edit event" : "Create new event"}</Typography>
+      <Typography variant="h5">{isEditing ? "Edit event" : "Create new event"}</Typography>
       {/* event name */}
       <TextField
         id="title"
@@ -83,11 +52,18 @@ const EventForm = ({ props }) => {
         label="Event"
         margin="dense"
         placeholder="e.g Roadtrip around Hungary"
-        value={values.title}
+        value={event.title || values.title}
         onChange={handleChange}
       />
       {/* country */}
-      <TextField id="country" name="country" select margin="dense" value={values.country} onChange={handleChange}>
+      <TextField
+        id="country"
+        name="country"
+        select
+        margin="dense"
+        value={event.country || values.country}
+        onChange={handleChange}
+      >
         {getCountries("slovakia", "czech republic", "hungary").map(country => (
           <MenuItem key={country?.name} value={country.isoCode}>
             {country.name}
@@ -95,15 +71,15 @@ const EventForm = ({ props }) => {
         ))}
       </TextField>
       {/* city */}
-      <TextField id="city" name="city" select value={values.city} onChange={handleChange} margin="dense">
-        {getCities(values.country).map(city => (
+      <TextField id="city" name="city" select value={event.city || values.city} onChange={handleChange} margin="dense">
+        {getCities(event.country || values.country).map(city => (
           <MenuItem key={`${city.name + city.latitude}`} value={city.name}>
             {city.name}
           </MenuItem>
         ))}
       </TextField>
       {/* date */}
-      <TextField type="date" margin="dense" name="date" value={values.date} onChange={handleChange} />
+      <TextField type="date" margin="dense" name="date" value={event.date || values.date} onChange={handleChange} />
       {/* tags */}
       <FormControl margin="dense">
         <InputLabel id="tags">Tags</InputLabel>
@@ -121,7 +97,7 @@ const EventForm = ({ props }) => {
           {tags.map(tag => {
             return (
               <MenuItem key={tag.id} value={tag.name}>
-                <Checkbox checked={values.tags.indexOf(tag.name) > -1} />
+                <Checkbox checked={event.tags?.indexOf(tag.name) > -1 || values.tags.indexOf(tag.name) > -1} />
                 <ListItemText primary={tag.name} />
               </MenuItem>
             );
@@ -137,7 +113,7 @@ const EventForm = ({ props }) => {
         multiline
         maxRows={4}
         placeholder="Our plan trip..."
-        value={values.description}
+        value={event.description || values.description}
         onChange={handleChange}
       />
       {/* buttons */}
@@ -146,10 +122,11 @@ const EventForm = ({ props }) => {
           type="button"
           variant="outlined"
           onClick={() => {
-            setFormOpen(false);
-            setEditing(false);
-            resetValues("");
-            setCurrentEvent("");
+            dispatch(setFormClosed());
+
+            dispatch(setEditingFalse());
+            dispatch(resetValues());
+            dispatch(resetEvent());
           }}
         >
           Cancel
@@ -158,14 +135,14 @@ const EventForm = ({ props }) => {
           type="submit"
           variant="contained"
           onClick={() => {
-            if (!editing) {
+            if (!isEditing) {
               dispatch(createEvent(values));
-              setFormOpen(false);
+              dispatch(setFormClosed());
               return;
             }
-            if (editing) {
+            if (isEditing) {
               dispatch(updateEvent(values));
-              setFormOpen(false);
+              dispatch(setFormClosed());
               return;
             }
           }}

@@ -16,31 +16,17 @@ import {
   Typography,
 } from "@mui/material";
 import { MoreVert } from "@mui/icons-material";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { deleteEvent } from "../store/slice";
 import { Link } from "react-router-dom";
+import { setFormOpen, setFormClosed, setEditingTrue, setEvent, resetEvent } from "../store/formSlice";
 
-const EventCard = ({
-  attendees,
-  category,
-  city,
-  date,
-  description,
-  hostPhotoURL,
-  hostedBy,
-  id,
-  title,
-  venue,
-  eventPhotoURL,
-  editing,
-  setEditing,
-  formOpen,
-  setFormOpen,
-  currentEvent,
-  setCurrentEvent,
-}) => {
+const EventCard = props => {
+  const { attendees, category, city, date, description, hostPhotoURL, hostedBy, id, title, venue, eventPhotoURL } =
+    props.event;
+
+  const { isOpen } = useSelector(store => store.formReducer);
   const dispatch = useDispatch();
-  console.log(formOpen);
   return (
     <Card>
       <CardActionArea component={Link} to={id}>
@@ -88,16 +74,16 @@ const EventCard = ({
       <CardActions>
         <Button
           size="small"
-          disabled={formOpen}
+          disabled={isOpen}
           onClick={() => {
-            if (formOpen === false) {
-              setFormOpen(true);
-              setEditing(true);
-              setCurrentEvent(id);
+            if (isOpen === false) {
+              dispatch(setFormOpen());
+              dispatch(setEditingTrue());
+              dispatch(setEvent(props.event));
               return;
             }
-            if (formOpen === true) {
-              setFormOpen(false);
+            if (isOpen === true) {
+              dispatch(setFormOpen());
               return;
             }
           }}
@@ -108,8 +94,8 @@ const EventCard = ({
           color="error"
           size="small"
           onClick={() => {
-            setFormOpen(false);
-            setCurrentEvent("");
+            dispatch(setFormClosed());
+            dispatch(resetEvent());
             dispatch(deleteEvent({ id: id }));
           }}
         >
