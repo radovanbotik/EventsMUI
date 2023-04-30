@@ -5,6 +5,7 @@ import { Outlet } from "react-router-dom";
 import { useState } from "react";
 import DrawerContent from "../features/DrawerContent";
 import Bar from "../features/Bar";
+import { ScrollRestoration } from "react-router-dom";
 
 function ResponsiveDrawer(props) {
   const drawerWidth = 240;
@@ -74,6 +75,7 @@ function ResponsiveDrawer(props) {
         <Toolbar />
         <Outlet context={{ formOpen, setFormOpen, editing, setEditing, currentEvent, setCurrentEvent }} />
       </Box>
+      <ScrollRestoration />
     </Box>
   );
 }

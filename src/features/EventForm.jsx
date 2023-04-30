@@ -43,7 +43,8 @@ const initialValues = {
 };
 
 const EventForm = ({ props }) => {
-  const { setFormOpen, setCurrentEvent, editing, currentEvent, events } = props;
+  const { setFormOpen, setCurrentEvent, editing, currentEvent, events, setEditing } = props;
+  console.log(editing);
   const [values, setValues] = useState(initialValues);
 
   function handleChange(e) {
@@ -74,7 +75,7 @@ const EventForm = ({ props }) => {
 
   return (
     <Paper sx={{ display: "flex", flexDirection: "column", p: 2 }} component={Form} method="post" action="new-event">
-      <Typography variant="h5">Create new event</Typography>
+      <Typography variant="h5">{editing ? "Edit event" : "Create new event"}</Typography>
       {/* event name */}
       <TextField
         id="title"
@@ -146,6 +147,7 @@ const EventForm = ({ props }) => {
           variant="outlined"
           onClick={() => {
             setFormOpen(false);
+            setEditing(false);
             resetValues("");
             setCurrentEvent("");
           }}
