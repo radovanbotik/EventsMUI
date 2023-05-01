@@ -1,11 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
-import getTodaysDate from "../utility/getTodaysDate";
+import getDate from "../utility/getDate";
+import { tags } from "../utility/tags";
 
 const initialValues = {
   title: "",
   country: "SK",
   city: "",
-  date: getTodaysDate(),
+  date: getDate(Date.now()),
   tags: [],
   description: "",
 };
@@ -46,9 +47,10 @@ const formSlice = createSlice({
         state.values.country = action.payload.value;
         state.values.city = "";
       }
-      if (action.payload.name === "tags")
+      if (action.payload.name === "tags") {
         state.values.tags =
           typeof action.payload.value === "string" ? action.payload.value.split(",") : action.payload.value;
+      }
     },
     resetValues: state => {
       state.values = initialValues;
