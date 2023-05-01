@@ -12,7 +12,7 @@ import {
 import { Create, Event } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { setFormOpen } from "../store/formSlice";
+import { openForm } from "../store/formSlice";
 
 const DrawerContent = ({ routes }) => {
   const dispatch = useDispatch();
@@ -29,7 +29,7 @@ const DrawerContent = ({ routes }) => {
         }
       >
         <ListItem disablePadding>
-          <ListItemButton onClick={() => dispatch(setFormOpen())} component={Link} to="/events">
+          <ListItemButton onClick={() => dispatch(openForm())} component={Link} to="/events">
             <ListItemIcon>
               <Create />
             </ListItemIcon>

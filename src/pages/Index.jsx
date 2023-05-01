@@ -16,6 +16,14 @@ export const loader = async ({ request }) => {
   return null;
 };
 
+const data = {
+  id: "2",
+  name: "acidko",
+  product: "milk",
+};
+
+const accept = () => {};
+
 const Index = () => {
   const { formOpen, setFormOpen, editing, setEditing, currentEvent, setCurrentEvent } = useOutletContext();
   const { events } = useSelector(store => store.eventReducer);

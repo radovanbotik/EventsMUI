@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { createEvent, updateEvent } from "../store/slice";
-import { setFormClosed, setEditingFalse, resetEvent, setValues, resetValues } from "../store/formSlice";
+import { closeForm, editingFalse, resetEvent, setValues, resetValues } from "../store/formSlice";
 import { Form } from "react-router-dom";
 import getCities from "../utility/getCities";
 import getCountries from "../utility/getCountries";
@@ -34,13 +34,12 @@ const MenuProps = {
 
 const EventForm = () => {
   const { values, isEditing, event } = useSelector(store => store.formReducer);
+  const dispatch = useDispatch();
 
   function handleChange(e) {
     const { name, value } = e.target;
     dispatch(setValues({ name, value }));
   }
-
-  const dispatch = useDispatch();
 
   return (
     <Paper sx={{ display: "flex", flexDirection: "column", p: 2 }} component={Form} method="post" action="new-event">
@@ -122,9 +121,8 @@ const EventForm = () => {
           type="button"
           variant="outlined"
           onClick={() => {
-            dispatch(setFormClosed());
-
-            dispatch(setEditingFalse());
+            dispatch(closeForm());
+            dispatch(editingFalse());
             dispatch(resetValues());
             dispatch(resetEvent());
           }}
@@ -137,12 +135,12 @@ const EventForm = () => {
           onClick={() => {
             if (!isEditing) {
               dispatch(createEvent(values));
-              dispatch(setFormClosed());
+              dispatch(closeForm());
               return;
             }
             if (isEditing) {
               dispatch(updateEvent(values));
-              dispatch(setFormClosed());
+              dispatch(closeForm());
               return;
             }
           }}

@@ -19,7 +19,7 @@ import { MoreVert } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteEvent } from "../store/slice";
 import { Link } from "react-router-dom";
-import { setFormOpen, setFormClosed, setEditingTrue, setEvent, resetEvent } from "../store/formSlice";
+import { openForm, closeForm, editingTrue, setEvent, resetEvent } from "../store/formSlice";
 
 const EventCard = props => {
   const { attendees, category, city, date, description, hostPhotoURL, hostedBy, id, title, venue, eventPhotoURL } =
@@ -77,13 +77,13 @@ const EventCard = props => {
           disabled={isOpen}
           onClick={() => {
             if (isOpen === false) {
-              dispatch(setFormOpen());
-              dispatch(setEditingTrue());
+              dispatch(openForm());
+              dispatch(editingTrue());
               dispatch(setEvent(props.event));
               return;
             }
             if (isOpen === true) {
-              dispatch(setFormOpen());
+              dispatch(openForm());
               return;
             }
           }}
@@ -94,7 +94,7 @@ const EventCard = props => {
           color="error"
           size="small"
           onClick={() => {
-            dispatch(setFormClosed());
+            dispatch(closeForm());
             dispatch(resetEvent());
             dispatch(deleteEvent({ id: id }));
           }}

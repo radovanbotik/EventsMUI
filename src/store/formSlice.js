@@ -21,16 +21,16 @@ const formSlice = createSlice({
   name: "formActions",
   initialState,
   reducers: {
-    setFormOpen: state => {
+    openForm: state => {
       state.isOpen = true;
     },
-    setFormClosed: state => {
+    closeForm: state => {
       state.isOpen = false;
     },
-    setEditingTrue: state => {
+    editingTrue: state => {
       state.isEditing = true;
     },
-    setEditingFalse: state => {
+    editingFalse: state => {
       state.isEditing = false;
     },
     setEvent: (state, action) => {
@@ -41,7 +41,6 @@ const formSlice = createSlice({
       state.event = {};
     },
     setValues: (state, action) => {
-      console.log(action.payload.value);
       state.values[action.payload.name] = action.payload.value;
       if (action.payload.name === "country") {
         state.values.country = action.payload.value;
@@ -57,14 +56,6 @@ const formSlice = createSlice({
   },
 });
 
-export const {
-  setFormOpen,
-  setFormClosed,
-  setEditingTrue,
-  setEditingFalse,
-  setEvent,
-  resetEvent,
-  setValues,
-  resetValues,
-} = formSlice.actions;
+export const { openForm, closeForm, editingTrue, editingFalse, setEvent, resetEvent, setValues, resetValues } =
+  formSlice.actions;
 export default formSlice.reducer;
