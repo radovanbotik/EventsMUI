@@ -33,27 +33,25 @@ const Index = () => {
     <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={8} columns={{ xs: 6, lg: 12 }}>
         <Grid item lg={Number(`${isOpen ? 8 : 12}`)} xs={6}>
-          <Paper>
-            <Stack spacing={4}>
-              <Toolbar>
-                <Typography variant="h5">Events:</Typography>
-              </Toolbar>
-              {events.map(entry => {
-                return (
-                  <EventCard
-                    key={entry.id}
-                    event={entry}
-                    editing={editing}
-                    setEditing={setEditing}
-                    formOpen={formOpen}
-                    setFormOpen={setFormOpen}
-                    setCurrentEvent={setCurrentEvent}
-                    currentEvent={currentEvent}
-                  />
-                );
-              })}
-            </Stack>
-          </Paper>
+          <Stack spacing={4}>
+            <Toolbar>
+              <Typography variant="h5">Events:</Typography>
+            </Toolbar>
+            {events.map(entry => {
+              return (
+                <EventCard
+                  key={entry.id}
+                  event={entry}
+                  editing={editing}
+                  setEditing={setEditing}
+                  formOpen={formOpen}
+                  setFormOpen={setFormOpen}
+                  setCurrentEvent={setCurrentEvent}
+                  currentEvent={currentEvent}
+                />
+              );
+            })}
+          </Stack>
         </Grid>
         {isOpen && (
           <Grid item lg={4} xs={6} sx={{ position: "sticky", top: 0, alignSelf: "flex-start" }}>
