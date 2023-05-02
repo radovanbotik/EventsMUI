@@ -7,6 +7,7 @@ import { closeForm, editingFalse, resetEvent, resetValues } from "../store/formS
 import { Formik } from "formik";
 //yup
 import * as Yup from "yup";
+import dayjs from "dayjs";
 //react-router-dom
 import { Form } from "react-router-dom";
 //utility
@@ -25,7 +26,7 @@ const validationSchema = Yup.object({
     .min(5, "Event title should be of minimum 5 characters length."),
   country: Yup.string().required("Event country is required.").oneOf(["SK", "CZ", "HU"]),
   city: Yup.string().required("Event city is required."),
-  date: Yup.date(),
+  date: Yup.date().min(dayjs()),
   description: Yup.string("Enter description of your event.")
     .required("Event description is required.")
     .min(10, "Event description should be of minimum 10 characters length.")
@@ -46,7 +47,7 @@ const initialValues = {
 };
 
 const EventForm = () => {
-  const { values, isEditing, event } = useSelector(store => store.formReducer);
+  const { isEditing, event } = useSelector(store => store.formReducer);
   const dispatch = useDispatch();
 
   return (
@@ -113,7 +114,7 @@ const EventForm = () => {
           <Input
             label="Description"
             name="description"
-            placeholder="Describe the event."
+            placeholder="e.g Best Event ever..."
             margin="dense"
             multiline
             maxRows={4}

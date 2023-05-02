@@ -47,7 +47,7 @@ const Index = () => {
         </Grid>
         {isOpen && (
           <Grid item lg={4} xs={6} sx={{ position: "sticky", top: 0, alignSelf: "flex-start" }}>
-            <EventForm props={{ events, formOpen, setFormOpen, editing, setEditing, currentEvent, setCurrentEvent }} />
+            <EventForm />
           </Grid>
         )}
       </Grid>

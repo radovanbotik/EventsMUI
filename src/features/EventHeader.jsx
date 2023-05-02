@@ -1,7 +1,10 @@
 /* eslint-disable react/prop-types */
 import { Card, CardMedia, Typography, CardActions, CardContent, Box, Button } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import { closeForm, editingTrue, editingFalse, setEvent, resetEvent, setValues, resetValues } from "../store/formSlice";
 
-const EventHeader = ({ title, date, hostedBy, eventPhotoURL }) => {
+const EventHeader = ({ title, date, hostedBy, eventPhotoURL, event }) => {
+  const dispatch = useDispatch();
   return (
     <Card>
       <CardMedia
@@ -26,7 +29,14 @@ const EventHeader = ({ title, date, hostedBy, eventPhotoURL }) => {
             <Button variant="contained">Join Event</Button>
           </Box>
           <Box>
-            <Button variant="contained" color="warning">
+            <Button
+              variant="contained"
+              color="warning"
+              onClick={() => {
+                dispatch(editingTrue());
+                dispatch(setEvent(event));
+              }}
+            >
               Manage Event
             </Button>
           </Box>

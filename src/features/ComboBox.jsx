@@ -14,7 +14,7 @@ const MenuProps = {
   },
 };
 
-const ComboBox = ({ label, labelId, margin, ...props }) => {
+const ComboBox = ({ label, labelId, ...props }) => {
   const [field, meta] = useField(props);
 
   return (

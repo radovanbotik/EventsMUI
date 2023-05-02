@@ -23,6 +23,7 @@ import { Link } from "react-router-dom";
 import { openForm, closeForm, editingTrue, setEvent, resetEvent } from "../store/formSlice";
 import getTime from "../utility/getTime";
 import getDate from "../utility/getDate";
+import dayjs from "dayjs";
 
 const EventCard = props => {
   const { attendees, category, city, date, description, hostPhotoURL, hostedBy, id, title, venue, eventPhotoURL } =
@@ -30,6 +31,7 @@ const EventCard = props => {
 
   const { isOpen } = useSelector(store => store.formReducer);
   const dispatch = useDispatch();
+
   return (
     <Card>
       <CardActionArea component={Link} to={id}>
@@ -65,7 +67,7 @@ const EventCard = props => {
               <ListItemText primary={`${attendees?.[0].name} and others`}></ListItemText>
               <Typography>{city}</Typography>
               <Divider>on</Divider>
-              <Typography>{date}</Typography>
+              <Typography>{dayjs(date).format("DD MMM YYYY, HH:mm")}</Typography>
             </ListItem>
             <Divider variant="inset" component="li" />
             <ListItem>
