@@ -1,5 +1,5 @@
+/* eslint-disable react/prop-types */
 import { Card, CardMedia, Typography, CardActions, CardContent, Box, Button } from "@mui/material";
-import { format } from "date-fns";
 
 const EventHeader = ({ title, date, hostedBy, eventPhotoURL }) => {
   return (

@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import {
   Card,
   CardContent,
@@ -10,7 +11,7 @@ import {
   CardActions,
   Button,
 } from "@mui/material";
-import { Description, Event, Place, Info } from "@mui/icons-material";
+import { Event, Place, Info } from "@mui/icons-material";
 
 const EventInfo = ({ description, date, venue }) => {
   return (

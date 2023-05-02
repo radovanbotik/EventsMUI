@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import {
   Card,
   Button,
@@ -20,6 +21,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { deleteEvent } from "../store/slice";
 import { Link } from "react-router-dom";
 import { openForm, closeForm, editingTrue, setEvent, resetEvent } from "../store/formSlice";
+import getTime from "../utility/getTime";
+import getDate from "../utility/getDate";
 
 const EventCard = props => {
   const { attendees, category, city, date, description, hostPhotoURL, hostedBy, id, title, venue, eventPhotoURL } =

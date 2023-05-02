@@ -1,7 +1,7 @@
-import { Box, Paper, Grid, Stack, Typography, Toolbar } from "@mui/material";
+import { Box, Grid, Stack, Typography, Toolbar } from "@mui/material";
 import EventCard from "../components/EventCard";
 import { useOutletContext } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import EventForm from "../features/EventForm";
 
 export const action = async ({ request }) => {
@@ -15,14 +15,6 @@ export const loader = async ({ request }) => {
   console.log("loaded");
   return null;
 };
-
-const data = {
-  id: "2",
-  name: "acidko",
-  product: "milk",
-};
-
-const accept = () => {};
 
 const Index = () => {
   const { formOpen, setFormOpen, editing, setEditing, currentEvent, setCurrentEvent } = useOutletContext();

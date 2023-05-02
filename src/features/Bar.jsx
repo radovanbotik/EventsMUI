@@ -1,7 +1,8 @@
+/* eslint-disable react/prop-types */
 import { AppBar, Toolbar, IconButton, Typography, Menu, MenuItem } from "@mui/material";
 import { AccountCircle, Menu as MenuIcon } from "@mui/icons-material";
 
-const Bar = ({ handleDrawerToggle, drawerWidth, mobileOpen, setMobileOpen, auth, setAuth, anchorEl, setAnchorEl }) => {
+const Bar = ({ handleDrawerToggle, drawerWidth, auth, anchorEl, setAnchorEl }) => {
   const handleMenu = event => {
     setAnchorEl(event.currentTarget);
   };

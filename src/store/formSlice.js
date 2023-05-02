@@ -1,12 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 import getDate from "../utility/getDate";
-import { tags } from "../utility/tags";
+import getTime from "../utility/getTime";
 
 const initialValues = {
   title: "",
   country: "SK",
   city: "",
-  date: getDate(Date.now()),
+  date: new Date().toISOString(),
+  // time: new Date(),
   tags: [],
   description: "",
 };
@@ -15,7 +16,7 @@ const initialState = {
   isOpen: false,
   isEditing: false,
   event: {},
-  values: initialValues,
+  // values: initialValues,
 };
 
 const formSlice = createSlice({

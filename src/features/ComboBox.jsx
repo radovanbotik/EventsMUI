@@ -1,4 +1,4 @@
-import React from "react";
+/* eslint-disable react/prop-types */
 import { useField } from "formik";
 import { FormControl, InputLabel, FormHelperText, Select, OutlinedInput } from "@mui/material";
 
@@ -18,7 +18,7 @@ const ComboBox = ({ label, labelId, margin, ...props }) => {
   const [field, meta] = useField(props);
 
   return (
-    <FormControl margin={margin}>
+    <FormControl margin="dense">
       <InputLabel id={labelId}>{label}</InputLabel>
       <Select
         labelId={labelId}

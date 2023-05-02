@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { Card, CardHeader, CardContent, List, ListItem, ListItemAvatar, Avatar, ListItemText } from "@mui/material";
 
 const EventGuests = ({ attendees }) => {

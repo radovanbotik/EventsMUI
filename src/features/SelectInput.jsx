@@ -1,9 +1,9 @@
-import React from "react";
+/* eslint-disable react/prop-types */
 import { useField } from "formik";
 import { FormControl, InputLabel, FormHelperText, Select } from "@mui/material";
 
 const SelectInput = ({ label, labelId, margin, ...props }) => {
-  const [field, meta] = useField(props);
+  const [field, meta, helpers] = useField(props);
 
   return (
     <FormControl margin={margin}>

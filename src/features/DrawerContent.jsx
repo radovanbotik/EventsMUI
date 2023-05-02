@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import {
   Toolbar,
   Typography,
@@ -9,7 +10,7 @@ import {
   ListItemIcon,
   ListItemText,
 } from "@mui/material";
-import { Create, Event } from "@mui/icons-material";
+import { Create } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { openForm } from "../store/formSlice";
