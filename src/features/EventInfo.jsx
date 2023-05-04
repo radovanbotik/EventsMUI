@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import {
   Card,
@@ -14,7 +16,23 @@ import {
 import { Event, Place, Info } from "@mui/icons-material";
 import dayjs from "dayjs";
 
-const EventInfo = ({ description, date, venue, city, country }) => {
+const EventInfo = ({ description, date, venue, city, country, location, toggleMap, mapOpen }) => {
+  console.log(mapOpen);
+  // const { Geocoder } = await google.maps.importLibrary("geocoding");
+
+  //https://developers.google.com/maps/documentation/javascript/reference/geocoder
+  // const geocoder = new google.maps.Geocoder();
+  // if (location) {
+  //   console.log(
+  //     geocoder.geocode({ placeId: location.place_id }).then(({ results }) => {
+  //       console.log(results);
+  //       console.log(results[0].geometry.location.lat());
+  //       console.log(results[0].geometry.location.lng());
+  //     })
+  //   );
+  // }
+  // const marker = new google.maps.Marker({ map: map });
+
   return (
     <Card>
       <CardContent>
@@ -41,13 +59,15 @@ const EventInfo = ({ description, date, venue, city, country }) => {
                 <Place />
               </Avatar>
             </ListItemAvatar>
-            <ListItemText primary={"Location"} secondary={`${city},${country}`} />
+            <ListItemText primary={"Location"} secondary={location ? location.description : `${city},${country}`} />
           </ListItem>
           <Divider />
         </List>
       </CardContent>
       <CardActions>
-        <Button variant="contained">Show on map</Button>
+        <Button variant="contained" onClick={toggleMap}>
+          {mapOpen ? "Close map" : "Show on map"}
+        </Button>
       </CardActions>
     </Card>
   );

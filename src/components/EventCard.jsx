@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import {
   Card,
@@ -24,11 +25,25 @@ import { openForm, closeForm, editingTrue, setEvent, resetEvent } from "../store
 import dayjs from "dayjs";
 
 const EventCard = props => {
-  const { attendees, category, city, date, description, hostPhotoURL, hostedBy, id, title, venue, eventPhotoURL } =
-    props.event;
+  const {
+    attendees,
+    category,
+    city,
+    date,
+    description,
+    hostPhotoURL,
+    hostedBy,
+    id,
+    title,
+    venue,
+    eventPhotoURL,
+    location,
+  } = props.event;
 
   const { isOpen } = useSelector(store => store.formReducer);
   const dispatch = useDispatch();
+
+  // console.log(props);
 
   return (
     <Card>
@@ -63,7 +78,7 @@ const EventCard = props => {
                 })}
               </AvatarGroup>
               <ListItemText primary={`${attendees?.[0].name} and others`}></ListItemText>
-              <Typography>{city}</Typography>
+              <Typography>{city || location.description}</Typography>
               <Divider>on</Divider>
               <Typography>{dayjs(date).format("DD MMM YYYY, HH:mm")}</Typography>
             </ListItem>

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import * as React from "react";
 import { Box } from "@mui/material/";
 import TextField from "@mui/material/TextField";
@@ -14,17 +15,17 @@ import { useField, useFormikContext } from "formik";
 const GOOGLE_MAPS_API_KEY = import.meta.env.VITE_API_KEY;
 
 //function to inject script into HTML
-function loadScript(src, position, id) {
-  if (!position) {
-    return;
-  }
+// function loadScript(src, position, id) {
+//   if (!position) {
+//     return;
+//   }
 
-  const script = document.createElement("script");
-  script.setAttribute("async", "");
-  script.setAttribute("id", id);
-  script.src = src;
-  position.appendChild(script);
-}
+//   const script = document.createElement("script");
+//   script.setAttribute("async", "");
+//   script.setAttribute("id", id);
+//   script.src = src;
+//   position.appendChild(script);
+// }
 
 //autocompleteService is emptry right now
 const autocompleteService = { current: null };
@@ -45,18 +46,18 @@ export default function PlacesInput() {
   const loaded = React.useRef(false);
 
   //if window exists and loading is false
-  if (typeof window !== "undefined" && !loaded.current) {
-    //Inject script into head of HTML, if there is no element with #id googlemaps in HTML
-    if (!document.querySelector("#google-maps")) {
-      loadScript(
-        `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&libraries=places`,
-        document.querySelector("head"),
-        "google-maps"
-      );
-    }
-    //set load state to true
-    loaded.current = true;
-  }
+  // if (typeof window !== "undefined" && !loaded.current) {
+  //   //Inject script into head of HTML, if there is no element with #id googlemaps in HTML
+  //   if (!document.querySelector("#google-maps")) {
+  //     loadScript(
+  //       `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&libraries=places`,
+  //       document.querySelector("head"),
+  //       "google-maps"
+  //     );
+  //   }
+  //   //set load state to true
+  //   loaded.current = true;
+  // }
 
   //request object, input values to request
   //callback to execute
@@ -96,6 +97,7 @@ export default function PlacesInput() {
     }
 
     //fetch with input values
+    //https://developers.google.com/maps/documentation/javascript/reference/places-autocomplete-service
     fetch({ input: inputValue }, results => {
       //before rendering active is set to false
       if (active) {

@@ -11,11 +11,8 @@ import dayjs from "dayjs";
 //react-router-dom
 import { Form } from "react-router-dom";
 //utility
-import getCities from "../utility/getCities";
-import getCountries from "../utility/getCountries";
 
 import Input from "./Input";
-import SelectInput from "./SelectInput";
 import { tags } from "../utility/tags";
 import ComboBox from "./ComboBox";
 import TimeDatePicker from "./TimeDatePicker";
@@ -34,9 +31,6 @@ const validationSchema = Yup.object({
     .max(500, "Event description should be of maximum 100 characters length."),
 });
 
-const countries = "";
-const cities = "";
-
 const initialValues = {
   title: "",
   // country: "SK",
@@ -48,6 +42,21 @@ const initialValues = {
   location: null,
 };
 
+// function addLngLat (values) {
+//   const {place_id} = values.location
+//   const geocoder = new google.maps.Geocoder();
+
+//   if (values.location) {
+//     console.log(
+//       geocoder.geocode({ placeId: location.place_id }).then(({ results }) => {
+//         console.log(results[0]);
+//       })
+//     );
+
+//   }
+//   return {...values,}
+// }
+
 const EventForm = () => {
   const { isEditing, event } = useSelector(store => store.formReducer);
   const dispatch = useDispatch();
@@ -57,11 +66,9 @@ const EventForm = () => {
       initialValues={Object.keys(event).length && isEditing > 0 ? event : initialValues}
       validationSchema={validationSchema}
       onSubmit={values => {
-        console.log(values);
         if (!isEditing) {
           dispatch(createEvent(values));
           dispatch(closeForm());
-          console.log(values);
           return;
         }
         if (isEditing) {

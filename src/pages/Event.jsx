@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+import { useState } from "react";
 import { Grid, Box, Stack } from "@mui/material";
 import { useLoaderData } from "react-router-dom";
 import EventHeader from "../features/EventHeader";
@@ -9,25 +11,27 @@ import { useDispatch, useSelector } from "react-redux";
 import { closeForm, editingTrue, editingFalse, setEvent, resetEvent, setValues, resetValues } from "../store/formSlice";
 
 export const loader = async ({ params }) => {
-  console.log(params);
   return params;
 };
 
 const Event = () => {
   const { events } = useSelector(store => store.eventReducer);
   const { isEditing } = useSelector(store => store.formReducer);
-
   const { id } = useLoaderData();
-
   const event = events.find(event => event.id === id);
+
+  const [mapOpen, setMapOpen] = useState(false);
+  function toggleMap() {
+    setMapOpen(prev => !prev);
+  }
 
   return (
     <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={8} columns={{ xs: 6, lg: 12 }}>
         <Grid item lg={8} xs={6}>
           <Stack spacing={2}>
-            <EventHeader {...event} event={event} />
-            <EventInfo {...event} />
+            <EventHeader {...event} event={event} mapOpen={mapOpen} />
+            <EventInfo {...event} toggleMap={toggleMap} mapOpen={mapOpen} />
             <EventChat />
           </Stack>
         </Grid>
