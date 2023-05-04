@@ -1,10 +1,14 @@
 import { configureStore } from "@reduxjs/toolkit";
-import slice from "./slice";
-import formSlice from "./formSlice";
+import eventReducer from "./slice";
+import formReducer from "./formSlice";
+import modalReducer from "./modalSlice";
+import authReducer from "./authSlice";
 
 export default configureStore({
   reducer: {
-    eventReducer: slice,
-    formReducer: formSlice,
+    eventReducer: eventReducer,
+    formReducer: formReducer,
+    modalReducer: modalReducer,
+    authReducer: authReducer,
   },
 });

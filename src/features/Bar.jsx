@@ -1,6 +1,11 @@
 /* eslint-disable react/prop-types */
-import { AppBar, Toolbar, IconButton, Typography, Menu, MenuItem } from "@mui/material";
+import { AppBar, Toolbar, IconButton, Typography, Menu, MenuItem, Avatar, Button } from "@mui/material";
 import { AccountCircle, Menu as MenuIcon } from "@mui/icons-material";
+import { useDispatch, useSelector } from "react-redux";
+import { openModal } from "../store/modalSlice";
+import { signOut } from "../store/authSlice";
+import TestPlace from "./TestPlace";
+import PlacesInput from "./PlacesInput";
 
 const Bar = ({ handleDrawerToggle, drawerWidth, auth, anchorEl, setAnchorEl }) => {
   const handleMenu = event => {
@@ -11,6 +16,8 @@ const Bar = ({ handleDrawerToggle, drawerWidth, auth, anchorEl, setAnchorEl }) =
     setAnchorEl(null);
   };
 
+  const dispatch = useDispatch();
+  const { currentUser, isAuthenticated } = useSelector(store => store.authReducer);
   return (
     <AppBar
       position="fixed"
@@ -34,8 +41,19 @@ const Bar = ({ handleDrawerToggle, drawerWidth, auth, anchorEl, setAnchorEl }) =
         <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
           Event Organizer Or Something
         </Typography>
+        {/* <TestPlace /> */}
+        {/* <PlacesInput /> */}
+        {!isAuthenticated && (
+          <Button
+            variant="contained"
+            sx={{ bgcolor: "primary.light" }}
+            onClick={() => dispatch(openModal({ modalType: "login" }))}
+          >
+            sign in
+          </Button>
+        )}
         {/* Profile Menu */}
-        {auth && (
+        {isAuthenticated && (
           <div>
             <IconButton
               size="large"
@@ -45,7 +63,11 @@ const Bar = ({ handleDrawerToggle, drawerWidth, auth, anchorEl, setAnchorEl }) =
               onClick={handleMenu}
               color="inherit"
             >
-              <AccountCircle />
+              {currentUser.photoURL ? (
+                <Avatar alt="user name" src={currentUser.photoURL} />
+              ) : (
+                <Avatar>{currentUser.email.charAt(0)}</Avatar>
+              )}
             </IconButton>
             <Menu
               id="menu-appbar"
@@ -63,7 +85,15 @@ const Bar = ({ handleDrawerToggle, drawerWidth, auth, anchorEl, setAnchorEl }) =
               onClose={handleClose}
             >
               <MenuItem onClick={handleClose}>Profile</MenuItem>
-              <MenuItem onClick={handleClose}>My account</MenuItem>
+
+              <MenuItem
+                onClick={() => {
+                  dispatch(signOut());
+                  handleClose();
+                }}
+              >
+                Logout
+              </MenuItem>
             </Menu>
           </div>
         )}

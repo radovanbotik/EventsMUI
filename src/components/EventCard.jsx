@@ -21,8 +21,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { deleteEvent } from "../store/slice";
 import { Link } from "react-router-dom";
 import { openForm, closeForm, editingTrue, setEvent, resetEvent } from "../store/formSlice";
-import getTime from "../utility/getTime";
-import getDate from "../utility/getDate";
 import dayjs from "dayjs";
 
 const EventCard = props => {

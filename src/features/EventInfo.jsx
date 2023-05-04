@@ -12,8 +12,9 @@ import {
   Button,
 } from "@mui/material";
 import { Event, Place, Info } from "@mui/icons-material";
+import dayjs from "dayjs";
 
-const EventInfo = ({ description, date, venue }) => {
+const EventInfo = ({ description, date, venue, city, country }) => {
   return (
     <Card>
       <CardContent>
@@ -32,7 +33,7 @@ const EventInfo = ({ description, date, venue }) => {
                 <Event />
               </Avatar>
             </ListItemAvatar>
-            <ListItemText primary={"Date"} secondary={date} />
+            <ListItemText primary={"Date"} secondary={dayjs(date).format("DD MMM YYYY, HH:mm")} />
           </ListItem>
           <ListItem>
             <ListItemAvatar>
@@ -40,7 +41,7 @@ const EventInfo = ({ description, date, venue }) => {
                 <Place />
               </Avatar>
             </ListItemAvatar>
-            <ListItemText primary={"Location"} secondary={venue} />
+            <ListItemText primary={"Location"} secondary={`${city},${country}`} />
           </ListItem>
           <Divider />
         </List>

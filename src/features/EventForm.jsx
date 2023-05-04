@@ -19,14 +19,15 @@ import SelectInput from "./SelectInput";
 import { tags } from "../utility/tags";
 import ComboBox from "./ComboBox";
 import TimeDatePicker from "./TimeDatePicker";
+import PlacesInput from "./PlacesInput";
 
+// country: Yup.string().required("Event country is required.").oneOf(["SK", "CZ", "HU"]),
+// city: Yup.string().required("Event city is required."),
 const validationSchema = Yup.object({
   title: Yup.string("Enter title of your event.")
     .required("Event title is required.")
     .min(5, "Event title should be of minimum 5 characters length."),
-  country: Yup.string().required("Event country is required.").oneOf(["SK", "CZ", "HU"]),
-  city: Yup.string().required("Event city is required."),
-  date: Yup.date().min(dayjs()),
+  date: Yup.date("Date is required.").min(dayjs(), "Can't set a date earlier than now."),
   description: Yup.string("Enter description of your event.")
     .required("Event description is required.")
     .min(10, "Event description should be of minimum 10 characters length.")
@@ -38,12 +39,13 @@ const cities = "";
 
 const initialValues = {
   title: "",
-  country: "SK",
-  city: "",
+  // country: "SK",
+  // city: "",
   date: new Date().toISOString(),
   // time: new Date(),
   tags: [],
   description: "",
+  location: null,
 };
 
 const EventForm = () => {
@@ -52,11 +54,10 @@ const EventForm = () => {
 
   return (
     <Formik
-      initialValues={Object.keys(event).length > 0 ? event : initialValues}
+      initialValues={Object.keys(event).length && isEditing > 0 ? event : initialValues}
       validationSchema={validationSchema}
       onSubmit={values => {
         console.log(values);
-
         if (!isEditing) {
           dispatch(createEvent(values));
           dispatch(closeForm());
@@ -83,21 +84,22 @@ const EventForm = () => {
           {/* title */}
           <Input label="Title" name="title" type="text" placeholder="e.g Roadtrip around Hungary" margin="dense" />
           {/* country */}
-          <SelectInput label="Country" name="country" margin="dense" labelId="country-label">
+          <PlacesInput />
+          {/* <SelectInput label="Country" name="country" margin="dense" labelId="country-label">
             {getCountries("slovakia", "czech republic", "hungary").map(country => (
               <MenuItem key={country.name} value={country.isoCode}>
                 {country.name}
               </MenuItem>
             ))}
-          </SelectInput>
+          </SelectInput> */}
           {/* cities */}
-          <SelectInput label="City" name="city" margin="dense" labelId="city-label">
+          {/* <SelectInput label="City" name="city" margin="dense" labelId="city-label">
             {getCities(formikProps.values.country).map(city => (
               <MenuItem key={`${city.name + city.latitude}`} value={city.name}>
                 {city.name}
               </MenuItem>
             ))}
-          </SelectInput>
+          </SelectInput> */}
           <TimeDatePicker label="Date" name="date" />
           {/* Tags */}
           <ComboBox label="Tags" name="tags" labelId="tags-label">
@@ -134,7 +136,13 @@ const EventForm = () => {
             >
               Cancel
             </Button>
-            <Button type="submit" variant="contained">
+            <Button
+              type="submit"
+              variant="contained"
+              sx={{ bgcolor: formikProps.isValid ? "primary.main" : "error.main" }}
+              // disabled={formikProps.isValid ? false : true}
+              disabled={!formikProps.dirty}
+            >
               Submit
             </Button>
           </Box>

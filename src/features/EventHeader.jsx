@@ -2,6 +2,7 @@
 import { Card, CardMedia, Typography, CardActions, CardContent, Box, Button } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { closeForm, editingTrue, editingFalse, setEvent, resetEvent, setValues, resetValues } from "../store/formSlice";
+import dayjs from "dayjs";
 
 const EventHeader = ({ title, date, hostedBy, eventPhotoURL, event }) => {
   const dispatch = useDispatch();
@@ -17,7 +18,7 @@ const EventHeader = ({ title, date, hostedBy, eventPhotoURL, event }) => {
       />
       <CardContent>
         <Typography variant="h4">{title}</Typography>
-        <Typography>{date}</Typography>
+        <Typography>{dayjs(date).format("DD MMM YYYY, HH:mm")}</Typography>
         <Typography>Hosted by {hostedBy}</Typography>
       </CardContent>
       <CardActions>
