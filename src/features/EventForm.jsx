@@ -17,6 +17,7 @@ import { tags } from "../utility/tags";
 import ComboBox from "./ComboBox";
 import TimeDatePicker from "./TimeDatePicker";
 import PlacesInput from "./PlacesInput";
+import { geocodeByPlaceId, getLatLng } from "react-places-autocomplete";
 
 // country: Yup.string().required("Event country is required.").oneOf(["SK", "CZ", "HU"]),
 // city: Yup.string().required("Event city is required."),
@@ -65,17 +66,26 @@ const EventForm = () => {
     <Formik
       initialValues={Object.keys(event).length && isEditing > 0 ? event : initialValues}
       validationSchema={validationSchema}
-      onSubmit={values => {
-        if (!isEditing) {
-          dispatch(createEvent(values));
-          dispatch(closeForm());
-          return;
-        }
-        if (isEditing) {
-          dispatch(updateEvent(values));
-          dispatch(closeForm());
-          console.log(values);
-          return;
+      onSubmit={async values => {
+        let coords;
+        const geocode = await geocodeByPlaceId(values.location.place_id);
+        const latLng = await getLatLng(geocode[0]);
+        console.log(latLng);
+        coords = latLng;
+
+        if (coords) {
+          const newValues = { ...values, latLng: coords };
+
+          if (!isEditing) {
+            dispatch(createEvent(newValues));
+            dispatch(closeForm());
+            return;
+          }
+          if (isEditing) {
+            dispatch(updateEvent(newValues));
+            dispatch(closeForm());
+            return;
+          }
         }
       }}
     >

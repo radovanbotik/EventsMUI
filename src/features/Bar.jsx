@@ -4,8 +4,6 @@ import { AccountCircle, Menu as MenuIcon } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
 import { openModal } from "../store/modalSlice";
 import { signOut } from "../store/authSlice";
-import TestPlace from "./TestPlace";
-import PlacesInput from "./PlacesInput";
 
 const Bar = ({ handleDrawerToggle, drawerWidth, auth, anchorEl, setAnchorEl }) => {
   const handleMenu = event => {
@@ -41,8 +39,6 @@ const Bar = ({ handleDrawerToggle, drawerWidth, auth, anchorEl, setAnchorEl }) =
         <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
           Event Organizer Or Something
         </Typography>
-        {/* <TestPlace /> */}
-        {/* <PlacesInput /> */}
         {!isAuthenticated && (
           <Button
             variant="contained"

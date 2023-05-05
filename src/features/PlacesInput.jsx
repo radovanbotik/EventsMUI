@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import * as React from "react";
 import { Box } from "@mui/material/";
 import TextField from "@mui/material/TextField";
@@ -45,12 +44,12 @@ export default function PlacesInput() {
   //script load state, if it is instantiated
   const loaded = React.useRef(false);
 
-  //if window exists and loading is false
+  // if window exists and loading is false
   // if (typeof window !== "undefined" && !loaded.current) {
   //   //Inject script into head of HTML, if there is no element with #id googlemaps in HTML
   //   if (!document.querySelector("#google-maps")) {
   //     loadScript(
-  //       `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&libraries=places`,
+  //       `https://maps.googleapis.com/maps/api/js?key=${import.meta.env.VITE_API_KEY}&libraries=places`,
   //       document.querySelector("head"),
   //       "google-maps"
   //     );
@@ -82,7 +81,7 @@ export default function PlacesInput() {
     //if autocomplete object is empty however google script is running
     //set autocomplete.current to new instance of automplete service
     if (!autocompleteService.current && window.google) {
-      autocompleteService.current = new window.google.maps.places.AutocompleteService();
+      autocompleteService.current = new google.maps.places.AutocompleteService();
     }
     //if autocomplete.current is empty return undefined
     if (!autocompleteService.current) {

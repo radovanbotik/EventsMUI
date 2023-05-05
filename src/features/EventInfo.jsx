@@ -36,7 +36,7 @@ const EventInfo = ({ description, date, venue, city, country, location, toggleMa
   return (
     <Card>
       <CardContent>
-        <List>
+        <List dense>
           <ListItem>
             <ListItemAvatar>
               <Avatar>
@@ -65,7 +65,7 @@ const EventInfo = ({ description, date, venue, city, country, location, toggleMa
         </List>
       </CardContent>
       <CardActions>
-        <Button variant="contained" onClick={toggleMap}>
+        <Button variant="contained" onClick={toggleMap} component={"a"} href="#">
           {mapOpen ? "Close map" : "Show on map"}
         </Button>
       </CardActions>

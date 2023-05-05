@@ -3,7 +3,9 @@ import { Card, CardMedia, Typography, CardActions, CardContent, Box, Button } fr
 import { useDispatch, useSelector } from "react-redux";
 import { closeForm, editingTrue, editingFalse, setEvent, resetEvent, setValues, resetValues } from "../store/formSlice";
 import dayjs from "dayjs";
-import { GoogleMap } from "./RenderMap";
+import Map from "./Map";
+// import { GoogleMap } from "./RenderMap";
+// import MapAndMarker from "./MapAndMarker";
 
 const EventHeader = ({ title, date, hostedBy, eventPhotoURL, event, mapOpen }) => {
   const dispatch = useDispatch();
@@ -18,9 +20,11 @@ const EventHeader = ({ title, date, hostedBy, eventPhotoURL, event, mapOpen }) =
         height={300}
         sx={{ display: mapOpen ? "none" : "block" }}
       />
-      <CardMedia height={300} sx={{ display: mapOpen ? "block" : "none" }}>
-        <GoogleMap event={event} />
-      </CardMedia>
+      {/* <CardMedia height={300} sx={{ display: mapOpen ? "block" : "none" }}> */}
+      {/* <GoogleMap event={event} /> */}
+      {/* <MapAndMarker event={event} /> */}
+      <Map event={event} />
+      {/* </CardMedia> */}
       <CardContent>
         <Typography variant="h4">{title}</Typography>
         <Typography>{dayjs(date).format("DD MMM YYYY, HH:mm")}</Typography>
