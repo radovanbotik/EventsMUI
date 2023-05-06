@@ -20,6 +20,8 @@ const Event = () => {
   const { id } = useLoaderData();
   const event = events.find(event => event.id === id);
 
+  console.log(event.date);
+
   const [mapOpen, setMapOpen] = useState(false);
   function toggleMap() {
     setMapOpen(prev => !prev);

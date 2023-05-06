@@ -7,6 +7,8 @@ import DrawerContent from "../features/DrawerContent";
 import Bar from "../features/Bar";
 import { ScrollRestoration } from "react-router-dom";
 import ModalManager from "../features/ModalManager";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function ResponsiveDrawer(props) {
   const drawerWidth = 240;
@@ -33,6 +35,7 @@ function ResponsiveDrawer(props) {
 
   return (
     <>
+      <ToastContainer />
       <ModalManager />
       <Box sx={{ display: "flex" }}>
         <CssBaseline />

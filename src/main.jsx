@@ -9,10 +9,10 @@ import { Provider } from "react-redux";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <Provider store={configureStore}>
+    <Provider store={configureStore}>
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
         <App />
-      </Provider>
-    </LocalizationProvider>
+      </LocalizationProvider>
+    </Provider>
   </React.StrictMode>
 );

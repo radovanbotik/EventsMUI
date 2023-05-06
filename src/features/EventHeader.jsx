@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { Card, CardMedia, Typography, CardActions, CardContent, Box, Button } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
@@ -20,11 +21,9 @@ const EventHeader = ({ title, date, hostedBy, eventPhotoURL, event, mapOpen }) =
         height={300}
         sx={{ display: mapOpen ? "none" : "block" }}
       />
-      {/* <CardMedia height={300} sx={{ display: mapOpen ? "block" : "none" }}> */}
-      {/* <GoogleMap event={event} /> */}
-      {/* <MapAndMarker event={event} /> */}
-      <Map event={event} />
-      {/* </CardMedia> */}
+      <CardMedia sx={{ display: mapOpen ? "block" : "none", height: "300px", width: "100%" }}>
+        <Map event={event} />
+      </CardMedia>
       <CardContent>
         <Typography variant="h4">{title}</Typography>
         <Typography>{dayjs(date).format("DD MMM YYYY, HH:mm")}</Typography>

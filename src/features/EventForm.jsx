@@ -36,7 +36,7 @@ const initialValues = {
   title: "",
   // country: "SK",
   // city: "",
-  date: new Date().toISOString(),
+  date: dayjs().toISOString(),
   // time: new Date(),
   tags: [],
   description: "",

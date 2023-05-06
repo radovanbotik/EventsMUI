@@ -1,8 +1,11 @@
-import { Box, Grid, Stack, Typography, Toolbar } from "@mui/material";
+import { Box, Grid, Stack, Typography, Toolbar, Paper } from "@mui/material";
 import EventCard from "../components/EventCard";
 import { useOutletContext } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import EventForm from "../features/EventForm";
+import { Loader } from "@googlemaps/js-api-loader";
+import { loadEvents } from "../store/slice";
+import { useEffect } from "react";
 
 export const action = async ({ request }) => {
   console.log(request);
@@ -16,10 +19,22 @@ export const loader = async ({ request }) => {
   return null;
 };
 
+const loaderInstance = new Loader({
+  apiKey: import.meta.env.VITE_API_KEY,
+  version: "weekly",
+  libraries: ["places"],
+});
+loaderInstance.load();
+
 const Index = () => {
   const { formOpen, setFormOpen, editing, setEditing, currentEvent, setCurrentEvent } = useOutletContext();
   const { events } = useSelector(store => store.eventReducer);
   const { isOpen } = useSelector(store => store.formReducer);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(loadEvents());
+  }, []);
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -29,6 +44,9 @@ const Index = () => {
             <Toolbar>
               <Typography variant="h5">Events:</Typography>
             </Toolbar>
+            {/* <Paper>
+              <MyMap />
+            </Paper> */}
             {events.map(entry => {
               return (
                 <EventCard

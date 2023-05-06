@@ -1,16 +1,29 @@
-import React, { useMemo } from "react";
-import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
+/* eslint-disable react/prop-types */
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-undef */
+import React, { useRef, useEffect } from "react";
+import Marker from "./Marker";
 
 const Map = ({ event }) => {
-  const { url, isLoaded } = useLoadScript({ googleMapsApiKey: import.meta.env.VITE_API_KEY });
-
-  if (!isLoaded) {
-    return <div>loading....</div>;
-  }
-  return <MapComponent />;
+  const { latLng } = event;
+  const mapRef = useRef(null);
+  const HTMLRef = useRef(null);
+  useEffect(() => {
+    if (window.google && HTMLRef.current) {
+      console.log("hi");
+      mapRef.current = new google.maps.Map(HTMLRef.current, {
+        center: latLng,
+        zoom: 11,
+      });
+      console.log(mapRef.current);
+    }
+  }, []);
+  return (
+    <>
+      <Marker latLng={latLng} mapReference={mapRef.current} />
+      <div ref={HTMLRef} style={{ width: "100%", height: "100%" }}></div>
+    </>
+  );
 };
+
 export default Map;
-
-const MapComponent = () => {
-  return <GoogleMap zoom={10} center={event.latLng} style={{ height: "100%", width: "100%" }}></GoogleMap>;
-};

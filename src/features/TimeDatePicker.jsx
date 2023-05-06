@@ -6,9 +6,9 @@ import dayjs from "dayjs";
 import { useField, useFormikContext } from "formik";
 
 export default function TimeDatePicker({ label, ...props }) {
-  const { values, setFieldValue } = useFormikContext("date");
-  const [field, meta] = useField(props);
-
+  const { values, setValues, setFieldValue } = useFormikContext("date");
+  console.log(useFormikContext());
+  const [field, meta, helpers] = useField(props);
   return (
     <FormControl margin="dense">
       <MobileDateTimePicker
@@ -16,9 +16,13 @@ export default function TimeDatePicker({ label, ...props }) {
         {...field}
         {...props}
         value={dayjs(values.date)}
-        // disablePast
-        minDate={dayjs()}
-        onChange={e => setFieldValue(dayjs(e))}
+        disablePast
+        // minDate={dayjs()}
+        onChange={e => {
+          // console.log(dayjs(e));
+          // helpers.setValue(dayjs(e).toISOString());
+          setValues(prev => ({ ...prev, date: dayjs(e).toISOString() }));
+        }}
       />
       {meta.touched && meta.error && <FormHelperText>{meta.touched && Boolean(meta.error)}</FormHelperText>}
     </FormControl>

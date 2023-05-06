@@ -1,12 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-import getDate from "../utility/getDate";
-import getTime from "../utility/getTime";
+import dayjs from "dayjs";
 
 const initialValues = {
   title: "",
   country: "SK",
   city: "",
-  date: new Date().toISOString(),
+  date: dayjs().toISOString(),
   // time: new Date(),
   tags: [],
   description: "",
@@ -37,6 +36,7 @@ const formSlice = createSlice({
     },
     setEvent: (state, action) => {
       console.log(action.payload);
+      // state.event = { ...action.payload, date: dayjs(action.payload.date) };
       state.event = action.payload;
     },
     resetEvent: state => {
