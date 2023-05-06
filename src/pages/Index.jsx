@@ -4,8 +4,6 @@ import { useOutletContext } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import EventForm from "../features/EventForm";
 import { Loader } from "@googlemaps/js-api-loader";
-import { loadEvents } from "../store/slice";
-import { useEffect } from "react";
 
 export const action = async ({ request }) => {
   console.log(request);
@@ -27,14 +25,10 @@ const loaderInstance = new Loader({
 loaderInstance.load();
 
 const Index = () => {
-  const { formOpen, setFormOpen, editing, setEditing, currentEvent, setCurrentEvent } = useOutletContext();
+  // const { formOpen, setFormOpen, editing, setEditing, currentEvent, setCurrentEvent } = useOutletContext();
   const { events } = useSelector(store => store.eventReducer);
   const { isOpen } = useSelector(store => store.formReducer);
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(loadEvents());
-  }, []);
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -48,18 +42,7 @@ const Index = () => {
               <MyMap />
             </Paper> */}
             {events.map(entry => {
-              return (
-                <EventCard
-                  key={entry.id}
-                  event={entry}
-                  editing={editing}
-                  setEditing={setEditing}
-                  formOpen={formOpen}
-                  setFormOpen={setFormOpen}
-                  setCurrentEvent={setCurrentEvent}
-                  currentEvent={currentEvent}
-                />
-              );
+              return <EventCard key={entry.id} event={entry} />;
             })}
           </Stack>
         </Grid>

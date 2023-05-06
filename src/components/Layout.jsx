@@ -1,14 +1,16 @@
 import CssBaseline from "@mui/material/CssBaseline";
-import { Box, Toolbar, Drawer } from "@mui/material";
+import { Box, Toolbar, Drawer, CircularProgress } from "@mui/material";
 import { Event, People } from "@mui/icons-material";
 import { Outlet } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import DrawerContent from "../features/DrawerContent";
 import Bar from "../features/Bar";
 import { ScrollRestoration } from "react-router-dom";
 import ModalManager from "../features/ModalManager";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useSelector, useDispatch } from "react-redux";
+import { loadEvents } from "../store/slice";
 
 function ResponsiveDrawer(props) {
   const drawerWidth = 240;
@@ -16,11 +18,12 @@ function ResponsiveDrawer(props) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [auth, setAuth] = useState(true);
   const [anchorEl, setAnchorEl] = useState(null);
+  const dispatch = useDispatch();
 
   // form states
-  const [formOpen, setFormOpen] = useState(false);
-  const [editing, setEditing] = useState(false);
-  const [currentEvent, setCurrentEvent] = useState("");
+  // const [formOpen, setFormOpen] = useState(false);
+  // const [editing, setEditing] = useState(false);
+  // const [currentEvent, setCurrentEvent] = useState("");
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -32,6 +35,11 @@ function ResponsiveDrawer(props) {
   ];
 
   const container = window !== undefined ? () => window().document.body : undefined;
+  const { status } = useSelector(store => store.eventReducer);
+
+  useEffect(() => {
+    dispatch(loadEvents());
+  }, []);
 
   return (
     <>
@@ -64,7 +72,7 @@ function ResponsiveDrawer(props) {
               "& .MuiDrawer-paper": { boxSizing: "border-box", width: drawerWidth },
             }}
           >
-            <DrawerContent setFormOpen={setFormOpen} routes={routes} />
+            <DrawerContent routes={routes} />
           </Drawer>
           <Drawer
             variant="permanent"
@@ -74,12 +82,18 @@ function ResponsiveDrawer(props) {
             }}
             open
           >
-            <DrawerContent setFormOpen={setFormOpen} routes={routes} />
+            <DrawerContent routes={routes} />
           </Drawer>
         </Box>
         <Box component="main" sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}>
           <Toolbar />
-          <Outlet context={{ formOpen, setFormOpen, editing, setEditing, currentEvent, setCurrentEvent }} />
+          {status === "loading" ? (
+            <Box sx={{ height: "100vh", flexGrow: 1, display: "grid", placeContent: "center" }}>
+              <CircularProgress />
+            </Box>
+          ) : (
+            <Outlet />
+          )}
         </Box>
         <ScrollRestoration />
       </Box>
