@@ -1,29 +1,29 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import {
-  Card,
-  Button,
-  IconButton,
-  CardHeader,
-  CardActions,
-  CardActionArea,
-  CardMedia,
-  CardContent,
-  List,
-  ListItem,
-  ListItemText,
-  Avatar,
-  AvatarGroup,
-  Divider,
-  Typography,
-  Skeleton,
-} from "@mui/material";
-import { MoreVert } from "@mui/icons-material";
+
+import Card from "@mui/material/Card";
+import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
+import CardHeader from "@mui/material/CardHeader";
+import CardActions from "@mui/material/CardActions";
+import CardActionArea from "@mui/material/CardActionArea";
+import CardMedia from "@mui/material/CardMedia";
+import CardContent from "@mui/material/CardContent";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemText from "@mui/material/ListItemText";
+import Avatar from "@mui/material/Avatar";
+import AvatarGroup from "@mui/material/AvatarGroup";
+import Divider from "@mui/material/Divider";
+import Typography from "@mui/material/Typography";
+import Skeleton from "@mui/material/Skeleton";
+
 import { useDispatch, useSelector } from "react-redux";
 import { deleteEvent } from "../store/eventSlice";
 import { Link } from "react-router-dom";
 import { openForm, closeForm, editingTrue, setEvent, resetEvent } from "../store/formSlice";
 import dayjs from "dayjs";
+import MoreVert from "@mui/icons-material/MoreVert";
 
 const EventCard = props => {
   const { status } = useSelector(store => store.eventReducer);
@@ -59,7 +59,7 @@ const EventCard = props => {
                 <Avatar />
               </Skeleton>
             ) : (
-              <Avatar aria-label="host" src={hostPhotoURL} /> || <Avatar />
+              <Avatar aria-label="host" src={hostPhotoURL} imgProps={{ loading: "lazy" }} /> || <Avatar />
             )
           }
           action={
@@ -80,6 +80,7 @@ const EventCard = props => {
               eventPhotoURL ||
               "https://media.istockphoto.com/id/513822999/photo/garbage-bin-outdoors-overflowing-with-trash.jpg?s=1024x1024&w=is&k=20&c=UDDkN_RligWzBQlJKApvm4vPP-4if9eNJb_-8hm9rrc="
             }
+            loading="lazy"
             alt="event image"
             height={300}
           ></CardMedia>
@@ -96,7 +97,13 @@ const EventCard = props => {
                 <AvatarGroup>
                   {attendees?.map(attendee => {
                     return (
-                      <Avatar key={attendee.id} alt="Guest" src={attendee.photoURL} sx={{ width: 24, height: 24 }} />
+                      <Avatar
+                        key={attendee.id}
+                        alt="Guest"
+                        src={attendee.photoURL}
+                        imgProps={{ loading: "lazy" }}
+                        sx={{ width: 24, height: 24 }}
+                      />
                     );
                   })}
                 </AvatarGroup>

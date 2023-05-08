@@ -1,5 +1,10 @@
 import { useEffect } from "react";
-import { Box, Grid, Stack, Typography, Toolbar, CircularProgress } from "@mui/material";
+import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
+import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
+import Toolbar from "@mui/material/Toolbar";
+import CircularProgress from "@mui/material/CircularProgress";
 import { useSelector, useDispatch } from "react-redux";
 import EventCard from "../components/EventCard";
 import EventForm from "../features/EventForm";

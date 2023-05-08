@@ -1,18 +1,18 @@
 /* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import {
-  Card,
-  CardContent,
-  List,
-  ListItem,
-  ListItemAvatar,
-  Avatar,
-  ListItemText,
-  Divider,
-  CardActions,
-  Button,
-} from "@mui/material";
+
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemAvatar from "@mui/material/ListItemAvatar";
+import ListItemText from "@mui/material/ListItemText";
+import Avatar from "@mui/material/Avatar";
+import Divider from "@mui/material/Divider";
+import CardActions from "@mui/material/CardActions";
+import Button from "@mui/material/Button";
+
 import { Event, Place, Info } from "@mui/icons-material";
 import dayjs from "dayjs";
 

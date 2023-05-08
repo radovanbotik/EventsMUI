@@ -1,18 +1,19 @@
+/* eslint-disable no-unused-vars */
 import * as React from "react";
-import { Box } from "@mui/material/";
-import TextField from "@mui/material/TextField";
-import Autocomplete from "@mui/material/Autocomplete";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
-import Grid from "@mui/material/Grid";
-import Typography from "@mui/material/Typography";
 import parse from "autosuggest-highlight/parse";
 import { debounce } from "@mui/material/utils";
 import { useField, useFormikContext } from "formik";
+import Box from "@mui/material/Box";
+import Autocomplete from "@mui/material/Autocomplete";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
+import TextField from "@mui/material/TextField";
 
 const autocompleteService = { current: null };
 
 export default function PlacesInput() {
-  const [field, meta, helpers] = useField("location");
+  const [field, helpers] = useField("location");
   const { values, setFieldValue } = useFormikContext();
   const [inputValue, setInputValue] = React.useState("");
   const [options, setOptions] = React.useState([]);
@@ -55,7 +56,6 @@ export default function PlacesInput() {
       active = false;
     };
   }, [values.location, inputValue, fetch]);
-
   return (
     <Autocomplete
       id="google-map-demo"

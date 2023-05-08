@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { TextField } from "@mui/material";
+import TextField from "@mui/material/TextField";
 import { useField } from "formik";
 
 const Input = ({ label, margin, ...props }) => {

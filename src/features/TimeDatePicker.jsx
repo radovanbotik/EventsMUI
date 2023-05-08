@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import { MobileDateTimePicker } from "@mui/x-date-pickers/MobileDateTimePicker";
-import { FormControl, FormHelperText } from "@mui/material";
+import FormControl from "@mui/material/FormControl";
+import FormHelperText from "@mui/material/FormHelperText";
 import dayjs from "dayjs";
 
 import { useField, useFormikContext } from "formik";

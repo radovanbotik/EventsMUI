@@ -1,10 +1,12 @@
-import React from "react";
 import DialogWrap from "./DialogWrap";
 import * as Yup from "yup";
 import YupPassword from "yup-password";
 YupPassword(Yup); // extend yup
 import { Formik } from "formik";
-import { Paper, Box, Button, Divider, ButtonGroup } from "@mui/material";
+import Paper from "@mui/material/Paper";
+import Button from "@mui/material/Button";
+import ButtonGroup from "@mui/material/ButtonGroup";
+
 import { Form } from "react-router-dom";
 import Input from "./Input";
 import { useDispatch } from "react-redux";

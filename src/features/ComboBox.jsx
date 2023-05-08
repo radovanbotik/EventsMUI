@@ -1,6 +1,10 @@
 /* eslint-disable react/prop-types */
 import { useField } from "formik";
-import { FormControl, InputLabel, FormHelperText, Select, OutlinedInput } from "@mui/material";
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
+import FormHelperText from "@mui/material/FormHelperText";
+import Select from "@mui/material/Select";
+import OutlinedInput from "@mui/material/OutlinedInput";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;

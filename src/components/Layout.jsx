@@ -1,13 +1,16 @@
 import CssBaseline from "@mui/material/CssBaseline";
-import { Box, Toolbar, Drawer, CircularProgress } from "@mui/material";
-import { Event, People } from "@mui/icons-material";
+import Box from "@mui/material/Box";
+import Toolbar from "@mui/material/Toolbar";
+import Drawer from "@mui/material/Drawer";
+import Event from "@mui/icons-material/Event";
+import People from "@mui/icons-material/People";
 import { Outlet } from "react-router-dom";
 import { useState, useEffect } from "react";
 import DrawerContent from "../features/DrawerContent";
 import Bar from "../features/Bar";
 import { ScrollRestoration } from "react-router-dom";
 import ModalManager from "../features/ModalManager";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useSelector, useDispatch } from "react-redux";
 import { loadEvents } from "../store/eventSlice";
@@ -37,16 +40,16 @@ function ResponsiveDrawer(props) {
   const container = window !== undefined ? () => window().document.body : undefined;
   const { status } = useSelector(store => store.eventReducer);
 
-  useEffect(() => {
-    dispatch(loadEvents());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(loadEvents());
+  // }, []);
 
   return (
     <>
+      <CssBaseline />
       <ToastContainer />
       <ModalManager />
       <Box sx={{ display: "flex" }}>
-        <CssBaseline />
         <Bar
           drawerWidth={drawerWidth}
           mobileOpen={mobileOpen}

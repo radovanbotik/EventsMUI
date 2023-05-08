@@ -1,6 +1,8 @@
 /* eslint-disable no-unused-vars */
 import { useState, useEffect } from "react";
-import { Grid, Box, Stack } from "@mui/material";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import Stack from "@mui/material/Stack";
 import { useLoaderData } from "react-router-dom";
 import EventHeader from "../features/EventHeader";
 import EventInfo from "../features/EventInfo";

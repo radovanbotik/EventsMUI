@@ -1,4 +1,11 @@
-import { Paper, Typography, Box, Button, MenuItem, Checkbox, ListItemText } from "@mui/material";
+import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import MenuItem from "@mui/material/MenuItem";
+import Checkbox from "@mui/material/Checkbox";
+import ListItemText from "@mui/material/ListItemText";
+
 //redux
 import { useDispatch, useSelector } from "react-redux";
 import { createEvent, updateEvent } from "../store/eventSlice";
