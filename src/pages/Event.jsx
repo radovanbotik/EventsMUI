@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Grid, Box, Stack } from "@mui/material";
 import { useLoaderData } from "react-router-dom";
 import EventHeader from "../features/EventHeader";
@@ -8,7 +8,6 @@ import EventChat from "../features/EventChat";
 import EventGuests from "../features/EventGuests";
 import EventForm from "../features/EventForm";
 import { useDispatch, useSelector } from "react-redux";
-import { closeForm, editingTrue, editingFalse, setEvent, resetEvent, setValues, resetValues } from "../store/formSlice";
 
 export const loader = async ({ params }) => {
   return params;
@@ -19,8 +18,6 @@ const Event = () => {
   const { isEditing } = useSelector(store => store.formReducer);
   const { id } = useLoaderData();
   const event = events.find(event => event.id === id);
-
-  console.log(event.date);
 
   const [mapOpen, setMapOpen] = useState(false);
   function toggleMap() {

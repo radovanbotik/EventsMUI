@@ -5,7 +5,7 @@ import React, { useRef, useEffect } from "react";
 import Marker from "./Marker";
 
 const Map = ({ event }) => {
-  const { latLng } = event;
+  const { latLng } = event.location;
   const mapRef = useRef(null);
   const HTMLRef = useRef(null);
   useEffect(() => {
@@ -15,7 +15,6 @@ const Map = ({ event }) => {
         center: latLng,
         zoom: 11,
       });
-      console.log(mapRef.current);
     }
   }, []);
   return (

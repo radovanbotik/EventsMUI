@@ -7,7 +7,6 @@ import { useField, useFormikContext } from "formik";
 
 export default function TimeDatePicker({ label, ...props }) {
   const { values, setValues, setFieldValue } = useFormikContext("date");
-  console.log(useFormikContext());
   const [field, meta, helpers] = useField(props);
   return (
     <FormControl margin="dense">

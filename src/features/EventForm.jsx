@@ -1,7 +1,7 @@
 import { Paper, Typography, Box, Button, MenuItem, Checkbox, ListItemText } from "@mui/material";
 //redux
 import { useDispatch, useSelector } from "react-redux";
-import { createEvent, updateEvent } from "../store/slice";
+import { createEvent, updateEvent } from "../store/eventSlice";
 import { closeForm, editingFalse, resetEvent, resetValues } from "../store/formSlice";
 //formik
 import { Formik } from "formik";
@@ -70,11 +70,14 @@ const EventForm = () => {
         let coords;
         const geocode = await geocodeByPlaceId(values.location.place_id);
         const latLng = await getLatLng(geocode[0]);
-        console.log(latLng);
         coords = latLng;
 
         if (coords) {
-          const newValues = { ...values, latLng: coords };
+          const newValues = {
+            ...values,
+            location: { place_id: values.location.place_id, description: values.location.description, latLng: coords },
+          };
+          console.log(newValues);
 
           if (!isEditing) {
             dispatch(createEvent(newValues));

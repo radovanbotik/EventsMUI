@@ -17,7 +17,6 @@ import { Event, Place, Info } from "@mui/icons-material";
 import dayjs from "dayjs";
 
 const EventInfo = ({ description, date, venue, city, country, location, toggleMap, mapOpen }) => {
-  console.log(mapOpen);
   // const { Geocoder } = await google.maps.importLibrary("geocoding");
 
   //https://developers.google.com/maps/documentation/javascript/reference/geocoder

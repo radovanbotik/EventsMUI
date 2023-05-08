@@ -4,16 +4,20 @@ export const sampleData = [
     id: "1",
     title: "Trip to Prague",
     date: dayjs().toISOString(),
-    category: "culture",
+    tags: ["active"],
+    location: {
+      description: "Bratislava - Hlavná stanica, Bratislava, Slovensko",
+      place_id: "ChIJiWpb2lOJbEcRyNN3sz1OPtg",
+      latLng: {
+        lat: 48.1586132,
+        lng: 17.1060975,
+      },
+    },
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sollicitudin ligula eu leo tincidunt, quis scelerisque magna dapibus. Sed eget ipsum vel arcu vehicula ullamcorper.",
-    country: "CZ",
-    city: "Bavorov",
-    venue: "Empire State Building, 5th Avenue, New York, NY, USA",
     eventPhotoURL: "https://upload.wikimedia.org/wikipedia/commons/a/a7/Prague_%286365119737%29.jpg",
     hostedBy: "Bob",
     hostPhotoURL: "https://randomuser.me/api/portraits/men/2.jpg",
-    tags: ["active"],
     attendees: [
       {
         id: "a",
@@ -36,16 +40,20 @@ export const sampleData = [
     id: "2",
     title: "Trip to Szeged",
     date: dayjs().toISOString(),
-    category: "drinks",
+    tags: ["family,active"],
+    location: {
+      description: "Trnava, Slovensko",
+      place_id: "ChIJzco95mKgbEcRsPqWxtH3AAQ",
+      latLng: {
+        lat: 48.3709108,
+        lng: 17.5833218,
+      },
+    },
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sollicitudin ligula eu leo tincidunt, quis scelerisque magna dapibus. Sed eget ipsum vel arcu vehicula ullamcorper.",
-    country: "HU",
-    city: "Aba",
-    venue: "Punch & Judy, Henrietta Street, London, UK",
     eventPhotoURL: "https://szegedtourism.hu/wp-content/uploads/2021/10/D%C3%B3m-t%C3%A9r-Bort%C3%A9r-_2.jpg",
     hostedBy: "Tom",
     hostPhotoURL: "https://randomuser.me/api/portraits/men/22.jpg",
-    tags: ["active"],
     attendees: [
       {
         id: "a",

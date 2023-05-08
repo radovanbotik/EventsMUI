@@ -10,7 +10,7 @@ import ModalManager from "../features/ModalManager";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useSelector, useDispatch } from "react-redux";
-import { loadEvents } from "../store/slice";
+import { loadEvents } from "../store/eventSlice";
 
 function ResponsiveDrawer(props) {
   const drawerWidth = 240;
@@ -87,13 +87,13 @@ function ResponsiveDrawer(props) {
         </Box>
         <Box component="main" sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}>
           <Toolbar />
-          {status === "loading" ? (
+          {/* {status === "loading" ? (
             <Box sx={{ height: "100vh", flexGrow: 1, display: "grid", placeContent: "center" }}>
               <CircularProgress />
             </Box>
-          ) : (
-            <Outlet />
-          )}
+          ) : ( */}
+          <Outlet />
+          {/* )} */}
         </Box>
         <ScrollRestoration />
       </Box>
