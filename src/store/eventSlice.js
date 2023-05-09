@@ -5,7 +5,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { getEventsRealTime } from "../firestore/firestore";
 import { db } from "../firestore/firestore";
-import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc, updateDoc, serverTimestamp, doc } from "firebase/firestore";
 
 //initial state
 const initialState = {
@@ -39,6 +39,16 @@ export const createEv = createAsyncThunk("events/createEv", async (ev, thunkAPI)
   thunkAPI.dispatch(setStatus("loading"));
   try {
     const docRef = await addDoc(collection(db, "events"), ev);
+    thunkAPI.dispatch(setStatus("success"));
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+export const updateEv = createAsyncThunk("events/updateEv", async (ev, thunkAPI) => {
+  thunkAPI.dispatch(setStatus("loading"));
+  try {
+    const docRef = await updateDoc(doc(db, "events", ev.id), { ...ev, updated: serverTimestamp() });
     thunkAPI.dispatch(setStatus("success"));
   } catch (error) {
     console.log(error);

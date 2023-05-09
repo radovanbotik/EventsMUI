@@ -4,20 +4,8 @@ import EventForm from "../features/EventForm";
 import { Loader } from "@googlemaps/js-api-loader";
 import EventFilters from "../features/EventFilters";
 import { load } from "../store/eventSlice";
-
 import { Box, Grid, Stack, Typography, Toolbar, CircularProgress } from "@mui/material";
 import useSubscribeTocollection from "../hooks/useSubscribeTocollection";
-
-export const action = async ({ request }) => {
-  console.log(request);
-  const formData = await request.formData();
-  const submission = Object.fromEntries(formData);
-  return null;
-};
-
-export const loader = async () => {
-  return null;
-};
 
 //Initialize Google Maps
 const loaderInstance = new Loader({

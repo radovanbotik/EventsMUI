@@ -12,10 +12,6 @@ import { Grid, Box, Stack } from "@mui/material";
 import useSubscribeTodocument from "../hooks/useSubscribeTodocument";
 import { load } from "../store/eventSlice";
 
-export const loader = async ({ params }) => {
-  return params;
-};
-
 const Event = () => {
   const { events, status } = useSelector(store => store.eventReducer);
   const { isEditing } = useSelector(store => store.formReducer);

@@ -1,6 +1,6 @@
 //redux
 import { useDispatch, useSelector } from "react-redux";
-import { createEv, createEvent, updateEvent } from "../store/eventSlice";
+import { createEv, createEvent, updateEv, updateEvent } from "../store/eventSlice";
 import { closeForm, editingFalse, resetEvent, resetValues } from "../store/formSlice";
 //formik
 import { Formik } from "formik";
@@ -17,8 +17,8 @@ import ComboBox from "./ComboBox";
 import TimeDatePicker from "./TimeDatePicker";
 import PlacesInput from "./PlacesInput";
 import { geocodeByPlaceId, getLatLng } from "react-places-autocomplete";
-
 import { Paper, Typography, Box, Button, MenuItem, Checkbox, ListItemText } from "@mui/material";
+import { toast } from "react-toastify";
 
 // country: Yup.string().required("Event country is required.").oneOf(["SK", "CZ", "HU"]),
 // city: Yup.string().required("Event city is required."),
@@ -35,29 +35,11 @@ const validationSchema = Yup.object({
 
 const initialValues = {
   title: "",
-  // country: "SK",
-  // city: "",
   date: dayjs().toISOString(),
-  // time: new Date(),
   tags: [],
   description: "",
   location: null,
 };
-
-// function addLngLat (values) {
-//   const {place_id} = values.location
-//   const geocoder = new google.maps.Geocoder();
-
-//   if (values.location) {
-//     console.log(
-//       geocoder.geocode({ placeId: location.place_id }).then(({ results }) => {
-//         console.log(results[0]);
-//       })
-//     );
-
-//   }
-//   return {...values,}
-// }
 
 const EventForm = () => {
   const { isEditing, event } = useSelector(store => store.formReducer);
@@ -67,31 +49,44 @@ const EventForm = () => {
     <Formik
       initialValues={Object.keys(event).length && isEditing > 0 ? event : initialValues}
       validationSchema={validationSchema}
-      onSubmit={async values => {
-        console.log(values);
-        let coords;
-        const geocode = await geocodeByPlaceId(values.location.place_id);
-        const latLng = await getLatLng(geocode[0]);
-        coords = latLng;
-        let newValues;
-        if (coords) {
-          newValues = {
-            ...values,
-            location: { place_id: values.location.place_id, description: values.location.description, latLng: coords },
-          };
+      onSubmit={async (values, { setSubmitting }) => {
+        try {
+          let coords;
+          const geocode = await geocodeByPlaceId(values.location.place_id);
+          const latLng = await getLatLng(geocode[0]);
+          coords = latLng;
+          let newValues;
+          if (coords) {
+            newValues = {
+              ...values,
+              location: {
+                place_id: values.location.place_id,
+                description: values.location.description,
+                latLng: coords,
+              },
+            };
 
-          console.log(newValues);
-          if (!isEditing) {
-            // dispatch(createEvent(newValues));
-            dispatch(createEv(newValues));
-            dispatch(closeForm());
-            return;
+            if (!isEditing) {
+              // dispatch(createEvent(newValues));
+              dispatch(createEv(newValues));
+              dispatch(resetEvent());
+              dispatch(closeForm());
+              return;
+            }
+            if (isEditing) {
+              // dispatch(updateEvent(newValues));
+              dispatch(updateEv(newValues));
+              dispatch(resetEvent());
+              dispatch(editingFalse());
+              dispatch(closeForm());
+
+              return;
+            }
           }
-          if (isEditing) {
-            dispatch(updateEvent(newValues));
-            dispatch(closeForm());
-            return;
-          }
+          setSubmitting(false);
+        } catch (error) {
+          setSubmitting(false);
+          toast.error(error.message);
         }
       }}
     >
@@ -108,21 +103,6 @@ const EventForm = () => {
           <Input label="Title" name="title" type="text" placeholder="e.g Roadtrip around Hungary" margin="dense" />
           {/* country */}
           <PlacesInput />
-          {/* <SelectInput label="Country" name="country" margin="dense" labelId="country-label">
-            {getCountries("slovakia", "czech republic", "hungary").map(country => (
-              <MenuItem key={country.name} value={country.isoCode}>
-                {country.name}
-              </MenuItem>
-            ))}
-          </SelectInput> */}
-          {/* cities */}
-          {/* <SelectInput label="City" name="city" margin="dense" labelId="city-label">
-            {getCities(formikProps.values.country).map(city => (
-              <MenuItem key={`${city.name + city.latitude}`} value={city.name}>
-                {city.name}
-              </MenuItem>
-            ))}
-          </SelectInput> */}
           <TimeDatePicker label="Date" name="date" />
           {/* Tags */}
           <ComboBox label="Tags" name="tags" labelId="tags-label">
@@ -164,7 +144,8 @@ const EventForm = () => {
               variant="contained"
               sx={{ bgcolor: formikProps.isValid ? "primary.main" : "error.main" }}
               // disabled={formikProps.isValid ? false : true}
-              disabled={!formikProps.dirty}
+
+              disabled={!formikProps.dirty || formikProps.isSubmitting}
             >
               Submit
             </Button>

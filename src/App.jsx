@@ -1,13 +1,12 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { loader as loadEvents } from "./pages/Index";
 import Landing from "./pages/Landing";
 import Layout from "./components/Layout";
 import Error from "./pages/Error";
-import Event, { loader as loadEvent } from "./pages/Event";
 import { action as createEvent } from "./routes/createEvent";
 import React from "react";
 
 const Index = React.lazy(() => import("./pages/Index"));
+const Event = React.lazy(() => import("./pages/Event"));
 
 const router = createBrowserRouter([
   { path: "/", element: <Landing /> },
@@ -25,13 +24,14 @@ const router = createBrowserRouter([
                 <Index />
               </React.Suspense>
             ),
-            action: createEvent,
-            loader: loadEvents,
           },
           {
             path: ":id",
-            element: <Event />,
-            loader: loadEvent,
+            element: (
+              <React.Suspense fallback={<div>loading....</div>}>
+                <Event />
+              </React.Suspense>
+            ),
           },
           {
             path: "new-event",
