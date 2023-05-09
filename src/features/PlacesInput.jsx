@@ -3,13 +3,13 @@ import * as React from "react";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import parse from "autosuggest-highlight/parse";
 import { useField, useFormikContext } from "formik";
-import { debounce, Box, Autocomplete, Grid, Typography, TextField } from '@mui/material';
+import { debounce, Box, Autocomplete, Grid, Typography, TextField } from "@mui/material";
 
 const autocompleteService = { current: null };
 
 export default function PlacesInput() {
   const [field, helpers] = useField("location");
-  const { values, setFieldValue } = useFormikContext();
+  const { values, setFieldValue, setValues } = useFormikContext();
   const [inputValue, setInputValue] = React.useState("");
   const [options, setOptions] = React.useState([]);
   const loaded = React.useRef(false);
@@ -68,7 +68,8 @@ export default function PlacesInput() {
       noOptionsText="No locations"
       onChange={(event, newValue) => {
         setOptions(newValue ? [newValue, ...options] : options);
-        helpers.setValue(newValue);
+        setFieldValue(newValue);
+        setValues({ ...values, location: newValue });
       }}
       onInputChange={(event, newInputValue) => {
         setInputValue(newInputValue);

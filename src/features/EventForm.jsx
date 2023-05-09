@@ -1,6 +1,6 @@
 //redux
 import { useDispatch, useSelector } from "react-redux";
-import { createEvent, updateEvent } from "../store/eventSlice";
+import { createEv, createEvent, updateEvent } from "../store/eventSlice";
 import { closeForm, editingFalse, resetEvent, resetValues } from "../store/formSlice";
 //formik
 import { Formik } from "formik";
@@ -18,7 +18,7 @@ import TimeDatePicker from "./TimeDatePicker";
 import PlacesInput from "./PlacesInput";
 import { geocodeByPlaceId, getLatLng } from "react-places-autocomplete";
 
-import { Paper, Typography, Box, Button, MenuItem, Checkbox, ListItemText } from '@mui/material';
+import { Paper, Typography, Box, Button, MenuItem, Checkbox, ListItemText } from "@mui/material";
 
 // country: Yup.string().required("Event country is required.").oneOf(["SK", "CZ", "HU"]),
 // city: Yup.string().required("Event city is required."),
@@ -68,20 +68,22 @@ const EventForm = () => {
       initialValues={Object.keys(event).length && isEditing > 0 ? event : initialValues}
       validationSchema={validationSchema}
       onSubmit={async values => {
+        console.log(values);
         let coords;
         const geocode = await geocodeByPlaceId(values.location.place_id);
         const latLng = await getLatLng(geocode[0]);
         coords = latLng;
-
+        let newValues;
         if (coords) {
-          const newValues = {
+          newValues = {
             ...values,
             location: { place_id: values.location.place_id, description: values.location.description, latLng: coords },
           };
-          console.log(newValues);
 
+          console.log(newValues);
           if (!isEditing) {
-            dispatch(createEvent(newValues));
+            // dispatch(createEvent(newValues));
+            dispatch(createEv(newValues));
             dispatch(closeForm());
             return;
           }

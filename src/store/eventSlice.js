@@ -4,6 +4,8 @@ import { v4 as uuid } from "uuid";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { getEventsRealTime } from "../firestore/firestore";
+import { db } from "../firestore/firestore";
+import { collection, addDoc } from "firebase/firestore";
 
 //initial state
 const initialState = {
@@ -30,6 +32,16 @@ export const loadEvents = createAsyncThunk("events/loadEvents", async (id, thunk
     thunkAPI.dispatch(setStatus("rejected"));
     //action.meta
     return thunkAPI.rejectWithValue(error.message, { msg: "fail!!!!" });
+  }
+});
+
+export const createEv = createAsyncThunk("events/createEv", async (ev, thunkAPI) => {
+  thunkAPI.dispatch(setStatus("loading"));
+  try {
+    const docRef = await addDoc(collection(db, "events"), ev);
+    thunkAPI.dispatch(setStatus("success"));
+  } catch (error) {
+    console.log(error);
   }
 });
 
