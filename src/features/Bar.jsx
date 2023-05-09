@@ -1,16 +1,9 @@
-/* eslint-disable react/prop-types */
-
-import AppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import Menu from "@mui/material/Menu";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import MenuIcon from "@mui/icons-material/Menu";
+import { Menu as MenuIcon } from "@mui/icons-material/";
 import { useDispatch, useSelector } from "react-redux";
 import { openModal } from "../store/modalSlice";
 import { signOut } from "../store/authSlice";
+
+import { AppBar, Toolbar, IconButton, Typography, Menu, Avatar, Button } from "@mui/material";
 
 const Bar = ({ handleDrawerToggle, drawerWidth, auth, anchorEl, setAnchorEl }) => {
   const handleMenu = event => {

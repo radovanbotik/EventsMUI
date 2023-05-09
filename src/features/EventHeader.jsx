@@ -1,17 +1,8 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable react/prop-types */
-import Card from "@mui/material/Card";
-import CardMedia from "@mui/material/CardMedia";
-import Typography from "@mui/material/Typography";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-
 import { useDispatch, useSelector } from "react-redux";
 import { closeForm, editingTrue, editingFalse, setEvent, resetEvent, setValues, resetValues } from "../store/formSlice";
 import dayjs from "dayjs";
 import Map from "./Map";
+import { Card, CardMedia, Typography, CardActions, CardContent, Box, Button } from '@mui/material';
 // import { GoogleMap } from "./RenderMap";
 // import MapAndMarker from "./MapAndMarker";
 

@@ -1,9 +1,4 @@
-import CssBaseline from "@mui/material/CssBaseline";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import Drawer from "@mui/material/Drawer";
-import Event from "@mui/icons-material/Event";
-import People from "@mui/icons-material/People";
+import { Event, People } from "@mui/icons-material";
 import { Outlet } from "react-router-dom";
 import { useState } from "react";
 import DrawerContent from "../features/DrawerContent";
@@ -14,6 +9,8 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useSelector, useDispatch } from "react-redux";
 import { loadEvents } from "../store/eventSlice";
+
+import { CssBaseline, Box, Toolbar, Drawer } from "@mui/material";
 
 function ResponsiveDrawer(props) {
   const drawerWidth = 240;

@@ -1,11 +1,3 @@
-import Paper from "@mui/material/Paper";
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import MenuItem from "@mui/material/MenuItem";
-import Checkbox from "@mui/material/Checkbox";
-import ListItemText from "@mui/material/ListItemText";
-
 //redux
 import { useDispatch, useSelector } from "react-redux";
 import { createEvent, updateEvent } from "../store/eventSlice";
@@ -25,6 +17,8 @@ import ComboBox from "./ComboBox";
 import TimeDatePicker from "./TimeDatePicker";
 import PlacesInput from "./PlacesInput";
 import { geocodeByPlaceId, getLatLng } from "react-places-autocomplete";
+
+import { Paper, Typography, Box, Button, MenuItem, Checkbox, ListItemText } from '@mui/material';
 
 // country: Yup.string().required("Event country is required.").oneOf(["SK", "CZ", "HU"]),
 // city: Yup.string().required("Event city is required."),

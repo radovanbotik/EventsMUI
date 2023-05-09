@@ -1,29 +1,28 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable react/prop-types */
-
-import Card from "@mui/material/Card";
-import Button from "@mui/material/Button";
-import IconButton from "@mui/material/IconButton";
-import CardHeader from "@mui/material/CardHeader";
-import CardActions from "@mui/material/CardActions";
-import CardActionArea from "@mui/material/CardActionArea";
-import CardMedia from "@mui/material/CardMedia";
-import CardContent from "@mui/material/CardContent";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemText from "@mui/material/ListItemText";
-import Avatar from "@mui/material/Avatar";
-import AvatarGroup from "@mui/material/AvatarGroup";
-import Divider from "@mui/material/Divider";
-import Typography from "@mui/material/Typography";
-import Skeleton from "@mui/material/Skeleton";
-
 import { useDispatch, useSelector } from "react-redux";
 import { deleteEvent } from "../store/eventSlice";
 import { Link } from "react-router-dom";
 import { openForm, closeForm, editingTrue, setEvent, resetEvent } from "../store/formSlice";
 import dayjs from "dayjs";
-import MoreVert from "@mui/icons-material/MoreVert";
+import { MoreVert } from "@mui/icons-material";
+
+import {
+  Card,
+  Button,
+  IconButton,
+  CardHeader,
+  CardActions,
+  CardActionArea,
+  CardMedia,
+  CardContent,
+  List,
+  ListItem,
+  ListItemText,
+  Avatar,
+  AvatarGroup,
+  Divider,
+  Typography,
+  Skeleton,
+} from "@mui/material";
 
 const EventCard = props => {
   const { status } = useSelector(store => store.eventReducer);

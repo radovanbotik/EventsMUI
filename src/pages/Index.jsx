@@ -1,10 +1,4 @@
 import { useEffect } from "react";
-import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
-import Stack from "@mui/material/Stack";
-import Typography from "@mui/material/Typography";
-import Toolbar from "@mui/material/Toolbar";
-import CircularProgress from "@mui/material/CircularProgress";
 import { useSelector, useDispatch } from "react-redux";
 import EventCard from "../components/EventCard";
 import EventForm from "../features/EventForm";
@@ -13,6 +7,8 @@ import EventFilters from "../features/EventFilters";
 import { getEventsRealTime } from "../firestore/firestore";
 import { Timestamp } from "firebase/firestore";
 import { load } from "../store/eventSlice";
+
+import { Box, Grid, Stack, Typography, Toolbar, CircularProgress } from "@mui/material";
 
 export const action = async ({ request }) => {
   console.log(request);

@@ -1,9 +1,7 @@
-/* eslint-disable react/prop-types */
-import Dialog from "@mui/material/Dialog";
-import DialogTitle from "@mui/material/DialogTitle";
-import Divider from "@mui/material/Divider";
 import { useSelector, useDispatch } from "react-redux";
 import { closeModal } from "../store/modalSlice";
+
+import { Dialog, DialogTitle, Divider } from '@mui/material';
 
 function DialogWrap({ props, children, title }) {
   const dispatch = useDispatch();

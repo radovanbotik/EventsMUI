@@ -1,8 +1,5 @@
 /* eslint-disable no-unused-vars */
 import { useState, useEffect } from "react";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import Stack from "@mui/material/Stack";
 import { useLoaderData } from "react-router-dom";
 import EventHeader from "../features/EventHeader";
 import EventInfo from "../features/EventInfo";
@@ -10,6 +7,8 @@ import EventChat from "../features/EventChat";
 import EventGuests from "../features/EventGuests";
 import EventForm from "../features/EventForm";
 import { useDispatch, useSelector } from "react-redux";
+
+import { Grid, Box, Stack } from '@mui/material';
 
 export const loader = async ({ params }) => {
   return params;

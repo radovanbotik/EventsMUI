@@ -1,5 +1,5 @@
 import DialogWrap from "./DialogWrap";
-import Typography from "@mui/material/Typography";
+import { Typography } from '@mui/material';
 
 const TestModal = () => {
   return (

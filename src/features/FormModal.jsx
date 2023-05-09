@@ -3,15 +3,14 @@ import * as Yup from "yup";
 import YupPassword from "yup-password";
 YupPassword(Yup); // extend yup
 import { Formik } from "formik";
-import Paper from "@mui/material/Paper";
-import Button from "@mui/material/Button";
-import ButtonGroup from "@mui/material/ButtonGroup";
 
 import { Form } from "react-router-dom";
 import Input from "./Input";
 import { useDispatch } from "react-redux";
 import { closeModal } from "../store/modalSlice";
 import { signIn } from "../store/authSlice";
+
+import { Paper, Button, ButtonGroup } from '@mui/material';
 
 const FormModal = () => {
   const dispatch = useDispatch();

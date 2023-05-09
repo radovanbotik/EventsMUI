@@ -1,13 +1,8 @@
-import Paper from "@mui/material/Paper";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemText from "@mui/material/ListItemText";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import Divider from "@mui/material/Divider";
-import FilterAltIcon from "@mui/icons-material/FilterAlt";
+import { FilterAlt, DateRange } from "@mui/icons-material/";
 import { StaticDatePicker } from "@mui/x-date-pickers/StaticDatePicker";
-import DateRangeIcon from "@mui/icons-material/DateRange";
 import dayjs from "dayjs";
+
+import { Paper, List, ListItem, ListItemText, ListItemIcon, Divider } from "@mui/material";
 
 const EventFilters = () => {
   return (
@@ -16,7 +11,7 @@ const EventFilters = () => {
       <List>
         <ListItem>
           <ListItemIcon>
-            <FilterAltIcon />
+            <FilterAlt />
           </ListItemIcon>
           <ListItemText primary="Filters" />
         </ListItem>
@@ -35,7 +30,7 @@ const EventFilters = () => {
       <List>
         <ListItem>
           <ListItemIcon>
-            <DateRangeIcon />
+            <DateRange />
           </ListItemIcon>
           <ListItemText primary="Calendar" />
         </ListItem>
