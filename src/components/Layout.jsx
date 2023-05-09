@@ -5,7 +5,7 @@ import Drawer from "@mui/material/Drawer";
 import Event from "@mui/icons-material/Event";
 import People from "@mui/icons-material/People";
 import { Outlet } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import DrawerContent from "../features/DrawerContent";
 import Bar from "../features/Bar";
 import { ScrollRestoration } from "react-router-dom";
@@ -90,13 +90,7 @@ function ResponsiveDrawer(props) {
         </Box>
         <Box component="main" sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}>
           <Toolbar />
-          {/* {status === "loading" ? (
-            <Box sx={{ height: "100vh", flexGrow: 1, display: "grid", placeContent: "center" }}>
-              <CircularProgress />
-            </Box>
-          ) : ( */}
           <Outlet />
-          {/* )} */}
         </Box>
         <ScrollRestoration />
       </Box>
