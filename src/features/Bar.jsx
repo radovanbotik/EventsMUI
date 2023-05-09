@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { openModal } from "../store/modalSlice";
 import { signOut } from "../store/authSlice";
 
-import { AppBar, Toolbar, IconButton, Typography, Menu, Avatar, Button } from "@mui/material";
+import { AppBar, Toolbar, IconButton, Typography, Menu, MenuItem, Avatar, Button } from "@mui/material";
 
 const Bar = ({ handleDrawerToggle, drawerWidth, auth, anchorEl, setAnchorEl }) => {
   const handleMenu = event => {

@@ -12,7 +12,7 @@ const initialState = {
 };
 
 //actions
-const setStatus = createAction("events/setStatus");
+export const setStatus = createAction("events/setStatus");
 
 //extra reducers
 export const loadEvents = createAsyncThunk("events/loadEvents", async (id, thunkAPI) => {

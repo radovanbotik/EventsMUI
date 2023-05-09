@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { closeForm, editingTrue, editingFalse, setEvent, resetEvent, setValues, resetValues } from "../store/formSlice";
 import dayjs from "dayjs";
 import Map from "./Map";
-import { Card, CardMedia, Typography, CardActions, CardContent, Box, Button } from '@mui/material';
+import { Card, CardMedia, Typography, CardActions, CardContent, Box, Button } from "@mui/material";
 // import { GoogleMap } from "./RenderMap";
 // import MapAndMarker from "./MapAndMarker";
 

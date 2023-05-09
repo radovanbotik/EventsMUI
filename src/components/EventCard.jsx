@@ -125,13 +125,14 @@ const EventCard = props => {
           disabled={isOpen || status === "loading"}
           onClick={() => {
             if (isOpen === false) {
-              dispatch(openForm());
+              console.log(props.event);
               dispatch(editingTrue());
+              dispatch(openForm());
               dispatch(setEvent(props.event));
               return;
             }
             if (isOpen === true) {
-              dispatch(openForm());
+              dispatch(closeForm());
               return;
             }
           }}

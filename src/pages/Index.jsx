@@ -1,14 +1,12 @@
-import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import EventCard from "../components/EventCard";
 import EventForm from "../features/EventForm";
 import { Loader } from "@googlemaps/js-api-loader";
 import EventFilters from "../features/EventFilters";
-import { getEventsRealTime } from "../firestore/firestore";
-import { Timestamp } from "firebase/firestore";
 import { load } from "../store/eventSlice";
 
 import { Box, Grid, Stack, Typography, Toolbar, CircularProgress } from "@mui/material";
+import useSubscribeTocollection from "../hooks/useSubscribeTocollection";
 
 export const action = async ({ request }) => {
   console.log(request);
@@ -34,25 +32,33 @@ const Index = () => {
   const { isOpen } = useSelector(store => store.formReducer);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    const unsubscribe = getEventsRealTime(
-      snapshot => {
-        const events = [];
-        snapshot.forEach(doc => {
-          const data = doc.data();
-          for (const prop in data) {
-            if (data[prop] instanceof Timestamp) {
-              data[prop] = data[prop].toDate().toISOString();
-            }
-          }
-          events.push({ ...data, id: doc.id });
-          return dispatch(load(events));
-        });
-      },
-      error => console.log(error)
-    );
-    return () => unsubscribe();
-  }, []);
+  // useEffect(() => {
+  //   dispatch(setStatus("loading"));
+  //   const unsubscribe = getEventsRealTime(
+  //     snapshot => {
+  //       const events = [];
+  //       snapshot.forEach(doc => {
+  //         const data = doc.data();
+  //         for (const prop in data) {
+  //           if (data[prop] instanceof Timestamp) {
+  //             data[prop] = data[prop].toDate().toISOString();
+  //           }
+  //         }
+  //         events.push({ ...data, id: doc.id });
+  //         dispatch(setStatus("success"));
+  //         return dispatch(load(events));
+  //       });
+  //     },
+  //     error => console.log(error)
+  //   );
+  //   return () => unsubscribe();
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
+  useSubscribeTocollection({
+    dbcollection: "events",
+    data: events => dispatch(load(events)),
+    dependancies: [],
+  });
 
   return (
     <Box sx={{ flexGrow: 1 }}>
