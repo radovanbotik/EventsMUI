@@ -5,7 +5,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { getEventsRealTime } from "../firestore/firestore";
 import { db } from "../firestore/firestore";
-import { collection, addDoc, updateDoc, serverTimestamp, doc } from "firebase/firestore";
+import { collection, addDoc, updateDoc, serverTimestamp, doc, deleteDoc } from "firebase/firestore";
 
 //initial state
 const initialState = {
@@ -38,7 +38,7 @@ export const loadEvents = createAsyncThunk("events/loadEvents", async (id, thunk
 export const createEv = createAsyncThunk("events/createEv", async (ev, thunkAPI) => {
   thunkAPI.dispatch(setStatus("loading"));
   try {
-    const docRef = await addDoc(collection(db, "events"), ev);
+    await addDoc(collection(db, "events"), ev);
     thunkAPI.dispatch(setStatus("success"));
   } catch (error) {
     console.log(error);
@@ -48,8 +48,17 @@ export const createEv = createAsyncThunk("events/createEv", async (ev, thunkAPI)
 export const updateEv = createAsyncThunk("events/updateEv", async (ev, thunkAPI) => {
   thunkAPI.dispatch(setStatus("loading"));
   try {
-    const docRef = await updateDoc(doc(db, "events", ev.id), { ...ev, updated: serverTimestamp() });
+    await updateDoc(doc(db, "events", ev.id), { ...ev, updated: serverTimestamp() });
     thunkAPI.dispatch(setStatus("success"));
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+export const deleteEv = createAsyncThunk("events/deleteEv", async (id, thunkAPI) => {
+  thunkAPI.dispatch(setStatus("loading"));
+  try {
+    await deleteDoc(doc(db, "events", id));
   } catch (error) {
     console.log(error);
   }

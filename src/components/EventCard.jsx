@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { deleteEvent } from "../store/eventSlice";
+import { deleteEv, deleteEvent } from "../store/eventSlice";
 import { Link } from "react-router-dom";
 import { openForm, closeForm, editingTrue, setEvent, resetEvent } from "../store/formSlice";
 import dayjs from "dayjs";
@@ -146,7 +146,7 @@ const EventCard = props => {
           onClick={() => {
             dispatch(closeForm());
             dispatch(resetEvent());
-            dispatch(deleteEvent({ id: id }));
+            dispatch(deleteEv(id));
           }}
         >
           Delete
