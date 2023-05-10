@@ -9,6 +9,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useSelector, useDispatch } from "react-redux";
 import { loadEvents } from "../store/eventSlice";
+import { Loader } from "@googlemaps/js-api-loader";
 
 import { CssBaseline, Box, Toolbar, Drawer } from "@mui/material";
 
@@ -40,6 +41,14 @@ function ResponsiveDrawer(props) {
   // useEffect(() => {
   //   dispatch(loadEvents());
   // }, []);
+
+  //Initialize Google Maps
+  const loaderInstance = new Loader({
+    apiKey: import.meta.env.VITE_API_KEY,
+    version: "weekly",
+    libraries: ["places"],
+  });
+  loaderInstance.load();
 
   return (
     <>

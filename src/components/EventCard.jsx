@@ -1,9 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
-import { deleteEv, deleteEvent } from "../store/eventSlice";
+import { deleteEv } from "../store/eventSlice";
 import { Link } from "react-router-dom";
 import { openForm, closeForm, editingTrue, setEvent, resetEvent } from "../store/formSlice";
 import dayjs from "dayjs";
 import { MoreVert } from "@mui/icons-material";
+import DescriptionAlert from "../features/DescriptionAlert";
 
 import {
   Card,
@@ -40,6 +41,7 @@ const EventCard = props => {
     venue,
     eventPhotoURL,
     location,
+    canceled,
   } = props.event;
 
   const { isOpen } = useSelector(store => store.formReducer);
@@ -91,6 +93,7 @@ const EventCard = props => {
           </>
         ) : (
           <CardContent>
+            {canceled && <DescriptionAlert severity={"info"} title={"Cancelled"} variant={"filled"} />}
             <List dense>
               <ListItem>
                 <AvatarGroup>

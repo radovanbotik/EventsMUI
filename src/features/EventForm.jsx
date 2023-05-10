@@ -47,7 +47,7 @@ const EventForm = () => {
 
   return (
     <Formik
-      initialValues={Object.keys(event).length && isEditing > 0 ? event : initialValues}
+      initialValues={Object.keys(event).length > 0 && isEditing ? event : initialValues}
       validationSchema={validationSchema}
       onSubmit={async (values, { setSubmitting }) => {
         try {
@@ -75,6 +75,7 @@ const EventForm = () => {
             }
             if (isEditing) {
               // dispatch(updateEvent(newValues));
+              console.log("ran");
               dispatch(updateEv(newValues));
               dispatch(resetEvent());
               dispatch(editingFalse());
@@ -86,6 +87,7 @@ const EventForm = () => {
           setSubmitting(false);
         } catch (error) {
           setSubmitting(false);
+          console.log(error);
           toast.error(error.message);
         }
       }}

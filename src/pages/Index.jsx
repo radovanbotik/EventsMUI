@@ -1,19 +1,10 @@
 import { useSelector, useDispatch } from "react-redux";
 import EventCard from "../components/EventCard";
 import EventForm from "../features/EventForm";
-import { Loader } from "@googlemaps/js-api-loader";
 import EventFilters from "../features/EventFilters";
 import { load } from "../store/eventSlice";
 import { Box, Grid, Stack, Typography, Toolbar, CircularProgress } from "@mui/material";
 import useSubscribeTocollection from "../hooks/useSubscribeTocollection";
-
-//Initialize Google Maps
-const loaderInstance = new Loader({
-  apiKey: import.meta.env.VITE_API_KEY,
-  version: "weekly",
-  libraries: ["places"],
-});
-loaderInstance.load();
 
 const Index = () => {
   const { events } = useSelector(store => store.eventReducer);

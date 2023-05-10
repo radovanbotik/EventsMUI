@@ -64,6 +64,16 @@ export const deleteEv = createAsyncThunk("events/deleteEv", async (id, thunkAPI)
   }
 });
 
+export const cancelEv = createAsyncThunk("events/cancelEv", async (ev, thunkAPI) => {
+  // thunkAPI.dispatch(setStatus("loading"));
+  try {
+    await updateDoc(doc(db, "events", ev.id), { canceled: !ev.canceled, updated: serverTimestamp() });
+    // thunkAPI.dispatch(setStatus("success"));
+  } catch (error) {
+    console.log(error);
+  }
+});
+
 const slice = createSlice({
   name: "eventsActions",
   initialState,
