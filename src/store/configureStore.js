@@ -20,7 +20,12 @@ const store = configureStore({
 onAuthStateChanged(auth, user => {
   if (user) {
     console.log({ authenticated: user.email });
-    store.dispatch(setUser({ user: { email: user.email }, authenticated: true }));
+    store.dispatch(
+      setUser({
+        user: { email: user.email, photoURL: user.photoURL, displayName: user.displayName, uid: user.uid },
+        authenticated: true,
+      })
+    );
   } else {
     console.log("not authenticated");
     store.dispatch(setUser({ user: null, authenticated: false }));

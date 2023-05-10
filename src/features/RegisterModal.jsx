@@ -9,7 +9,8 @@ import Input from "./Input";
 import { useDispatch } from "react-redux";
 import { closeModal } from "../store/modalSlice";
 import { registerUser } from "../store/authSlice";
-import { Paper, Button, ButtonGroup } from "@mui/material";
+import { Paper, Button, ButtonGroup, Divider } from "@mui/material";
+import SocialSignIn from "./SocialSignIn";
 
 const RegisterModal = () => {
   const dispatch = useDispatch();
@@ -56,6 +57,8 @@ const RegisterModal = () => {
                 Submit
               </Button>
             </ButtonGroup>
+            <Divider sx={{ my: 4 }} />
+            <SocialSignIn />
           </Paper>
         )}
       </Formik>

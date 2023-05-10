@@ -26,6 +26,7 @@ const Bar = ({ handleDrawerToggle, drawerWidth, auth, anchorEl, setAnchorEl }) =
   };
   const dispatch = useDispatch();
   const { currentUser, isAuthenticated } = useSelector(store => store.authReducer);
+
   return (
     <AppBar
       position="fixed"

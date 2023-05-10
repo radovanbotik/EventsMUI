@@ -1,6 +1,13 @@
 import { createAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { auth } from "../config/firebase";
-import { signInWithEmailAndPassword, signOut, updateProfile, createUserWithEmailAndPassword } from "firebase/auth";
+import {
+  signInWithEmailAndPassword,
+  signOut,
+  updateProfile,
+  createUserWithEmailAndPassword,
+  GoogleAuthProvider,
+  signInWithPopup,
+} from "firebase/auth";
 import { toast } from "react-toastify";
 import { collection, setDoc, doc } from "firebase/firestore";
 import { db } from "../firestore/firestore";
@@ -16,9 +23,8 @@ const initialState = {
 //extra reducers
 export const registerUser = createAsyncThunk("authSlice/registerUser", async (credentials, thunkAPI) => {
   const result = await createUserWithEmailAndPassword(auth, credentials.email, credentials.password);
-  if (!result) throw new Error("user hasnt been registered");
   await setDoc(doc(db, "users", result.user.uid), {
-    displayName: result.user.displayName || null,
+    displayName: result.user.displayName || result.user.email,
     email: result.user.email,
     photoURL: result.user.photoURL || null,
     phoneNumber: result.user.phoneNumber || null,
@@ -42,6 +48,16 @@ export const logOut = createAsyncThunk("authSlice/logOut", async (_, thunkAPI) =
 export const updateUser = createAsyncThunk("authslice/UpdateUser", async (updates, thunkAPI) => {
   const result = await updateProfile(auth.currentUser, updates);
   return result;
+});
+//sign in google
+export const signInWithGoogle = createAsyncThunk("authSlice/signInWithGoogle", async (arg, thunkAPI) => {
+  const provider = new GoogleAuthProvider();
+  const result = await signInWithPopup(auth, provider);
+  // const credential = GoogleAuthProvider.credentialFromResult(result)
+  // const token = credential.accessToken;
+  const user = result.user;
+  console.log(user);
+  console.log(user);
 });
 
 const authSlice = createSlice({
