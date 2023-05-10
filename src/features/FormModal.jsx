@@ -9,8 +9,10 @@ import Input from "./Input";
 import { useDispatch } from "react-redux";
 import { closeModal } from "../store/modalSlice";
 import { signIn } from "../store/authSlice";
+import { logIn } from "../store/authSlice";
 
-import { Paper, Button, ButtonGroup } from '@mui/material';
+import { Paper, Button, ButtonGroup } from "@mui/material";
+import { toast } from "react-toastify";
 
 const FormModal = () => {
   const dispatch = useDispatch();
@@ -26,13 +28,16 @@ const FormModal = () => {
           password: Yup.string().password().required("This field is requried."),
         })}
         onSubmit={values => {
-          const user = {
-            ...values,
-            photoURL:
-              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTU5XItnpm5LbvsoblhdfuXF7SHwlOLPeUIkw&usqp=CAU",
-          };
-          console.log(user);
-          dispatch(signIn(user));
+          // const user = {
+          //   ...values,
+          //   photoURL:
+          //     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTU5XItnpm5LbvsoblhdfuXF7SHwlOLPeUIkw&usqp=CAU",
+          // };
+          console.log(values);
+          // dispatch(signIn(user));
+          dispatch(logIn(values))
+            .then(() => toast.success("you have logged in!"))
+            .catch(() => toast.error("there was an error!"));
           dispatch(closeModal());
         }}
       >

@@ -1,9 +1,10 @@
 import { Menu as MenuIcon } from "@mui/icons-material/";
 import { useDispatch, useSelector } from "react-redux";
 import { openModal } from "../store/modalSlice";
-import { signOut } from "../store/authSlice";
+import { logOut } from "../store/authSlice";
 
 import { AppBar, Toolbar, IconButton, Typography, Menu, MenuItem, Avatar, Button } from "@mui/material";
+import { toast } from "react-toastify";
 
 const Bar = ({ handleDrawerToggle, drawerWidth, auth, anchorEl, setAnchorEl }) => {
   const handleMenu = event => {
@@ -13,7 +14,6 @@ const Bar = ({ handleDrawerToggle, drawerWidth, auth, anchorEl, setAnchorEl }) =
   const handleClose = () => {
     setAnchorEl(null);
   };
-
   const dispatch = useDispatch();
   const { currentUser, isAuthenticated } = useSelector(store => store.authReducer);
   return (
@@ -84,7 +84,9 @@ const Bar = ({ handleDrawerToggle, drawerWidth, auth, anchorEl, setAnchorEl }) =
 
               <MenuItem
                 onClick={() => {
-                  dispatch(signOut());
+                  dispatch(logOut())
+                    .then(() => toast.success("you have been logged out!"))
+                    .catch(() => toast.error("There was en error!"));
                   handleClose();
                 }}
               >
