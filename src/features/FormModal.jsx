@@ -8,7 +8,6 @@ import { Form } from "react-router-dom";
 import Input from "./Input";
 import { useDispatch } from "react-redux";
 import { closeModal } from "../store/modalSlice";
-import { signIn } from "../store/authSlice";
 import { logIn } from "../store/authSlice";
 
 import { Paper, Button, ButtonGroup } from "@mui/material";

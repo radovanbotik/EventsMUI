@@ -8,8 +8,7 @@ import ModalManager from "../features/ModalManager";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useSelector, useDispatch } from "react-redux";
-import { loadEvents } from "../store/eventSlice";
-import { Loader } from "@googlemaps/js-api-loader";
+import useGoogleMaps from "../hooks/useGoogleMaps";
 
 import { CssBaseline, Box, Toolbar, Drawer } from "@mui/material";
 
@@ -19,12 +18,6 @@ function ResponsiveDrawer(props) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [auth, setAuth] = useState(true);
   const [anchorEl, setAnchorEl] = useState(null);
-  const dispatch = useDispatch();
-
-  // form states
-  // const [formOpen, setFormOpen] = useState(false);
-  // const [editing, setEditing] = useState(false);
-  // const [currentEvent, setCurrentEvent] = useState("");
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -38,17 +31,8 @@ function ResponsiveDrawer(props) {
   const container = window !== undefined ? () => window().document.body : undefined;
   const { status } = useSelector(store => store.eventReducer);
 
-  // useEffect(() => {
-  //   dispatch(loadEvents());
-  // }, []);
-
   //Initialize Google Maps
-  const loaderInstance = new Loader({
-    apiKey: import.meta.env.VITE_API_KEY,
-    version: "weekly",
-    libraries: ["places"],
-  });
-  loaderInstance.load();
+  useGoogleMaps();
 
   return (
     <>

@@ -10,7 +10,6 @@ const Map = ({ event }) => {
   const HTMLRef = useRef(null);
   useEffect(() => {
     if (window.google && HTMLRef.current) {
-      console.log("hi");
       mapRef.current = new google.maps.Map(HTMLRef.current, {
         center: latLng,
         zoom: 11,

@@ -59,7 +59,8 @@ const Bar = ({ handleDrawerToggle, drawerWidth, auth, anchorEl, setAnchorEl }) =
               onClick={handleMenu}
               color="inherit"
             >
-              {currentUser.photoURL ? (
+              {/* Profile Picture */}
+              {currentUser && currentUser.photoURL ? (
                 <Avatar alt="user name" src={currentUser.photoURL} />
               ) : (
                 <Avatar>{currentUser.email.charAt(0)}</Avatar>
