@@ -3,8 +3,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { openModal } from "../store/modalSlice";
 import { logOut } from "../store/authSlice";
 
-import { AppBar, Toolbar, IconButton, Typography, Menu, MenuItem, Avatar, Button } from "@mui/material";
-import { toast } from "react-toastify";
+import {
+  AppBar,
+  Toolbar,
+  IconButton,
+  Typography,
+  Menu,
+  MenuItem,
+  Avatar,
+  Button,
+  ButtonGroup,
+  Box,
+} from "@mui/material";
 
 const Bar = ({ handleDrawerToggle, drawerWidth, auth, anchorEl, setAnchorEl }) => {
   const handleMenu = event => {
@@ -25,7 +35,7 @@ const Bar = ({ handleDrawerToggle, drawerWidth, auth, anchorEl, setAnchorEl }) =
       }}
     >
       <Toolbar>
-        {/* Menu Icon */}
+        {/* Menu Icon for MOBILE*/}
         <IconButton
           color="inherit"
           aria-label="open drawer"
@@ -39,18 +49,29 @@ const Bar = ({ handleDrawerToggle, drawerWidth, auth, anchorEl, setAnchorEl }) =
         <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
           Event Organizer Or Something
         </Typography>
+        {/* Sign in / Register Button */}
         {!isAuthenticated && (
-          <Button
-            variant="contained"
-            sx={{ bgcolor: "primary.light" }}
-            onClick={() => dispatch(openModal({ modalType: "login" }))}
-          >
-            sign in
-          </Button>
+          <ButtonGroup>
+            <Button
+              variant="contained"
+              sx={{ bgcolor: "primary.light" }}
+              onClick={() => dispatch(openModal({ modalType: "register" }))}
+            >
+              register
+            </Button>
+            <Button
+              variant="contained"
+              sx={{ bgcolor: "primary.light" }}
+              onClick={() => dispatch(openModal({ modalType: "login" }))}
+            >
+              sign in
+            </Button>
+          </ButtonGroup>
         )}
         {/* Profile Menu */}
         {isAuthenticated && (
-          <div>
+          <Box>
+            {/* Profile Picture */}
             <IconButton
               size="large"
               aria-label="account of current user"
@@ -59,13 +80,13 @@ const Bar = ({ handleDrawerToggle, drawerWidth, auth, anchorEl, setAnchorEl }) =
               onClick={handleMenu}
               color="inherit"
             >
-              {/* Profile Picture */}
               {currentUser && currentUser.photoURL ? (
                 <Avatar alt="user name" src={currentUser.photoURL} />
               ) : (
                 <Avatar>{currentUser.email.charAt(0)}</Avatar>
               )}
             </IconButton>
+            {/* Profile Menu Actions*/}
             <Menu
               id="menu-appbar"
               anchorEl={anchorEl}
@@ -85,16 +106,14 @@ const Bar = ({ handleDrawerToggle, drawerWidth, auth, anchorEl, setAnchorEl }) =
 
               <MenuItem
                 onClick={() => {
-                  dispatch(logOut())
-                    .then(() => toast.success("you have been logged out!"))
-                    .catch(() => toast.error("There was en error!"));
+                  dispatch(logOut());
                   handleClose();
                 }}
               >
                 Logout
               </MenuItem>
             </Menu>
-          </div>
+          </Box>
         )}
       </Toolbar>
     </AppBar>

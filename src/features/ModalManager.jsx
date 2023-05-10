@@ -1,8 +1,9 @@
 import { useSelector } from "react-redux";
 import TestModal from "./TestModal";
-import FormModal from "./FormModal";
+import LoginModal from "./LoginModal";
+import RegisterModal from "./RegisterModal";
 
-const lookUp = { test: TestModal, login: FormModal };
+const lookUp = { test: TestModal, login: LoginModal, register: RegisterModal };
 const ModalManager = () => {
   const { open, modalType, modalProps } = useSelector(store => store.modalReducer);
   //   let renderedModal;

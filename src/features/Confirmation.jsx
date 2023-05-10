@@ -19,7 +19,7 @@ export default function AlertDialog({ open, handleClose, cancelEvent, title, con
           <DialogContentText id="alert-dialog-description">{content}</DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Disagree</Button>
+          <Button onClick={handleClose}>No, take me back.</Button>
           <Button
             onClick={() => {
               cancelEvent();
@@ -27,7 +27,7 @@ export default function AlertDialog({ open, handleClose, cancelEvent, title, con
             }}
             autoFocus
           >
-            Agree
+            Yes, I wish to proceed.
           </Button>
         </DialogActions>
       </Dialog>

@@ -8,15 +8,13 @@ import { Form } from "react-router-dom";
 import Input from "./Input";
 import { useDispatch } from "react-redux";
 import { closeModal } from "../store/modalSlice";
-import { logIn } from "../store/authSlice";
-
+import { registerUser } from "../store/authSlice";
 import { Paper, Button, ButtonGroup } from "@mui/material";
-import { toast } from "react-toastify";
 
-const FormModal = () => {
+const RegisterModal = () => {
   const dispatch = useDispatch();
   return (
-    <DialogWrap title={"Sign in to your account"}>
+    <DialogWrap title={"Register your account"}>
       <Formik
         initialValues={{
           email: "",
@@ -27,16 +25,8 @@ const FormModal = () => {
           password: Yup.string().password().required("This field is requried."),
         })}
         onSubmit={values => {
-          // const user = {
-          //   ...values,
-          //   photoURL:
-          //     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTU5XItnpm5LbvsoblhdfuXF7SHwlOLPeUIkw&usqp=CAU",
-          // };
           console.log(values);
-          // dispatch(signIn(user));
-          dispatch(logIn(values))
-            .then(() => toast.success("you have logged in!"))
-            .catch(() => toast.error("there was an error!"));
+          dispatch(registerUser(values));
           dispatch(closeModal());
         }}
       >
@@ -73,4 +63,4 @@ const FormModal = () => {
   );
 };
 
-export default FormModal;
+export default RegisterModal;
