@@ -50,7 +50,7 @@ const EventCard = props => {
   // console.log(props);
 
   return (
-    <Card>
+    <Card variant="outlined">
       <CardActionArea component={Link} to={id}>
         {/* PROFILE PICTURE */}
         <CardHeader

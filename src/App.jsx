@@ -2,8 +2,8 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Landing from "./pages/Landing";
 import Layout from "./components/Layout";
 import Error from "./pages/Error";
-import { action as createEvent } from "./routes/createEvent";
 import React from "react";
+import Account from "./pages/Account";
 
 const Index = React.lazy(() => import("./pages/Index"));
 const Event = React.lazy(() => import("./pages/Event"));
@@ -33,9 +33,10 @@ const router = createBrowserRouter([
               </React.Suspense>
             ),
           },
+
           {
-            path: "new-event",
-            action: createEvent,
+            path: "account",
+            element: <Account />,
           },
         ],
       },

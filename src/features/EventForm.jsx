@@ -93,7 +93,7 @@ const EventForm = () => {
       }}
     >
       {formikProps => (
-        <Paper
+        <Box
           sx={{ display: "flex", flexDirection: "column", p: 2 }}
           component={Form}
           method="post"
@@ -152,7 +152,7 @@ const EventForm = () => {
               Submit
             </Button>
           </Box>
-        </Paper>
+        </Box>
       )}
     </Formik>
   );

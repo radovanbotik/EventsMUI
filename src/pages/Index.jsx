@@ -3,7 +3,7 @@ import EventCard from "../components/EventCard";
 import EventForm from "../features/EventForm";
 import EventFilters from "../features/EventFilters";
 import { load } from "../store/eventSlice";
-import { Box, Grid, Stack, Typography, Toolbar, CircularProgress } from "@mui/material";
+import { Box, Grid, Stack, Typography, Toolbar, CircularProgress, Paper } from "@mui/material";
 import useSubscribeTocollection from "../hooks/useSubscribeTocollection";
 
 const Index = () => {
@@ -11,28 +11,6 @@ const Index = () => {
   const { isOpen } = useSelector(store => store.formReducer);
   const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   dispatch(setStatus("loading"));
-  //   const unsubscribe = getEventsRealTime(
-  //     snapshot => {
-  //       const events = [];
-  //       snapshot.forEach(doc => {
-  //         const data = doc.data();
-  //         for (const prop in data) {
-  //           if (data[prop] instanceof Timestamp) {
-  //             data[prop] = data[prop].toDate().toISOString();
-  //           }
-  //         }
-  //         events.push({ ...data, id: doc.id });
-  //         dispatch(setStatus("success"));
-  //         return dispatch(load(events));
-  //       });
-  //     },
-  //     error => console.log(error)
-  //   );
-  //   return () => unsubscribe();
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
   useSubscribeTocollection({
     dbcollection: "events",
     data: events => dispatch(load(events)),
@@ -61,8 +39,10 @@ const Index = () => {
           </Stack>
         </Grid>
         <Grid item lg={4} xs={6} sx={{ position: "sticky", top: 0, alignSelf: "flex-start" }} order={1}>
-          {isOpen && <EventForm />}
-          {!isOpen && <EventFilters />}
+          <Paper variant="outlined">
+            {isOpen && <EventForm />}
+            {!isOpen && <EventFilters />}
+          </Paper>
         </Grid>
       </Grid>
     </Box>

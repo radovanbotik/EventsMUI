@@ -15,6 +15,7 @@ import {
   ButtonGroup,
   Box,
 } from "@mui/material";
+import { Link } from "react-router-dom";
 
 const Bar = ({ handleDrawerToggle, drawerWidth, auth, anchorEl, setAnchorEl }) => {
   const handleMenu = event => {
@@ -26,7 +27,6 @@ const Bar = ({ handleDrawerToggle, drawerWidth, auth, anchorEl, setAnchorEl }) =
   };
   const dispatch = useDispatch();
   const { currentUser, isAuthenticated } = useSelector(store => store.authReducer);
-
   return (
     <AppBar
       position="fixed"
@@ -81,8 +81,8 @@ const Bar = ({ handleDrawerToggle, drawerWidth, auth, anchorEl, setAnchorEl }) =
               onClick={handleMenu}
               color="inherit"
             >
-              {currentUser && currentUser.photoURL ? (
-                <Avatar alt="user name" src={currentUser.photoURL} />
+              {currentUser?.photoURL ? (
+                <Avatar alt="user name" src={currentUser?.photoURL} />
               ) : (
                 <Avatar>{currentUser.email.charAt(0)}</Avatar>
               )}
@@ -103,7 +103,9 @@ const Bar = ({ handleDrawerToggle, drawerWidth, auth, anchorEl, setAnchorEl }) =
               open={Boolean(anchorEl)}
               onClose={handleClose}
             >
-              <MenuItem onClick={handleClose}>Profile</MenuItem>
+              <MenuItem onClick={handleClose} component={Link} to="account">
+                My Account
+              </MenuItem>
 
               <MenuItem
                 onClick={() => {

@@ -16,7 +16,6 @@ const SocialSignIn = () => {
       >
         Google
       </Button>
-      <Button>Facebook</Button>
     </ButtonGroup>
   );
 };

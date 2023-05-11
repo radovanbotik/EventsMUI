@@ -1,7 +1,7 @@
 import { useField } from "formik";
-import { TextField } from '@mui/material';
+import { TextField } from "@mui/material";
 
-const Input = ({ label, margin, ...props }) => {
+const Input = ({ ...props }) => {
   const [field, meta] = useField(props);
 
   return (
@@ -11,8 +11,8 @@ const Input = ({ label, margin, ...props }) => {
       {...props}
       helperText={meta.touched && meta.error}
       error={meta.touched && Boolean(meta.error)}
-      label={label}
-      margin={margin}
+      // label={label}
+      // margin={margin}
     />
   );
 };

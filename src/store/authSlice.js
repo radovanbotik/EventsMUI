@@ -7,9 +7,10 @@ import {
   createUserWithEmailAndPassword,
   GoogleAuthProvider,
   signInWithPopup,
+  getAdditionalUserInfo,
 } from "firebase/auth";
 import { toast } from "react-toastify";
-import { collection, setDoc, doc } from "firebase/firestore";
+import { collection, setDoc, doc, getDoc } from "firebase/firestore";
 import { db } from "../firestore/firestore";
 
 const initialState = {
@@ -53,11 +54,24 @@ export const updateUser = createAsyncThunk("authslice/UpdateUser", async (update
 export const signInWithGoogle = createAsyncThunk("authSlice/signInWithGoogle", async (arg, thunkAPI) => {
   const provider = new GoogleAuthProvider();
   const result = await signInWithPopup(auth, provider);
-  // const credential = GoogleAuthProvider.credentialFromResult(result)
+  // const credential = GoogleAuthProvider.credentialFromResult(result);
   // const token = credential.accessToken;
   const user = result.user;
+  const isNewUser = getAdditionalUserInfo(result).isNewUser;
+  if (isNewUser) {
+    await setDoc(doc(db, "users", result.user.uid), {
+      displayName: result.user.displayName || result.user.email,
+      email: result.user.email,
+      photoURL: result.user.photoURL || null,
+      phoneNumber: result.user.phoneNumber || null,
+      createdAt: result.user.metadata.createdAt,
+      creationTime: result.user.metadata.creationTime,
+    });
+    console.log("added");
+    return;
+  }
   console.log(user);
-  console.log(user);
+  return;
 });
 
 const authSlice = createSlice({
@@ -106,6 +120,19 @@ const authSlice = createSlice({
       toast.success("you have registered!");
     });
     builder.addCase(registerUser.rejected, (state, action) => {
+      state.status = "idle";
+      toast.error("there was an unexpected error!");
+    });
+    //sign with google
+    builder.addCase(signInWithGoogle.pending, (state, action) => {
+      state.status = "loading";
+      toast.info("gears are spinning!");
+    });
+    builder.addCase(signInWithGoogle.fulfilled, (state, action) => {
+      state.status = "idle";
+      toast.success("you are in!");
+    });
+    builder.addCase(signInWithGoogle.rejected, (state, action) => {
       state.status = "idle";
       toast.error("there was an unexpected error!");
     });

@@ -19,10 +19,16 @@ const store = configureStore({
 
 onAuthStateChanged(auth, user => {
   if (user) {
-    console.log({ authenticated: user.email });
+    console.log(user);
     store.dispatch(
       setUser({
-        user: { email: user.email, photoURL: user.photoURL, displayName: user.displayName, uid: user.uid },
+        user: {
+          email: user.email,
+          photoURL: user.photoURL,
+          displayName: user.displayName,
+          uid: user.uid,
+          providerId: user.providerData[0].providerId,
+        },
         authenticated: true,
       })
     );

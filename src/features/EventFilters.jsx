@@ -2,11 +2,11 @@ import { FilterAlt, DateRange } from "@mui/icons-material/";
 import { StaticDatePicker } from "@mui/x-date-pickers/StaticDatePicker";
 import dayjs from "dayjs";
 
-import { Paper, List, ListItem, ListItemText, ListItemIcon, Divider } from "@mui/material";
+import { List, ListItem, ListItemText, ListItemIcon, Divider, Box } from "@mui/material";
 
 const EventFilters = () => {
   return (
-    <Paper>
+    <Box>
       {/* Menu */}
       <List>
         <ListItem>
@@ -39,7 +39,7 @@ const EventFilters = () => {
           <StaticDatePicker defaultValue={dayjs()} />
         </ListItem>
       </List>
-    </Paper>
+    </Box>
   );
 };
 
