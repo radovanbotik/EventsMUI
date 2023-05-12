@@ -3,6 +3,7 @@ import eventReducer from "./eventSlice";
 import formReducer from "./formSlice";
 import modalReducer from "./modalSlice";
 import authReducer from "./authSlice";
+import profileReducer from "./profileSlice";
 
 import { auth } from "../config/firebase";
 import { onAuthStateChanged } from "firebase/auth";
@@ -14,6 +15,7 @@ const store = configureStore({
     formReducer: formReducer,
     modalReducer: modalReducer,
     authReducer: authReducer,
+    profileReducer: profileReducer,
   },
 });
 

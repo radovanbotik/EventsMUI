@@ -8,6 +8,7 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
   getAdditionalUserInfo,
+  updatePassword,
 } from "firebase/auth";
 import { toast } from "react-toastify";
 import { collection, setDoc, doc, getDoc } from "firebase/firestore";
@@ -19,7 +20,6 @@ const initialState = {
   status: "idle",
 };
 //actions
-// export const setUser = createAction('auth/setUser')
 
 //extra reducers
 export const registerUser = createAsyncThunk("authSlice/registerUser", async (credentials, thunkAPI) => {
@@ -36,7 +36,6 @@ export const registerUser = createAsyncThunk("authSlice/registerUser", async (cr
 
 export const logIn = createAsyncThunk("authSlice/logIn", async (credentials, thunkAPI) => {
   const result = await signInWithEmailAndPassword(auth, credentials.email, credentials.password);
-  console.log(result.user);
   const user = { email: result.user.email };
   return user;
 });
@@ -46,7 +45,7 @@ export const logOut = createAsyncThunk("authSlice/logOut", async (_, thunkAPI) =
   return result;
 });
 
-export const updateUser = createAsyncThunk("authslice/UpdateUser", async (updates, thunkAPI) => {
+export const updateUser = createAsyncThunk("authslice/updateUser", async (updates, thunkAPI) => {
   const result = await updateProfile(auth.currentUser, updates);
   return result;
 });
@@ -54,8 +53,6 @@ export const updateUser = createAsyncThunk("authslice/UpdateUser", async (update
 export const signInWithGoogle = createAsyncThunk("authSlice/signInWithGoogle", async (arg, thunkAPI) => {
   const provider = new GoogleAuthProvider();
   const result = await signInWithPopup(auth, provider);
-  // const credential = GoogleAuthProvider.credentialFromResult(result);
-  // const token = credential.accessToken;
   const user = result.user;
   const isNewUser = getAdditionalUserInfo(result).isNewUser;
   if (isNewUser) {
@@ -72,6 +69,14 @@ export const signInWithGoogle = createAsyncThunk("authSlice/signInWithGoogle", a
   }
   console.log(user);
   return;
+});
+//change password
+export const changePassword = createAsyncThunk("authSlice/changePassword", async (password, thunkAPI) => {
+  const user = auth.currentUser;
+  await updatePassword(user, password);
+});
+export const retrieveUser = createAsyncThunk("authSlice/retrieveUser", async (id, thunkAPI) => {
+  const user = await getDoc(doc(db, "users", id));
 });
 
 const authSlice = createSlice({
@@ -138,7 +143,17 @@ const authSlice = createSlice({
     });
     //update user
     builder.addCase(updateUser.fulfilled, (state, action) => {
-      console.log("success");
+      toast.success("your profile has been changed!");
+    });
+    builder.addCase(updateUser.rejected, (state, action) => {
+      toast.error("there was an unexpected error!");
+    });
+    //password change
+    builder.addCase(changePassword.fulfilled, (state, action) => {
+      toast.success("your password has been changed!");
+    });
+    builder.addCase(changePassword.rejected, (state, action) => {
+      toast.error("there was an unexpected error!");
     });
   },
 });

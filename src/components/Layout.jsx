@@ -10,7 +10,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useSelector, useDispatch } from "react-redux";
 import useGoogleMaps from "../hooks/useGoogleMaps";
 
-import { CssBaseline, Box, Toolbar, Drawer } from "@mui/material";
+import { CssBaseline, Box, Toolbar, Drawer, Container } from "@mui/material";
 
 function ResponsiveDrawer(props) {
   const drawerWidth = 240;
@@ -78,10 +78,14 @@ function ResponsiveDrawer(props) {
             <DrawerContent routes={routes} />
           </Drawer>
         </Box>
-        <Box component="main" sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}>
+        <Container
+          maxWidth="xl"
+          component="main"
+          sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}
+        >
           <Toolbar />
           <Outlet />
-        </Box>
+        </Container>
         <ScrollRestoration />
       </Box>
     </>

@@ -1,11 +1,11 @@
-import React from "react";
 import * as Yup from "yup";
 import YupPassword from "yup-password";
 YupPassword(Yup); // extend yup
 import { Formik } from "formik";
 import { Box, Button, ButtonGroup, Stack, Typography } from "@mui/material";
-import Input from "./Input";
 import PasswordInput from "./PasswordInput";
+import { useDispatch } from "react-redux";
+import { changePassword } from "../store/authSlice";
 
 const validationSchema = Yup.object({
   password: Yup.string().password().required("This field is required."),
@@ -20,12 +20,14 @@ const initialValues = {
 };
 
 const AccountForm = () => {
+  const dispatch = useDispatch();
+
   return (
     <Formik
       initialValues={initialValues}
       validationSchema={validationSchema}
-      onSubmit={async values => {
-        console.log(values);
+      onSubmit={values => {
+        dispatch(changePassword(values.password));
       }}
     >
       {formikProps => (

@@ -33,7 +33,7 @@ const Event = () => {
   });
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <>
       {status === "loading" || (!event && status !== "error") ? (
         <div>loading...</div>
       ) : (
@@ -50,7 +50,7 @@ const Event = () => {
           </Grid>
         </Grid>
       )}
-    </Box>
+    </>
   );
 };
 

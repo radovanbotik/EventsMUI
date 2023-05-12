@@ -4,7 +4,7 @@ import { onSnapshot, doc, Timestamp } from "firebase/firestore";
 import { db } from "../firestore/firestore";
 import { setStatus } from "../store/eventSlice";
 
-const useSubscribeTodocument = ({ dbcollection = "events", documentId, data, dependancies }) => {
+const useSubscribeTodocument = ({ dbcollection, documentId, data, dependancies }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -24,7 +24,7 @@ const useSubscribeTodocument = ({ dbcollection = "events", documentId, data, dep
         }
         doc.id = documentId;
         data(doc);
-        dispatch(setStatus("success"));
+        dispatch(setStatus("idle"));
       },
       error => {
         setStatus("error");

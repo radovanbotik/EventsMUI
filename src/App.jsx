@@ -4,6 +4,7 @@ import Layout from "./components/Layout";
 import Error from "./pages/Error";
 import React from "react";
 import Account from "./pages/Account";
+import Profile from "./features/profiles/profilePage/Profile";
 
 const Index = React.lazy(() => import("./pages/Index"));
 const Event = React.lazy(() => import("./pages/Event"));
@@ -33,10 +34,13 @@ const router = createBrowserRouter([
               </React.Suspense>
             ),
           },
-
           {
             path: "account",
             element: <Account />,
+          },
+          {
+            path: "profile/:id",
+            element: <Profile />,
           },
         ],
       },

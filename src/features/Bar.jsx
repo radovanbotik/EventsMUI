@@ -15,7 +15,7 @@ import {
   ButtonGroup,
   Box,
 } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Bar = ({ handleDrawerToggle, drawerWidth, auth, anchorEl, setAnchorEl }) => {
   const handleMenu = event => {
@@ -26,6 +26,7 @@ const Bar = ({ handleDrawerToggle, drawerWidth, auth, anchorEl, setAnchorEl }) =
     setAnchorEl(null);
   };
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { currentUser, isAuthenticated } = useSelector(store => store.authReducer);
   return (
     <AppBar
@@ -106,11 +107,15 @@ const Bar = ({ handleDrawerToggle, drawerWidth, auth, anchorEl, setAnchorEl }) =
               <MenuItem onClick={handleClose} component={Link} to="account">
                 My Account
               </MenuItem>
+              <MenuItem onClick={handleClose} component={Link} to={`profile/${currentUser.uid}`}>
+                My Profile
+              </MenuItem>
 
               <MenuItem
                 onClick={() => {
                   dispatch(logOut());
                   handleClose();
+                  navigate("/events");
                 }}
               >
                 Logout

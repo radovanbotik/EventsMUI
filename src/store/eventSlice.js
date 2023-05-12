@@ -25,11 +25,11 @@ export const loadEvents = createAsyncThunk("events/loadEvents", async (id, thunk
       throw new Error("error during fetching");
     }
 
-    thunkAPI.dispatch(setStatus("resolved"));
+    thunkAPI.dispatch(setStatus("idle"));
     //action.meta
     return thunkAPI.fulfillWithValue(response.data, { msg: "success!!!!" });
   } catch (error) {
-    thunkAPI.dispatch(setStatus("rejected"));
+    thunkAPI.dispatch(setStatus("idle"));
     //action.meta
     return thunkAPI.rejectWithValue(error.message, { msg: "fail!!!!" });
   }
@@ -39,7 +39,7 @@ export const createEv = createAsyncThunk("events/createEv", async (ev, thunkAPI)
   thunkAPI.dispatch(setStatus("loading"));
   try {
     await addDoc(collection(db, "events"), ev);
-    thunkAPI.dispatch(setStatus("success"));
+    thunkAPI.dispatch(setStatus("idle"));
   } catch (error) {
     console.log(error);
   }
@@ -49,7 +49,7 @@ export const updateEv = createAsyncThunk("events/updateEv", async (ev, thunkAPI)
   thunkAPI.dispatch(setStatus("loading"));
   try {
     await updateDoc(doc(db, "events", ev.id), { ...ev, updated: serverTimestamp() });
-    thunkAPI.dispatch(setStatus("success"));
+    thunkAPI.dispatch(setStatus("idle"));
   } catch (error) {
     console.log(error);
   }
@@ -65,10 +65,8 @@ export const deleteEv = createAsyncThunk("events/deleteEv", async (id, thunkAPI)
 });
 
 export const cancelEv = createAsyncThunk("events/cancelEv", async (ev, thunkAPI) => {
-  // thunkAPI.dispatch(setStatus("loading"));
   try {
     await updateDoc(doc(db, "events", ev.id), { canceled: !ev.canceled, updated: serverTimestamp() });
-    // thunkAPI.dispatch(setStatus("success"));
   } catch (error) {
     console.log(error);
   }

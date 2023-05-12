@@ -24,10 +24,10 @@ const useSubscribeTocollection = ({ q, dbcollection = "events", data, dependanci
           events.push({ ...data, id: doc.id });
         });
         data(events);
-        dispatch(setStatus("success"));
+        dispatch(setStatus("idle"));
       },
       error => {
-        dispatch(setStatus("error"));
+        dispatch(setStatus("idle"));
       }
     );
     return () => unsubscribe();
