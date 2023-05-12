@@ -2,13 +2,14 @@ import { AccountCircle, ModeEdit } from "@mui/icons-material";
 import { Box, AppBar, Button, Toolbar, Typography } from "@mui/material";
 import React, { useState } from "react";
 import dayjs from "dayjs";
+import AboutProfileForm from "./AboutProfileForm";
 
-const AboutPanel = ({ creationTime }) => {
+const AboutPanel = user => {
   const [editing, setEditing] = useState(false);
 
   return (
-    <>
-      <AppBar position="static">
+    <div>
+      <AppBar position="static" sx={{ mb: 2 }}>
         <Toolbar variant="dense" sx={{ display: "flex" }}>
           <AccountCircle sx={{ mr: 2 }} />
           <Typography sx={{ mr: "auto" }}>About User</Typography>
@@ -25,15 +26,15 @@ const AboutPanel = ({ creationTime }) => {
       </AppBar>
       {/* content */}
       {editing ? (
-        <>form</>
+        <AboutProfileForm {...user} />
       ) : (
         <Box>
           <Toolbar disableGutters>
-            <Typography>Member since:{dayjs(creationTime).format("DD/MM/YYYY")}</Typography>
+            <Typography>Member since:{dayjs(user.creationTime).format("DD/MM/YYYY")}</Typography>
           </Toolbar>
         </Box>
       )}
-    </>
+    </div>
   );
 };
 
