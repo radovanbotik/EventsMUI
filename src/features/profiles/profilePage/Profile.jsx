@@ -5,20 +5,35 @@ import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "../../../store/profileSlice";
 import useSubscribeTodocument from "../../../hooks/useSubscribeTodocument";
 import { CircularProgress, Box } from "@mui/material";
+import { auth } from "../../../config/firebase";
+import { useEffect, useRef } from "react";
 
 const Profile = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const { user } = useSelector(store => store.profileReducer);
   const { status } = useSelector(store => store.eventReducer);
-  console.log(user);
+
+  const owner = useRef(null);
 
   useSubscribeTodocument({
     dbcollection: "users",
     documentId: id,
-    dependancies: [],
+    dependancies: [id],
     data: userData => dispatch(setUser(userData)),
   });
+
+  const isOwner = () => {
+    if (id === auth.currentUser?.uid) {
+      return (owner.current = true);
+    } else {
+      return (owner.current = false);
+    }
+  };
+  useEffect(() => {
+    isOwner();
+  }, [status, id]);
+
   if (status === "loading")
     return (
       <Box sx={{ display: "grid", height: "100vh", width: "100%", placeContent: "center" }}>
@@ -28,8 +43,8 @@ const Profile = () => {
 
   return (
     <>
-      <ProfileHeader {...user} />
-      <ProfileContent {...user} />
+      <ProfileHeader props={{ ...user, owner: owner.current }} />
+      <ProfileContent props={{ ...user, owner: owner.current }} />
     </>
   );
 };

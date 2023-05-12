@@ -49,7 +49,7 @@ const Bar = ({ handleDrawerToggle, drawerWidth, auth, anchorEl, setAnchorEl }) =
         </IconButton>
         {/* AppTitle */}
         <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
-          Event Organizer Or Something
+          Dashboard
         </Typography>
         {/* Sign in / Register Button */}
         {!isAuthenticated && (
@@ -107,7 +107,7 @@ const Bar = ({ handleDrawerToggle, drawerWidth, auth, anchorEl, setAnchorEl }) =
               <MenuItem onClick={handleClose} component={Link} to="account">
                 My Account
               </MenuItem>
-              <MenuItem onClick={handleClose} component={Link} to={`profile/${currentUser.uid}`}>
+              <MenuItem onClick={handleClose} component={Link} to={`profile/${currentUser.id}`}>
                 My Profile
               </MenuItem>
 

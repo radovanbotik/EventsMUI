@@ -4,7 +4,7 @@ import { setStatus } from "../store/eventSlice";
 import { onSnapshot, collection, Timestamp, query } from "firebase/firestore";
 import { db } from "../firestore/firestore";
 
-const useSubscribeTocollection = ({ q, dbcollection = "events", data, dependancies }) => {
+const useSubscribeTocollection = ({ q, dbcollection, data, dependancies }) => {
   const dispatch = useDispatch();
   const collectionRef = collection(db, dbcollection);
 

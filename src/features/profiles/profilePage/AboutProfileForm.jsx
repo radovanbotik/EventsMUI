@@ -4,25 +4,36 @@ import * as Yup from "yup";
 import React from "react";
 import Input from "../../Input";
 import { Form } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { updateUser } from "../../../store/profileSlice";
 
 const AboutProfileForm = ({ email, displayName, description }) => {
+  const dispatch = useDispatch();
+
   const initialValues = {
-    name: displayName || email,
-    aboutme: description || "",
+    displayName: displayName || email,
+    description: description || "",
   };
   const validationSchema = Yup.object({
-    name: Yup.string("Please enter your name in correct format")
+    displayName: Yup.string("Please enter your name in correct format")
       .min(4, "Name must be at least 4 characters of length.")
       .required("This field is required."),
-    aboutme: Yup.string().max(1000, "Description cannot exceed 1000 characters."),
+    description: Yup.string().max(1000, "Description cannot exceed 1000 characters."),
   });
   return (
-    <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={values => console.log(values)}>
+    <Formik
+      initialValues={initialValues}
+      validationSchema={validationSchema}
+      onSubmit={values => {
+        console.log(values);
+        dispatch(updateUser(values));
+      }}
+    >
       {formikProps => (
-        <Stack onSubmit={() => formikProps.handleSubmit} component={Form}>
-          <Input name="name" label="User Name" margin="dense" placeholder="My name is..." />
+        <Stack onSubmit={() => formikProps.handleSubmit()} component={Form}>
+          <Input name="displayName" label="User Name" margin="dense" placeholder="My name is..." />
           <Input
-            name="aboutme"
+            name="description"
             label="About me"
             placeholder="Write about yourself..."
             margin="dense"

@@ -20,7 +20,7 @@ const DrawerContent = ({ routes }) => {
   return (
     <div>
       <Toolbar>
-        <Typography variant="h5">ImportantLogo</Typography>
+        <Typography variant="h5">Logo obviously.</Typography>
       </Toolbar>
       <List
         subheader={

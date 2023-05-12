@@ -25,7 +25,7 @@ function ResponsiveDrawer(props) {
 
   const routes = [
     { id: "a", name: "See Events", route: "/events", icon: <Event /> },
-    { id: "b", name: "See People", route: "/people", icon: <People /> },
+    { id: "b", name: "See People", route: "/events/users", icon: <People /> },
   ];
 
   const container = window !== undefined ? () => window().document.body : undefined;

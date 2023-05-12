@@ -19,17 +19,17 @@ import { useSelector } from "react-redux";
 
 const Account = () => {
   const { currentUser } = useSelector(store => store.authReducer);
-  console.log(currentUser);
+
   return (
     <Grid container spacing={8} columns={{ xs: 6, lg: 12 }}>
       {/* <Grid item lg={Number(`${isOpen ? 8 : 12}`)} xs={6}> */}
-      <Grid item lg={8} xs={6} order={2}>
+      <Grid item lg={12} xs={12} order={2}>
         <Paper>
           <Typography variant="h4">Account details:</Typography>
           <AccountForm />
         </Paper>
       </Grid>
-      <Grid item lg={4} xs={6} order={1}>
+      {/* <Grid item lg={4} xs={6} order={1}>
         <Paper>
           {!currentUser ? (
             <div>...loading</div>
@@ -66,7 +66,7 @@ const Account = () => {
             </Card>
           )}
         </Paper>
-      </Grid>
+      </Grid> */}
     </Grid>
   );
 };

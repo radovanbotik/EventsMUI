@@ -1,7 +1,8 @@
 import React from "react";
 import { Grid, Avatar, Typography, Stack, Button } from "@mui/material";
 
-const ProfileHeader = ({ photoURL, displayName, email }) => {
+const ProfileHeader = ({ props }) => {
+  const { photoURL, displayName, email, owner } = props;
   return (
     <Grid
       container
