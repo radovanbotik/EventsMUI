@@ -24,6 +24,7 @@ const initialState = {
 //extra reducers
 export const registerUser = createAsyncThunk("authSlice/registerUser", async (credentials, thunkAPI) => {
   const result = await createUserWithEmailAndPassword(auth, credentials.email, credentials.password);
+  console.log(result);
   await setDoc(doc(db, "users", result.user.uid), {
     displayName: result.user.displayName || result.user.email,
     email: result.user.email,
@@ -55,6 +56,7 @@ export const signInWithGoogle = createAsyncThunk("authSlice/signInWithGoogle", a
   const result = await signInWithPopup(auth, provider);
   const user = result.user;
   const isNewUser = getAdditionalUserInfo(result).isNewUser;
+  console.log(user);
   if (isNewUser) {
     await setDoc(doc(db, "users", result.user.uid), {
       displayName: result.user.displayName || result.user.email,

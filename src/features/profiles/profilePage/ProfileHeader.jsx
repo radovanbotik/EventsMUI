@@ -1,7 +1,7 @@
 import React from "react";
 import { Grid, Avatar, Typography, Stack, Button } from "@mui/material";
 
-const ProfileHeader = () => {
+const ProfileHeader = ({ photoURL, displayName, email }) => {
   return (
     <Grid
       container
@@ -19,11 +19,10 @@ const ProfileHeader = () => {
       }}
     >
       <Grid item xs={12} lg={2} sx={{ display: "grid", placeContent: "center" }}>
-        <Avatar sx={{ width: 100, height: 100 }}></Avatar>
+        <Avatar sx={{ width: 100, height: 100 }} src={photoURL}></Avatar>
       </Grid>
-      {/* <Divider orientation="vertical" variant="middle" flexItem /> */}
       <Grid item xs={12} lg={5} sx={{ display: "grid", placeContent: "center" }}>
-        <Typography variant="h4">Radovan Botik</Typography>
+        <Typography variant="h4">{displayName || email}</Typography>
       </Grid>
       <Grid item xs={12} lg={5} textAlign="center" sx={{ display: "grid", placeContent: "center" }}>
         <Grid container spacing={2}>

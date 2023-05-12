@@ -11,8 +11,7 @@ const Profile = () => {
   const dispatch = useDispatch();
   const { user } = useSelector(store => store.profileReducer);
   const { status } = useSelector(store => store.eventReducer);
-  // console.log(user);
-  console.log(status);
+  console.log(user);
 
   useSubscribeTodocument({
     dbcollection: "users",
