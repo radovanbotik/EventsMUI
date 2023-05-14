@@ -40,7 +40,7 @@ const ProfileHeader = ({ props }) => {
             </Stack>
           </Grid>
         </Grid>
-        <Button variant="contained">Following</Button>
+        {!owner && <Button variant="contained">Following</Button>}
       </Grid>
     </Grid>
   );

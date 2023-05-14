@@ -6,7 +6,7 @@ import { setUser } from "../../../store/profileSlice";
 import useSubscribeTodocument from "../../../hooks/useSubscribeTodocument";
 import { CircularProgress, Box } from "@mui/material";
 import { auth } from "../../../config/firebase";
-import { useEffect, useRef } from "react";
+import { useEffect, useState } from "react";
 
 const Profile = () => {
   const { id } = useParams();
@@ -14,7 +14,7 @@ const Profile = () => {
   const { user } = useSelector(store => store.profileReducer);
   const { status } = useSelector(store => store.eventReducer);
 
-  const owner = useRef(null);
+  const [owner, setOwner] = useState(false);
 
   useSubscribeTodocument({
     dbcollection: "users",
@@ -25,9 +25,9 @@ const Profile = () => {
 
   const isOwner = () => {
     if (id === auth.currentUser?.uid) {
-      return (owner.current = true);
+      return setOwner(true);
     } else {
-      return (owner.current = false);
+      return setOwner(false);
     }
   };
   useEffect(() => {
@@ -43,8 +43,8 @@ const Profile = () => {
 
   return (
     <>
-      <ProfileHeader props={{ ...user, owner: owner.current }} />
-      <ProfileContent props={{ ...user, owner: owner.current }} />
+      <ProfileHeader props={{ ...user, owner: owner }} />
+      <ProfileContent props={{ ...user, owner: owner }} />
     </>
   );
 };
