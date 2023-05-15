@@ -1,9 +1,19 @@
 import { useState } from "react";
-import { useMediaQuery, ImageList, ImageListItem, ImageListItemBar } from "@mui/material";
+import { useMediaQuery, ImageList, ImageListItem, ImageListItemBar, IconButton } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { DeleteRounded } from "@mui/icons-material";
+import Confirmation from "../../../common/dialogs/Confirmation";
 
 export default function PhotosImageList({ photos }) {
+  const [open, setOpen] = useState(false);
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const setProfilePicture = () => {
+    console.log("profile picture set");
+    handleClose();
+  };
+
   const theme = useTheme();
   const xl = useMediaQuery(theme.breakpoints.up("xl"));
   const lg = useMediaQuery(theme.breakpoints.up("lg"));
@@ -20,26 +30,37 @@ export default function PhotosImageList({ photos }) {
   };
 
   return (
-    <ImageList cols={cols()}>
-      {photos?.map(item => (
-        <ImageListItem key={item.name}>
-          <img
-            src={item.url}
-            // src={`${item.img}?w=248&fit=crop&auto=format`}
-            // srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
-            alt={item.name}
-            loading="lazy"
-          />
-          <ImageListItemBar
-            actionIcon={<DeleteRounded fontSize="small" />}
-            title={item.name}
-            // subtitle={<span>by: {item.author}</span>}
-            position="top"
-            sx={{ alignItems: "end", "& .MuiImageListItemBar-actionIcon": { color: "white" } }}
-          />
-        </ImageListItem>
-      ))}
-    </ImageList>
+    <>
+      <Confirmation
+        open={open}
+        title={"Update profile picture"}
+        content={"Do you wish to set this picture as your profile picture?"}
+        handleClose={handleClose}
+        onSubmit={setProfilePicture}
+      />
+      <ImageList cols={cols()}>
+        {photos?.map(item => (
+          <ImageListItem key={item.name} onClick={() => setOpen(true)} sx={{ cursor: "pointer" }}>
+            <img src={item.url} alt={item.name} loading="lazy" />
+            <ImageListItemBar
+              // actionIcon={<DeleteRounded fontSize="small" />}
+              actionIcon={
+                <IconButton color="inherit" onClick={() => console.log("delete")}>
+                  <DeleteRounded fontSize="small" />
+                </IconButton>
+              }
+              title={item.name}
+              // subtitle={<span>by: {item.author}</span>}
+              position="top"
+              sx={{
+                alignItems: "end",
+                "& .MuiImageListItemBar-actionIcon": { color: "white" },
+              }}
+            />
+          </ImageListItem>
+        ))}
+      </ImageList>
+    </>
   );
 }
 

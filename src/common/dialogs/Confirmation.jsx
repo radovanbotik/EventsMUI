@@ -2,7 +2,7 @@ import * as React from "react";
 
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
 
-export default function AlertDialog({ open, handleClose, cancelEvent, title, content }) {
+export default function AlertDialog({ open, handleClose, onSubmit, title, content }) {
   return (
     <div>
       {/* <Button variant="outlined" onClick={handleClickOpen}>
@@ -20,13 +20,7 @@ export default function AlertDialog({ open, handleClose, cancelEvent, title, con
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>No, take me back.</Button>
-          <Button
-            onClick={() => {
-              cancelEvent();
-              handleClose();
-            }}
-            autoFocus
-          >
+          <Button onClick={onSubmit} autoFocus>
             Yes, I wish to proceed.
           </Button>
         </DialogActions>

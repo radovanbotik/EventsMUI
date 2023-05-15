@@ -4,9 +4,9 @@ import dayjs from "dayjs";
 import Map from "./Map";
 import { Card, CardMedia, Typography, CardActions, CardContent, Box, Button } from "@mui/material";
 import { cancelEv } from "../store/eventSlice";
-import DescriptionAlert from "./DescriptionAlert";
+import DescriptionAlert from "../common/alerts/DescriptionAlert";
 import { useState } from "react";
-import Confirmation from "./Confirmation";
+import Confirmation from "../common/dialogs/Confirmation";
 
 const EventHeader = ({ title, date, hostedBy, eventPhotoURL, event, mapOpen }) => {
   const { events } = useSelector(store => store.eventReducer);
@@ -23,6 +23,7 @@ const EventHeader = ({ title, date, hostedBy, eventPhotoURL, event, mapOpen }) =
 
   const cancelEvent = () => {
     dispatch(cancelEv(event));
+    handleClose();
   };
 
   const dispatch = useDispatch();
@@ -31,7 +32,7 @@ const EventHeader = ({ title, date, hostedBy, eventPhotoURL, event, mapOpen }) =
       <Confirmation
         open={confirmationOpen}
         handleClose={handleClose}
-        cancelEvent={cancelEvent}
+        onSubmit={cancelEvent}
         title={currentEvent.canceled ? "Activating an event" : "Cancelling an event"}
         content={`This action will ${
           currentEvent.canceled ? "activate" : "cancel"

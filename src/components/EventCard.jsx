@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { openForm, closeForm, editingTrue, setEvent, resetEvent } from "../store/formSlice";
 import dayjs from "dayjs";
 import { MoreVert } from "@mui/icons-material";
-import DescriptionAlert from "../features/DescriptionAlert";
+import DescriptionAlert from "../common/alerts/DescriptionAlert";
 
 import {
   Card,
