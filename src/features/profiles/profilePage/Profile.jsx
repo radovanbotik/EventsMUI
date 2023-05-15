@@ -1,5 +1,6 @@
 import { useParams } from "react-router-dom";
 import ProfileHeader from "./ProfileHeader";
+import ProfileContent from "./ProfileContent";
 import { useDispatch, useSelector } from "react-redux";
 import { setViewedUser } from "../../../store/profileSlice";
 import useSubscribeTodocument from "../../../hooks/useSubscribeTodocument";
