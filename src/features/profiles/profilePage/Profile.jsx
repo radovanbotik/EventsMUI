@@ -44,7 +44,7 @@ const Profile = () => {
   return (
     <>
       <ProfileHeader props={{ ...user, owner: owner }} />
-      <ProfileContent props={{ ...user, owner: owner }} />
+      {/* <ProfileContent props={{ ...user, owner: owner }} /> */}
     </>
   );
 };
