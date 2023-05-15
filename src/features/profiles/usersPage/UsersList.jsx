@@ -6,6 +6,7 @@ import ListItemText from "@mui/material/ListItemText";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Checkbox from "@mui/material/Checkbox";
 import Avatar from "@mui/material/Avatar";
+import { useNavigate } from "react-router-dom";
 
 export default function UsersList({ users }) {
   console.log(users);
@@ -24,6 +25,8 @@ export default function UsersList({ users }) {
     setChecked(newChecked);
   };
 
+  const navigate = useNavigate();
+
   return (
     <List dense sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
       {users?.map(value => {
@@ -41,7 +44,7 @@ export default function UsersList({ users }) {
             // }
             disablePadding
           >
-            <ListItemButton>
+            <ListItemButton onClick={() => navigate(`/events/profile/${value.id}`)}>
               <ListItemAvatar>
                 <Avatar src={value.photoURL} />
               </ListItemAvatar>
