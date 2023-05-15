@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import ProfileHeader from "./ProfileHeader";
-import ProfileContent from "./ProfileContent";
+// import ProfileContent from "./ProfileContent";
 import { useDispatch, useSelector } from "react-redux";
 import { setViewedUser } from "../../../store/profileSlice";
 import useSubscribeTodocument from "../../../hooks/useSubscribeTodocument";
@@ -44,7 +44,7 @@ const Profile = () => {
   return (
     <>
       <ProfileHeader props={{ ...user, owner: owner }} />
-      <ProfileContent props={{ ...user, owner: owner }} />
+      {/* <ProfileContent props={{ ...user, owner: owner }} /> */}
     </>
   );
 };
