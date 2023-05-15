@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Tabs, Tab, Typography, Box } from "@mui/material";
+import { Tabs, Tab, Box } from "@mui/material";
 import AboutPanel from "./AboutPanel";
 import PhotosPanel from "./PhotosPanel";
 
@@ -18,7 +18,6 @@ function TabPanel(props) {
     </div>
   );
 }
-
 function a11yProps(index) {
   return {
     id: `simple-tab-${index}`,
@@ -26,7 +25,7 @@ function a11yProps(index) {
   };
 }
 
-export default function BasicTabs(props) {
+const ProfileContent = props => {
   const [value, setValue] = React.useState(0);
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -60,4 +59,6 @@ export default function BasicTabs(props) {
       </TabPanel>
     </Box>
   );
-}
+};
+
+export default ProfileContent;
