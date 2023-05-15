@@ -6,7 +6,6 @@ import AboutProfileForm from "./AboutProfileForm";
 
 const AboutPanel = ({ props }) => {
   const [editing, setEditing] = useState(false);
-  console.log(props);
 
   return (
     <div>

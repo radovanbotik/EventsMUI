@@ -7,7 +7,7 @@ const ImageCropper = ({ image, setCroppedImage }) => {
   const cropperRef = useRef(null);
   const onCrop = () => {
     const cropper = cropperRef.current?.cropper;
-    cropper.getCroppedCanvas().toBlob(blob => console.log(blob));
+    cropper.getCroppedCanvas().toBlob(blob => setCroppedImage(blob));
   };
 
   return (

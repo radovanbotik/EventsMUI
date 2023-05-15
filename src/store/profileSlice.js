@@ -21,7 +21,7 @@ const profileSlice = createSlice({
   name: "profileSlice",
   initialState: initialState,
   reducers: {
-    setUser: (state, action) => {
+    setViewedUser: (state, action) => {
       state.user = action.payload;
     },
   },
@@ -39,4 +39,4 @@ const profileSlice = createSlice({
 });
 
 export default profileSlice.reducer;
-export const { setUser } = profileSlice.actions;
+export const { setViewedUser } = profileSlice.actions;

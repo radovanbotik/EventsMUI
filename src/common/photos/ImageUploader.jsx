@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ImageDropzone from "./ImageDropzone";
 import { Stack, Divider } from "@mui/material";
 import ImageCropper from "./ImageCropper";
@@ -9,7 +9,6 @@ const ImageUploader = () => {
   const [croppedImage, setCroppedImage] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  console.log(files);
   return (
     <Stack
       direction="row"
@@ -19,7 +18,7 @@ const ImageUploader = () => {
     >
       <ImageDropzone setFiles={setFiles} files={files} />
       {files?.length > 0 && <ImageCropper image={files} setCroppedImage={setCroppedImage} />}
-      {files?.length > 0 && <ImagePreview image={croppedImage} />}
+      {files?.length > 0 && <ImagePreview filename={files[0].name} image={croppedImage} setLoading={setLoading} />}
     </Stack>
   );
 };

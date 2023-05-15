@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import ProfileHeader from "./ProfileHeader";
 import ProfileContent from "./ProfileContent";
 import { useDispatch, useSelector } from "react-redux";
-import { setUser } from "../../../store/profileSlice";
+import { setViewedUser } from "../../../store/profileSlice";
 import useSubscribeTodocument from "../../../hooks/useSubscribeTodocument";
 import { CircularProgress, Box } from "@mui/material";
 import { auth } from "../../../config/firebase";
@@ -20,7 +20,7 @@ const Profile = () => {
     dbcollection: "users",
     documentId: id,
     dependancies: [id],
-    data: userData => dispatch(setUser(userData)),
+    data: userData => dispatch(setViewedUser(userData)),
   });
 
   const isOwner = () => {

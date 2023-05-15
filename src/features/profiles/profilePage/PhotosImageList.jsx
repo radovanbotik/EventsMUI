@@ -2,11 +2,8 @@ import { useState } from "react";
 import { useMediaQuery, ImageList, ImageListItem, ImageListItemBar } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { DeleteRounded } from "@mui/icons-material";
-import { storage } from "../../../firestore/firestore";
-import { ref, listAll } from "firebase/storage";
 
-export default function PhotosImageList() {
-  const [imageList, setImagelist] = useState(null);
+export default function PhotosImageList({ photos }) {
   const theme = useTheme();
   const xl = useMediaQuery(theme.breakpoints.up("xl"));
   const lg = useMediaQuery(theme.breakpoints.up("lg"));
@@ -22,40 +19,21 @@ export default function PhotosImageList() {
     if (xs && sm && md && lg && xl) return 6;
   };
 
-  const listFiles = async ({ user }) => {
-    const listRef = ref(storage, `${user.uid}/user_images/`);
-    await listAll(listRef)
-      .then(res => {
-        res.prefixes.forEach(folderRef => {
-          // All the prefixes under listRef.
-          // You may call listAll() recursively on them.
-          console.log(folderRef);
-        });
-        res.items.forEach(itemRef => {
-          // All the items under listRef.
-          console.log(itemRef);
-        });
-      })
-      .catch(error => {
-        // Uh-oh, an error occurred!
-        console.log(error);
-      });
-  };
-
   return (
     <ImageList cols={cols()}>
-      {itemData.map(item => (
-        <ImageListItem key={item.img}>
+      {photos?.map(item => (
+        <ImageListItem key={item.name}>
           <img
-            src={`${item.img}?w=248&fit=crop&auto=format`}
-            srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
-            alt={item.title}
+            src={item.url}
+            // src={`${item.img}?w=248&fit=crop&auto=format`}
+            // srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
+            alt={item.name}
             loading="lazy"
           />
           <ImageListItemBar
             actionIcon={<DeleteRounded fontSize="small" />}
-            title={item.title}
-            subtitle={<span>by: {item.author}</span>}
+            title={item.name}
+            // subtitle={<span>by: {item.author}</span>}
             position="top"
             sx={{ alignItems: "end", "& .MuiImageListItemBar-actionIcon": { color: "white" } }}
           />

@@ -1,13 +1,28 @@
+import React, { useEffect, useState } from "react";
 import { AccountCircle, ModeEdit } from "@mui/icons-material";
 import { Box, AppBar, Button, Toolbar, Typography, Stack } from "@mui/material";
-import React, { useState } from "react";
-import dayjs from "dayjs";
-import PhotosImageList from "./PhotosImageList";
 import ImageUploader from "../../../common/photos/ImageUploader";
+import PhotosImageList from "./PhotosImageList";
+import { onSnapshot, doc, collection, Timestamp } from "firebase/firestore";
+import { db } from "../../../firestore/firestore";
 
 const PhotosPanel = ({ props }) => {
   const [editing, setEditing] = useState(false);
-  console.log(props);
+  const [photos, setPhotos] = useState([]);
+
+  useEffect(() => {
+    const unsubscribe = onSnapshot(
+      collection(db, "users", props.id, "photos"),
+      collection => {
+        collection.forEach(doc => setPhotos(prev => [...prev, doc.data()]));
+      },
+      error => {
+        console.log(error);
+      }
+    );
+
+    return () => unsubscribe();
+  }, []);
 
   return (
     <div>
@@ -34,8 +49,8 @@ const PhotosPanel = ({ props }) => {
         <Box>
           <Toolbar disableGutters>
             <Stack>
-              <Typography>Number of photos: 10</Typography>
-              <PhotosImageList />
+              {/* <Typography>Number of photos: {photos.current?.length}</Typography> */}
+              <PhotosImageList photos={photos} />
             </Stack>
           </Toolbar>
         </Box>

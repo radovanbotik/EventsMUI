@@ -24,6 +24,7 @@ const useSubscribeTodocument = ({ dbcollection, documentId, data, dependancies }
         }
         doc.id = documentId;
         data(doc);
+        console.log(doc);
         dispatch(setStatus("idle"));
       },
       error => {
