@@ -2,7 +2,7 @@ import { Stack, Box, Button } from "@mui/material";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import React from "react";
-import Input from "../../Input";
+import BasicInput from "../../../common/forms/BasicInput";
 import { Form } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { updateUser } from "../../../store/profileSlice";
@@ -31,8 +31,8 @@ const AboutProfileForm = ({ email, displayName, description }) => {
     >
       {formikProps => (
         <Stack onSubmit={() => formikProps.handleSubmit()} component={Form}>
-          <Input name="displayName" label="User Name" margin="dense" placeholder="My name is..." />
-          <Input
+          <BasicInput name="displayName" label="User Name" margin="dense" placeholder="My name is..." />
+          <BasicInput
             name="description"
             label="About me"
             placeholder="Write about yourself..."
