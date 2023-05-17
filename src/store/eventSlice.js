@@ -1,9 +1,6 @@
 import { createSlice, createAsyncThunk, createAction } from "@reduxjs/toolkit";
-import { sampleData } from "../sampleData";
 import { v4 as uuid } from "uuid";
 import axios from "axios";
-import { toast } from "react-toastify";
-import { getEventsRealTime } from "../firestore/firestore";
 import { db } from "../firestore/firestore";
 import { collection, addDoc, updateDoc, serverTimestamp, doc, deleteDoc } from "firebase/firestore";
 
