@@ -33,9 +33,9 @@ const EventHeader = ({ title, date, hostedBy, eventPhotoURL, event, mapOpen }) =
         open={confirmationOpen}
         handleClose={handleClose}
         onSubmit={cancelEvent}
-        title={currentEvent.canceled ? "Activating an event" : "Cancelling an event"}
+        title={currentEvent.cancelled ? "Activating an event" : "Cancelling an event"}
         content={`This action will ${
-          currentEvent.canceled ? "activate" : "cancel"
+          currentEvent.cancelled ? "activate" : "cancel"
         } the current event. Do you wish to procceed?`}
       />
       <CardMedia
@@ -54,11 +54,11 @@ const EventHeader = ({ title, date, hostedBy, eventPhotoURL, event, mapOpen }) =
         <Typography variant="h4">{title}</Typography>
         <Typography>{dayjs(date).format("DD MMM YYYY, HH:mm")}</Typography>
         <Typography>Hosted by {hostedBy}</Typography>
-        {currentEvent.canceled && (
+        {currentEvent.cancelled && (
           <DescriptionAlert
             severity={"warning"}
             title={"Cancelled"}
-            description={"This event has been canceled by user."}
+            description={"This event has been cancelled by user."}
             emp={"You can't join this event."}
             variant={"filled"}
           />
@@ -68,10 +68,10 @@ const EventHeader = ({ title, date, hostedBy, eventPhotoURL, event, mapOpen }) =
         <Box sx={{ display: "flex", justifyContent: "space-between", width: 1 }}>
           <Box sx={{ display: "flex", gap: 1 }}>
             <Button variant="contained" color="secondary" type="button" onClick={handleClickOpen}>
-              {currentEvent.canceled ? "re-active event" : "cancel event"}
+              {currentEvent.cancelled ? "re-active event" : "cancel event"}
             </Button>
 
-            {!currentEvent.canceled && <Button variant="contained">Join Event</Button>}
+            {!currentEvent.cancelled && <Button variant="contained">Join Event</Button>}
           </Box>
           <Box>
             <Button

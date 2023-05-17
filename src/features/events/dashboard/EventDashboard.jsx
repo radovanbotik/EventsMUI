@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import EventForm from "../form/EventForm";
 import EventFilters from "./EventFilters";
-import { load } from "../../../store/eventSlice";
+import { loadEvents } from "../../../store/eventSlice";
 import { Grid } from "@mui/material";
 import useSubscribeTocollection from "../../../hooks/useSubscribeTocollection";
 import EventList from "./EventList";
@@ -13,7 +13,7 @@ const EventDashboard = () => {
 
   useSubscribeTocollection({
     dbcollection: "events",
-    data: events => dispatch(load(events)),
+    data: events => dispatch(loadEvents(events)),
     dependancies: [],
   });
 

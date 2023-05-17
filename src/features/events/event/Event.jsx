@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { Grid, Box, Stack } from "@mui/material";
 import useSubscribeTodocument from "../../../hooks/useSubscribeTodocument";
-import { load } from "../../../store/eventSlice";
+import { loadEvents } from "../../../store/eventSlice";
 
 const Event = () => {
   const { events, status } = useSelector(store => store.eventReducer);
@@ -28,7 +28,7 @@ const Event = () => {
   useSubscribeTodocument({
     dbcollection: "events",
     documentId: id,
-    data: doc => dispatch(load([doc])),
+    data: doc => dispatch(loadEvents([doc])),
     dependancies: [id],
   });
 

@@ -1,69 +1,42 @@
 import { createSlice, createAsyncThunk, createAction } from "@reduxjs/toolkit";
-import { v4 as uuid } from "uuid";
-import axios from "axios";
-import { db } from "../firestore/firestore";
-import { collection, addDoc, updateDoc, serverTimestamp, doc, deleteDoc } from "firebase/firestore";
+import { addDocumentToCollection, db, deleteDocument, updateDocument } from "../firestore/firestore";
+import { toast } from "react-toastify";
 
 //initial state
 const initialState = {
   events: null,
   status: "idle",
 };
-
 //actions
 export const setStatus = createAction("events/setStatus");
 
-//extra reducers
-export const loadEvents = createAsyncThunk("events/loadEvents", async (id, thunkAPI) => {
-  thunkAPI.dispatch(setStatus("loading"));
+export const createEvent = createAsyncThunk("events/createEvent", async (event, thunkAPI) => {
   try {
-    const response = await axios.get("http://127.0.0.1:5500/api/getEvents.json");
-    if (response.statusText !== "OK") {
-      throw new Error("error during fetching");
-    }
-
-    thunkAPI.dispatch(setStatus("idle"));
-    //action.meta
-    return thunkAPI.fulfillWithValue(response.data, { msg: "success!!!!" });
-  } catch (error) {
-    thunkAPI.dispatch(setStatus("idle"));
-    //action.meta
-    return thunkAPI.rejectWithValue(error.message, { msg: "fail!!!!" });
-  }
-});
-
-export const createEv = createAsyncThunk("events/createEv", async (ev, thunkAPI) => {
-  thunkAPI.dispatch(setStatus("loading"));
-  try {
-    await addDoc(collection(db, "events"), ev);
-    thunkAPI.dispatch(setStatus("idle"));
+    await addDocumentToCollection({ collectionRef: "events", document: event });
   } catch (error) {
     console.log(error);
   }
 });
 
-export const updateEv = createAsyncThunk("events/updateEv", async (ev, thunkAPI) => {
-  thunkAPI.dispatch(setStatus("loading"));
+export const updateEvent = createAsyncThunk("events/updateEv", async (event, thunkAPI) => {
   try {
-    await updateDoc(doc(db, "events", ev.id), { ...ev, updated: serverTimestamp() });
-    thunkAPI.dispatch(setStatus("idle"));
+    await updateDocument({ collectionRef: "events", document: event });
   } catch (error) {
     console.log(error);
   }
 });
 
-export const deleteEv = createAsyncThunk("events/deleteEv", async (id, thunkAPI) => {
-  thunkAPI.dispatch(setStatus("loading"));
+export const deleteEvent = createAsyncThunk("events/deleteEv", async (eventId, thunkAPI) => {
   try {
-    await deleteDoc(doc(db, "events", id));
+    await deleteDocument({ collectionRef: "events", docId: eventId });
   } catch (error) {
     console.log(error);
   }
 });
 
-export const cancelEv = createAsyncThunk("events/cancelEv", async (ev, thunkAPI) => {
+export const cancelEv = createAsyncThunk("events/cancelEv", async (event, thunkAPI) => {
   try {
-    await updateDoc(doc(db, "events", ev.id), { canceled: !ev.canceled, updated: serverTimestamp() });
+    await updateDocument({ collectionRef: "events", document: { ...event, cancelled: !event.cancelled } });
   } catch (error) {
     console.log(error);
   }
@@ -73,47 +46,55 @@ const slice = createSlice({
   name: "eventsActions",
   initialState,
   reducers: {
-    createEvent: {
-      reducer: (state, action) => {
-        state.events.unshift(action.payload);
-      },
-      prepare: event => {
-        const id = uuid();
-        return { payload: { id, ...event } };
-      },
-    },
-    updateEvent: (state, action) => {
-      //   return { ...state, events: [...state.events.filter(ev => ev.id !== action.payload.id), action.payload] };
-      state.events = [...state.events.filter(ev => ev.id !== action.payload.id), action.payload];
-    },
-    deleteEvent: (state, action) => {
-      //   return { ...state, events: [...state.events.filter(ev => ev.id !== action.payload.id)] };
-      state.events = [...state.events.filter(ev => ev.id !== action.payload.id)];
-    },
-    load: (state, action) => {
+    loadEvents: (state, action) => {
       state.events = action.payload;
     },
   },
   extraReducers: builder => {
-    builder.addCase(loadEvents.pending, (state, action) => {
-      // state.status = "loading";
-    });
-    builder.addCase(loadEvents.fulfilled, (state, action) => {
-      // console.log(action);
-      // state.status = "idle";
-      state.events2 = action.payload;
-    });
-    builder.addCase(loadEvents.rejected, (state, action) => {
-      // state.status = "idle";
-      //rejectwithvalue value
-    });
     builder.addCase(setStatus, (state, action) => {
       state.status = action.payload;
+    });
+    //create event
+    builder.addCase(createEvent.pending, (state, action) => {
+      state.status = "loading";
+      toast.info("Your post is being uploaded...");
+    });
+    builder.addCase(createEvent.fulfilled, (state, action) => {
+      state.status = "idle";
+      toast.success("Your post has been succesfully uploaded!");
+    });
+    builder.addCase(createEvent.rejected, (state, action) => {
+      state.status = "idle";
+      toast.loading("There has been an error during upload!");
+    });
+    //update event
+    builder.addCase(updateEvent.pending, (state, action) => {
+      state.status = "loading";
+      toast.info("Your post is being edited...");
+    });
+    builder.addCase(updateEvent.fulfilled, (state, action) => {
+      state.status = "idle";
+      toast.success("Your post has been succesfully edited!");
+    });
+    builder.addCase(updateEvent.rejected, (state, action) => {
+      state.status = "idle";
+      toast.loading("There has been an error during edit!");
+    });
+    //delete event
+    builder.addCase(deleteEvent.pending, (state, action) => {
+      state.status = "loading";
+      toast.info("Your post is being deleted...");
+    });
+    builder.addCase(deleteEvent.fulfilled, (state, action) => {
+      state.status = "idle";
+      toast.success("Your post has been succesfully deleted!");
+    });
+    builder.addCase(deleteEvent.rejected, (state, action) => {
+      state.status = "idle";
+      toast.loading("There has been an error during deletion!");
     });
   },
 });
 
-export const { createEvent, updateEvent, deleteEvent, load } = slice.actions;
+export const { loadEvents } = slice.actions;
 export default slice.reducer;
-// export const selectAllEvents = state => state.events;
-// export const selectEventById = (state, id) => state.events.find(ev => ev.id === id);

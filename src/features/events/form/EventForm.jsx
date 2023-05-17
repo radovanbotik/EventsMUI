@@ -1,15 +1,11 @@
 //redux
 import { useDispatch, useSelector } from "react-redux";
-import { createEv, createEvent, updateEv, updateEvent } from "../../../store/eventSlice";
+import { createEvent, updateEvent } from "../../../store/eventSlice";
 import { closeForm, editingFalse, resetEvent, resetValues } from "../../../store/formSlice";
-//formik
 import { Formik } from "formik";
-//yup
 import * as Yup from "yup";
 import dayjs from "dayjs";
-//react-router-dom
 import { Form } from "react-router-dom";
-//utility
 
 import BasicInput from "../../../common/forms/BasicInput";
 import { tags } from "../../../common/util/tags";
@@ -17,8 +13,7 @@ import SelectAutocomplete from "../../../common/forms/SelectAutocomplete";
 import CalendarWithTime from "../../../common/forms/CalendarWithTime";
 import LocationSelectAutocomplete from "../../../common/forms/LocationSelectAutocomplete";
 import { geocodeByPlaceId, getLatLng } from "react-places-autocomplete";
-import { Paper, Typography, Box, Button, MenuItem, Checkbox, ListItemText, ButtonGroup, Stack } from "@mui/material";
-import { toast } from "react-toastify";
+import { Typography, Button, MenuItem, Checkbox, ListItemText, ButtonGroup, Stack } from "@mui/material";
 
 // country: Yup.string().required("Event country is required.").oneOf(["SK", "CZ", "HU"]),
 // city: Yup.string().required("Event city is required."),
@@ -68,7 +63,7 @@ const EventForm = () => {
 
             if (!isEditing) {
               // dispatch(createEvent(newValues));
-              dispatch(createEv(newValues));
+              dispatch(createEvent(newValues));
               dispatch(resetEvent());
               dispatch(closeForm());
               return;
@@ -76,7 +71,7 @@ const EventForm = () => {
             if (isEditing) {
               // dispatch(updateEvent(newValues));
               console.log("ran");
-              dispatch(updateEv(newValues));
+              dispatch(updateEvent(newValues));
               dispatch(resetEvent());
               dispatch(editingFalse());
               dispatch(closeForm());
@@ -88,7 +83,6 @@ const EventForm = () => {
         } catch (error) {
           setSubmitting(false);
           console.log(error);
-          toast.error(error.message);
         }
       }}
     >
