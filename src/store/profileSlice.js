@@ -9,6 +9,7 @@ const initialState = {
 export const updateUser = createAsyncThunk("profileSlice/updateProfile", async (updates, thunkAPI) => {
   const loggedUser = auth.currentUser;
   const { user } = thunkAPI.getState().profileReducer;
+  console.log(updates);
   if (loggedUser.uid === user.id) {
     await updateUserProfile(updates);
     await updateDocument({ collectionRef: "users", document: { ...updates, id: loggedUser.uid } });

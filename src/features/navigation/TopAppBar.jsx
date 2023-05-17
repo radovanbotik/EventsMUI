@@ -47,7 +47,6 @@ const Bar = ({ handleDrawerToggle, drawerWidth, auth, anchorEl, setAnchorEl }) =
         >
           <MenuIcon />
         </IconButton>
-        <Button>hello</Button>
         {/* AppTitle */}
         <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
           Dashboard

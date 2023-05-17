@@ -3,14 +3,19 @@ import { useMediaQuery, ImageList, ImageListItem, ImageListItemBar, IconButton }
 import { useTheme } from "@mui/material/styles";
 import { DeleteRounded } from "@mui/icons-material";
 import Confirmation from "../../../common/dialogs/Confirmation";
+import { updateUser } from "../../../store/profileSlice";
+import { useDispatch } from "react-redux";
 
 export default function PhotosImageList({ photos }) {
   const [open, setOpen] = useState(false);
+  const [currentPhoto, setCurrentPhoto] = useState(null);
+  const dispatch = useDispatch();
   const handleClose = () => {
     setOpen(false);
   };
-  const setProfilePicture = () => {
-    console.log("profile picture set");
+  const setProfilePicture = photo => {
+    dispatch(updateUser({ photoURL: photo }));
+    setCurrentPhoto(null);
     handleClose();
   };
 
@@ -36,11 +41,18 @@ export default function PhotosImageList({ photos }) {
         title={"Update profile picture"}
         content={"Do you wish to set this picture as your profile picture?"}
         handleClose={handleClose}
-        onSubmit={setProfilePicture}
+        onSubmit={() => setProfilePicture(currentPhoto)}
       />
       <ImageList cols={cols()}>
         {photos?.map(item => (
-          <ImageListItem key={item.name} onClick={() => setOpen(true)} sx={{ cursor: "pointer" }}>
+          <ImageListItem
+            key={item.name}
+            onClick={() => {
+              setOpen(true);
+              setCurrentPhoto(item.url);
+            }}
+            sx={{ cursor: "pointer" }}
+          >
             <img src={item.url} alt={item.name} loading="lazy" />
             <ImageListItemBar
               // actionIcon={<DeleteRounded fontSize="small" />}
