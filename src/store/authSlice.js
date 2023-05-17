@@ -1,18 +1,14 @@
-import { createAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { auth } from "../config/firebase";
-import {
-  signInWithEmailAndPassword,
-  signOut,
-  updateProfile,
-  createUserWithEmailAndPassword,
-  GoogleAuthProvider,
-  signInWithPopup,
-  getAdditionalUserInfo,
-  updatePassword,
-} from "firebase/auth";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
-import { collection, setDoc, doc, getDoc } from "firebase/firestore";
-import { db } from "../firestore/firestore";
+import {
+  createUserWithMail,
+  getDocumentOnce,
+  signInUser,
+  signOutUser,
+  signWithGoogle,
+  updateUserPassword,
+  updateUserProfile,
+} from "../firestore/firestore";
 
 const initialState = {
   isAuthenticated: false,
@@ -22,63 +18,31 @@ const initialState = {
 //actions
 
 //extra reducers
-export const registerUser = createAsyncThunk("authSlice/registerUser", async (credentials, thunkAPI) => {
-  const result = await createUserWithEmailAndPassword(auth, credentials.email, credentials.password);
-  console.log(result);
-  await setDoc(doc(db, "users", result.user.uid), {
-    displayName: result.user.displayName || result.user.email,
-    email: result.user.email,
-    photoURL: result.user.photoURL || null,
-    phoneNumber: result.user.phoneNumber || null,
-    createdAt: result.user.metadata.createdAt,
-    creationTime: result.user.metadata.creationTime,
-  });
+export const registerUser = createAsyncThunk("authSlice/registerUser", async (userdata, thunkAPI) => {
+  await createUserWithMail(userdata);
 });
 
-export const logIn = createAsyncThunk("authSlice/logIn", async (credentials, thunkAPI) => {
-  const result = await signInWithEmailAndPassword(auth, credentials.email, credentials.password);
-  const user = { email: result.user.email };
-  return user;
+export const logIn = createAsyncThunk("authSlice/logIn", async (userdata, thunkAPI) => {
+  signInUser(userdata);
 });
 
 export const logOut = createAsyncThunk("authSlice/logOut", async (_, thunkAPI) => {
-  const result = await signOut(auth);
-  return result;
+  signOutUser();
 });
 
 export const updateUser = createAsyncThunk("authslice/updateUser", async (updates, thunkAPI) => {
-  const result = await updateProfile(auth.currentUser, updates);
-  return result;
+  updateUserProfile;
 });
 //sign in google
 export const signInWithGoogle = createAsyncThunk("authSlice/signInWithGoogle", async (arg, thunkAPI) => {
-  const provider = new GoogleAuthProvider();
-  const result = await signInWithPopup(auth, provider);
-  const user = result.user;
-  const isNewUser = getAdditionalUserInfo(result).isNewUser;
-  console.log(user);
-  if (isNewUser) {
-    await setDoc(doc(db, "users", result.user.uid), {
-      displayName: result.user.displayName || result.user.email,
-      email: result.user.email,
-      photoURL: result.user.photoURL || null,
-      phoneNumber: result.user.phoneNumber || null,
-      createdAt: result.user.metadata.createdAt,
-      creationTime: result.user.metadata.creationTime,
-    });
-    console.log("added");
-    return;
-  }
-  console.log(user);
-  return;
+  await signWithGoogle();
 });
 //change password
 export const changePassword = createAsyncThunk("authSlice/changePassword", async (password, thunkAPI) => {
-  const user = auth.currentUser;
-  await updatePassword(user, password);
+  updateUserPassword(password);
 });
 export const retrieveUser = createAsyncThunk("authSlice/retrieveUser", async (id, thunkAPI) => {
-  const user = await getDoc(doc(db, "users", id));
+  await getDocumentOnce({ collectionRef: "users", documentId: id });
 });
 
 const authSlice = createSlice({

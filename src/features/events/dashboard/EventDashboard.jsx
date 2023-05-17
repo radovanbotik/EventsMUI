@@ -12,8 +12,8 @@ const EventDashboard = () => {
   const dispatch = useDispatch();
 
   useSubscribeTocollection({
-    dbcollection: "events",
-    data: events => dispatch(loadEvents(events)),
+    collectionRef: "events",
+    action: events => dispatch(loadEvents(events)),
     dependancies: [],
   });
 
