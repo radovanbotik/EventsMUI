@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk, createAction } from "@reduxjs/toolkit";
-import { addDocumentToCollection, db, deleteDocument, updateDocument } from "../firestore/firestore";
+import { addDocumentToCollection, deleteDocument, updateDocument } from "../firestore/firestore";
 import { toast } from "react-toastify";
 
 //initial state

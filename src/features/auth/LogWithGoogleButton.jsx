@@ -7,6 +7,7 @@ const LogWithGoogleButton = () => {
   const dispatch = useDispatch();
   return (
     <Button
+      variant="contained"
       onClick={() => {
         dispatch(signInWithGoogle());
         dispatch(closeModal());

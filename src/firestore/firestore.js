@@ -3,7 +3,6 @@ import {
   doc,
   query,
   collection,
-  getDocs,
   getDoc,
   onSnapshot,
   Timestamp,
