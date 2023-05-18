@@ -1,13 +1,4 @@
-import {
-  Card,
-  CardHeader,
-  CardContent,
-  List,
-  ListItem,
-  ListItemAvatar,
-  Avatar,
-  ListItemText,
-} from '@mui/material';
+import { Card, CardHeader, CardContent, List, ListItem, ListItemAvatar, Avatar, ListItemText } from "@mui/material";
 
 const EventGuests = ({ attendees }) => {
   function formatGuests(guestCount = 0) {
@@ -17,7 +8,7 @@ const EventGuests = ({ attendees }) => {
   }
 
   return (
-    <Card sx={{ p: 2 }}>
+    <Card>
       <CardHeader
         title={formatGuests(attendees?.length || 0)}
         sx={{ textAlign: "center", bgcolor: "primary.main" }}

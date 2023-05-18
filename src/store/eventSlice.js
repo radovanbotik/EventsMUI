@@ -1,5 +1,13 @@
 import { createSlice, createAsyncThunk, createAction } from "@reduxjs/toolkit";
-import { addDocumentToCollection, deleteDocument, updateDocument, createArrayUnion } from "../firestore/firestore";
+import {
+  addDocumentToCollection,
+  deleteDocument,
+  updateDocument,
+  createArrayUnion,
+  addToArrayDocument,
+  removeDocumentFromArray,
+  getDocumentOnce,
+} from "../firestore/firestore";
 import { toast } from "react-toastify";
 
 //initial state
@@ -57,6 +65,40 @@ export const cancelEv = createAsyncThunk("events/cancelEv", async (event, thunkA
   } catch (error) {
     console.log(error);
   }
+});
+export const joinEvent = createAsyncThunk("events/joinEvent", async (eventId, thunkAPI) => {
+  const { currentUser } = thunkAPI.getState().authReducer;
+  const attendee = {
+    id: currentUser.id,
+    name: currentUser.displayName,
+    photoURL: currentUser.photoURL || null,
+  };
+  await addToArrayDocument({
+    collectionRef: "events",
+    documentRef: eventId,
+    array: "attendees",
+    documentToAdd: attendee,
+  });
+  await addToArrayDocument({
+    collectionRef: "events",
+    documentRef: eventId,
+    array: "attendeesId",
+    documentToAdd: currentUser.id,
+  });
+});
+
+export const leaveEvent = createAsyncThunk("eventSlice/leaveEvent", async (eventId, thunkAPI) => {
+  const { currentUser } = thunkAPI.getState().authReducer;
+  await removeDocumentFromArray({
+    collectionRef: "events",
+    documentRef: eventId,
+    array: "attendeesId",
+    documentToRemove: currentUser.id,
+  });
+  const event = await getDocumentOnce({ collectionRef: "events", documentId: eventId });
+  const attendeesWithoutUser = event.attendees.filter(attendee => attendee.id !== currentUser.id);
+  const newEvent = { ...event, attendees: attendeesWithoutUser };
+  await updateDocument({ collectionRef: "events", document: newEvent });
 });
 
 const slice = createSlice({

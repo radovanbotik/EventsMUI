@@ -5,6 +5,7 @@ import { openForm, closeForm, editingTrue, setEvent, resetEvent } from "../../..
 import dayjs from "dayjs";
 import { MoreVert } from "@mui/icons-material";
 import DescriptionAlert from "../../../common/alerts/DescriptionAlert";
+import noImage from "../../../common/images/noImage.avif";
 
 import {
   Card,
@@ -77,10 +78,7 @@ const EventCard = props => {
         ) : (
           <CardMedia
             component="img"
-            image={
-              eventPhotoURL ||
-              "https://media.istockphoto.com/id/513822999/photo/garbage-bin-outdoors-overflowing-with-trash.jpg?s=1024x1024&w=is&k=20&c=UDDkN_RligWzBQlJKApvm4vPP-4if9eNJb_-8hm9rrc="
-            }
+            image={eventPhotoURL || noImage}
             loading="lazy"
             alt="event image"
             height={300}
@@ -109,7 +107,9 @@ const EventCard = props => {
                     );
                   })}
                 </AvatarGroup>
-                <ListItemText primary={`${attendees?.[0].name} and others`}></ListItemText>
+                <ListItemText
+                  primary={`${attendees?.[0].name} ${attendees?.length > 1 && "and others"}`}
+                ></ListItemText>
                 <Typography>{city || location.description}</Typography>
                 <Divider>on</Divider>
                 <Typography>{dayjs(date).format("DD MMM YYYY, HH:mm")}</Typography>

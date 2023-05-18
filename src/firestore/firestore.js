@@ -12,6 +12,7 @@ import {
   deleteDoc,
   setDoc,
   arrayUnion,
+  arrayRemove,
 } from "firebase/firestore";
 import { deleteObject, getStorage, ref } from "firebase/storage";
 import { app } from "../config/firebase";
@@ -33,9 +34,17 @@ import { auth } from "../config/firebase";
 export const createArrayUnion = array => {
   return arrayUnion(...array);
 };
+export const addToArrayDocument = async ({ collectionRef, documentRef, array, documentToAdd }) => {
+  await updateDoc(doc(db, collectionRef, documentRef), { [array]: arrayUnion(documentToAdd) });
+};
+
+export const removeDocumentFromArray = async ({ collectionRef, documentRef, array, documentToRemove }) => {
+  await updateDoc(doc(db, collectionRef, documentRef), { [array]: arrayRemove(documentToRemove) });
+};
 
 export const getDocumentOnce = async ({ collectionRef, documentId }) => {
   const docSnap = await getDoc(doc(db, collectionRef, documentId));
+  console.log(docSnap.data());
   if (docSnap.exists()) return docSnap.data();
 };
 export const addDocumentToCollection = async ({ collectionRef, document }) => {

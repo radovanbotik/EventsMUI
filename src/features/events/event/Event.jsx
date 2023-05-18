@@ -19,7 +19,6 @@ const Event = () => {
   //only if events is populated events?.find
   const event = events?.find(event => event.id === id);
   const dispatch = useDispatch();
-
   const [mapOpen, setMapOpen] = useState(false);
   function toggleMap() {
     setMapOpen(prev => !prev);
@@ -37,10 +36,10 @@ const Event = () => {
       {status === "loading" || (!event && status !== "error") ? (
         <div>loading...</div>
       ) : (
-        <Grid container spacing={8} columns={{ xs: 6, lg: 12 }}>
+        <Grid container spacing={8} columns={{ xs: 6, lg: 12 }} p={4}>
           <Grid item lg={8} xs={6}>
             <Stack spacing={2}>
-              <EventHeader {...event} event={event} mapOpen={mapOpen} />
+              <EventHeader id={id} event={event} mapOpen={mapOpen} />
               <EventInfo {...event} toggleMap={toggleMap} mapOpen={mapOpen} />
               <EventChat />
             </Stack>
