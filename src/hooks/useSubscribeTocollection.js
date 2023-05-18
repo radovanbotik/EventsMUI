@@ -1,7 +1,12 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { setStatus } from "../store/eventSlice";
-import { createQuery, subscribeToCollection } from "../firestore/firestore";
+import {
+  convertDateToTimestamp,
+  createCompoundQuery,
+  createQuery,
+  subscribeToCollection,
+} from "../firestore/firestore";
 // import { onSnapshot, collection, Timestamp, query } from "firebase/firestore";
 // import { db } from "../firestore/firestore";
 
@@ -31,27 +36,80 @@ const useSubscribeTocollection = ({ filter, collectionRef, action, dependancies 
     //     dispatch(setStatus("idle"));
     //   }
     // );
+    // createCompoundQuery({collectionRef:collectionRef,constraints:[
+    //   {
+    //     field: "attendeesId",
+    //     operator: "array-contains",
+    //     value: filter.id,
+    //   },
+    //   {
+    //     field: "date",
+    //     operator: ">=",
+    //     value: convertDateToTimestamp(filter.date),
+    //   }
+    // ]})
+
     let query;
     switch (filter.attendanceType) {
       case "attending":
-        query = createQuery({
+        // query = createQuery({
+        //   collectionRef: collectionRef,
+        //   field: "attendeesId",
+        //   operator: "array-contains",
+        //   value: filter.id,
+        // });
+        query = createCompoundQuery({
           collectionRef: collectionRef,
-          field: "attendeesId",
-          operator: "array-contains",
-          value: filter.id,
+          constraints: [
+            {
+              field: "attendeesId",
+              operator: "array-contains",
+              value: filter.id,
+            },
+            {
+              field: "date",
+              operator: ">=",
+              value: convertDateToTimestamp(filter.date),
+            },
+          ],
         });
         break;
       case "hosting":
-        query = createQuery({
+        // query = createQuery({
+        //   collectionRef: collectionRef,
+        //   field: "hostId",
+        //   operator: "==",
+        //   value: filter.id,
+        // });
+        query = createCompoundQuery({
           collectionRef: collectionRef,
-          field: "hostId",
-          operator: "==",
-          value: filter.id,
+          constraints: [
+            {
+              field: "hostId",
+              operator: "==",
+              value: filter.id,
+            },
+            {
+              field: "date",
+              operator: ">=",
+              value: convertDateToTimestamp(filter.date),
+            },
+          ],
         });
         break;
       default:
-        query = createQuery({
+        // query = createQuery({
+        //   collectionRef: collectionRef,
+        // });
+        query = createCompoundQuery({
           collectionRef: collectionRef,
+          constraints: [
+            {
+              field: "date",
+              operator: ">=",
+              value: convertDateToTimestamp(filter.date),
+            },
+          ],
         });
         break;
     }

@@ -33,7 +33,7 @@ const EventDashboard = () => {
       </Grid>
       <Grid item lg={4} xs={6} sx={{ position: "sticky", top: 0, alignSelf: "flex-start" }}>
         {isOpen && <EventForm />}
-        {!isOpen && <EventFilters />}
+        {!isOpen && <EventFilters setFilterOptions={setFilterOptions} filterOptions={filterOptions} />}
       </Grid>
     </Grid>
   );

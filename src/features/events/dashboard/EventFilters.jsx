@@ -4,17 +4,7 @@ import dayjs from "dayjs";
 
 import { List, ListItem, ListItemText, ListItemIcon, Divider, Box } from "@mui/material";
 
-const EventFilters = () => {
-  //All events
-  //no query
-  //Events I am going
-  //where('attendeesId','array-contains','currentUser.id')
-  //Events I am hosting
-  //where('hostId','==','currentUser.id')
-  //
-
-  // const lookup = { all: "", going: "", hosting: "", time:'' };
-
+const EventFilters = ({ setFilterOptions, filterOptions }) => {
   return (
     <Box>
       {/* Menu */}
@@ -26,13 +16,13 @@ const EventFilters = () => {
           <ListItemText primary="Filters" />
         </ListItem>
         <Divider />
-        <ListItem>
+        <ListItem onClick={e => setFilterOptions(prev => ({ ...prev, attendanceType: "all" }))}>
           <ListItemText primary="Avaible events" secondary="All avaible events" />
         </ListItem>
-        <ListItem>
+        <ListItem onClick={e => setFilterOptions(prev => ({ ...prev, attendanceType: "attending" }))}>
           <ListItemText primary="I am going" secondary="Events I am attending" />
         </ListItem>
-        <ListItem>
+        <ListItem onClick={e => setFilterOptions(prev => ({ ...prev, attendanceType: "hosting" }))}>
           <ListItemText primary="I am hosting" secondary="Events I am hosting" />
         </ListItem>
       </List>
@@ -46,7 +36,10 @@ const EventFilters = () => {
         </ListItem>
         <Divider />
         <ListItem>
-          <StaticDatePicker defaultValue={dayjs()} />
+          <StaticDatePicker
+            value={dayjs(filterOptions.date)}
+            onChange={e => setFilterOptions(prev => ({ ...prev, date: dayjs(e).toDate() }))}
+          />
         </ListItem>
       </List>
     </Box>

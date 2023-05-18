@@ -45,6 +45,15 @@ export const createQuery = ({ collectionRef, field, value, operator }) => {
   return query(collection(db, collectionRef), where(field, `${operator}`, value));
 };
 
+export const createCompoundQuery = ({ collectionRef, constraints }) => {
+  if (!constraints) return query(collection(db, collectionRef));
+  let chainedConstraints = constraints.map(obj => where(obj.field, obj.operator, obj.value));
+  return query(collection(db, collectionRef), ...chainedConstraints);
+};
+
+// where(constraints[0].field, constraints[0].operator, constraints[0].value),
+// where(constraints[1].field, constraints[1].operator, constraints[1].value)
+// constraints.forEach(obj => where(obj.field, obj.operator, obj.value))
 export const addToArrayDocument = async ({ collectionRef, documentRef, array, documentToAdd }) => {
   await updateDoc(doc(db, collectionRef, documentRef), { [array]: arrayUnion(documentToAdd) });
 };
@@ -71,6 +80,7 @@ export const deleteDocument = async ({ collectionRef, docId }) => {
   await deleteDoc(doc(db, collectionRef, docId));
 };
 export const subscribeToCollection = ({ collectionRef, q, action }) => {
+  console.log(q);
   return onSnapshot(q, snapshot => {
     const docs = [];
     snapshot.forEach(doc => {
