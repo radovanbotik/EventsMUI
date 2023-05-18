@@ -14,14 +14,14 @@ const EventDashboard = () => {
   const [filterOptions, setFilterOptions] = useState({
     attendanceType: "all",
     date: new Date(),
-    id: currentUser.id,
+    id: currentUser?.id,
   });
   const dispatch = useDispatch();
 
   useSubscribeTocollection({
     collectionRef: "events",
     action: events => dispatch(loadEvents(events)),
-    dependancies: [filterOptions, currentUser.id],
+    dependancies: [filterOptions, currentUser?.id],
     filter: filterOptions,
   });
 

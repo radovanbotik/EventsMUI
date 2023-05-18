@@ -56,6 +56,7 @@ onAuthStateChanged(auth, user => {
   } else {
     console.log("not authenticated");
     store.dispatch(setUser({ user: null, authenticated: false }));
+    store.dispatch(setInitialized(true));
   }
 });
 
