@@ -11,6 +11,7 @@ import {
   serverTimestamp,
   deleteDoc,
   setDoc,
+  arrayUnion,
 } from "firebase/firestore";
 import { deleteObject, getStorage, ref } from "firebase/storage";
 import { app } from "../config/firebase";
@@ -28,6 +29,10 @@ import {
 export const db = getFirestore(app);
 export const storage = getStorage(app);
 import { auth } from "../config/firebase";
+
+export const createArrayUnion = array => {
+  return arrayUnion(...array);
+};
 
 export const getDocumentOnce = async ({ collectionRef, documentId }) => {
   const docSnap = await getDoc(doc(db, collectionRef, documentId));

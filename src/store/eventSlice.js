@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk, createAction } from "@reduxjs/toolkit";
-import { addDocumentToCollection, deleteDocument, updateDocument } from "../firestore/firestore";
+import { addDocumentToCollection, deleteDocument, updateDocument, createArrayUnion } from "../firestore/firestore";
 import { toast } from "react-toastify";
 
 //initial state
@@ -11,8 +11,25 @@ const initialState = {
 export const setStatus = createAction("events/setStatus");
 
 export const createEvent = createAsyncThunk("events/createEvent", async (event, thunkAPI) => {
+  const { currentUser } = thunkAPI.getState().authReducer;
+  const attendees = createArrayUnion([
+    {
+      id: currentUser.id,
+      name: currentUser.displayName,
+      photoURL: currentUser.photoURL || null,
+    },
+  ]);
+  const attendeesId = createArrayUnion([currentUser.id]);
+  const document = {
+    ...event,
+    hostedBy: currentUser.displayName,
+    hostId: currentUser.id,
+    hostPhotoURL: currentUser.photoURL || null,
+    attendees: attendees,
+    attendeesId: attendeesId,
+  };
   try {
-    await addDocumentToCollection({ collectionRef: "events", document: event });
+    await addDocumentToCollection({ collectionRef: "events", document: document });
   } catch (error) {
     console.log(error);
   }
@@ -65,7 +82,7 @@ const slice = createSlice({
     });
     builder.addCase(createEvent.rejected, (state, action) => {
       state.status = "idle";
-      toast.loading("There has been an error during upload!");
+      toast.error("There has been an error during upload!");
     });
     //update event
     builder.addCase(updateEvent.pending, (state, action) => {

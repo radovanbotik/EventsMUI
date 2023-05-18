@@ -62,6 +62,7 @@ const EventForm = () => {
             };
 
             if (!isEditing) {
+              console.log("new post");
               // dispatch(createEvent(newValues));
               dispatch(createEvent(newValues));
               dispatch(resetEvent());
@@ -70,7 +71,7 @@ const EventForm = () => {
             }
             if (isEditing) {
               // dispatch(updateEvent(newValues));
-              console.log("ran");
+              console.log("editing post");
               dispatch(updateEvent(newValues));
               dispatch(resetEvent());
               dispatch(editingFalse());
