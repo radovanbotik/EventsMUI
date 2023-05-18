@@ -17,12 +17,13 @@ export default function CalendarWithTime({ label, ...props }) {
         {...props}
         value={dayjs(values.date)}
         disablePast
+        onChange={e => setValues(prev => ({ ...prev, date: dayjs(e) }))}
         // minDate={dayjs()}
-        onChange={e => {
-          // console.log(dayjs(e));
-          // helpers.setValue(dayjs(e).toISOString());
-          setValues(prev => ({ ...prev, date: dayjs(e).toISOString() }));
-        }}
+        // onChange={e => {
+        //   // console.log(dayjs(e));
+        //   // helpers.setValue(dayjs(e).toISOString());
+        //   setValues(prev => ({ ...prev, date: dayjs(e).toISOString() }));
+        // }}
       />
       {meta.touched && meta.error && <FormHelperText>{meta.touched && Boolean(meta.error)}</FormHelperText>}
     </FormControl>

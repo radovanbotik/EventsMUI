@@ -15,13 +15,11 @@ import LocationSelectAutocomplete from "../../../common/forms/LocationSelectAuto
 import { geocodeByPlaceId, getLatLng } from "react-places-autocomplete";
 import { Typography, Button, MenuItem, Checkbox, ListItemText, ButtonGroup, Stack } from "@mui/material";
 
-// country: Yup.string().required("Event country is required.").oneOf(["SK", "CZ", "HU"]),
-// city: Yup.string().required("Event city is required."),
 const validationSchema = Yup.object({
   title: Yup.string("Enter title of your event.")
     .required("Event title is required.")
     .min(5, "Event title should be of minimum 5 characters length."),
-  date: Yup.date("Date is required.").min(dayjs(), "Can't set a date earlier than now."),
+  // date: Yup.date("Date is required.").min(dayjs(), "Can't set a date earlier than now."),
   description: Yup.string("Enter description of your event.")
     .required("Event description is required.")
     .min(10, "Event description should be of minimum 10 characters length.")
@@ -30,7 +28,9 @@ const validationSchema = Yup.object({
 
 const initialValues = {
   title: "",
-  date: dayjs().toISOString(),
+  // date: dayjs().toISOString(),
+  // date:dayjs(),
+  date: new Date(),
   tags: [],
   description: "",
   location: null,
@@ -54,6 +54,7 @@ const EventForm = () => {
           if (coords) {
             newValues = {
               ...values,
+              date: values.date.toDate(),
               location: {
                 place_id: values.location.place_id,
                 description: values.location.description,

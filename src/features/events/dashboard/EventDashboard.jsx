@@ -12,7 +12,7 @@ const EventDashboard = () => {
   const { isOpen } = useSelector(store => store.formReducer);
   const { currentUser } = useSelector(store => store.authReducer);
   const [filterOptions, setFilterOptions] = useState({
-    attendanceType: "attending",
+    attendanceType: "all",
     date: new Date(),
     id: currentUser.id,
   });

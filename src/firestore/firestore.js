@@ -32,6 +32,10 @@ export const db = getFirestore(app);
 export const storage = getStorage(app);
 import { auth } from "../config/firebase";
 
+export const convertDateToTimestamp = date => {
+  return Timestamp.fromDate(date);
+};
+
 export const createArrayUnion = array => {
   return arrayUnion(...array);
 };

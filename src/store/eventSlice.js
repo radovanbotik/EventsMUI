@@ -7,6 +7,7 @@ import {
   addToArrayDocument,
   removeDocumentFromArray,
   getDocumentOnce,
+  convertDateToTimestamp,
 } from "../firestore/firestore";
 import { toast } from "react-toastify";
 
@@ -19,6 +20,7 @@ const initialState = {
 export const setStatus = createAction("events/setStatus");
 
 export const createEvent = createAsyncThunk("events/createEvent", async (event, thunkAPI) => {
+  console.log(event);
   const { currentUser } = thunkAPI.getState().authReducer;
   const attendees = createArrayUnion([
     {
@@ -27,15 +29,18 @@ export const createEvent = createAsyncThunk("events/createEvent", async (event, 
       photoURL: currentUser.photoURL || null,
     },
   ]);
+  const timestamp = convertDateToTimestamp(event.date);
   const attendeesId = createArrayUnion([currentUser.id]);
   const document = {
     ...event,
+    date: timestamp,
     hostedBy: currentUser.displayName,
     hostId: currentUser.id,
     hostPhotoURL: currentUser.photoURL || null,
     attendees: attendees,
     attendeesId: attendeesId,
   };
+  console.log(document);
   try {
     await addDocumentToCollection({ collectionRef: "events", document: document });
   } catch (error) {
