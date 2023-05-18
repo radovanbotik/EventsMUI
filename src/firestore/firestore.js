@@ -12,7 +12,7 @@ import {
   deleteDoc,
   setDoc,
 } from "firebase/firestore";
-import { getStorage } from "firebase/storage";
+import { deleteObject, getStorage, ref } from "firebase/storage";
 import { app } from "../config/firebase";
 import {
   createUserWithEmailAndPassword,
@@ -33,7 +33,6 @@ export const getDocumentOnce = async ({ collectionRef, documentId }) => {
   const docSnap = await getDoc(doc(db, collectionRef, documentId));
   if (docSnap.exists()) return docSnap.data();
 };
-
 export const addDocumentToCollection = async ({ collectionRef, document }) => {
   await addDoc(collection(db, collectionRef), document);
 };
@@ -64,6 +63,21 @@ export const subscribeToCollection = ({ collectionRef, q, action }) => {
     };
   });
 };
+
+export const deleteDocumentFromSubCollection = async ({
+  collectionRef,
+  document1,
+  subcollectionRef,
+  documentToDelete,
+}) => {
+  await deleteDoc(doc(db, collectionRef, document1, subcollectionRef, documentToDelete));
+  console.log("removed");
+};
+
+// setDoc(doc(db, "users", auth.currentUser.uid, "photos", filename), {
+//   name: filename,
+//   url: downloadURL,
+// });
 
 //auth
 export const createUserWithMail = async ({ email, password }) => {
@@ -117,4 +131,11 @@ export const updateUserProfile = async updates => {
 
 export const updateUserPassword = async password => {
   await updatePassword(auth.currentUser, password);
+};
+
+//storage
+export const deleteFileFromStorage = async filepath => {
+  const fileRef = ref(storage, filepath);
+  await deleteObject(fileRef);
+  console.log("removed");
 };

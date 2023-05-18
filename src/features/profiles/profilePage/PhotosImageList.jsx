@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { useMediaQuery, ImageList, ImageListItem, ImageListItemBar, IconButton } from "@mui/material";
+import { useMediaQuery, ImageList, ImageListItem, ImageListItemBar, IconButton, Button } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import { DeleteRounded } from "@mui/icons-material";
+import { DeleteRounded, CheckCircleOutline } from "@mui/icons-material";
 import Confirmation from "../../../common/dialogs/Confirmation";
-import { updateUser } from "../../../store/profileSlice";
+import { deleteImage, updateUser } from "../../../store/profileSlice";
 import { useDispatch } from "react-redux";
 
 export default function PhotosImageList({ photos }) {
@@ -44,24 +44,24 @@ export default function PhotosImageList({ photos }) {
         onSubmit={() => setProfilePicture(currentPhoto)}
       />
       <ImageList cols={cols()}>
-        {photos?.map(item => (
-          <ImageListItem
-            key={item.name}
-            onClick={() => {
-              setOpen(true);
-              setCurrentPhoto(item.url);
-            }}
-            sx={{ cursor: "pointer" }}
-          >
-            <img src={item.url} alt={item.name} loading="lazy" />
+        {photos?.map(photo => (
+          <ImageListItem key={photo.name}>
+            <img src={photo.url} alt={photo.name} loading="lazy" />
             <ImageListItemBar
               // actionIcon={<DeleteRounded fontSize="small" />}
               actionIcon={
-                <IconButton color="inherit" onClick={() => console.log("delete")}>
-                  <DeleteRounded fontSize="small" />
+                <IconButton
+                  color="inherit"
+                  onClick={() => {
+                    setOpen(true);
+                    setCurrentPhoto(photo.url);
+                  }}
+                  sx={{ cursor: "pointer" }}
+                >
+                  <CheckCircleOutline fontSize="small" />
                 </IconButton>
               }
-              title={item.name}
+              title={photo.name}
               // subtitle={<span>by: {item.author}</span>}
               position="top"
               sx={{
@@ -69,6 +69,9 @@ export default function PhotosImageList({ photos }) {
                 "& .MuiImageListItemBar-actionIcon": { color: "white" },
               }}
             />
+            <Button size="small" sx={{ alignSelf: "end" }} onClick={() => dispatch(deleteImage(photo.name))}>
+              delete
+            </Button>
           </ImageListItem>
         ))}
       </ImageList>

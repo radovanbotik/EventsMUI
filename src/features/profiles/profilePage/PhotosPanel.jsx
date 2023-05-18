@@ -13,15 +13,20 @@ const PhotosPanel = ({ props }) => {
   useEffect(() => {
     const unsubscribe = onSnapshot(
       collection(db, "users", props.id, "photos"),
-      collection => {
-        collection.forEach(doc => setPhotos(prev => [...prev, doc.data()]));
+      snapshot => {
+        const photos = [];
+        snapshot.forEach(doc => {
+          const data = doc.data();
+          photos.push(data);
+        });
+        setPhotos(photos);
       },
       error => {
         console.log(error);
       }
     );
 
-    return () => unsubscribe();
+    return unsubscribe;
   }, []);
 
   return (
