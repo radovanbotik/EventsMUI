@@ -5,6 +5,16 @@ import dayjs from "dayjs";
 import { List, ListItem, ListItemText, ListItemIcon, Divider, Box } from "@mui/material";
 
 const EventFilters = () => {
+  //All events
+  //no query
+  //Events I am going
+  //where('attendeesId','array-contains','currentUser.id')
+  //Events I am hosting
+  //where('hostId','==','currentUser.id')
+  //
+
+  // const lookup = { all: "", going: "", hosting: "", time:'' };
+
   return (
     <Box>
       {/* Menu */}
@@ -17,13 +27,13 @@ const EventFilters = () => {
         </ListItem>
         <Divider />
         <ListItem>
-          <ListItemText primary="All events" secondary="list of all avaible events" />
+          <ListItemText primary="Avaible events" secondary="All avaible events" />
         </ListItem>
         <ListItem>
-          <ListItemText primary="My events" secondary="list of all avaible events" />
+          <ListItemText primary="I am going" secondary="Events I am attending" />
         </ListItem>
         <ListItem>
-          <ListItemText primary="All events" secondary="list of all avaible events" />
+          <ListItemText primary="I am hosting" secondary="Events I am hosting" />
         </ListItem>
       </List>
       {/* Calendar */}

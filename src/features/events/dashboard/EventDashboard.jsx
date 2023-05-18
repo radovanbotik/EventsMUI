@@ -5,16 +5,24 @@ import { loadEvents } from "../../../store/eventSlice";
 import { Grid } from "@mui/material";
 import useSubscribeTocollection from "../../../hooks/useSubscribeTocollection";
 import EventList from "./EventList";
+import { useState } from "react";
 
 const EventDashboard = () => {
   const { events } = useSelector(store => store.eventReducer);
   const { isOpen } = useSelector(store => store.formReducer);
+  const { currentUser } = useSelector(store => store.authReducer);
+  const [filterOptions, setFilterOptions] = useState({
+    attendanceType: "attending",
+    date: new Date(),
+    id: currentUser.id,
+  });
   const dispatch = useDispatch();
 
   useSubscribeTocollection({
     collectionRef: "events",
     action: events => dispatch(loadEvents(events)),
-    dependancies: [],
+    dependancies: [filterOptions, currentUser.id],
+    filter: filterOptions,
   });
 
   return (

@@ -10,8 +10,11 @@ import "react-toastify/dist/ReactToastify.css";
 import useGoogleMaps from "../../hooks/useGoogleMaps";
 
 import { CssBaseline, Box, Toolbar, Drawer } from "@mui/material";
+import { useSelector } from "react-redux";
+import store from "../../store/store";
 
 function ResponsiveDrawer(props) {
+  const { isInitialized } = useSelector(store => store.authReducer);
   const drawerWidth = 240;
   const { window } = props;
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -87,7 +90,7 @@ function ResponsiveDrawer(props) {
           }}
         >
           <Toolbar />
-          <Outlet />
+          {isInitialized && <Outlet />}
         </Box>
         <ScrollRestoration />
       </Box>

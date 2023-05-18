@@ -13,6 +13,7 @@ import {
   setDoc,
   arrayUnion,
   arrayRemove,
+  where,
 } from "firebase/firestore";
 import { deleteObject, getStorage, ref } from "firebase/storage";
 import { app } from "../config/firebase";
@@ -34,6 +35,12 @@ import { auth } from "../config/firebase";
 export const createArrayUnion = array => {
   return arrayUnion(...array);
 };
+
+export const createQuery = ({ collectionRef, field, value, operator }) => {
+  if (!field && !operator && !value) return query(collection(db, collectionRef));
+  return query(collection(db, collectionRef), where(field, `${operator}`, value));
+};
+
 export const addToArrayDocument = async ({ collectionRef, documentRef, array, documentToAdd }) => {
   await updateDoc(doc(db, collectionRef, documentRef), { [array]: arrayUnion(documentToAdd) });
 };
@@ -60,7 +67,7 @@ export const deleteDocument = async ({ collectionRef, docId }) => {
   await deleteDoc(doc(db, collectionRef, docId));
 };
 export const subscribeToCollection = ({ collectionRef, q, action }) => {
-  return onSnapshot(query(collection(db, collectionRef), q && q), snapshot => {
+  return onSnapshot(q, snapshot => {
     const docs = [];
     snapshot.forEach(doc => {
       const docData = doc.data();

@@ -14,6 +14,7 @@ const initialState = {
   isAuthenticated: false,
   currentUser: null,
   status: "idle",
+  isInitialized: false,
 };
 //actions
 
@@ -55,6 +56,9 @@ const authSlice = createSlice({
     setUser: (state, action) => {
       state.isAuthenticated = action.payload.authenticated;
       state.currentUser = action.payload.user;
+    },
+    setInitialized: (state, action) => {
+      state.isInitialized = action.payload;
     },
   },
   extraReducers: builder => {
@@ -125,4 +129,4 @@ const authSlice = createSlice({
 });
 
 export default authSlice.reducer;
-export const { setUser } = authSlice.actions;
+export const { setUser, setInitialized } = authSlice.actions;

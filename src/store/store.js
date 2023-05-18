@@ -2,7 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import eventReducer, { setStatus } from "./eventSlice";
 import formReducer from "./formSlice";
 import modalReducer from "./modalSlice";
-import authReducer from "./authSlice";
+import authReducer, { setInitialized } from "./authSlice";
 import profileReducer from "./profileSlice";
 
 import { auth } from "../config/firebase";
@@ -22,7 +22,7 @@ const store = configureStore({
 });
 
 onAuthStateChanged(auth, user => {
-  store.dispatch(setStatus("loading"));
+  // store.dispatch(setStatus("loading"));
   if (user) {
     //find user in user database and store that
     const unsub = onSnapshot(doc(db, "users", user.uid), doc => {
@@ -38,7 +38,8 @@ onAuthStateChanged(auth, user => {
           authenticated: true,
         })
       );
-      store.dispatch(setStatus("idle"));
+      // store.dispatch(setStatus("idle"));
+      store.dispatch(setInitialized(true));
     });
     // store.dispatch(
     //   setUser({
