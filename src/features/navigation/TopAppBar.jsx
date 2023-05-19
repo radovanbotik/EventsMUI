@@ -104,10 +104,10 @@ const Bar = ({ handleDrawerToggle, drawerWidth, auth, anchorEl, setAnchorEl }) =
               open={Boolean(anchorEl)}
               onClose={handleClose}
             >
-              <MenuItem onClick={handleClose} component={Link} to="account">
+              <MenuItem onClick={handleClose} component={Link} to="/account">
                 My Account
               </MenuItem>
-              <MenuItem onClick={handleClose} component={Link} to={`profile/${currentUser.id}`}>
+              <MenuItem onClick={handleClose} component={Link} to={`/users/profile/${currentUser.id}`}>
                 My Profile
               </MenuItem>
 

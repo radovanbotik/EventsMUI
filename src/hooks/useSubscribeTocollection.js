@@ -130,6 +130,11 @@ const useSubscribeTocollection = ({ filter, collectionRef, action, dependancies 
             collectionRef: collectionRef,
             constraints: [
               {
+                field: "attendeesId",
+                operator: "array-contains",
+                value: filter.id,
+              },
+              {
                 field: "date",
                 operator: ">=",
                 value: convertDateToTimestamp(filter.date),

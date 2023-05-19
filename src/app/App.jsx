@@ -13,7 +13,7 @@ const Event = React.lazy(() => import("../features/events/event/Event"));
 const router = createBrowserRouter([
   { path: "/", element: <Landing /> },
   {
-    path: "/events",
+    path: "events",
     element: <Layout />,
     children: [
       {
@@ -28,24 +28,46 @@ const router = createBrowserRouter([
             ),
           },
           {
-            path: ":id",
+            path: "event/:id",
             element: (
               <React.Suspense fallback={<div>loading....</div>}>
                 <Event />
               </React.Suspense>
             ),
           },
+        ],
+      },
+    ],
+  },
+  {
+    path: "users",
+    element: <Layout />,
+    children: [
+      {
+        errorElement: <Error />,
+        children: [
           {
-            path: "account",
-            element: <Account />,
-          },
-          {
-            path: "users",
+            index: true,
             element: <Users />,
           },
           {
             path: "profile/:id",
             element: <Profile />,
+          },
+        ],
+      },
+    ],
+  },
+  {
+    path: "account",
+    element: <Layout />,
+    children: [
+      {
+        errorElement: <Error />,
+        children: [
+          {
+            index: true,
+            element: <Account />,
           },
         ],
       },

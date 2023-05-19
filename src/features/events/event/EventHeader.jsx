@@ -57,7 +57,7 @@ const EventHeader = ({ event, mapOpen }) => {
         <Typography>{dayjs(date).format("DD MMM YYYY, HH:mm")}</Typography>
         <Typography>
           Hosted by
-          <Link component={RLink} to={`/events/profile/${hostId}`}>
+          <Link component={RLink} to={`/users/profile/${hostId}`}>
             {hostedBy}
           </Link>
         </Typography>

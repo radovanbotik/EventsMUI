@@ -44,7 +44,7 @@ export default function UsersList({ users }) {
             // }
             disablePadding
           >
-            <ListItemButton onClick={() => navigate(`/events/profile/${value.id}`)}>
+            <ListItemButton onClick={() => navigate(`profile/${value.id}`)}>
               <ListItemAvatar>
                 <Avatar src={value.photoURL} />
               </ListItemAvatar>

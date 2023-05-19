@@ -55,7 +55,7 @@ const EventCard = props => {
 
   return (
     <Card variant="outlined">
-      <CardActionArea component={Link} to={id}>
+      <CardActionArea component={Link} to={`event/${id}`}>
         {/* PROFILE PICTURE */}
         <CardHeader
           avatar={
