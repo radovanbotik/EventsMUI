@@ -29,9 +29,11 @@ export const createEvent = createAsyncThunk("events/createEvent", async (event, 
     },
   ]);
   const timestamp = convertDateToTimestamp(event.date);
+  const createdAt = convertDateToTimestamp(new Date());
   const attendeesId = createArrayUnion([currentUser.id]);
   const document = {
     ...event,
+    createdAt: createdAt,
     date: timestamp,
     hostedBy: currentUser.displayName,
     hostId: currentUser.id,

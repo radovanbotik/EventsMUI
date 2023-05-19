@@ -6,6 +6,8 @@ import dayjs from "dayjs";
 import { MoreVert } from "@mui/icons-material";
 import DescriptionAlert from "../../../common/alerts/DescriptionAlert";
 import noImage from "../../../common/images/noImage.avif";
+import relativeTime from "dayjs/plugin/relativeTime";
+dayjs.extend(relativeTime);
 
 import {
   Card,
@@ -43,6 +45,7 @@ const EventCard = props => {
     eventPhotoURL,
     location,
     canceled,
+    createdAt,
   } = props.event;
 
   const { isOpen } = useSelector(store => store.formReducer);
@@ -116,7 +119,7 @@ const EventCard = props => {
               </ListItem>
               <Divider variant="inset" component="li" />
               <ListItem>
-                <ListItemText primary={description} secondary={"2 minutes ago"} />
+                <ListItemText primary={description} secondary={dayjs(createdAt).fromNow("hh") || "2 minutes ago"} />
               </ListItem>
             </List>
           </CardContent>
