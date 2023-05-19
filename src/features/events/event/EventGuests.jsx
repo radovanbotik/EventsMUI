@@ -26,7 +26,7 @@ const EventGuests = ({ attendees }) => {
       <CardContent>
         <List>
           {attendees?.map(att => (
-            <ListItemButton component={Link} to={`/events/profile/${att.id}`} divider key={att.id}>
+            <ListItemButton component={Link} to={`/users/profile/${att.id}`} divider key={att.id}>
               <ListItemAvatar>
                 <Avatar src={att.photoURL} />
               </ListItemAvatar>
