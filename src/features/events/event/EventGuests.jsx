@@ -1,4 +1,14 @@
-import { Card, CardHeader, CardContent, List, ListItem, ListItemAvatar, Avatar, ListItemText } from "@mui/material";
+import {
+  Card,
+  CardHeader,
+  CardContent,
+  List,
+  ListItemButton,
+  ListItemAvatar,
+  Avatar,
+  ListItemText,
+} from "@mui/material";
+import { Link } from "react-router-dom";
 
 const EventGuests = ({ attendees }) => {
   function formatGuests(guestCount = 0) {
@@ -16,12 +26,12 @@ const EventGuests = ({ attendees }) => {
       <CardContent>
         <List>
           {attendees?.map(att => (
-            <ListItem divider key={att.id}>
+            <ListItemButton component={Link} to={`/events/profile/${att.id}`} divider key={att.id}>
               <ListItemAvatar>
                 <Avatar src={att.photoURL} />
               </ListItemAvatar>
               <ListItemText primary={att.name} />
-            </ListItem>
+            </ListItemButton>
           ))}
         </List>
       </CardContent>
