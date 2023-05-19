@@ -119,7 +119,7 @@ const EventCard = props => {
               </ListItem>
               <Divider variant="inset" component="li" />
               <ListItem>
-                <ListItemText primary={description} secondary={dayjs(createdAt).fromNow("hh") || "2 minutes ago"} />
+                <ListItemText primary={description} secondary={`${dayjs(createdAt).fromNow("hh")} ago`} />
               </ListItem>
             </List>
           </CardContent>

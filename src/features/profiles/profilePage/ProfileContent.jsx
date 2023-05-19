@@ -2,6 +2,7 @@ import * as React from "react";
 import { Tabs, Tab, Box } from "@mui/material";
 import AboutPanel from "./AboutPanel";
 import PhotosPanel from "./PhotosPanel";
+import EventsPanel from "./EventsPanel";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -49,7 +50,7 @@ const ProfileContent = props => {
         <PhotosPanel {...props} />
       </TabPanel>
       <TabPanel value={value} index={2}>
-        events
+        <EventsPanel {...props} />
       </TabPanel>
       <TabPanel value={value} index={3}>
         followers

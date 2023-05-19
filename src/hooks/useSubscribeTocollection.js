@@ -110,6 +110,18 @@ const useSubscribeTocollection = ({ filter, collectionRef, action, dependancies 
             ],
           });
           break;
+        case "attended":
+          query = createCompoundQuery({
+            collectionRef: collectionRef,
+            constraints: [
+              {
+                field: "date",
+                operator: "<=",
+                value: convertDateToTimestamp(filter.date),
+              },
+            ],
+          });
+          break;
         default:
           // query = createQuery({
           //   collectionRef: collectionRef,

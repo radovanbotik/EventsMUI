@@ -10,6 +10,7 @@ import { toast } from "react-toastify";
 
 const initialState = {
   user: null,
+  eventTab: "hosting",
 };
 
 export const updateUser = createAsyncThunk("profileSlice/updateProfile", async (updates, thunkAPI) => {
@@ -40,6 +41,9 @@ const profileSlice = createSlice({
     setViewedUser: (state, action) => {
       state.user = action.payload;
     },
+    setEventTab: (state, action) => {
+      state.eventTab = action.payload;
+    },
   },
   extraReducers: builder => {
     builder.addCase(updateUser.pending, (state, action) => {
@@ -57,4 +61,4 @@ const profileSlice = createSlice({
 });
 
 export default profileSlice.reducer;
-export const { setViewedUser } = profileSlice.actions;
+export const { setViewedUser, setEventTab } = profileSlice.actions;
