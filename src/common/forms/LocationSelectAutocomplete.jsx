@@ -53,7 +53,7 @@ export default function LocationSelectAutocomplete() {
   }, [values.location, inputValue, fetch]);
   return (
     <Autocomplete
-      id="google-map-demo"
+      // id="google-map-demo"
       //   sx={{ width: 300 }}
       sx={{ width: 1 }}
       getOptionLabel={option => (typeof option === "string" ? option : option.description)}
@@ -67,9 +67,10 @@ export default function LocationSelectAutocomplete() {
       value={values.location}
       noOptionsText="No locations"
       onChange={(event, newValue) => {
+        console.log(newValue);
         setOptions(newValue ? [newValue, ...options] : options);
-        setFieldValue(newValue);
-        setValues({ ...values, location: newValue });
+        setFieldValue("location", newValue);
+        // setValues({ ...values, location: newValue });
       }}
       onInputChange={(event, newInputValue) => {
         setInputValue(newInputValue);

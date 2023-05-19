@@ -5,7 +5,6 @@ import { closeForm, editingFalse, resetEvent, resetValues } from "../../../store
 import { Formik } from "formik";
 import * as Yup from "yup";
 import dayjs from "dayjs";
-import { Form } from "react-router-dom";
 
 import BasicInput from "../../../common/forms/BasicInput";
 import { tags } from "../../../common/util/tags";
@@ -14,6 +13,7 @@ import CalendarWithTime from "../../../common/forms/CalendarWithTime";
 import LocationSelectAutocomplete from "../../../common/forms/LocationSelectAutocomplete";
 import { geocodeByPlaceId, getLatLng } from "react-places-autocomplete";
 import { Typography, Button, MenuItem, Checkbox, ListItemText, ButtonGroup, Stack } from "@mui/material";
+import { Form } from "react-router-dom";
 
 const validationSchema = Yup.object({
   title: Yup.string("Enter title of your event.")
@@ -28,8 +28,6 @@ const validationSchema = Yup.object({
 
 const initialValues = {
   title: "",
-  // date: dayjs().toISOString(),
-  // date:dayjs(),
   date: new Date(),
   tags: [],
   description: "",
@@ -45,6 +43,7 @@ const EventForm = () => {
       initialValues={Object.keys(event).length > 0 && isEditing ? event : initialValues}
       validationSchema={validationSchema}
       onSubmit={async (values, { setSubmitting }) => {
+        console.log(values);
         try {
           let coords;
           const geocode = await geocodeByPlaceId(values.location.place_id);
@@ -54,7 +53,7 @@ const EventForm = () => {
           if (coords) {
             newValues = {
               ...values,
-              date: values.date.toDate(),
+              date: dayjs(values.date).toDate(),
               location: {
                 place_id: values.location.place_id,
                 description: values.location.description,
@@ -94,12 +93,19 @@ const EventForm = () => {
           spacing={1}
           sx={{ p: 4 }}
           component={Form}
-          method="post"
-          action="new-event"
+          // method="post"
+          // action="new-event"
           onSubmit={formikProps.handleSubmit}
         >
           <Typography variant="h5">{isEditing ? "Edit event" : "Create new event"}</Typography>
-          <BasicInput label="Title" name="title" type="text" placeholder="e.g Roadtrip around Hungary" margin="dense" />
+          <BasicInput
+            label="Title"
+            name="title"
+            type="text"
+            placeholder="e.g Roadtrip around Hungary"
+            margin="dense"
+            id="title"
+          />
           <LocationSelectAutocomplete />
           <CalendarWithTime label="Date" name="date" />
           <SelectAutocomplete label="Tags" name="tags" labelId="tags-label">

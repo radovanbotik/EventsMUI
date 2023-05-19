@@ -20,7 +20,6 @@ const initialState = {
 export const setStatus = createAction("events/setStatus");
 
 export const createEvent = createAsyncThunk("events/createEvent", async (event, thunkAPI) => {
-  console.log(event);
   const { currentUser } = thunkAPI.getState().authReducer;
   const attendees = createArrayUnion([
     {
@@ -40,7 +39,6 @@ export const createEvent = createAsyncThunk("events/createEvent", async (event, 
     attendees: attendees,
     attendeesId: attendeesId,
   };
-  console.log(document);
   try {
     await addDocumentToCollection({ collectionRef: "events", document: document });
   } catch (error) {

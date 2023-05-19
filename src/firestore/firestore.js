@@ -51,9 +51,6 @@ export const createCompoundQuery = ({ collectionRef, constraints }) => {
   return query(collection(db, collectionRef), ...chainedConstraints);
 };
 
-// where(constraints[0].field, constraints[0].operator, constraints[0].value),
-// where(constraints[1].field, constraints[1].operator, constraints[1].value)
-// constraints.forEach(obj => where(obj.field, obj.operator, obj.value))
 export const addToArrayDocument = async ({ collectionRef, documentRef, array, documentToAdd }) => {
   await updateDoc(doc(db, collectionRef, documentRef), { [array]: arrayUnion(documentToAdd) });
 };
@@ -64,7 +61,7 @@ export const removeDocumentFromArray = async ({ collectionRef, documentRef, arra
 
 export const getDocumentOnce = async ({ collectionRef, documentId }) => {
   const docSnap = await getDoc(doc(db, collectionRef, documentId));
-  console.log(docSnap.data());
+  // console.log(docSnap.data());
   if (docSnap.exists()) return docSnap.data();
 };
 export const addDocumentToCollection = async ({ collectionRef, document }) => {
@@ -80,7 +77,7 @@ export const deleteDocument = async ({ collectionRef, docId }) => {
   await deleteDoc(doc(db, collectionRef, docId));
 };
 export const subscribeToCollection = ({ collectionRef, q, action }) => {
-  console.log(q);
+  // console.log(q);
   return onSnapshot(q, snapshot => {
     const docs = [];
     snapshot.forEach(doc => {

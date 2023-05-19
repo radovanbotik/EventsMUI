@@ -38,7 +38,11 @@ const EventFilters = ({ setFilterOptions, filterOptions }) => {
         <ListItem>
           <StaticDatePicker
             value={dayjs(filterOptions.date)}
-            onChange={e => setFilterOptions(prev => ({ ...prev, date: dayjs(e).toDate() }))}
+            onChange={e => {
+              setFilterOptions(prev => ({ ...prev, date: dayjs(e).toDate() }));
+              // console.log(dayjs(e).toDate());
+              console.log(dayjs(filterOptions.date));
+            }}
           />
         </ListItem>
       </List>

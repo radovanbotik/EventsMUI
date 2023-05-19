@@ -15,7 +15,6 @@ const useSubscribeTocollection = ({ filter, collectionRef, action, dependancies 
 
   useEffect(() => {
     dispatch(setStatus("loading"));
-    console.log(filter);
     // const unsubscribe = onSnapshot(
     //   query(collection(db, collectionRef), q),
     //   snapshot => {
@@ -50,68 +49,85 @@ const useSubscribeTocollection = ({ filter, collectionRef, action, dependancies 
     // ]})
 
     let query;
-    switch (filter.attendanceType) {
-      case "attending":
-        // query = createQuery({
-        //   collectionRef: collectionRef,
-        //   field: "attendeesId",
-        //   operator: "array-contains",
-        //   value: filter.id,
-        // });
-        query = createCompoundQuery({
-          collectionRef: collectionRef,
-          constraints: [
-            {
-              field: "attendeesId",
-              operator: "array-contains",
-              value: filter.id,
-            },
-            {
-              field: "date",
-              operator: ">=",
-              value: convertDateToTimestamp(filter.date),
-            },
-          ],
-        });
-        break;
-      case "hosting":
-        // query = createQuery({
-        //   collectionRef: collectionRef,
-        //   field: "hostId",
-        //   operator: "==",
-        //   value: filter.id,
-        // });
-        query = createCompoundQuery({
-          collectionRef: collectionRef,
-          constraints: [
-            {
-              field: "hostId",
-              operator: "==",
-              value: filter.id,
-            },
-            {
-              field: "date",
-              operator: ">=",
-              value: convertDateToTimestamp(filter.date),
-            },
-          ],
-        });
-        break;
-      default:
-        // query = createQuery({
-        //   collectionRef: collectionRef,
-        // });
-        query = createCompoundQuery({
-          collectionRef: collectionRef,
-          constraints: [
-            {
-              field: "date",
-              operator: ">=",
-              value: convertDateToTimestamp(filter.date),
-            },
-          ],
-        });
-        break;
+
+    if (filter) {
+      switch (filter.attendanceType) {
+        case "attending":
+          // query = createQuery({
+          //   collectionRef: collectionRef,
+          //   field: "attendeesId",
+          //   operator: "array-contains",
+          //   value: filter.id,
+          // });
+          query = createCompoundQuery({
+            collectionRef: collectionRef,
+            constraints: [
+              {
+                field: "attendeesId",
+                operator: "array-contains",
+                value: filter.id,
+              },
+              {
+                field: "date",
+                operator: ">=",
+                value: convertDateToTimestamp(filter.date),
+              },
+            ],
+          });
+          break;
+        case "hosting":
+          // query = createQuery({
+          //   collectionRef: collectionRef,
+          //   field: "hostId",
+          //   operator: "==",
+          //   value: filter.id,
+          // });
+          query = createCompoundQuery({
+            collectionRef: collectionRef,
+            constraints: [
+              {
+                field: "hostId",
+                operator: "==",
+                value: filter.id,
+              },
+              {
+                field: "date",
+                operator: ">=",
+                value: convertDateToTimestamp(filter.date),
+              },
+            ],
+          });
+          break;
+        case "all":
+          query = createCompoundQuery({
+            collectionRef: collectionRef,
+            constraints: [
+              {
+                field: "date",
+                operator: ">=",
+                value: convertDateToTimestamp(filter.date),
+              },
+            ],
+          });
+          break;
+        default:
+          // query = createQuery({
+          //   collectionRef: collectionRef,
+          // });
+          query = createCompoundQuery({
+            collectionRef: collectionRef,
+            constraints: [
+              {
+                field: "date",
+                operator: ">=",
+                value: convertDateToTimestamp(filter.date),
+              },
+            ],
+          });
+          break;
+      }
+    } else {
+      query = createQuery({ collectionRef: collectionRef });
     }
 
     const unsubscribe = subscribeToCollection({ collectionRef, q: query, action });
