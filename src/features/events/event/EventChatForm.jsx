@@ -6,10 +6,7 @@ import { Typography, Stack, Button, ButtonGroup } from "@mui/material";
 import { addCommentToEvent } from "../../../firestore/realtimeDatabase";
 
 const validationSchema = Yup.object({
-  comment: Yup.string()
-    .min(5, "comment must contain at least 5 characters")
-    .max(1000, "comment cannot exceed 1000 words.")
-    .required("You forgot to write your comment."),
+  comment: Yup.string().max(1000, "comment cannot exceed 1000 words.").required("You forgot to write your comment."),
 });
 const initialValues = {
   comment: "",
@@ -44,9 +41,10 @@ const EventChatForm = ({ handleClose, id }) => {
               name="comment"
               label="Comment"
               margin="dense"
+              placeholder="Enter your comment (Enter to submit, SHIFT + Enter for new line)"
               submitOnKeyDown={true}
               multiline
-              minRows={1}
+              minRows={2}
               maxRows={4}
             />
             <ButtonGroup fullWidth variant="contained">

@@ -51,7 +51,7 @@ const EventChat = ({ id }) => {
                 primary={comment.displayName}
                 secondary={
                   <>
-                    <Typography component="span">
+                    <Typography component="span" whiteSpace="pre-wrap">
                       {comment.comment} <br /> {dayjs(comment.createdAt).fromNow()}
                     </Typography>
                   </>
