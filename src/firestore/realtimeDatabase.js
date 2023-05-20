@@ -40,6 +40,7 @@ export const addCommentToEvent = async ({ post, id }) => {
 export const listenToLocation = async ({ location, action }) => {
   const locationRef = ref(database, location);
   onValue(locationRef, snapshot => {
+    if (!snapshot.exists()) return;
     const data = snapshot.val();
     console.log(Object.entries(data));
     action(Object.entries(data));
