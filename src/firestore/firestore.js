@@ -28,40 +28,37 @@ import {
   getAdditionalUserInfo,
 } from "firebase/auth";
 
-export const db = getFirestore(app);
-export const storage = getStorage(app);
 import { auth } from "../config/firebase";
 
+export const db = getFirestore(app);
+export const storage = getStorage(app);
+
+//utility
 export const convertDateToTimestamp = date => {
   return Timestamp.fromDate(date);
 };
-
 export const createArrayUnion = array => {
   return arrayUnion(...array);
 };
-
 export const createQuery = ({ collectionRef, field, value, operator }) => {
   if (!field && !operator && !value) return query(collection(db, collectionRef));
   return query(collection(db, collectionRef), where(field, `${operator}`, value));
 };
-
 export const createCompoundQuery = ({ collectionRef, constraints }) => {
   if (!constraints) return query(collection(db, collectionRef));
   let chainedConstraints = constraints.map(obj => where(obj.field, obj.operator, obj.value));
   return query(collection(db, collectionRef), ...chainedConstraints);
 };
-
+//general operations
 export const addToArrayDocument = async ({ collectionRef, documentRef, array, documentToAdd }) => {
   await updateDoc(doc(db, collectionRef, documentRef), { [array]: arrayUnion(documentToAdd) });
 };
-
 export const removeDocumentFromArray = async ({ collectionRef, documentRef, array, documentToRemove }) => {
   await updateDoc(doc(db, collectionRef, documentRef), { [array]: arrayRemove(documentToRemove) });
 };
 
 export const getDocumentOnce = async ({ collectionRef, documentId }) => {
   const docSnap = await getDoc(doc(db, collectionRef, documentId));
-  // console.log(docSnap.data());
   if (docSnap.exists()) return docSnap.data();
 };
 export const addDocumentToCollection = async ({ collectionRef, document }) => {
@@ -95,7 +92,6 @@ export const subscribeToCollection = ({ collectionRef, q, action }) => {
     };
   });
 };
-
 export const deleteDocumentFromSubCollection = async ({
   collectionRef,
   document1,
@@ -105,11 +101,6 @@ export const deleteDocumentFromSubCollection = async ({
   await deleteDoc(doc(db, collectionRef, document1, subcollectionRef, documentToDelete));
   console.log("removed");
 };
-
-// setDoc(doc(db, "users", auth.currentUser.uid, "photos", filename), {
-//   name: filename,
-//   url: downloadURL,
-// });
 
 //auth
 export const createUserWithMail = async ({ email, password }) => {
@@ -130,7 +121,6 @@ export const createUserWithMail = async ({ email, password }) => {
       addDocumentWithIdToCollection({ collectionRef: "users", documentId: user.uid, document: newUserObject })
     );
 };
-
 export const signWithGoogle = async () => {
   const provider = new GoogleAuthProvider();
   const result = await signInWithPopup(auth, provider);
@@ -148,15 +138,12 @@ export const signWithGoogle = async () => {
     await addDocumentWithIdToCollection({ collectionRef: "users", documentId: user.uid, document: newUserObject });
   }
 };
-
 export const signInUser = async ({ email, password }) => {
   await signInWithEmailAndPassword(auth, email, password);
 };
-
 export const signOutUser = async () => {
   await signOut(auth);
 };
-
 export const updateUserProfile = async updates => {
   await updateProfile(auth.currentUser, updates);
 };

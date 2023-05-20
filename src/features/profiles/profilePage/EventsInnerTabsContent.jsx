@@ -9,7 +9,7 @@ export default function EventsInnerTabsContent({ events }) {
   return (
     <List sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
       {events?.map(ev => (
-        <ListItemButton key={ev.id} component={Link} to={`/events/${ev.id}`}>
+        <ListItemButton key={ev.id} component={Link} to={`/events/event/${ev.id}`}>
           <ListItemAvatar>
             <Avatar src={ev.photoURL && ev.photoURL}>{!ev.photoURL && <Image />}</Avatar>
           </ListItemAvatar>

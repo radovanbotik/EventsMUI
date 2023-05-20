@@ -53,12 +53,6 @@ const useSubscribeTocollection = ({ filter, collectionRef, action, dependancies 
     if (filter) {
       switch (filter.attendanceType) {
         case "attending":
-          // query = createQuery({
-          //   collectionRef: collectionRef,
-          //   field: "attendeesId",
-          //   operator: "array-contains",
-          //   value: filter.id,
-          // });
           query = createCompoundQuery({
             collectionRef: collectionRef,
             constraints: [
@@ -123,9 +117,6 @@ const useSubscribeTocollection = ({ filter, collectionRef, action, dependancies 
           });
           break;
         default:
-          // query = createQuery({
-          //   collectionRef: collectionRef,
-          // });
           query = createCompoundQuery({
             collectionRef: collectionRef,
             constraints: [

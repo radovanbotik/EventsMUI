@@ -41,7 +41,7 @@ const Event = () => {
             <Stack spacing={2}>
               <EventHeader id={id} event={event} mapOpen={mapOpen} />
               <EventInfo {...event} toggleMap={toggleMap} mapOpen={mapOpen} />
-              <EventChat />
+              <EventChat {...event} />
             </Stack>
           </Grid>
           <Grid item lg={4} xs={6}>
