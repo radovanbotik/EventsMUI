@@ -1,9 +1,8 @@
 import { app, auth } from "../config/firebase";
-import { getDatabase, ref, set, onValue, push } from "firebase/database";
+import { getDatabase, ref, set, onValue, push, orderByKey, query, limitToLast } from "firebase/database";
 
 const database = getDatabase(app);
 const user = auth.currentUser;
-console.log(user);
 
 //will overwrite data
 export const writeUserData = async user => {
@@ -32,17 +31,25 @@ export const addCommentToEvent = async ({ post, id }) => {
     ...post,
     displayName: user.displayName,
     photoURL: user.photoURL,
-    id: user.uid,
+    userId: user.uid,
     createdAt: Date.now(),
   });
 };
 
 export const listenToLocation = async ({ location, action }) => {
-  const locationRef = ref(database, location);
+  // const locationRef = ref(database, location);
+  const locationRef = query(ref(database, location), limitToLast(10));
   onValue(locationRef, snapshot => {
     if (!snapshot.exists()) return;
     const data = snapshot.val();
-    console.log(Object.entries(data));
-    action(Object.entries(data));
+    // const comments = Object.entries(snapshot.val()).map(array =>
+    //   array.reduce((prev, current, index, arr) => {
+    //     prev = { id: arr[0], ...current };
+    //     return prev;
+    //   }, {})
+    // );
+    const comments = Object.entries(snapshot.val()).map(array => ({ id: array[0], ...array[1] }));
+    // action(Object.entries(data));
+    action(comments);
   });
 };

@@ -8,14 +8,15 @@ import {
   Toolbar,
   Typography,
   Button,
-  ListItemButton,
 } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import EventChatForm from "./EventChatForm";
-import { listenToEventChat } from "../../../firestore/realtimeDatabase";
 import useListenToEventComments from "../../../hooks/useListenToEventComments";
 import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+dayjs.extend(relativeTime);
 import { Link } from "react-router-dom";
+import defaultPhoto from "../../../common/images/defaultPhoto.jpg";
 
 const EventChat = ({ id }) => {
   const [open, setOpen] = useState(false);
@@ -38,16 +39,20 @@ const EventChat = ({ id }) => {
       <List>
         {comments &&
           comments.map(comment => (
-            <ListItem key={comment[0]} dense divider disableGutters disablePadding>
+            <ListItem key={comment.id} dense divider disableGutters disablePadding>
               <ListItemAvatar>
-                <Avatar src={comment[1].photoURL || null} component={Link} to={`/users/profile/${comment[1].id}`} />
+                <Avatar
+                  src={comment.photoURL || defaultPhoto}
+                  component={Link}
+                  to={`/users/profile/${comment.userId}`}
+                />
               </ListItemAvatar>
               <ListItemText
-                primary={comment[1].displayName}
+                primary={comment.displayName}
                 secondary={
                   <>
                     <Typography component="span">
-                      {comment[1].comment} <br /> {dayjs(comment[1].createdAt).format("DD/MM/YYYY")}
+                      {comment.comment} <br /> {dayjs(comment.createdAt).fromNow()}
                     </Typography>
                   </>
                 }
