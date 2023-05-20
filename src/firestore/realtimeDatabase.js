@@ -42,14 +42,9 @@ export const listenToLocation = async ({ location, action }) => {
   onValue(locationRef, snapshot => {
     if (!snapshot.exists()) return;
     const data = snapshot.val();
-    // const comments = Object.entries(snapshot.val()).map(array =>
-    //   array.reduce((prev, current, index, arr) => {
-    //     prev = { id: arr[0], ...current };
-    //     return prev;
-    //   }, {})
-    // );
-    const comments = Object.entries(snapshot.val()).map(array => ({ id: array[0], ...array[1] }));
-    // action(Object.entries(data));
+    const comments = Object.entries(snapshot.val())
+      .reverse()
+      .map(array => ({ id: array[0], ...array[1] }));
     action(comments);
   });
 };

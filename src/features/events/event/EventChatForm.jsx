@@ -40,7 +40,15 @@ const EventChatForm = ({ handleClose, id }) => {
             useFlexGap
             // onChange={e => console.log(e.target.name, e.target.value)}
           >
-            <BasicInput name="comment" label="Comment" margin="dense" />
+            <BasicInput
+              name="comment"
+              label="Comment"
+              margin="dense"
+              submitOnKeyDown={true}
+              multiline
+              minRows={1}
+              maxRows={4}
+            />
             <ButtonGroup fullWidth variant="contained">
               <Button
                 color="warning"
