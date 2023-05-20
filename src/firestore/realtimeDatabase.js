@@ -36,6 +36,19 @@ export const addCommentToEvent = async ({ post, id }) => {
   });
 };
 
+export const addReplyToEventMessage = async ({ reply, eventId, commentId }) => {
+  console.log(reply);
+  // const locationRef = ref(database, `events/${eventId}/comments/${commentId}/replies`);
+  // const newPostLocationRef = push(locationRef);
+  // set(newPostLocationRef, {
+  //   ...reply,
+  //   displayName: user.displayName,
+  //   photoURL: user.photoURL,
+  //   userId: user.uid,
+  //   createdAt: Date.now(),
+  // });
+};
+
 export const listenToLocation = async ({ location, action }) => {
   // const locationRef = ref(database, location);
   const locationRef = query(ref(database, location), limitToLast(10));

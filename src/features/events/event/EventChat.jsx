@@ -17,10 +17,12 @@ import relativeTime from "dayjs/plugin/relativeTime";
 dayjs.extend(relativeTime);
 import { Link } from "react-router-dom";
 import defaultPhoto from "../../../common/images/defaultPhoto.jpg";
+import EventChatReplyForm from "./EventChatReplyForm";
 
 const EventChat = ({ id }) => {
   const [open, setOpen] = useState(false);
   const [comments, setComments] = useState(null);
+  const [replyingTo, setReplyingTo] = useState(null);
   const handleClose = () => {
     setOpen(false);
   };
@@ -39,25 +41,41 @@ const EventChat = ({ id }) => {
       <List>
         {comments &&
           comments.map(comment => (
-            <ListItem key={comment.id} dense divider disableGutters disablePadding>
-              <ListItemAvatar>
-                <Avatar
-                  src={comment.photoURL || defaultPhoto}
-                  component={Link}
-                  to={`/users/profile/${comment.userId}`}
-                />
-              </ListItemAvatar>
-              <ListItemText
-                primary={comment.displayName}
-                secondary={
-                  <>
-                    <Typography component="span" whiteSpace="pre-wrap">
-                      {comment.comment} <br /> {dayjs(comment.createdAt).fromNow()}
+            <div key={comment.id}>
+              <ListItem dense divider disableGutters disablePadding>
+                <ListItemAvatar>
+                  <Avatar
+                    src={comment.photoURL || defaultPhoto}
+                    component={Link}
+                    to={`/users/profile/${comment.userId}`}
+                  />
+                </ListItemAvatar>
+                <ListItemText
+                  primary={
+                    <Typography>
+                      {comment.displayName}
+                      <br /> {dayjs(comment.createdAt).fromNow()}
                     </Typography>
-                  </>
-                }
-              />
-            </ListItem>
+                  }
+                  secondary={
+                    <>
+                      <Typography component="span" whiteSpace="pre-wrap">
+                        {comment.comment}
+                      </Typography>
+                    </>
+                  }
+                />
+                <Button onClick={() => setReplyingTo(comment.id)}>Reply</Button>
+              </ListItem>
+              {replyingTo === comment.id && (
+                <EventChatReplyForm
+                  replyingTo={replyingTo}
+                  commentId={comment.id}
+                  eventId={id}
+                  setReplyingTo={setReplyingTo}
+                />
+              )}
+            </div>
           ))}
       </List>
     </>
