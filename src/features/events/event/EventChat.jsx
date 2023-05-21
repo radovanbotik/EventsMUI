@@ -8,6 +8,8 @@ import {
   Toolbar,
   Typography,
   Button,
+  Box,
+  ListItemButton,
 } from "@mui/material";
 import { useState } from "react";
 import EventChatForm from "./EventChatForm";
@@ -38,11 +40,11 @@ const EventChat = ({ id }) => {
         </Toolbar>
       </AppBar>
       {open && <EventChatForm handleClose={handleClose} id={id} />}
-      <List>
+      <>
         {comments &&
           comments.map(comment => (
-            <div key={comment.id}>
-              <ListItem dense divider disableGutters disablePadding>
+            <List key={comment.id}>
+              <ListItem divider disableGutters disablePadding>
                 <ListItemAvatar>
                   <Avatar
                     src={comment.photoURL || defaultPhoto}
@@ -50,34 +52,50 @@ const EventChat = ({ id }) => {
                     to={`/users/profile/${comment.userId}`}
                   />
                 </ListItemAvatar>
+
                 <ListItemText
+                  disableTypography
                   primary={
-                    <Typography>
+                    <Typography variant="body2" component="span" mr={1}>
                       {comment.displayName}
-                      <br /> {dayjs(comment.createdAt).fromNow()}
                     </Typography>
                   }
                   secondary={
-                    <>
-                      <Typography component="span" whiteSpace="pre-wrap">
-                        {comment.comment}
-                      </Typography>
-                    </>
+                    <Typography variant="body2" component="span" color="text.secondary">
+                      {dayjs(comment.createdAt).fromNow()}
+                    </Typography>
                   }
                 />
-                <Button onClick={() => setReplyingTo(comment.id)}>Reply</Button>
               </ListItem>
+              <ListItem>
+                <Typography variant="body2">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas voluptate corrupti, incidunt aliquam
+                  officia animi, impedit reprehenderit nostrum omnis, eaque obcaecati perferendis eius dolore reiciendis
+                  delectus harum necessitatibus unde. Velit error, aspernatur perspiciatis dolorum corrupti dolorem
+                  commodi accusamus soluta at!
+                </Typography>
+              </ListItem>
+              <ListItemButton
+                dense
+                onClick={() => setReplyingTo(comment.id)}
+                sx={{ fontSize: "caption.fontSize", fontWeight: 700 }}
+              >
+                Reply
+              </ListItemButton>
+
               {replyingTo === comment.id && (
-                <EventChatReplyForm
-                  replyingTo={replyingTo}
-                  commentId={comment.id}
-                  eventId={id}
-                  setReplyingTo={setReplyingTo}
-                />
+                <ListItem>
+                  <EventChatReplyForm
+                    replyingTo={replyingTo}
+                    commentId={comment.id}
+                    eventId={id}
+                    setReplyingTo={setReplyingTo}
+                  />
+                </ListItem>
               )}
-            </div>
+            </List>
           ))}
-      </List>
+      </>
     </>
   );
 };
