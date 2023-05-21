@@ -29,6 +29,19 @@ const EventChat = ({ id }) => {
     setOpen(false);
   };
   useListenToEventComments({ eventId: id, action: data => setComments(data), dependencies: [id] });
+
+  const hashData = data => {
+    // console.log(data);
+    const hashtable = {};
+    data.forEach(entry => (hashtable[entry.id] = { ...entry, replies: [] }));
+    let dataTree = [];
+    data.forEach(entry => {
+      if (entry.commentId) hashtable[entry.commentId].replies.push(hashtable[entry.id]);
+      else dataTree.push(hashtable[entry.id]);
+    });
+    console.log(dataTree);
+    return dataTree;
+  };
   return (
     <>
       <AppBar position="static">
@@ -42,9 +55,9 @@ const EventChat = ({ id }) => {
       {open && <EventChatForm handleClose={handleClose} id={id} />}
       <>
         {comments &&
-          comments.map(comment => (
+          hashData(comments).map(comment => (
             <List key={comment.id}>
-              <ListItem divider disableGutters disablePadding>
+              <ListItem disableGutters disablePadding>
                 <ListItemAvatar>
                   <Avatar
                     src={comment.photoURL || defaultPhoto}
@@ -56,33 +69,33 @@ const EventChat = ({ id }) => {
                 <ListItemText
                   disableTypography
                   primary={
-                    <Typography variant="body2" component="span" mr={1}>
-                      {comment.displayName}
-                    </Typography>
+                    <>
+                      <Typography variant="body2" component="span" mr={1}>
+                        {comment.displayName}
+                      </Typography>
+                      <Typography variant="body2" component="span" color="text.secondary">
+                        {dayjs(comment.createdAt).fromNow()}
+                      </Typography>
+                    </>
                   }
                   secondary={
-                    <Typography variant="body2" component="span" color="text.secondary">
-                      {dayjs(comment.createdAt).fromNow()}
-                    </Typography>
+                    <ListItemText>
+                      <Typography variant="body2">{comment.comment}</Typography>
+                    </ListItemText>
                   }
                 />
               </ListItem>
-              <ListItem>
-                <Typography variant="body2">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas voluptate corrupti, incidunt aliquam
-                  officia animi, impedit reprehenderit nostrum omnis, eaque obcaecati perferendis eius dolore reiciendis
-                  delectus harum necessitatibus unde. Velit error, aspernatur perspiciatis dolorum corrupti dolorem
-                  commodi accusamus soluta at!
-                </Typography>
+              <ListItem disableGutters disablePadding>
+                <ListItemText inset>
+                  <ListItemButton
+                    dense
+                    onClick={() => setReplyingTo(comment.id)}
+                    sx={{ fontSize: "caption.fontSize", fontWeight: 700, p: 0 }}
+                  >
+                    Reply
+                  </ListItemButton>
+                </ListItemText>
               </ListItem>
-              <ListItemButton
-                dense
-                onClick={() => setReplyingTo(comment.id)}
-                sx={{ fontSize: "caption.fontSize", fontWeight: 700 }}
-              >
-                Reply
-              </ListItemButton>
-
               {replyingTo === comment.id && (
                 <ListItem>
                   <EventChatReplyForm
@@ -93,6 +106,67 @@ const EventChat = ({ id }) => {
                   />
                 </ListItem>
               )}
+              <Box sx={{ pl: 4 }}>
+                {comment.replies.length > 0 && (
+                  <Box>
+                    {comment.replies.map(reply => (
+                      <List key={reply.id}>
+                        <ListItem disableGutters disablePadding>
+                          <ListItemAvatar>
+                            <Avatar
+                              src={reply.photoURL || defaultPhoto}
+                              component={Link}
+                              to={`/users/profile/${reply.userId}`}
+                              sx={{ width: 24, height: 24 }}
+                            />
+                          </ListItemAvatar>
+
+                          <ListItemText
+                            disableTypography
+                            primary={
+                              <Typography variant="body2" component="span" mr={1}>
+                                {reply.displayName}
+                              </Typography>
+                            }
+                            secondary={
+                              <Typography variant="body2" component="span" color="text.secondary">
+                                {dayjs(reply.createdAt).fromNow()}
+                              </Typography>
+                            }
+                          />
+                        </ListItem>
+                        <ListItem disableGutters disablePadding>
+                          <ListItemText inset>
+                            <Typography variant="body2">{reply.comment || reply.reply}</Typography>
+                          </ListItemText>
+                        </ListItem>
+                        <ListItem disableGutters disablePadding>
+                          <ListItemText inset>
+                            <ListItemButton
+                              dense
+                              onClick={() => setReplyingTo(reply.id)}
+                              sx={{ fontSize: "caption.fontSize", fontWeight: 700, p: 0 }}
+                            >
+                              Reply
+                            </ListItemButton>
+                          </ListItemText>
+                        </ListItem>
+                        {replyingTo === reply.id && (
+                          <ListItem>
+                            <EventChatReplyForm
+                              replyingTo={replyingTo}
+                              //Swapper comment.id for reply.id  maybe implement recursion?
+                              commentId={comment.id}
+                              eventId={id}
+                              setReplyingTo={setReplyingTo}
+                            />
+                          </ListItem>
+                        )}
+                      </List>
+                    ))}
+                  </Box>
+                )}
+              </Box>
             </List>
           ))}
       </>

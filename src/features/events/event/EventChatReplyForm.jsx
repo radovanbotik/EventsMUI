@@ -23,13 +23,14 @@ const EventChatReplyForm = ({ setReplyingTo, eventId, commentId }) => {
         try {
           await addReplyToEventMessage({ reply: values, eventId: eventId, commentId: commentId });
           setSubmitting(false);
+          setReplyingTo(null);
         } catch (error) {
           console.log(error);
         }
       }}
     >
       {formikProps => (
-        <Stack onSubmit={formikProps.handleSubmit} component="form" sx={{ flex: 1 }}>
+        <Stack onSubmit={formikProps.handleSubmit} component="form" sx={{ flex: 1, pl: 4 }}>
           <BasicInput
             name="reply"
             label="reply"

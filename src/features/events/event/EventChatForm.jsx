@@ -28,40 +28,46 @@ const EventChatForm = ({ handleClose, id }) => {
       }}
     >
       {formikProps => (
-        <>
-          <Typography>New post:</Typography>
-          <Stack
-            onSubmit={formikProps.handleSubmit}
-            component="form"
-            spacing={1}
-            useFlexGap
-            // onChange={e => console.log(e.target.name, e.target.value)}
-          >
-            <BasicInput
-              name="comment"
-              label="Comment"
-              margin="dense"
-              placeholder="Enter your comment (Enter to submit, SHIFT + Enter for new line)"
-              submitOnKeyDown={true}
-              multiline
-              minRows={2}
-              maxRows={4}
-            />
-            <ButtonGroup fullWidth variant="contained">
-              <Button
-                color="warning"
-                onClick={() => {
-                  //   handleClose();
-                  formikProps.handleReset();
-                }}
-                type="button"
-              >
-                Cancel
-              </Button>
-              <Button type="submit">Post</Button>
-            </ButtonGroup>
-          </Stack>
-        </>
+        <Stack
+          onSubmit={formikProps.handleSubmit}
+          component="form"
+
+          // onChange={e => console.log(e.target.name, e.target.value)}
+        >
+          {/* <Typography>New post:</Typography> */}
+          <BasicInput
+            name="comment"
+            label="Comment"
+            size="small"
+            variant="filled"
+            margin="dense"
+            placeholder="Enter your comment (Enter to submit, SHIFT + Enter for new line)"
+            submitOnKeyDown={true}
+            multiline
+            fullWidth
+            maxRows={"4"}
+            sx={{ mt: 0 }}
+          />
+          <ButtonGroup sx={{ justifyContent: "flex-end" }}>
+            <Button
+              color="warning"
+              onClick={() => {
+                //   handleClose();
+                formikProps.handleReset();
+                handleClose();
+              }}
+              type="button"
+              size="small"
+              variant="text"
+              sx={{ fontSize: "caption.fontSize" }}
+            >
+              Cancel
+            </Button>
+            <Button type="submit" size="small" variant="text" sx={{ fontSize: "caption.fontSize" }}>
+              Post
+            </Button>
+          </ButtonGroup>
+        </Stack>
       )}
     </Formik>
   );

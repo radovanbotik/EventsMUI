@@ -37,10 +37,11 @@ export const addCommentToEvent = async ({ post, id }) => {
 };
 
 export const addReplyToEventMessage = async ({ reply, eventId, commentId }) => {
-  const locationRef = ref(database, `events/${eventId}/comments/${commentId}/replies`);
+  const locationRef = ref(database, `events/${eventId}/comments`);
   const newPostLocationRef = push(locationRef);
   set(newPostLocationRef, {
     ...reply,
+    commentId: commentId,
     displayName: user.displayName,
     photoURL: user.photoURL,
     userId: user.uid,
