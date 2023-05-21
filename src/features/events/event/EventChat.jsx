@@ -22,7 +22,7 @@ import defaultPhoto from "../../../common/images/defaultPhoto.jpg";
 import EventChatReplyForm from "./EventChatReplyForm";
 
 const EventChat = ({ id }) => {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
   const [comments, setComments] = useState(null);
   const [replyingTo, setReplyingTo] = useState(null);
   const handleClose = () => {

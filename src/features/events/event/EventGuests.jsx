@@ -7,6 +7,9 @@ import {
   ListItemAvatar,
   Avatar,
   ListItemText,
+  AppBar,
+  Toolbar,
+  Typography,
 } from "@mui/material";
 import { Link } from "react-router-dom";
 
@@ -18,24 +21,23 @@ const EventGuests = ({ attendees }) => {
   }
 
   return (
-    <Card>
-      <CardHeader
-        title={formatGuests(attendees?.length || 0)}
-        sx={{ textAlign: "center", bgcolor: "primary.main" }}
-      ></CardHeader>
-      <CardContent>
-        <List>
-          {attendees?.map(att => (
-            <ListItemButton component={Link} to={`/users/profile/${att.id}`} divider key={att.id}>
-              <ListItemAvatar>
-                <Avatar src={att.photoURL} />
-              </ListItemAvatar>
-              <ListItemText primary={att.name} />
-            </ListItemButton>
-          ))}
-        </List>
-      </CardContent>
-    </Card>
+    <>
+      <AppBar position="static">
+        <Toolbar variant="dense">
+          <Typography>{formatGuests(attendees?.length || 0)}</Typography>
+        </Toolbar>
+      </AppBar>
+      <List dense>
+        {attendees?.map(att => (
+          <ListItemButton component={Link} to={`/users/profile/${att.id}`} divider key={att.id}>
+            <ListItemAvatar>
+              <Avatar src={att.photoURL} />
+            </ListItemAvatar>
+            <ListItemText primary={att.name} />
+          </ListItemButton>
+        ))}
+      </List>
+    </>
   );
 };
 

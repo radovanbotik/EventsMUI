@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { editingTrue, setEvent } from "../../../store/formSlice";
 import dayjs from "dayjs";
 import Map from "./map/Map";
-import { Link, Card, CardMedia, Typography, CardActions, CardContent, Box, Button } from "@mui/material";
+import { Link, Card, CardMedia, Typography, CardActions, CardContent, Box, Button, ButtonGroup } from "@mui/material";
 import { cancelEv, joinEvent, leaveEvent } from "../../../store/eventSlice";
 import DescriptionAlert from "../../../common/alerts/DescriptionAlert";
 import { useState } from "react";
@@ -72,41 +72,38 @@ const EventHeader = ({ event, mapOpen }) => {
           />
         )}
       </CardContent>
-      <CardActions>
-        <Box sx={{ display: "flex", justifyContent: "space-between", width: 1 }}>
-          <Box sx={{ display: "flex", gap: 1 }}>
-            <Button variant="contained" color="warning" type="button" onClick={handleClickOpen}>
-              {currentEvent.cancelled ? "re-active event" : "cancel event"}
-            </Button>
+      <CardActions sx={{ display: "flex", justifyContent: "space-between", width: 1 }}>
+        <ButtonGroup sx={{ display: "flex", gap: 1 }}>
+          <Button size="small" variant="text" color="warning" type="button" onClick={handleClickOpen}>
+            {currentEvent.cancelled ? "re-active event" : "cancel event"}
+          </Button>
 
-            {!currentEvent.cancelled && (
-              <>
-                {isAttending ? (
-                  <Button variant="contained" color="warning" onClick={() => dispatch(leaveEvent(id))}>
-                    Leave event
-                  </Button>
-                ) : (
-                  <Button variant="contained" onClick={() => dispatch(joinEvent(id))}>
-                    Join Event
-                  </Button>
-                )}
-              </>
-            )}
-          </Box>
-          <Box>
-            <Button
-              type="button"
-              variant="contained"
-              color="info"
-              onClick={() => {
-                dispatch(editingTrue());
-                dispatch(setEvent(event));
-              }}
-            >
-              Manage Event
-            </Button>
-          </Box>
-        </Box>
+          {!currentEvent.cancelled && (
+            <>
+              {isAttending ? (
+                <Button size="small" variant="text" color="warning" onClick={() => dispatch(leaveEvent(id))}>
+                  Leave event
+                </Button>
+              ) : (
+                <Button size="small" variant="text" onClick={() => dispatch(joinEvent(id))}>
+                  Join Event
+                </Button>
+              )}
+            </>
+          )}
+        </ButtonGroup>
+        <Button
+          type="button"
+          size="small"
+          variant="text"
+          color="info"
+          onClick={() => {
+            dispatch(editingTrue());
+            dispatch(setEvent(event));
+          }}
+        >
+          Manage Event
+        </Button>
       </CardActions>
     </Card>
   );
