@@ -65,7 +65,7 @@ const EventChatForm = ({ handleClose, id }) => {
               onClick={() => {
                 //   handleClose();
                 formikProps.handleReset();
-                handleClose();
+                // handleClose();
               }}
               type="button"
               size="small"

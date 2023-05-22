@@ -47,9 +47,9 @@ const EventChat = ({ id }) => {
       <AppBar position="static">
         <Toolbar variant="dense">
           <Typography mr="auto">Comments</Typography>
-          <Button variant="contained" size="small" onClick={() => setOpen(prev => !prev)}>
+          {/* <Button variant="contained" size="small" onClick={() => setOpen(prev => !prev)}>
             {open ? "close" : "new comment"}
-          </Button>
+          </Button> */}
         </Toolbar>
       </AppBar>
       {open && <EventChatForm handleClose={handleClose} id={id} />}
