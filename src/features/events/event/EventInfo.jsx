@@ -38,7 +38,7 @@ const EventInfo = ({ description, date, location, toggleMap, mapOpen }) => {
             {mapOpen ? "Close map" : "Show location"}
           </Button>
         </ListItem>
-        <Divider />
+        {/* <Divider /> */}
       </List>
     </>
   );

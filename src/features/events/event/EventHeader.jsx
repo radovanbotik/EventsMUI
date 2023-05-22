@@ -83,10 +83,9 @@ const EventHeader = ({ event, mapOpen }) => {
           <Map event={event} />
         </Box>
       </Box>
-
       {/* <Link to={`/users/profile/${hostId}`}>{hostedBy}</Link> */}
       <List>
-        <ListItem disablePadding sx={{ gap: 3 }}>
+        <ListItem sx={{ gap: 3, px: 0 }}>
           <ListItemText
             primary={dayjs(date).format("MMM")}
             secondary={dayjs(date).format("DD")}
@@ -101,7 +100,6 @@ const EventHeader = ({ event, mapOpen }) => {
           />
         </ListItem>
       </List>
-
       {currentEvent.cancelled && (
         <DescriptionAlert
           severity={"warning"}
@@ -117,7 +115,13 @@ const EventHeader = ({ event, mapOpen }) => {
             {isAttending ? (
               <Button
                 onClick={() => dispatch(leaveEvent(id))}
-                sx={{ fontWeight: 700, fontSize: "caption.fontSize" }}
+                sx={{
+                  fontWeight: 700,
+                  fontSize: "caption.fontSize",
+                  color: "ButtonText",
+                  borderColor: "ButtonText",
+                  borderRadius: "0 !important",
+                }}
                 startIcon={<PersonRemoveOutlined />}
               >
                 Leave event
@@ -125,7 +129,13 @@ const EventHeader = ({ event, mapOpen }) => {
             ) : (
               <Button
                 onClick={() => dispatch(joinEvent(id))}
-                sx={{ fontWeight: 700, fontSize: "caption.fontSize" }}
+                sx={{
+                  fontWeight: 700,
+                  fontSize: "caption.fontSize",
+                  color: "ButtonText",
+                  borderColor: "ButtonText",
+                  borderRadius: "0 !important",
+                }}
                 startIcon={<PersonAddOutlined fontSize="small" />}
               >
                 Join Event
@@ -140,8 +150,9 @@ const EventHeader = ({ event, mapOpen }) => {
             dispatch(setEvent(event));
           }}
           sx={{
-            // color: "MenuText",
-            // borderColor: "MenuText",
+            borderRadius: "0 !important",
+            color: "ButtonText",
+            borderColor: "ButtonText",
             fontWeight: 700,
             fontSize: "caption.fontSize",
           }}
@@ -151,7 +162,15 @@ const EventHeader = ({ event, mapOpen }) => {
         </Button>
         <Button
           type="button"
-          sx={{ margin: 0, fontWeight: 700, fontSize: "caption.fontSize", ".MuiButton-startIcon": { m: 0 } }}
+          sx={{
+            margin: 0,
+            borderRadius: "0 !important",
+            fontWeight: 700,
+            color: "ButtonText",
+            borderColor: "ButtonText",
+            fontSize: "caption.fontSize",
+            ".MuiButton-startIcon": { m: 0 },
+          }}
           startIcon={<MoreVert fontSize="small" />}
           onClick={handleClick}
         />

@@ -23,7 +23,7 @@ const EventGuests = ({ attendees }) => {
           Invite
         </Button>
       </ListItem>
-      <Divider />
+      {/* <Divider /> */}
     </List>
   );
 };

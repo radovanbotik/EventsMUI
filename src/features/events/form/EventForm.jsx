@@ -124,8 +124,8 @@ const EventForm = () => {
             placeholder="e.g Best Event ever..."
             margin="dense"
             multiline
-            maxRows={8}
-            minRows={8}
+            maxRows={4}
+            minRows={4}
           />
 
           <ButtonGroup fullWidth size="medium" sx={{ mt: 4, gap: 2 }}>
