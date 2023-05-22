@@ -30,7 +30,7 @@ const Sidebar = ({ routes }) => {
         }
       >
         <ListItem disablePadding>
-          <ListItemButton onClick={() => dispatch(openForm())} component={Link} to="/events">
+          <ListItemButton dense onClick={() => dispatch(openForm())} component={Link} to="/events">
             <ListItemIcon>
               <Create />
             </ListItemIcon>
@@ -48,7 +48,7 @@ const Sidebar = ({ routes }) => {
       >
         {routes.map(route => (
           <ListItem key={route.id} disablePadding>
-            <ListItemButton component={Link} to={route.route}>
+            <ListItemButton dense component={Link} to={route.route}>
               <ListItemIcon>{route.icon}</ListItemIcon>
               <ListItemText primary={route.name} />
             </ListItemButton>
