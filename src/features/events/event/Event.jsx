@@ -36,16 +36,17 @@ const Event = () => {
       {status === "loading" || (!event && status !== "error") ? (
         <div>loading...</div>
       ) : (
-        <Grid container spacing={8} columns={{ xs: 6, lg: 12 }} p={4}>
-          <Grid item lg={8} xs={6}>
+        <Grid container spacing={2} columns={{ xs: 6, lg: 12 }} p={4}>
+          <Grid item lg={6} xs={6}>
             <Stack spacing={2}>
               <EventHeader id={id} event={event} mapOpen={mapOpen} />
               <EventInfo {...event} toggleMap={toggleMap} mapOpen={mapOpen} />
+              <EventGuests attendees={event.attendees} />
               <EventChat {...event} />
             </Stack>
           </Grid>
-          <Grid item lg={4} xs={6}>
-            {isEditing ? <EventForm /> : <EventGuests attendees={event.attendees} />}
+          <Grid item lg={6} xs={6}>
+            {isEditing && <EventForm />}
           </Grid>
         </Grid>
       )}
