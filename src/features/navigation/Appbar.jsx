@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   AppBar as MuiAppBar,
   Toolbar,
@@ -20,37 +20,42 @@ import { logOut } from "../../store/authSlice";
 import { openModal } from "../../store/modalSlice";
 // react router dom
 import { Link, useNavigate } from "react-router-dom";
+import defaultPhoto from "../../common/images/defaultPhoto.jpg";
+import { drawerWidth } from "../../app/layout/Persistent";
 
-const Appbar = ({ drawerWidth, handleDrawerOpen, open, setAnchorEl, anchorEl }) => {
-  const AppBar = styled(MuiAppBar, {
-    shouldForwardProp: prop => prop !== "open",
-  })(({ theme, open }) => ({
+const AppBar = styled(MuiAppBar, {
+  shouldForwardProp: prop => prop !== "open",
+})(({ theme, open }) => ({
+  transition: theme.transitions.create(["margin", "width"], {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen,
+  }),
+  ...(open && {
+    width: `calc(100% - ${drawerWidth}px)`,
+    marginLeft: `${drawerWidth}px`,
     transition: theme.transitions.create(["margin", "width"], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen,
     }),
-    ...(open && {
-      width: `calc(100% - ${drawerWidth}px)`,
-      marginLeft: `${drawerWidth}px`,
-      transition: theme.transitions.create(["margin", "width"], {
-        easing: theme.transitions.easing.easeOut,
-        duration: theme.transitions.duration.enteringScreen,
-      }),
-    }),
-  }));
-
+  }),
+}));
+const Appbar = ({ handleDrawerOpen, open }) => {
+  console.log(open);
   //signup login
   const { currentUser, isAuthenticated } = useSelector(store => store.authReducer);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   //menu
   const handleMenu = event => {
+    console.log(event.currentTarget);
     setAnchorEl(event.currentTarget);
   };
 
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const [anchorEl, setAnchorEl] = useState(null);
 
   return (
     <AppBar position="absolute" open={open}>
@@ -90,33 +95,30 @@ const Appbar = ({ drawerWidth, handleDrawerOpen, open, setAnchorEl, anchorEl }) 
         {isAuthenticated && (
           <Box>
             {/* Profile Picture */}
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleMenu}
-              color="inherit"
-            >
-              {currentUser?.photoURL ? (
-                <Avatar alt="user name" src={currentUser?.photoURL} />
-              ) : (
-                <Avatar>{currentUser.email.charAt(0)}</Avatar>
-              )}
-            </IconButton>
+            <Box sx={{ position: "relative" }}>
+              <IconButton
+                size="small"
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleMenu}
+                color="inherit"
+              >
+                <Avatar alt="user name" src={currentUser.photoURL ? currentUser.photoURL : defaultPhoto} />
+              </IconButton>
+            </Box>
             {/* Profile Menu Actions*/}
             <Menu
-              id="menu-appbar"
               anchorEl={anchorEl}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
+              //   anchorOrigin={{
+              //     vertical: "top",
+              //     horizontal: "right",
+              //   }}
               keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
+              //   transformOrigin={{
+              //     vertical: "top",
+              //     horizontal: "right",
+              //   }}
               open={Boolean(anchorEl)}
               onClose={handleClose}
             >

@@ -1,18 +1,13 @@
 import { useState } from "react";
-import { styled, useTheme } from "@mui/material/styles";
-import Box from "@mui/material/Box";
-import Drawer from "@mui/material/Drawer";
-import CssBaseline from "@mui/material/CssBaseline";
-import Divider from "@mui/material/Divider";
-import IconButton from "@mui/material/IconButton";
+import { useTheme } from "@mui/material/styles";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import { Container, Grid } from "@mui/material";
+import { Container, Grid, styled, Box, Drawer, CssBaseline, Divider, IconButton } from "@mui/material";
 import { Outlet } from "react-router-dom";
 import Sidebar from "../../features/navigation/Sidebar";
 import Appbar from "../../features/navigation/Appbar";
 
-const drawerWidth = 240;
+export const drawerWidth = 240;
 
 const Main = styled("main", { shouldForwardProp: prop => prop !== "open" })(({ theme, open }) => ({
   minHeight: "100vh",
@@ -45,9 +40,6 @@ export default function PersistentDrawerLeft() {
   const theme = useTheme();
   const [open, setOpen] = useState(true);
 
-  //menu
-  const [anchorEl, setAnchorEl] = useState(null);
-
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -60,13 +52,7 @@ export default function PersistentDrawerLeft() {
     <Container maxWidth="xl" sx={{ position: "relative" }}>
       <Box sx={{ position: "relative", display: "flex" }}>
         <CssBaseline />
-        <Appbar
-          open={open}
-          drawerWidth={drawerWidth}
-          handleDrawerOpen={handleDrawerOpen}
-          setAnchorEl={setAnchorEl}
-          anchorEl={anchorEl}
-        />
+        <Appbar open={open} drawerWidth={drawerWidth} handleDrawerOpen={handleDrawerOpen} />
         <Drawer
           sx={{
             width: drawerWidth,

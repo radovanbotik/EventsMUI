@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Grid, Box, Stack, Divider, Typography } from "@mui/material";
 import useSubscribeTodocument from "../../../hooks/useSubscribeTodocument";
 import { loadEvents } from "../../../store/eventSlice";
+import useGoogleMaps from "../../../hooks/useGoogleMaps";
 
 const Event = () => {
   const { events, status } = useSelector(store => store.eventReducer);
@@ -23,6 +24,7 @@ const Event = () => {
     setMapOpen(prev => !prev);
   }
 
+  useGoogleMaps();
   useSubscribeTodocument({
     dbcollection: "events",
     documentId: id,
@@ -35,7 +37,7 @@ const Event = () => {
       {status === "loading" || (!event && status !== "error") ? (
         <div>loading...</div>
       ) : (
-        <Grid container spacing={2} columns={{ xs: 6, lg: 12 }} p={4}>
+        <Grid container spacing={2} columns={{ xs: 6, lg: 12 }}>
           <Grid item lg={8} xs={6}>
             <Stack spacing={2}>
               <EventHeader id={id} event={event} mapOpen={mapOpen} />
