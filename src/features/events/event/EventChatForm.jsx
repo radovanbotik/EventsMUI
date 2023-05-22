@@ -54,7 +54,7 @@ const EventChatForm = ({ handleClose, id }) => {
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
-                  <Avatar sx={{ width: 24, height: 24 }} src={currentUser.photoURL} />
+                  <Avatar sx={{ width: 24, height: 24 }} src={currentUser?.photoURL} />
                 </InputAdornment>
               ),
             }}

@@ -1,5 +1,4 @@
 import { List, ListItemText, Divider, ListItem, Button } from "@mui/material";
-import { Link } from "react-router-dom";
 
 const EventGuests = ({ attendees }) => {
   console.log(attendees);
@@ -15,7 +14,11 @@ const EventGuests = ({ attendees }) => {
         {/* <ListItemAvatar>
             <Place sx={{ color: "grey" }} />
           </ListItemAvatar> */}
-        <ListItemText primary={formatGuests(attendees?.length)} secondary={"invite other people to this event."} />
+        <ListItemText
+          primaryTypographyProps={{ fontWeight: 500 }}
+          primary={formatGuests(attendees?.length)}
+          secondary={"invite other people to this event."}
+        />
         <Button size="small" sx={{ textTransform: "capitalize" }}>
           Invite
         </Button>

@@ -1,9 +1,10 @@
 import { useRouteError } from "react-router-dom";
+import { Box } from "@mui/system";
 
 const Error = () => {
   const error = useRouteError();
   console.log(error);
-  return <div>Error message: {error.statusText || error.message}</div>;
+  return <Box sx={{ height: "100%", minHeight: "100vh" }}>Error message: {error.statusText || error.message}</Box>;
 };
 
 export default Error;

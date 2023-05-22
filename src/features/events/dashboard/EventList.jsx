@@ -7,7 +7,7 @@ const EventList = ({ events }) => {
     return (
       <Box sx={{ display: "flex", flexDirection: "column", height: "100%" }}>
         <Toolbar>
-          <Typography variant="h5">Events:</Typography>
+          <Typography variant="h6">Events:</Typography>
         </Toolbar>
         <Box sx={{ display: "grid", placeItems: "center", flex: 1, flexGrow: 1 }}>
           <CircularProgress />
@@ -16,10 +16,7 @@ const EventList = ({ events }) => {
     );
   return (
     <>
-      <Toolbar>
-        <Typography variant="h5">Events:</Typography>
-      </Toolbar>
-      <Stack spacing={4}>
+      <Stack spacing={2}>
         {events.map(entry => {
           return <EventCard key={entry.id} event={entry} />;
         })}

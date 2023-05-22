@@ -34,14 +34,12 @@ const EventCard = props => {
   const {
     attendees,
     category,
-    city,
     date,
     description,
     hostPhotoURL,
     hostedBy,
     id,
     title,
-    venue,
     eventPhotoURL,
     location,
     canceled,
@@ -57,7 +55,7 @@ const EventCard = props => {
     <Card variant="outlined">
       <CardActionArea component={Link} to={`event/${id}`}>
         {/* PROFILE PICTURE */}
-        <CardHeader
+        {/* <CardHeader
           avatar={
             status === "loading" ? (
               <Skeleton animation="wave" variant="circular">
@@ -74,7 +72,7 @@ const EventCard = props => {
           }
           title={title}
           subheader={`by ${hostedBy || "anonymous"}`}
-        ></CardHeader>
+        ></CardHeader> */}
         {/* EVENT PICTURE */}
         {status === "loading" ? (
           <Skeleton animation="wave" width="100%" variant="rectangular" height={300} />
@@ -85,6 +83,7 @@ const EventCard = props => {
             loading="lazy"
             alt="event image"
             height={300}
+            sx={{ objectFit: "contain" }}
           ></CardMedia>
         )}
         {status === "loading" ? (
@@ -113,7 +112,7 @@ const EventCard = props => {
                 <ListItemText
                   primary={`${attendees?.[0].name} ${attendees?.length > 1 && "and others"}`}
                 ></ListItemText>
-                <Typography>{city || location.description}</Typography>
+                <Typography>{location.description}</Typography>
                 <Divider>on</Divider>
                 <Typography>{dayjs(date).format("DD MMM YYYY, HH:mm")}</Typography>
               </ListItem>

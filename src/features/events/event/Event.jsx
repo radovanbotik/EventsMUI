@@ -8,7 +8,7 @@ import EventGuests from "./EventGuests";
 import EventForm from "../../../features/events/form/EventForm";
 import { useDispatch, useSelector } from "react-redux";
 
-import { Grid, Box, Stack } from "@mui/material";
+import { Grid, Box, Stack, Divider } from "@mui/material";
 import useSubscribeTodocument from "../../../hooks/useSubscribeTodocument";
 import { loadEvents } from "../../../store/eventSlice";
 
@@ -37,7 +37,7 @@ const Event = () => {
         <div>loading...</div>
       ) : (
         <Grid container spacing={2} columns={{ xs: 6, lg: 12 }} p={4}>
-          <Grid item lg={6} xs={6}>
+          <Grid item lg={9} xs={6}>
             <Stack spacing={2}>
               <EventHeader id={id} event={event} mapOpen={mapOpen} />
               <EventInfo {...event} toggleMap={toggleMap} mapOpen={mapOpen} />
@@ -45,8 +45,10 @@ const Event = () => {
               <EventChat {...event} />
             </Stack>
           </Grid>
-          <Grid item lg={6} xs={6}>
+          {/* <Divider flexItem orientation="vertical" sx={{ mr: "-1px" }} /> */}
+          <Grid item lg={3} xs={6}>
             {isEditing && <EventForm />}
+            hello here
           </Grid>
         </Grid>
       )}

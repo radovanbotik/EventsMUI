@@ -26,14 +26,15 @@ const EventDashboard = () => {
   });
 
   return (
-    <Grid container columns={{ xs: 6, lg: 12 }} sx={{ height: "100%" }}>
+    <Grid spacing={2} container columns={{ xs: 6, lg: 12 }} sx={{ height: "100%" }}>
       {/* <Grid item lg={Number(`${isOpen ? 8 : 12}`)} xs={6}> */}
-      <Grid item lg={8} xs={6} order={2}>
+      <Grid item lg={7} xs={6}>
         <EventList events={events} />
       </Grid>
-      <Grid item lg={4} xs={6} sx={{ position: "sticky", top: 0, alignSelf: "flex-start" }}>
-        {isOpen && <EventForm />}
-        {!isOpen && <EventFilters setFilterOptions={setFilterOptions} filterOptions={filterOptions} />}
+      <Grid item lg={5} xs={6} sx={{ position: "sticky", top: 0, alignSelf: "flex-start" }}>
+        other events
+        {/* {isOpen && <EventForm />}
+        {!isOpen && <EventFilters setFilterOptions={setFilterOptions} filterOptions={filterOptions} />} */}
       </Grid>
     </Grid>
   );

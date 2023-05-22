@@ -6,6 +6,7 @@ import React from "react";
 import Account from "../features/auth/account/Account";
 import Profile from "../features/profiles/profilePage/Profile";
 import Users from "../features/profiles/usersPage/Users";
+import Persistent from "./layout/Persistent";
 
 const EventDashboard = React.lazy(() => import("../features/events/dashboard/EventDashboard"));
 const Event = React.lazy(() => import("../features/events/event/Event"));
@@ -14,7 +15,8 @@ const router = createBrowserRouter([
   { path: "/", element: <Landing /> },
   {
     path: "events",
-    element: <Layout />,
+    // element: <Layout />,
+    element: <Persistent />,
     children: [
       {
         errorElement: <Error />,

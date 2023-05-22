@@ -18,10 +18,10 @@ import {
 const Sidebar = ({ routes }) => {
   const dispatch = useDispatch();
   return (
-    <div>
-      <Toolbar>
+    <>
+      {/* <Toolbar>
         <Typography variant="h5">Logo obviously.</Typography>
-      </Toolbar>
+      </Toolbar> */}
       <List
         subheader={
           <ListSubheader component="div" id="nested-list-subheader">
@@ -56,7 +56,7 @@ const Sidebar = ({ routes }) => {
         ))}
       </List>
       <Divider />
-    </div>
+    </>
   );
 };
 
