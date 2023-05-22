@@ -18,7 +18,7 @@ const EventInfo = ({ description, date, venue, city, country, location, toggleMa
   return (
     <>
       <List dense>
-        <ListItem>
+        <ListItem disablePadding>
           <ListItemAvatar>
             <Avatar>
               <Info />
@@ -26,7 +26,7 @@ const EventInfo = ({ description, date, venue, city, country, location, toggleMa
           </ListItemAvatar>
           <ListItemText primary={"Information"} secondary={description} />
         </ListItem>
-        <ListItem>
+        <ListItem disablePadding>
           <ListItemAvatar>
             <Avatar>
               <Event />
@@ -34,7 +34,7 @@ const EventInfo = ({ description, date, venue, city, country, location, toggleMa
           </ListItemAvatar>
           <ListItemText primary={"Date"} secondary={dayjs(date).format("DD MMM YYYY, HH:mm")} />
         </ListItem>
-        <ListItem>
+        <ListItem disablePadding>
           <ListItemAvatar>
             <Avatar>
               <Place />
