@@ -3,16 +3,17 @@ import { editingTrue, setEvent } from "../../../store/formSlice";
 import dayjs from "dayjs";
 import Map from "./map/Map";
 import {
-  Link,
-  Card,
-  CardMedia,
-  Typography,
-  CardActions,
-  CardContent,
+  Menu,
+  MenuItem,
   Box,
   Button,
   ButtonGroup,
   Stack,
+  List,
+  ListItem,
+  ListItemText,
+  useMediaQuery,
+  useTheme,
 } from "@mui/material";
 import { cancelEv, joinEvent, leaveEvent } from "../../../store/eventSlice";
 import DescriptionAlert from "../../../common/alerts/DescriptionAlert";
@@ -20,6 +21,7 @@ import { useState } from "react";
 import Confirmation from "../../../common/dialogs/Confirmation";
 import noImage from "../../../common/images/noImage.avif";
 import { Link as RLink } from "react-router-dom";
+import { EditOutlined, MoreVert, PersonAddOutlined, PersonRemoveOutlined } from "@mui/icons-material";
 
 const EventHeader = ({ event, mapOpen }) => {
   const { title, date, hostedBy, eventPhotoURL, hostId, attendeesId, id } = event;
@@ -29,10 +31,19 @@ const EventHeader = ({ event, mapOpen }) => {
   const [currentEvent] = events;
   const [confirmationOpen, setConfirmationOpen] = useState(false);
   const isAttending = attendeesId && attendeesId?.includes(currentUser?.id);
+  /////////////////////////////////////////////////
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = event => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleCloseMenu = () => {
+    setAnchorEl(null);
+  };
+  ///////////////////////////
   const handleClickOpen = () => {
     setConfirmationOpen(true);
   };
-
   const handleClose = () => {
     setConfirmationOpen(false);
   };
@@ -41,6 +52,14 @@ const EventHeader = ({ event, mapOpen }) => {
     dispatch(cancelEv(event));
     handleClose();
   };
+  /////////////////////////////////
+
+  const theme = useTheme();
+  const xl = useMediaQuery(theme.breakpoints.up("xl"));
+  const lg = useMediaQuery(theme.breakpoints.up("lg"));
+  const md = useMediaQuery(theme.breakpoints.up("md"));
+  const sm = useMediaQuery(theme.breakpoints.up("sm"));
+  const xs = useMediaQuery(theme.breakpoints.up("xs"));
 
   const dispatch = useDispatch();
   return (
@@ -64,16 +83,24 @@ const EventHeader = ({ event, mapOpen }) => {
       <Box sx={{ display: mapOpen ? "block" : "none", height: "300px", width: "100%" }}>
         <Map event={event} />
       </Box>
-      <Typography variant="h6" sx={{ textTransform: "capitalize" }}>
-        {title}
-      </Typography>
-      <Typography variant="body2">{dayjs(date).format("DD MMM YYYY, HH:mm")}</Typography>
-      <Typography variant="body2">
-        Hosted by{" "}
-        <Typography variant="body2" display="inline" component={RLink} to={`/users/profile/${hostId}`}>
-          {hostedBy}
-        </Typography>
-      </Typography>
+
+      {/* <Link to={`/users/profile/${hostId}`}>{hostedBy}</Link> */}
+      <List>
+        <ListItem disablePadding sx={{ gap: 3 }}>
+          <ListItemText
+            primary={dayjs(date).format("MMM")}
+            secondary={dayjs(date).format("DD")}
+            sx={{ flexGrow: 0 }}
+            primaryTypographyProps={{ color: "red" }}
+            secondaryTypographyProps={{ fontSize: "h6.fontSize" }}
+          />
+          <ListItemText
+            primary={title}
+            secondary={`Hosted by ${hostedBy}`}
+            primaryTypographyProps={{ fontSize: "h6.fontSize", textTransform: "capitalize" }}
+          />
+        </ListItem>
+      </List>
 
       {currentEvent.cancelled && (
         <DescriptionAlert
@@ -84,38 +111,70 @@ const EventHeader = ({ event, mapOpen }) => {
           variant={"filled"}
         />
       )}
-      <ButtonGroup sx={{ display: "flex", justifyContent: "space-between", width: 1 }}>
-        <ButtonGroup sx={{ display: "flex", gap: 1 }}>
-          <Button sx={{ p: 0 }} size="small" variant="text" color="warning" type="button" onClick={handleClickOpen}>
-            {currentEvent.cancelled ? "re-active event" : "cancel event"}
-          </Button>
-
-          {!currentEvent.cancelled && (
-            <>
-              {isAttending ? (
-                <Button size="small" variant="text" color="warning" onClick={() => dispatch(leaveEvent(id))}>
-                  Leave event
-                </Button>
-              ) : (
-                <Button size="small" variant="text" onClick={() => dispatch(joinEvent(id))}>
-                  Join Event
-                </Button>
-              )}
-            </>
-          )}
-        </ButtonGroup>
+      <ButtonGroup size="small" variant="outlined" sx={md && { alignSelf: "end" }}>
+        {!currentEvent.cancelled && (
+          <>
+            {isAttending ? (
+              <Button
+                onClick={() => dispatch(leaveEvent(id))}
+                sx={{ fontWeight: 700, fontSize: "caption.fontSize" }}
+                startIcon={<PersonRemoveOutlined />}
+              >
+                Leave event
+              </Button>
+            ) : (
+              <Button
+                onClick={() => dispatch(joinEvent(id))}
+                sx={{ fontWeight: 700, fontSize: "caption.fontSize" }}
+                startIcon={<PersonAddOutlined fontSize="small" />}
+              >
+                Join Event
+              </Button>
+            )}
+          </>
+        )}
         <Button
           type="button"
-          size="small"
-          variant="text"
-          color="info"
           onClick={() => {
             dispatch(editingTrue());
             dispatch(setEvent(event));
           }}
+          sx={{
+            // color: "MenuText",
+            // borderColor: "MenuText",
+            fontWeight: 700,
+            fontSize: "caption.fontSize",
+          }}
+          startIcon={<EditOutlined fontSize="small" />}
         >
-          Manage Event
+          Edit
         </Button>
+        <Button
+          type="button"
+          sx={{ margin: 0, fontWeight: 700, fontSize: "caption.fontSize", ".MuiButton-startIcon": { m: 0 } }}
+          startIcon={<MoreVert fontSize="small" />}
+          onClick={handleClick}
+        />
+        <Menu
+          id="basic-menu"
+          anchorEl={anchorEl}
+          open={open}
+          onClose={handleCloseMenu}
+          MenuListProps={{
+            "aria-labelledby": "basic-button",
+          }}
+        >
+          <MenuItem onClick={handleClose}>Invite</MenuItem>
+          <MenuItem
+            onClick={() => {
+              handleClickOpen();
+              handleCloseMenu();
+            }}
+          >
+            {currentEvent.cancelled ? "Activate event" : "Cancel event"}
+          </MenuItem>
+          <MenuItem onClick={handleClose}>Delete Event</MenuItem>
+        </Menu>
       </ButtonGroup>
     </Stack>
   );
