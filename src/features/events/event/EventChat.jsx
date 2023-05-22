@@ -39,7 +39,7 @@ const EventChat = ({ id }) => {
       if (entry.commentId) hashtable[entry.commentId].replies.push(hashtable[entry.id]);
       else dataTree.push(hashtable[entry.id]);
     });
-    console.log(dataTree);
+    // console.log(dataTree);
     return dataTree;
   };
   return (

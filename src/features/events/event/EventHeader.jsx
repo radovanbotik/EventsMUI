@@ -79,9 +79,9 @@ const EventHeader = ({ event, mapOpen }) => {
           src={eventPhotoURL || noImage}
           sx={{ display: mapOpen ? "none" : "block", objectFit: "contain", width: "100%", height: "100%" }}
         />
-      </Box>
-      <Box sx={{ display: mapOpen ? "block" : "none", height: "300px", width: "100%" }}>
-        <Map event={event} />
+        <Box sx={{ display: mapOpen ? "block" : "none", height: "300px", width: "100%" }}>
+          <Map event={event} />
+        </Box>
       </Box>
 
       {/* <Link to={`/users/profile/${hostId}`}>{hostedBy}</Link> */}

@@ -1,52 +1,45 @@
-import { Event, Place, Info } from "@mui/icons-material";
+import { Place, WatchLaterOutlined } from "@mui/icons-material";
+import calendar from "dayjs/plugin/calendar";
+import relativeTime from "dayjs/plugin/relativeTime";
 import dayjs from "dayjs";
+dayjs.extend(calendar);
+dayjs.extend(relativeTime);
 
-import {
-  Card,
-  CardContent,
-  List,
-  ListItem,
-  ListItemAvatar,
-  ListItemText,
-  Avatar,
-  Divider,
-  CardActions,
-  Button,
-} from "@mui/material";
+import { List, ListItem, ListItemAvatar, ListItemText, Avatar, Divider, Button } from "@mui/material";
 
-const EventInfo = ({ description, date, venue, city, country, location, toggleMap, mapOpen }) => {
+const EventInfo = ({ description, date, location, toggleMap, mapOpen }) => {
+  const formatTime = date => {
+    const calendar = dayjs(date).calendar(null, {
+      sameDay: "[Today at] h:mm A",
+      nextDay: "[Tomorrow] h:mm A",
+      nextWeek: "dddd [at] h:mm A",
+      lastDay: "[Yesterday]",
+      lastWeek: "[Last] dddd",
+      sameElse: "DD/MM/YYYY",
+    });
+    const toX = dayjs().to(date);
+    return { calendar, toX };
+  };
   return (
     <>
       <List dense>
         <ListItem disablePadding>
           <ListItemAvatar>
-            <Avatar>
-              <Info />
-            </Avatar>
+            <WatchLaterOutlined sx={{ color: "grey" }} />
           </ListItemAvatar>
-          <ListItemText primary={"Information"} secondary={description} />
+          <ListItemText primary={formatTime(date).calendar} secondary={formatTime(date).toX} />
         </ListItem>
         <ListItem disablePadding>
           <ListItemAvatar>
-            <Avatar>
-              <Event />
-            </Avatar>
+            <Place sx={{ color: "grey" }} />
           </ListItemAvatar>
-          <ListItemText primary={"Date"} secondary={dayjs(date).format("DD MMM YYYY, HH:mm")} />
-        </ListItem>
-        <ListItem disablePadding>
-          <ListItemAvatar>
-            <Avatar>
-              <Place />
-            </Avatar>
-          </ListItemAvatar>
-          <ListItemText primary={"Location"} secondary={location ? location.description : `${city},${country}`} />
+          <ListItemText primary={"Location"} secondary={location.description} />
+          <Button size="small" onClick={toggleMap} component={"a"} href="#" sx={{ textTransform: "capitalize" }}>
+            {mapOpen ? "Close map" : "Show location"}
+          </Button>
         </ListItem>
         <Divider />
       </List>
-      <Button variant="contained" onClick={toggleMap} component={"a"} href="#">
-        {mapOpen ? "Close map" : "Show on map"}
-      </Button>
     </>
   );
 };
