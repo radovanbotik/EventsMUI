@@ -43,7 +43,7 @@ const router = createBrowserRouter([
   },
   {
     path: "users",
-    element: <Layout />,
+    element: <Persistent />,
     children: [
       {
         errorElement: <Error />,
@@ -62,7 +62,7 @@ const router = createBrowserRouter([
   },
   {
     path: "account",
-    element: <Layout />,
+    element: <Persistent />,
     children: [
       {
         errorElement: <Error />,

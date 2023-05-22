@@ -11,6 +11,7 @@ import {
   Stack,
   List,
   ListItem,
+  Divider,
   ListItemText,
   useMediaQuery,
   useTheme,
@@ -83,6 +84,8 @@ const EventHeader = ({ event, mapOpen }) => {
           <Map event={event} />
         </Box>
       </Box>
+      <Divider />
+
       {/* <Link to={`/users/profile/${hostId}`}>{hostedBy}</Link> */}
       <List>
         <ListItem sx={{ gap: 3, px: 0 }}>

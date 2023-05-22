@@ -26,15 +26,16 @@ const EventDashboard = () => {
   });
 
   return (
-    <Grid spacing={2} container columns={{ xs: 6, lg: 12 }} sx={{ height: "100%", ".MuiGrid-item": { p: 0 } }}>
+    <Grid spacing={2} container columns={{ xs: 6, lg: 12 }} sx={{ height: "100%" }}>
       {/* <Grid item lg={Number(`${isOpen ? 8 : 12}`)} xs={6}> */}
       <Grid item lg={7} xs={6} sx={{ p: 0 }}>
         <EventList events={events} />
       </Grid>
       <Grid item lg={5} xs={6} sx={{ p: 0 }}>
+        hello hello
         {/* other events */}
         {isOpen && <EventForm />}
-        {!isOpen && <EventFilters setFilterOptions={setFilterOptions} filterOptions={filterOptions} />}
+        {/* {!isOpen && <EventFilters setFilterOptions={setFilterOptions} filterOptions={filterOptions} />} */}
       </Grid>
     </Grid>
   );

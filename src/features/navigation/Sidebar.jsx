@@ -1,7 +1,8 @@
-import { Create } from "@mui/icons-material";
+import { Create, People } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { openForm } from "../../store/formSlice";
+import { eventActions, usersActions } from "../../common/util/actions";
 
 import {
   Toolbar,
@@ -15,7 +16,7 @@ import {
   ListItemText,
 } from "@mui/material";
 
-const Sidebar = ({ routes }) => {
+const Sidebar = () => {
   const dispatch = useDispatch();
   return (
     <>
@@ -42,15 +43,31 @@ const Sidebar = ({ routes }) => {
       <List
         subheader={
           <ListSubheader component="div" id="nested-list-subheader">
-            Routes
+            Events
           </ListSubheader>
         }
       >
-        {routes.map(route => (
-          <ListItem key={route.id} disablePadding>
-            <ListItemButton dense component={Link} to={route.route}>
-              <ListItemIcon>{route.icon}</ListItemIcon>
-              <ListItemText primary={route.name} />
+        {eventActions.map(action => (
+          <ListItem key={action.id} disablePadding>
+            <ListItemButton dense component={Link} to={action.route}>
+              <ListItemIcon>{<action.icon />}</ListItemIcon>
+              <ListItemText primary={action.name} />
+            </ListItemButton>
+          </ListItem>
+        ))}
+      </List>
+      <List
+        subheader={
+          <ListSubheader component="div" id="nested-list-subheader">
+            Users
+          </ListSubheader>
+        }
+      >
+        {usersActions.map(action => (
+          <ListItem key={action.id} disablePadding>
+            <ListItemButton dense component={Link} to={action.route}>
+              <ListItemIcon>{<action.icon />}</ListItemIcon>
+              <ListItemText primary={action.name} />
             </ListItemButton>
           </ListItem>
         ))}
