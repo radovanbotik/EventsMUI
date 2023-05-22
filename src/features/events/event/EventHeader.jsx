@@ -2,7 +2,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { editingTrue, setEvent } from "../../../store/formSlice";
 import dayjs from "dayjs";
 import Map from "./map/Map";
-import { Link, Card, CardMedia, Typography, CardActions, CardContent, Box, Button, ButtonGroup } from "@mui/material";
+import {
+  Link,
+  Card,
+  CardMedia,
+  Typography,
+  CardActions,
+  CardContent,
+  Box,
+  Button,
+  ButtonGroup,
+  Stack,
+} from "@mui/material";
 import { cancelEv, joinEvent, leaveEvent } from "../../../store/eventSlice";
 import DescriptionAlert from "../../../common/alerts/DescriptionAlert";
 import { useState } from "react";
@@ -33,7 +44,7 @@ const EventHeader = ({ event, mapOpen }) => {
 
   const dispatch = useDispatch();
   return (
-    <Card>
+    <Stack>
       <Confirmation
         open={confirmationOpen}
         handleClose={handleClose}
@@ -43,38 +54,39 @@ const EventHeader = ({ event, mapOpen }) => {
           currentEvent.cancelled ? "activate" : "cancel"
         } the current event. Do you wish to procceed?`}
       />
-      <CardMedia
-        component="img"
-        image={eventPhotoURL || noImage}
-        height={300}
-        sx={{ display: mapOpen ? "none" : "block" }}
-      />
-      <CardMedia sx={{ display: mapOpen ? "block" : "none", height: "300px", width: "100%" }}>
+      <Box sx={{ position: "relative", height: 300, width: "100%" }}>
+        <Box
+          component="img"
+          src={eventPhotoURL || noImage}
+          sx={{ display: mapOpen ? "none" : "block", objectFit: "contain", width: "100%", height: "100%" }}
+        />
+      </Box>
+      <Box sx={{ display: mapOpen ? "block" : "none", height: "300px", width: "100%" }}>
         <Map event={event} />
-      </CardMedia>
-      <CardContent>
-        <Typography variant="h4">{title}</Typography>
-        <Typography>{dayjs(date).format("DD MMM YYYY, HH:mm")}</Typography>
-        <Typography>
-          Hosted by
-          <Link component={RLink} to={`/users/profile/${hostId}`}>
-            {hostedBy}
-          </Link>
+      </Box>
+      <Typography variant="h6" sx={{ textTransform: "capitalize" }}>
+        {title}
+      </Typography>
+      <Typography variant="body2">{dayjs(date).format("DD MMM YYYY, HH:mm")}</Typography>
+      <Typography variant="body2">
+        Hosted by{" "}
+        <Typography variant="body2" display="inline" component={RLink} to={`/users/profile/${hostId}`}>
+          {hostedBy}
         </Typography>
+      </Typography>
 
-        {currentEvent.cancelled && (
-          <DescriptionAlert
-            severity={"warning"}
-            title={"Cancelled"}
-            description={"This event has been cancelled by user."}
-            emp={"You can't join this event."}
-            variant={"filled"}
-          />
-        )}
-      </CardContent>
-      <CardActions sx={{ display: "flex", justifyContent: "space-between", width: 1 }}>
+      {currentEvent.cancelled && (
+        <DescriptionAlert
+          severity={"warning"}
+          title={"Cancelled"}
+          description={"This event has been cancelled by user."}
+          emp={"You can't join this event."}
+          variant={"filled"}
+        />
+      )}
+      <ButtonGroup sx={{ display: "flex", justifyContent: "space-between", width: 1 }}>
         <ButtonGroup sx={{ display: "flex", gap: 1 }}>
-          <Button size="small" variant="text" color="warning" type="button" onClick={handleClickOpen}>
+          <Button sx={{ p: 0 }} size="small" variant="text" color="warning" type="button" onClick={handleClickOpen}>
             {currentEvent.cancelled ? "re-active event" : "cancel event"}
           </Button>
 
@@ -104,8 +116,8 @@ const EventHeader = ({ event, mapOpen }) => {
         >
           Manage Event
         </Button>
-      </CardActions>
-    </Card>
+      </ButtonGroup>
+    </Stack>
   );
 };
 
