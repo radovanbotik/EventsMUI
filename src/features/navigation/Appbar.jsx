@@ -1,27 +1,15 @@
 import React, { useState } from "react";
-import {
-  AppBar as MuiAppBar,
-  Toolbar,
-  IconButton,
-  Typography,
-  styled,
-  useTheme,
-  Box,
-  MenuItem,
-  Menu,
-  Avatar,
-  ButtonGroup,
-  Button,
-} from "@mui/material";
+import { AppBar as MuiAppBar, Toolbar, IconButton, Typography, styled, Avatar } from "@mui/material";
 import { MenuOutlined } from "@mui/icons-material";
 import { useSelector, useDispatch } from "react-redux";
-//auth
 import { logOut } from "../../store/authSlice";
 import { openModal } from "../../store/modalSlice";
-// react router dom
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import defaultPhoto from "../../common/images/defaultPhoto.jpg";
 import { drawerWidth } from "../../app/layout/Persistent";
+import BasicMenu from "../../common/menus/BasicMenu";
+import BasicButton from "../../common/buttons/BasicButton";
+import useGetPathName from "../../hooks/useGetPathName";
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: prop => prop !== "open",
@@ -39,27 +27,65 @@ const AppBar = styled(MuiAppBar, {
     }),
   }),
 }));
+
 const Appbar = ({ handleDrawerOpen, open }) => {
-  console.log(open);
-  //signup login
+  const [anchorEl, setAnchorEl] = useState(null);
   const { currentUser, isAuthenticated } = useSelector(store => store.authReducer);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [pathName, setPathName] = useState(null);
 
-  //menu
+  //Anchor Menu to element
   const handleMenu = event => {
-    console.log(event.currentTarget);
     setAnchorEl(event.currentTarget);
   };
-
+  //Close Menu
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const [anchorEl, setAnchorEl] = useState(null);
+  //Menu actions
+  const menuActions = [
+    {
+      id: "a1",
+      actionName: "Account",
+      location: "/account",
+      action() {
+        navigate(this.location);
+        setAnchorEl(null);
+      },
+    },
+    {
+      id: "a2",
+      actionName: "Profile",
+      location: `/users/profile/${currentUser?.id}`,
+      action() {
+        navigate(this.location);
+        setAnchorEl(null);
+      },
+    },
+    {
+      id: "a3",
+      actionName: "Sign Out",
+      location: `/events`,
+      action() {
+        navigate(this.location);
+        dispatch(logOut());
+        setAnchorEl(null);
+      },
+    },
+  ];
+  //Open Modal
+  const openModalType = type => {
+    dispatch(openModal(type));
+  };
+
+  const location = useLocation();
+  useGetPathName({ action: pathname => setPathName(pathname), dependecies: [location] });
 
   return (
     <AppBar position="absolute" open={open}>
       <Toolbar sx={{ position: "relative", display: "flex" }}>
+        {/* Resize icon */}
         <IconButton
           color="inherit"
           aria-label="open drawer"
@@ -69,77 +95,36 @@ const Appbar = ({ handleDrawerOpen, open }) => {
         >
           <MenuOutlined />
         </IconButton>
-        <Typography variant="h6" noWrap component="div" sx={{ mr: "auto" }}>
-          Events
+        {/* Logo */}
+        <Typography variant="h6" noWrap component="div" sx={{ mr: "auto", textTransform: "capitalize" }}>
+          {pathName}
         </Typography>
-        {/* Sign in / Register Button */}
+        {/* Auth actions */}
         {!isAuthenticated && (
-          <ButtonGroup>
-            <Button
-              variant="contained"
-              sx={{ bgcolor: "primary.light" }}
-              onClick={() => dispatch(openModal({ modalType: "register" }))}
-            >
-              register
-            </Button>
-            <Button
-              variant="contained"
-              sx={{ bgcolor: "primary.light" }}
-              onClick={() => dispatch(openModal({ modalType: "login" }))}
-            >
-              sign in
-            </Button>
-          </ButtonGroup>
+          <>
+            <BasicButton variant="contained" action={() => openModalType({ modalType: "register" })}>
+              Register
+            </BasicButton>
+            <BasicButton variant="contained" action={() => openModalType({ modalType: "login" })}>
+              Log In
+            </BasicButton>
+          </>
         )}
-        {/* Profile Menu */}
+        {/* Account Circle */}
         {isAuthenticated && (
-          <Box>
+          <>
             {/* Profile Picture */}
-            <Box sx={{ position: "relative" }}>
-              <IconButton
-                size="small"
-                aria-label="account of current user"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                onClick={handleMenu}
-                color="inherit"
-              >
-                <Avatar alt="user name" src={currentUser.photoURL ? currentUser.photoURL : defaultPhoto} />
-              </IconButton>
-            </Box>
-            {/* Profile Menu Actions*/}
-            <Menu
-              anchorEl={anchorEl}
-              //   anchorOrigin={{
-              //     vertical: "top",
-              //     horizontal: "right",
-              //   }}
-              keepMounted
-              //   transformOrigin={{
-              //     vertical: "top",
-              //     horizontal: "right",
-              //   }}
-              open={Boolean(anchorEl)}
-              onClose={handleClose}
+            <IconButton
+              size="small"
+              aria-label="account of current user"
+              aria-controls="menu-appbar"
+              aria-haspopup="true"
+              onClick={handleMenu}
             >
-              <MenuItem onClick={handleClose} component={Link} to="/account">
-                My Account
-              </MenuItem>
-              <MenuItem onClick={handleClose} component={Link} to={`/users/profile/${currentUser.id}`}>
-                My Profile
-              </MenuItem>
-
-              <MenuItem
-                onClick={() => {
-                  dispatch(logOut());
-                  handleClose();
-                  navigate("/events");
-                }}
-              >
-                Logout
-              </MenuItem>
-            </Menu>
-          </Box>
+              <Avatar alt="user name" src={currentUser.photoURL ? currentUser.photoURL : defaultPhoto} />
+            </IconButton>
+            <BasicMenu handleClose={handleClose} anchorEl={anchorEl} menuActions={menuActions} />
+          </>
         )}
       </Toolbar>
     </AppBar>

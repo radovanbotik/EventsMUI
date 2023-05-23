@@ -6,6 +6,8 @@ import { Container, Grid, styled, Box, Drawer, CssBaseline, Divider, IconButton 
 import { Outlet } from "react-router-dom";
 import Sidebar from "../../features/navigation/Sidebar";
 import Appbar from "../../features/navigation/Appbar";
+import { ToastContainer } from "react-toastify";
+import ModalManager from "../../common/modals/ModalManager";
 
 export const drawerWidth = 240;
 
@@ -52,6 +54,8 @@ export default function PersistentDrawerLeft() {
     <Container maxWidth="xl" sx={{ position: "relative" }}>
       <Box sx={{ position: "relative", display: "flex" }}>
         <CssBaseline />
+        <ToastContainer />
+        <ModalManager />
         <Appbar open={open} drawerWidth={drawerWidth} handleDrawerOpen={handleDrawerOpen} />
         <Drawer
           sx={{
