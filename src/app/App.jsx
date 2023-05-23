@@ -1,6 +1,5 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Landing from "../features/landing/Landing";
-import Layout from "./layout/Layout";
 import Error from "../common/errors/Error";
 import React from "react";
 import Account from "../features/auth/account/Account";
