@@ -9,6 +9,7 @@ import Appbar from "../../features/navigation/Appbar";
 import { ToastContainer } from "react-toastify";
 import ModalManager from "../../common/modals/ModalManager";
 import { useSelector } from "react-redux";
+import useGoogleMaps from "../../hooks/useGoogleMaps";
 
 export const drawerWidth = 240;
 
@@ -51,6 +52,8 @@ export default function PersistentDrawerLeft() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+
+  useGoogleMaps();
 
   return (
     <Container maxWidth="xl" sx={{ position: "relative" }}>

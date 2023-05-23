@@ -29,12 +29,8 @@ import {
 
 const EventCard = props => {
   const { status } = useSelector(store => store.eventReducer);
-
   const { attendees, category, date, hostPhotoURL, hostedBy, id, title, eventPhotoURL, location, canceled } =
     props.event;
-
-  const { isOpen } = useSelector(store => store.formReducer);
-  const dispatch = useDispatch();
 
   return (
     <Card variant="outlined">

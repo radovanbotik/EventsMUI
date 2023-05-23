@@ -2,13 +2,14 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Landing from "../features/landing/Landing";
 import Error from "../common/errors/Error";
 import React from "react";
-import Account from "../features/auth/account/Account";
-import Profile from "../features/profiles/profilePage/Profile";
-import Users from "../features/profiles/usersPage/Users";
 import Persistent from "./layout/Persistent";
+import PageLoader from "../common/loaders/PageLoader";
 
 const EventDashboard = React.lazy(() => import("../features/events/dashboard/EventDashboard"));
 const Event = React.lazy(() => import("../features/events/event/Event"));
+const Users = React.lazy(() => import("../features/profiles/usersPage/Users"));
+const Profile = React.lazy(() => import("../features/profiles/profilePage/Profile"));
+const Account = React.lazy(() => import("../features/auth/account/Account"));
 
 export const router = createBrowserRouter([
   { path: "/", element: <Landing /> },
@@ -23,7 +24,7 @@ export const router = createBrowserRouter([
           {
             index: true,
             element: (
-              <React.Suspense fallback={<div>loading....</div>}>
+              <React.Suspense fallback={<PageLoader />}>
                 <EventDashboard />
               </React.Suspense>
             ),
@@ -31,7 +32,7 @@ export const router = createBrowserRouter([
           {
             path: "event/:id",
             element: (
-              <React.Suspense fallback={<div>loading....</div>}>
+              <React.Suspense fallback={<PageLoader />}>
                 <Event />
               </React.Suspense>
             ),
@@ -49,11 +50,19 @@ export const router = createBrowserRouter([
         children: [
           {
             index: true,
-            element: <Users />,
+            element: (
+              <React.Suspense fallback={<PageLoader />}>
+                <Users />
+              </React.Suspense>
+            ),
           },
           {
             path: "profile/:id",
-            element: <Profile />,
+            element: (
+              <React.Suspense fallback={<PageLoader />}>
+                <Profile />
+              </React.Suspense>
+            ),
           },
         ],
       },
@@ -68,7 +77,11 @@ export const router = createBrowserRouter([
         children: [
           {
             index: true,
-            element: <Account />,
+            element: (
+              <React.Suspense fallback={<PageLoader />}>
+                <Account />
+              </React.Suspense>
+            ),
           },
         ],
       },

@@ -21,11 +21,12 @@ const EventChatForm = ({ handleClose, id }) => {
     <Formik
       validationSchema={validationSchema}
       initialValues={initialValues}
-      onSubmit={async (values, { setSubmitting }) => {
+      onSubmit={async (values, { setSubmitting, resetForm }) => {
         console.log(values);
         try {
           await addCommentToEvent({ post: values, id: id });
           setSubmitting(false);
+          resetForm();
         } catch (error) {
           console.log(error);
         }
@@ -61,20 +62,22 @@ const EventChatForm = ({ handleClose, id }) => {
           />
           <ButtonGroup sx={{ justifyContent: "flex-end" }}>
             <Button
-              color="warning"
               onClick={() => {
-                //   handleClose();
                 formikProps.handleReset();
-                // handleClose();
               }}
               type="button"
               size="small"
               variant="text"
-              sx={{ fontSize: "caption.fontSize" }}
+              sx={{ fontSize: "caption.fontSize", p: 0, textTransform: "none" }}
             >
               Cancel
             </Button>
-            <Button type="submit" size="small" variant="text" sx={{ fontSize: "caption.fontSize" }}>
+            <Button
+              type="submit"
+              size="small"
+              variant="text"
+              sx={{ fontSize: "caption.fontSize", p: 0, textTransform: "none" }}
+            >
               Post
             </Button>
           </ButtonGroup>

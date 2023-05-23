@@ -13,6 +13,8 @@ import {
 const useSubscribeTocollection = ({ filter, collectionRef, action, dependancies }) => {
   const dispatch = useDispatch();
 
+  console.log(action);
+
   useEffect(() => {
     dispatch(setStatus("loading"));
     // const unsubscribe = onSnapshot(
@@ -51,7 +53,6 @@ const useSubscribeTocollection = ({ filter, collectionRef, action, dependancies 
     let query;
 
     if (filter) {
-      console.log(filter);
       switch (filter.attendanceType) {
         case "attending":
           query = createCompoundQuery({

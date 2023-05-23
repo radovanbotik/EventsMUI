@@ -3,8 +3,6 @@ import { editingTrue, setEvent } from "../../../store/formSlice";
 import dayjs from "dayjs";
 import Map from "./map/Map";
 import {
-  Menu,
-  MenuItem,
   Box,
   Button,
   ButtonGroup,
@@ -21,12 +19,11 @@ import DescriptionAlert from "../../../common/alerts/DescriptionAlert";
 import { useState } from "react";
 import Confirmation from "../../../common/dialogs/Confirmation";
 import noImage from "../../../common/images/noImage.avif";
-import { Link as RLink } from "react-router-dom";
 import { EditOutlined, MoreVert, PersonAddOutlined, PersonRemoveOutlined } from "@mui/icons-material";
+import BasicMenu from "../../../common/menus/BasicMenu";
 
 const EventHeader = ({ event, mapOpen }) => {
   const { title, date, hostedBy, eventPhotoURL, hostId, attendeesId, id } = event;
-
   const { events } = useSelector(store => store.eventReducer);
   const { currentUser } = useSelector(store => store.authReducer);
   const [currentEvent] = events;
@@ -34,7 +31,6 @@ const EventHeader = ({ event, mapOpen }) => {
   const isAttending = attendeesId && attendeesId?.includes(currentUser?.id);
   /////////////////////////////////////////////////
   const [anchorEl, setAnchorEl] = useState(null);
-  const open = Boolean(anchorEl);
   const handleClick = event => {
     setAnchorEl(event.currentTarget);
   };
@@ -42,7 +38,7 @@ const EventHeader = ({ event, mapOpen }) => {
     setAnchorEl(null);
   };
   ///////////////////////////
-  const handleClickOpen = () => {
+  const askForPermission = () => {
     setConfirmationOpen(true);
   };
   const handleClose = () => {
@@ -54,6 +50,30 @@ const EventHeader = ({ event, mapOpen }) => {
     handleClose();
   };
   /////////////////////////////////
+  const menuActions = [
+    {
+      id: "a",
+      actionName: "Invite",
+      action() {
+        handleCloseMenu();
+      },
+    },
+    {
+      id: "b",
+      actionName: `${currentEvent.cancelled ? "Active event" : "Cancel Event"}`,
+      action() {
+        askForPermission();
+        handleCloseMenu();
+      },
+    },
+    {
+      id: "c",
+      actionName: "Delete Event",
+      action() {
+        handleCloseMenu();
+      },
+    },
+  ];
 
   const theme = useTheme();
   const xl = useMediaQuery(theme.breakpoints.up("xl"));
@@ -61,6 +81,9 @@ const EventHeader = ({ event, mapOpen }) => {
   const md = useMediaQuery(theme.breakpoints.up("md"));
   const sm = useMediaQuery(theme.breakpoints.up("sm"));
   const xs = useMediaQuery(theme.breakpoints.up("xs"));
+
+  const isNotCancelledAndIsAttending = !currentEvent.cancelled && isAttending;
+  const isNotCancelledAndIsNotAttending = !currentEvent.cancelled && !isAttending;
 
   const dispatch = useDispatch();
   return (
@@ -86,9 +109,8 @@ const EventHeader = ({ event, mapOpen }) => {
       </Box>
       <Divider />
 
-      {/* <Link to={`/users/profile/${hostId}`}>{hostedBy}</Link> */}
       <List>
-        <ListItem sx={{ gap: 3, px: 0 }}>
+        <ListItem sx={{ gap: 3 }}>
           <ListItemText
             primary={dayjs(date).format("MMM")}
             secondary={dayjs(date).format("DD")}
@@ -113,39 +135,38 @@ const EventHeader = ({ event, mapOpen }) => {
         />
       )}
       <ButtonGroup size="small" variant="outlined" sx={md && { alignSelf: "end" }}>
-        {!currentEvent.cancelled && (
-          <>
-            {isAttending ? (
-              <Button
-                onClick={() => dispatch(leaveEvent(id))}
-                sx={{
-                  fontWeight: 700,
-                  fontSize: "caption.fontSize",
-                  color: "ButtonText",
-                  borderColor: "ButtonText",
-                  borderRadius: "0 !important",
-                }}
-                startIcon={<PersonRemoveOutlined />}
-              >
-                Leave event
-              </Button>
-            ) : (
-              <Button
-                onClick={() => dispatch(joinEvent(id))}
-                sx={{
-                  fontWeight: 700,
-                  fontSize: "caption.fontSize",
-                  color: "ButtonText",
-                  borderColor: "ButtonText",
-                  borderRadius: "0 !important",
-                }}
-                startIcon={<PersonAddOutlined fontSize="small" />}
-              >
-                Join Event
-              </Button>
-            )}
-          </>
+        {isNotCancelledAndIsAttending && (
+          <Button
+            onClick={() => dispatch(leaveEvent(id))}
+            sx={{
+              fontWeight: 700,
+              fontSize: "caption.fontSize",
+              color: "ButtonText",
+              borderColor: "ButtonText",
+              borderRadius: "0 !important",
+            }}
+            startIcon={<PersonRemoveOutlined />}
+          >
+            Leave event
+          </Button>
         )}
+
+        {isNotCancelledAndIsNotAttending && (
+          <Button
+            onClick={() => dispatch(joinEvent(id))}
+            sx={{
+              fontWeight: 700,
+              fontSize: "caption.fontSize",
+              color: "ButtonText",
+              borderColor: "ButtonText",
+              borderRadius: "0 !important",
+            }}
+            startIcon={<PersonAddOutlined fontSize="small" />}
+          >
+            Join Event
+          </Button>
+        )}
+
         <Button
           type="button"
           onClick={() => {
@@ -177,26 +198,7 @@ const EventHeader = ({ event, mapOpen }) => {
           startIcon={<MoreVert fontSize="small" />}
           onClick={handleClick}
         />
-        <Menu
-          id="basic-menu"
-          anchorEl={anchorEl}
-          open={open}
-          onClose={handleCloseMenu}
-          MenuListProps={{
-            "aria-labelledby": "basic-button",
-          }}
-        >
-          <MenuItem onClick={handleClose}>Invite</MenuItem>
-          <MenuItem
-            onClick={() => {
-              handleClickOpen();
-              handleCloseMenu();
-            }}
-          >
-            {currentEvent.cancelled ? "Activate event" : "Cancel event"}
-          </MenuItem>
-          <MenuItem onClick={handleClose}>Delete Event</MenuItem>
-        </Menu>
+        <BasicMenu menuActions={menuActions} handleClose={handleCloseMenu} anchorEl={anchorEl} />
       </ButtonGroup>
     </Stack>
   );

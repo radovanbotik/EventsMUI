@@ -10,7 +10,6 @@ import {
   convertDateToTimestamp,
 } from "../firestore/firestore";
 import { toast } from "react-toastify";
-import { useSelector } from "react-redux";
 
 const initialState = {
   events: null,

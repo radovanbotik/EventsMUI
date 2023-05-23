@@ -4,8 +4,7 @@ import { useFormikContext } from "formik";
 
 const BasicInput = ({ submitOnKeyDown, ...props }) => {
   const [field, meta, helpers] = useField(props);
-  const { values, setValues, setFieldValue, handleSubmit } = useFormikContext();
-
+  const { handleSubmit, resetForm } = useFormikContext();
   return (
     <TextField
       className="text-input"
@@ -15,9 +14,14 @@ const BasicInput = ({ submitOnKeyDown, ...props }) => {
       error={meta.touched && Boolean(meta.error)}
       onKeyDown={e => {
         if (submitOnKeyDown === true) {
-          if (!e.shiftKey && e.key === "Enter") {
-            console.log(e.key);
+          if (!e.shiftKey && e.key == "Enter") {
+            e.preventDefault();
+            e.target.blur();
             handleSubmit();
+            return;
+          }
+          if (e.shiftKey && e.key == "Enter") {
+            return;
           }
         }
       }}

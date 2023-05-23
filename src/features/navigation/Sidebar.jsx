@@ -28,12 +28,9 @@ const Sidebar = () => {
     dispatch(setFilter({ attendanceType, id, date: new Date().getTime() }));
   };
 
-  const matchPath = useMatch("/events");
-  console.log(matchPath);
-
   const eventActions = [
     {
-      id: "a",
+      id: "ea1",
       name: "All Events",
       location: "/events",
       attendanceType: "all",
@@ -44,7 +41,7 @@ const Sidebar = () => {
       icon: EventOutlined,
     },
     {
-      id: "b",
+      id: "ea2",
       name: "Hosting",
       attendanceType: "hosting",
       action() {
@@ -53,7 +50,7 @@ const Sidebar = () => {
       icon: TodayOutlined,
     },
     {
-      id: "c",
+      id: "ea3",
       name: "Attending",
       attendanceType: "attending",
       action() {
@@ -62,7 +59,7 @@ const Sidebar = () => {
       icon: EventAvailableOutlined,
     },
     {
-      id: "d",
+      id: "ea4",
       name: "Past Events",
       attendanceType: "attended",
       action() {
