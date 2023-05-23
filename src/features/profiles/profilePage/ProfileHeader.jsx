@@ -5,6 +5,7 @@ const ProfileHeader = ({ props }) => {
   const { photoURL, displayName, email, owner } = props;
   return (
     <Grid
+      component="div"
       container
       mb={4}
       sx={{

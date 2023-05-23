@@ -42,10 +42,10 @@ const Profile = () => {
     );
 
   return (
-    <>
+    <Box sx={{ width: "100%" }}>
       <ProfileHeader props={{ ...user, owner: owner }} />
       <ProfileContent props={{ ...user, owner: owner }} />
-    </>
+    </Box>
   );
 };
 

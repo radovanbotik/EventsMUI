@@ -13,12 +13,35 @@ import { openForm } from "../../store/formSlice";
 import { setFilter } from "../../store/eventSlice";
 // import { eventActions, usersActions } from "../../common/util/actions";
 
-import { Divider, List, ListSubheader, ListItem, ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
+import {
+  Divider,
+  List,
+  ListSubheader,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  Badge,
+  styled,
+} from "@mui/material";
+import { useEffect, useState } from "react";
+import useSubscribeTocollection from "../../hooks/useSubscribeTocollection";
+
+const StyledBadge = styled(Badge)(({ theme }) => ({
+  "& .MuiBadge-badge": {
+    right: 3,
+    top: 3,
+    border: `2px solid ${theme.palette.background.paper}`,
+    padding: "0 4px",
+  },
+}));
 
 const Sidebar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { id } = useSelector(store => store.authReducer.currentUser);
+  const { events } = useSelector(store => store.eventReducer);
+  const [eventsCount, setEventsCount] = useState();
 
   const navigateTo = location => {
     navigate(location);
@@ -27,6 +50,9 @@ const Sidebar = () => {
   const onFilterChange = ({ attendanceType }) => {
     dispatch(setFilter({ attendanceType, id, date: new Date().getTime() }));
   };
+  const allCount = eventsCount?.length;
+  const hostingCount = eventsCount?.filter(ev => ev.hostId === id).length;
+  const attendingCount = eventsCount?.filter(ev => ev.attendeesId.includes(id)).length;
 
   const eventActions = [
     {
@@ -34,6 +60,7 @@ const Sidebar = () => {
       name: "All Events",
       location: "/events",
       attendanceType: "all",
+      count: allCount,
       action() {
         navigateTo(this.location);
         onFilterChange({ attendanceType: this.attendanceType });
@@ -44,6 +71,7 @@ const Sidebar = () => {
       id: "ea2",
       name: "Hosting",
       attendanceType: "hosting",
+      count: hostingCount,
       action() {
         onFilterChange({ attendanceType: this.attendanceType });
       },
@@ -53,6 +81,7 @@ const Sidebar = () => {
       id: "ea3",
       name: "Attending",
       attendanceType: "attending",
+      count: attendingCount,
       action() {
         onFilterChange({ attendanceType: this.attendanceType });
       },
@@ -80,6 +109,12 @@ const Sidebar = () => {
       icon: PeopleOutlineOutlined,
     },
   ];
+
+  useSubscribeTocollection({
+    collectionRef: "events",
+    action: events => setEventsCount(events),
+    dependancies: [],
+  });
 
   return (
     <>
@@ -110,7 +145,11 @@ const Sidebar = () => {
         {eventActions.map(action => (
           <ListItem key={action.id} disablePadding>
             <ListItemButton dense onClick={action.action.bind(action)}>
-              <ListItemIcon>{<action.icon />}</ListItemIcon>
+              <ListItemIcon>
+                <StyledBadge badgeContent={action.count} color="secondary">
+                  {<action.icon />}
+                </StyledBadge>
+              </ListItemIcon>
               <ListItemText primary={action.name} />
             </ListItemButton>
           </ListItem>

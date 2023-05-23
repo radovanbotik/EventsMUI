@@ -8,7 +8,7 @@ const AboutPanel = ({ props }) => {
   const [editing, setEditing] = useState(false);
 
   return (
-    <div>
+    <>
       <AppBar position="static" sx={{ mb: 2 }}>
         <Toolbar variant="dense" sx={{ display: "flex" }}>
           <AccountCircle sx={{ mr: 2 }} />
@@ -38,7 +38,7 @@ const AboutPanel = ({ props }) => {
           </Toolbar>
         </Box>
       )}
-    </div>
+    </>
   );
 };
 

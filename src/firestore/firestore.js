@@ -15,7 +15,7 @@ import {
   arrayRemove,
   where,
 } from "firebase/firestore";
-import { deleteObject, getStorage, ref } from "firebase/storage";
+import { deleteObject, getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { app } from "../config/firebase";
 import {
   createUserWithEmailAndPassword,
@@ -78,7 +78,6 @@ export const deleteDocument = async ({ collectionRef, docId }) => {
   await deleteDoc(doc(db, collectionRef, docId));
 };
 export const subscribeToCollection = ({ collectionRef, q, action }) => {
-  // console.log(q);
   return onSnapshot(q, snapshot => {
     const docs = [];
     snapshot.forEach(doc => {
@@ -161,4 +160,29 @@ export const deleteFileFromStorage = async filepath => {
   const fileRef = ref(storage, filepath);
   await deleteObject(fileRef);
   console.log("removed");
+};
+
+export const uploadFile = async ({ image, filename }) => {
+  const storageRef = ref(storage);
+  const imageAndStorageRef = ref(storageRef, `${auth.currentUser.uid}/user_images/${filename}`);
+  const uploadTask = uploadBytesResumable(imageAndStorageRef, image);
+  uploadTask.on(
+    "state_changed",
+    snapshot => {
+      const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+      console.log("Upload is " + progress + "% done");
+    },
+    error => {},
+    () => {
+      getDownloadURL(uploadTask.snapshot.ref).then(downloadURL => {
+        console.log("File available at", downloadURL);
+        //users individual photo collection
+        setDoc(doc(db, "users", auth.currentUser.uid, "photos", filename), {
+          name: filename,
+          url: downloadURL,
+        });
+      });
+    }
+  );
+  console.log(uploadTask);
 };

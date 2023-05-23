@@ -13,8 +13,6 @@ import {
 const useSubscribeTocollection = ({ filter, collectionRef, action, dependancies }) => {
   const dispatch = useDispatch();
 
-  console.log(action);
-
   useEffect(() => {
     dispatch(setStatus("loading"));
     // const unsubscribe = onSnapshot(

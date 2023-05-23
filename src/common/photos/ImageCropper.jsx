@@ -13,18 +13,18 @@ const ImageCropper = ({ image, setCroppedImage }) => {
   return (
     <Cropper
       src={preview}
-      style={{ height: 300, width: "100%", flex: 1 }}
+      style={{ height: "200px", flex: 1, aspectRatio: 16 / 9 }}
       // Cropper.js options
-      initialAspectRatio={16 / 9}
+      viewMode={1}
+      // initialAspectRatio={16 / 9}
       guides={false}
       crop={onCrop}
       ref={cropperRef}
-      viewMode={1}
       dragMode="move"
       responsive={true}
       preview={".img-cropped"}
-      cropBoxMovable={true}
-      cropBoxResizable={true}
+      // cropBoxMovable={true}
+      // cropBoxResizable={true}
     />
   );
 };

@@ -8,7 +8,7 @@ function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
   return (
-    <div
+    <Box
       role="tabpanel"
       hidden={value !== index}
       id={`simple-tabpanel-${index}`}
@@ -16,7 +16,7 @@ function TabPanel(props) {
       {...other}
     >
       {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
-    </div>
+    </Box>
   );
 }
 function a11yProps(index) {
@@ -33,9 +33,16 @@ const ProfileContent = props => {
   };
 
   return (
-    <Box sx={{ width: "100%" }}>
-      <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-        <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" scrollButtons="auto">
+    <>
+      <Box sx={{ borderBottom: 1, borderColor: "divider", maxWidth: { xs: 400, sm: 480, md: "100%" } }}>
+        <Tabs
+          value={value}
+          onChange={handleChange}
+          aria-label="basic tabs example"
+          variant="scrollable"
+          scrollButtons
+          allowScrollButtonsMobile
+        >
           <Tab label="About me" {...a11yProps(0)} />
           <Tab label="Photos" {...a11yProps(1)} />
           <Tab label="Events" {...a11yProps(2)} />
@@ -58,7 +65,7 @@ const ProfileContent = props => {
       <TabPanel value={value} index={4}>
         following
       </TabPanel>
-    </Box>
+    </>
   );
 };
 
