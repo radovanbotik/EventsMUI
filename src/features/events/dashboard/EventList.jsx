@@ -14,6 +14,14 @@ const EventList = ({ events }) => {
         </Box>
       </Box>
     );
+  if (events.length === 0)
+    return (
+      <Box sx={{ display: "flex", flexDirection: "column", height: "100%" }}>
+        <Toolbar>
+          <Typography variant="h6">No events to be displayed.</Typography>
+        </Toolbar>
+      </Box>
+    );
   return (
     <>
       <Stack spacing={2}>

@@ -11,7 +11,7 @@ import Persistent from "./layout/Persistent";
 const EventDashboard = React.lazy(() => import("../features/events/dashboard/EventDashboard"));
 const Event = React.lazy(() => import("../features/events/event/Event"));
 
-const router = createBrowserRouter([
+export const router = createBrowserRouter([
   { path: "/", element: <Landing /> },
   {
     path: "events",

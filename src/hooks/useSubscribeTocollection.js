@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { setStatus } from "../store/eventSlice";
 import {
-  convertDateToTimestamp,
+  convertMillisToTimestamp,
   createCompoundQuery,
   createQuery,
   subscribeToCollection,
@@ -44,7 +44,7 @@ const useSubscribeTocollection = ({ filter, collectionRef, action, dependancies 
     //   {
     //     field: "date",
     //     operator: ">=",
-    //     value: convertDateToTimestamp(filter.date),
+    //     value: convertMillisToTimestamp(filter.date),
     //   }
     // ]})
 
@@ -65,7 +65,7 @@ const useSubscribeTocollection = ({ filter, collectionRef, action, dependancies 
               {
                 field: "date",
                 operator: ">=",
-                value: convertDateToTimestamp(filter.date),
+                value: convertMillisToTimestamp(filter.date),
               },
             ],
           });
@@ -88,7 +88,7 @@ const useSubscribeTocollection = ({ filter, collectionRef, action, dependancies 
               {
                 field: "date",
                 operator: ">=",
-                value: convertDateToTimestamp(filter.date),
+                value: convertMillisToTimestamp(filter.date),
               },
             ],
           });
@@ -100,24 +100,12 @@ const useSubscribeTocollection = ({ filter, collectionRef, action, dependancies 
               {
                 field: "date",
                 operator: ">=",
-                value: convertDateToTimestamp(filter.date),
+                value: convertMillisToTimestamp(filter.date),
               },
             ],
           });
           break;
         case "attended":
-          query = createCompoundQuery({
-            collectionRef: collectionRef,
-            constraints: [
-              {
-                field: "date",
-                operator: "<=",
-                value: convertDateToTimestamp(filter.date),
-              },
-            ],
-          });
-          break;
-        default:
           query = createCompoundQuery({
             collectionRef: collectionRef,
             constraints: [
@@ -128,8 +116,20 @@ const useSubscribeTocollection = ({ filter, collectionRef, action, dependancies 
               },
               {
                 field: "date",
+                operator: "<=",
+                value: convertMillisToTimestamp(filter.date),
+              },
+            ],
+          });
+          break;
+        default:
+          query = createCompoundQuery({
+            collectionRef: collectionRef,
+            constraints: [
+              {
+                field: "date",
                 operator: ">=",
-                value: convertDateToTimestamp(filter.date),
+                value: convertMillisToTimestamp(filter.date),
               },
             ],
           });

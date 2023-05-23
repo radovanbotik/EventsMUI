@@ -10,11 +10,16 @@ import {
   convertDateToTimestamp,
 } from "../firestore/firestore";
 import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
 
-//initial state
 const initialState = {
   events: null,
   status: "idle",
+  filterOptions: {
+    attendanceType: "all",
+    date: new Date().getTime(),
+    id: null,
+  },
 };
 //actions
 export const setStatus = createAction("events/setStatus");
@@ -113,6 +118,9 @@ const slice = createSlice({
     loadEvents: (state, action) => {
       state.events = action.payload;
     },
+    setFilter: (state, action) => {
+      state.filterOptions = action.payload;
+    },
   },
   extraReducers: builder => {
     builder.addCase(setStatus, (state, action) => {
@@ -160,5 +168,5 @@ const slice = createSlice({
   },
 });
 
-export const { loadEvents } = slice.actions;
+export const { loadEvents, setFilter } = slice.actions;
 export default slice.reducer;

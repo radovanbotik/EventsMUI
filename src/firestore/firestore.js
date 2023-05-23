@@ -37,6 +37,10 @@ export const storage = getStorage(app);
 export const convertDateToTimestamp = date => {
   return Timestamp.fromDate(date);
 };
+export const convertMillisToTimestamp = date => {
+  return Timestamp.fromMillis(date);
+};
+
 export const createArrayUnion = array => {
   return arrayUnion(...array);
 };

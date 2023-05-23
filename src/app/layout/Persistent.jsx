@@ -8,6 +8,7 @@ import Sidebar from "../../features/navigation/Sidebar";
 import Appbar from "../../features/navigation/Appbar";
 import { ToastContainer } from "react-toastify";
 import ModalManager from "../../common/modals/ModalManager";
+import { useSelector } from "react-redux";
 
 export const drawerWidth = 240;
 
@@ -39,6 +40,7 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 }));
 
 export default function PersistentDrawerLeft() {
+  const { isInitialized } = useSelector(store => store.authReducer);
   const theme = useTheme();
   const [open, setOpen] = useState(true);
 
@@ -83,11 +85,11 @@ export default function PersistentDrawerLeft() {
             </IconButton>
           </DrawerHeader>
           <Divider />
-          <Sidebar />
+          {isInitialized && <Sidebar />}
         </Drawer>
         <Main open={open}>
           <DrawerHeader />
-          <Outlet />
+          {isInitialized && <Outlet />}
         </Main>
       </Box>
     </Container>

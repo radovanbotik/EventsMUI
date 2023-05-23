@@ -3,7 +3,6 @@ import { deleteEvent } from "../../../store/eventSlice";
 import { Link } from "react-router-dom";
 import { openForm, closeForm, editingTrue, setEvent, resetEvent } from "../../../store/formSlice";
 import dayjs from "dayjs";
-import { MoreVert, PersonAddOutlined } from "@mui/icons-material";
 import DescriptionAlert from "../../../common/alerts/DescriptionAlert";
 import noImage from "../../../common/images/noImage.avif";
 import relativeTime from "dayjs/plugin/relativeTime";
@@ -31,24 +30,11 @@ import {
 const EventCard = props => {
   const { status } = useSelector(store => store.eventReducer);
 
-  const {
-    attendees,
-    category,
-    date,
-    description,
-    hostPhotoURL,
-    hostedBy,
-    id,
-    title,
-    eventPhotoURL,
-    location,
-    canceled,
-    createdAt,
-  } = props.event;
+  const { attendees, category, date, hostPhotoURL, hostedBy, id, title, eventPhotoURL, location, canceled } =
+    props.event;
 
   const { isOpen } = useSelector(store => store.formReducer);
   const dispatch = useDispatch();
-  console.log(attendees);
 
   return (
     <Card variant="outlined">
