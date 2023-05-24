@@ -1,15 +1,13 @@
 import React from "react";
 import { Stack, Toolbar, Box, CircularProgress, Typography } from "@mui/material";
-import EventCard from "../dashboard/EventCard";
+import EventCard from "../dashboard/card/EventCard";
 
 const EventList = ({ events }) => {
   if (!events)
     return (
       <Box sx={{ display: "flex", flexDirection: "column", height: "100%" }}>
-        <Toolbar>
-          <Typography variant="h6">Events:</Typography>
-        </Toolbar>
-        <Box sx={{ display: "grid", placeItems: "center", flex: 1, flexGrow: 1 }}>
+        <Box sx={{ display: "grid", justifyItems: "center", alignContent: "center", flex: 1, flexGrow: 1 }}>
+          <Typography variant="body2">Your content is loading...</Typography>
           <CircularProgress />
         </Box>
       </Box>
@@ -18,7 +16,7 @@ const EventList = ({ events }) => {
     return (
       <Box sx={{ display: "flex", flexDirection: "column", height: "100%" }}>
         <Toolbar>
-          <Typography variant="h6">No events to be displayed.</Typography>
+          <Typography variant="body2">No events matching the criteria.</Typography>
         </Toolbar>
       </Box>
     );
