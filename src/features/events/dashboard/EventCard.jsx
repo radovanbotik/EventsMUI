@@ -27,28 +27,57 @@ import {
   ButtonBase,
 } from "@mui/material";
 
-const EventCard = props => {
+const EventCard = ({ event }) => {
   const { status } = useSelector(store => store.eventReducer);
-  const { attendees, category, date, hostPhotoURL, hostedBy, id, title, eventPhotoURL, location, canceled } =
-    props.event;
+  const { attendees, category, date, hostPhotoURL, hostedBy, hostId, id, title, eventPhotoURL, location, canceled } =
+    event;
+
+  console.log(attendees);
+  const getNamesOfAttendees = ({ totalAttendees, attendees }) => {
+    const length = totalAttendees < attendees.length ? attendees.length : totalAttendees;
+    const names = attendees
+      .slice(0, length)
+      .map(attendee => attendee.name.split(" ")[0])
+      .join(" and ");
+    // console.log(names);
+    return names;
+  };
+  console.log(event);
 
   return (
     <Card variant="outlined">
+      <CardHeader
+        avatar={
+          status === "loading" ? (
+            <Skeleton animation="wave" variant="circular">
+              <Avatar />
+            </Skeleton>
+          ) : (
+            <Avatar
+              component={Link}
+              to={`/users/profile/${hostId}`}
+              aria-label="host"
+              src={hostPhotoURL}
+              imgProps={{ loading: "lazy" }}
+            />
+          )
+        }
+        title={title}
+        subheader={
+          <Typography sx={{ fontSize: "body2.fontSize", color: "GrayText" }}>
+            by{" "}
+            <Typography
+              sx={{ fontSize: "body2.fontSize", textDecoration: "none", color: "WindowText" }}
+              component={Link}
+              to={`/users/profile/${hostId}`}
+            >
+              {hostedBy}
+            </Typography>
+          </Typography>
+        }
+      ></CardHeader>
+      <Divider />
       <CardActionArea component={Link} to={`event/${id}`}>
-        <CardHeader
-          avatar={
-            status === "loading" ? (
-              <Skeleton animation="wave" variant="circular">
-                <Avatar />
-              </Skeleton>
-            ) : (
-              <Avatar aria-label="host" src={hostPhotoURL} imgProps={{ loading: "lazy" }} /> || <Avatar />
-            )
-          }
-          title={title}
-          subheader={`by ${hostedBy || "anonymous"}`}
-        ></CardHeader>
-        <Divider />
         {status === "loading" ? (
           <Skeleton animation="wave" width="100%" variant="rectangular" height={240} />
         ) : (
@@ -108,17 +137,28 @@ const EventCard = props => {
           View details
         </ButtonBase>
         <Stack direction={"row"} spacing={1} sx={{ alignItems: "center" }}>
-          <AvatarGroup max={3} total={attendees.length} spacing="small">
+          <AvatarGroup
+            max={3}
+            total={attendees.length}
+            spacing="small"
+            sx={{
+              "& .MuiAvatar-root": { width: 24, height: 24, fontSize: 14 },
+              gap: 1,
+            }}
+          >
             <Avatar
               aria-label="host"
               src={hostPhotoURL}
               imgProps={{ loading: "lazy" }}
-              sx={{ height: 16, width: 16 }}
+              // sx={{ height: 16, width: 16 }}
             />
           </AvatarGroup>
-          <Typography sx={{ fontSize: "body2.fontSize", color: "GrayText" }}>{`${
-            attendees[0].name.split(" ")[0]
-          } is going`}</Typography>
+          <Typography sx={{ fontSize: "body2.fontSize", color: "GrayText" }}>
+            {`${getNamesOfAttendees({
+              totalAttendees: 4,
+              attendees: attendees,
+            })} is going`}
+          </Typography>
         </Stack>
         {/* <Button
           size="small"
