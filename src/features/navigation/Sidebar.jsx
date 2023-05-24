@@ -41,7 +41,8 @@ const Sidebar = () => {
   const navigate = useNavigate();
   const { id } = useSelector(store => store.authReducer.currentUser);
   const { events } = useSelector(store => store.eventReducer);
-  const [eventsCount, setEventsCount] = useState();
+  const [activeEvents, setActiveEvents] = useState();
+  const [expiredEvents, setExpiredEvents] = useState();
 
   const navigateTo = location => {
     navigate(location);
@@ -50,14 +51,15 @@ const Sidebar = () => {
   const onFilterChange = ({ attendanceType }) => {
     dispatch(setFilter({ attendanceType, id, date: new Date().getTime() }));
   };
-  const allCount = eventsCount?.length;
-  const hostingCount = eventsCount?.filter(ev => ev.hostId === id).length;
-  const attendingCount = eventsCount?.filter(ev => ev.attendeesId.includes(id)).length;
+  const allCount = activeEvents?.length;
+  const hostingCount = activeEvents?.filter(ev => ev.hostId === id).length;
+  const attendingCount = activeEvents?.filter(ev => ev.attendeesId.includes(id)).length;
+  const expiredEventsCount = expiredEvents?.length;
 
   const eventActions = [
     {
       id: "ea1",
-      name: "All Events",
+      name: "Avaible Events",
       location: "/events",
       attendanceType: "all",
       count: allCount,
@@ -91,6 +93,8 @@ const Sidebar = () => {
       id: "ea4",
       name: "Past Events",
       attendanceType: "attended",
+      count: expiredEventsCount,
+
       action() {
         onFilterChange({ attendanceType: this.attendanceType });
       },
@@ -112,7 +116,23 @@ const Sidebar = () => {
 
   useSubscribeTocollection({
     collectionRef: "events",
-    action: events => setEventsCount(events),
+    filter: {
+      attendanceType: "all",
+      date: new Date().getTime(),
+      id: id,
+    },
+    action: events => setActiveEvents(events),
+    dependancies: [],
+  });
+
+  useSubscribeTocollection({
+    collectionRef: "events",
+    filter: {
+      attendanceType: "attended",
+      date: new Date().getTime(),
+      id: id,
+    },
+    action: events => setExpiredEvents(events),
     dependancies: [],
   });
 

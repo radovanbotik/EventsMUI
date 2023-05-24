@@ -7,6 +7,7 @@ import { Outlet } from "react-router-dom";
 import Sidebar from "../../features/navigation/Sidebar";
 import Appbar from "../../features/navigation/Appbar";
 import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import ModalManager from "../../common/modals/ModalManager";
 import { useSelector } from "react-redux";
 import useGoogleMaps from "../../hooks/useGoogleMaps";
@@ -58,8 +59,8 @@ export default function PersistentDrawerLeft() {
   return (
     <Container maxWidth="xl" sx={{ position: "relative" }}>
       <Box sx={{ position: "relative", display: "flex" }}>
-        <CssBaseline />
         <ToastContainer />
+        <CssBaseline />
         <ModalManager />
         <Appbar open={open} drawerWidth={drawerWidth} handleDrawerOpen={handleDrawerOpen} />
         <Drawer

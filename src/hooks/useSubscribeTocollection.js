@@ -64,7 +64,7 @@ const useSubscribeTocollection = ({ filter, collectionRef, action, dependancies 
               {
                 field: "date",
                 operator: ">=",
-                value: convertMillisToTimestamp(filter.date),
+                value: convertMillisToTimestamp(new Date().getTime()),
               },
             ],
           });
@@ -87,7 +87,7 @@ const useSubscribeTocollection = ({ filter, collectionRef, action, dependancies 
               {
                 field: "date",
                 operator: ">=",
-                value: convertMillisToTimestamp(filter.date),
+                value: convertMillisToTimestamp(new Date().getTime()),
               },
             ],
           });
@@ -99,7 +99,7 @@ const useSubscribeTocollection = ({ filter, collectionRef, action, dependancies 
               {
                 field: "date",
                 operator: ">=",
-                value: convertMillisToTimestamp(filter.date),
+                value: convertMillisToTimestamp(new Date().getTime()),
               },
             ],
           });
@@ -116,7 +116,7 @@ const useSubscribeTocollection = ({ filter, collectionRef, action, dependancies 
               {
                 field: "date",
                 operator: "<=",
-                value: convertMillisToTimestamp(filter.date),
+                value: convertMillisToTimestamp(new Date().getTime()),
               },
             ],
           });

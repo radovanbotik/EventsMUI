@@ -121,7 +121,10 @@ const Appbar = ({ handleDrawerOpen, open }) => {
               aria-haspopup="true"
               onClick={handleMenu}
             >
-              <Avatar alt="user name" src={currentUser.photoURL ? currentUser.photoURL : defaultPhoto} />
+              <Avatar
+                alt="user name"
+                src={currentUser.photoURL ? currentUser.photoURL : "../../common/images/defaultPhoto.jpg"}
+              />
             </IconButton>
             <BasicMenu handleClose={handleClose} anchorEl={anchorEl} menuActions={menuActions} />
           </>
