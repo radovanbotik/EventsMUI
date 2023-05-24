@@ -4,8 +4,8 @@
 import React, { useRef, useEffect } from "react";
 import Marker from "./Marker";
 
-const Map = ({ event }) => {
-  const { latLng } = event.location;
+const Map = ({ location }) => {
+  const { latLng } = location;
   const mapRef = useRef(null);
   const HTMLRef = useRef(null);
   useEffect(() => {

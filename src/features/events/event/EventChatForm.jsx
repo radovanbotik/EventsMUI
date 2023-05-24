@@ -46,7 +46,7 @@ const EventChatForm = ({ handleClose, id }) => {
             size="small"
             variant="standard"
             margin="dense"
-            placeholder="Enter your comment (Enter to submit, SHIFT + Enter for new line)"
+            placeholder="Enter to submit, SHIFT + Enter for new line"
             submitOnKeyDown={true}
             multiline
             fullWidth

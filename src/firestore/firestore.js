@@ -84,7 +84,7 @@ export const subscribeToCollection = ({ collectionRef, q, action }) => {
       const docData = doc.data();
       for (const prop in docData) {
         if (docData[prop] instanceof Timestamp) {
-          docData[prop] = docData[prop].toDate().toISOString();
+          docData[prop] = docData[prop].toDate().getTime();
         }
       }
       docs.push({ id: doc.id, ...docData });

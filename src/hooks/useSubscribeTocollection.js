@@ -14,6 +14,7 @@ const useSubscribeTocollection = ({ filter, collectionRef, action, dependancies 
   const dispatch = useDispatch();
 
   useEffect(() => {
+    console.log("loading");
     dispatch(setStatus("loading"));
     // const unsubscribe = onSnapshot(
     //   query(collection(db, collectionRef), q),

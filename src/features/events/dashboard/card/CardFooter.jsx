@@ -2,7 +2,7 @@ import { CardActions, ButtonBase, Stack, AvatarGroup, Avatar, Typography } from 
 import getNamesOfAttendees from "../../../../common/util/getNamesOfAttendees";
 import { Link } from "react-router-dom";
 
-const CardFooter = ({ id, attendees, hostPhotoURL }) => {
+const CardFooter = ({ id, attendees }) => {
   const AVATAR_MAX = 3;
 
   const avatarGroupStyles = {

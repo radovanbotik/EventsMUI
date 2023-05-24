@@ -1,4 +1,3 @@
-import React from "react";
 import { Stack, Toolbar, Box, CircularProgress, Typography } from "@mui/material";
 import EventCard from "../dashboard/card/EventCard";
 

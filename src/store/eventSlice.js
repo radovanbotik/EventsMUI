@@ -34,6 +34,7 @@ export const createEvent = createAsyncThunk("events/createEvent", async (event, 
   ]);
   const timestamp = convertDateToTimestamp(event.date);
   const createdAt = convertDateToTimestamp(new Date());
+  console.table("timestamp:", timestamp, "createdAt:", createdAt);
   const attendeesId = createArrayUnion([currentUser.id]);
   const document = {
     ...event,
@@ -70,6 +71,7 @@ export const deleteEvent = createAsyncThunk("events/deleteEv", async (eventId, t
 
 export const cancelEv = createAsyncThunk("events/cancelEv", async (event, thunkAPI) => {
   try {
+    // const date = event. to timestamp
     await updateDocument({ collectionRef: "events", document: { ...event, cancelled: !event.cancelled } });
   } catch (error) {
     console.log(error);
@@ -117,6 +119,7 @@ const slice = createSlice({
     loadEvents: (state, action) => {
       state.events = action.payload;
     },
+
     setFilter: (state, action) => {
       state.filterOptions = action.payload;
     },

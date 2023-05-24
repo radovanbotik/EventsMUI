@@ -4,6 +4,7 @@ import formReducer from "./formSlice";
 import modalReducer from "./modalSlice";
 import authReducer, { setInitialized } from "./authSlice";
 import profileReducer from "./profileSlice";
+import confirmationReducer from "./confirmationSlice";
 
 import { auth } from "../config/firebase";
 import { onAuthStateChanged } from "firebase/auth";
@@ -18,6 +19,7 @@ const store = configureStore({
     modalReducer: modalReducer,
     authReducer: authReducer,
     profileReducer: profileReducer,
+    confirmationReducer: confirmationReducer,
   },
 });
 

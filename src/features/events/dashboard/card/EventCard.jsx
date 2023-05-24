@@ -1,6 +1,5 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import CardSkeleton from "./CardSkeleton";
-
 import { Card, Divider } from "@mui/material";
 import CardHead from "./CardHead";
 import CardImage from "./CardImage";

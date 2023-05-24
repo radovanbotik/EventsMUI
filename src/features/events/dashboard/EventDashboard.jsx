@@ -8,12 +8,6 @@ import EventList from "./EventList";
 const EventDashboard = () => {
   const { events } = useSelector(store => store.eventReducer);
   const { isOpen } = useSelector(store => store.formReducer);
-  const { currentUser } = useSelector(store => store.authReducer);
-  // const [filterOptions, setFilterOptions] = useState({
-  //   attendanceType: "all",
-  //   date: new Date(),
-  //   id: currentUser?.id,
-  // });
   const { filterOptions } = useSelector(store => store.eventReducer);
   const dispatch = useDispatch();
 

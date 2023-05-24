@@ -2,9 +2,10 @@ import React from "react";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import BasicInput from "../../../common/forms/BasicInput";
-import { Typography, Stack, Button, ButtonGroup, ListItem } from "@mui/material";
+import { Typography, Stack, Button, ButtonGroup, ListItem, InputAdornment, Avatar } from "@mui/material";
 import { addReplyToEventMessage } from "../../../firestore/realtimeDatabase";
 import { Box } from "@mui/system";
+import { useSelector } from "react-redux";
 
 const validationSchema = Yup.object({
   reply: Yup.string().max(1000, "reply cannot exceed 1000 words.").required("You forgot to write your reply."),
@@ -14,6 +15,8 @@ const initialValues = {
 };
 
 const EventChatReplyForm = ({ setReplyingTo, eventId, commentId }) => {
+  const { currentUser } = useSelector(store => store.authReducer);
+
   return (
     <Formik
       validationSchema={validationSchema}
@@ -33,16 +36,23 @@ const EventChatReplyForm = ({ setReplyingTo, eventId, commentId }) => {
         <Stack onSubmit={formikProps.handleSubmit} component="form" sx={{ flex: 1, pl: 4 }}>
           <BasicInput
             name="reply"
-            label="reply"
+            // label="reply"
             size="small"
-            variant="filled"
+            variant="standard"
             margin="dense"
-            placeholder="Enter your reply (Enter to submit, SHIFT + Enter for new line)"
+            placeholder="Enter to submit, SHIFT + Enter for new line"
             maxRows={"4"}
             multiline
             fullWidth
             submitOnKeyDown={true}
             sx={{ mt: 0 }}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <Avatar sx={{ width: 24, height: 24 }} src={currentUser?.photoURL} />
+                </InputAdornment>
+              ),
+            }}
           />
           <ButtonGroup sx={{ justifyContent: "flex-end" }}>
             <Button

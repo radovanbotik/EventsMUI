@@ -19,7 +19,7 @@ const useSubscribeTodocument = ({ dbcollection, documentId, data, dependancies }
         const doc = document.data();
         for (const prop in doc) {
           if (doc[prop] instanceof Timestamp) {
-            doc[prop] = doc[prop].toDate().toISOString();
+            doc[prop] = doc[prop].toDate().getTime();
           }
         }
         doc.id = documentId;
