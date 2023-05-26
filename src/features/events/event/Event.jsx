@@ -13,7 +13,7 @@ import { loadEvents } from "../../../store/eventSlice";
 import PageLoader from "../../../common/loaders/PageLoader";
 
 const Event = () => {
-  const { events, status } = useSelector(store => store.eventReducer);
+  const { events, status, filterOptions } = useSelector(store => store.eventReducer);
   const { isEditing } = useSelector(store => store.formReducer);
   const { id } = useParams();
   const event = events?.find(event => event.id === id);
@@ -41,7 +41,7 @@ const Event = () => {
           <Divider />
           <EventInfo {...event} toggleMap={toggleMap} mapOpen={mapOpen} />
           <Divider />
-          <EventGuests attendees={event.attendees} />
+          <EventGuests {...event} filterOptions={filterOptions} />
           <Divider />
           <Typography>{event.description}</Typography>
           <Divider />

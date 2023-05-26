@@ -1,24 +1,29 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAction, createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
+  id: null,
   open: false,
   title: null,
   content: null,
+  confirmButtonText: null,
+  rejectButtonText: null,
+  actionType: null,
+  cancelled: null,
 };
+
+export const agreededToProceed = createAction("agreededToProceed");
 
 const confirmationSlice = createSlice({
   name: "confirmationActions",
   initialState,
   reducers: {
-    askForPermission: (state, action) => {
-      state = action.payload;
+    setOpen: (state, action) => {
+      const { id, open, actionType, title, content, confirmButtonText, rejectButtonText, cancelled } = action.payload;
+      Object.assign(state, { id, open, actionType, title, content, confirmButtonText, rejectButtonText, cancelled });
     },
-    resetConfirmation: (state, action) => (state = initialState),
+    reset: (state, action) => Object.assign(state, { ...initialState }),
   },
-  // extraReducers:(builder=>{
-  //     builder.addCase()
-  // })
 });
 
 export default confirmationSlice.reducer;
-export const { askForPermission, resetConfirmation } = confirmationSlice.actions;
+export const { reset, setOpen } = confirmationSlice.actions;

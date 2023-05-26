@@ -7,7 +7,7 @@ import CardBody from "./CardBody";
 import CardFooter from "./CardFooter";
 
 const EventCard = ({ event }) => {
-  const { status } = useSelector(store => store.eventReducer);
+  const { status, filterOptions } = useSelector(store => store.eventReducer);
   if (status === "loading") return <CardSkeleton />;
 
   return (
@@ -16,9 +16,9 @@ const EventCard = ({ event }) => {
       <Divider />
       <CardImage {...event} />
       <Divider />
-      <CardBody {...event} />
+      <CardBody {...event} filterOptions={filterOptions} />
       <Divider />
-      <CardFooter {...event} />
+      <CardFooter {...event} filterOptions={filterOptions} />
     </Card>
   );
 };

@@ -1,11 +1,23 @@
 import { List, ListItemText, Divider, ListItem, Button } from "@mui/material";
+import isExpired from "../../../common/util/isExpired";
 
-const EventGuests = ({ attendees }) => {
-  console.log(attendees);
-  function formatGuests(guestCount = 0) {
-    if (guestCount === 0) return "No guests yet.";
-    if (guestCount === 1) return "1 person is going";
-    if (guestCount > 1) return `${guestCount} people are going`;
+const EventGuests = ({ attendees, filterOptions, date }) => {
+  function formatGuests({ guestCount = 0, date }) {
+    switch (isExpired(date)) {
+      case true: {
+        if (guestCount === 0) return "No guests.";
+        if (guestCount === 1) return "1 person went.";
+        if (guestCount > 1) return `${guestCount} people went.`;
+        break;
+      }
+
+      default: {
+        if (guestCount === 0) return "No guests yet.";
+        if (guestCount === 1) return "1 person is going";
+        if (guestCount > 1) return `${guestCount} people are going`;
+        break;
+      }
+    }
   }
 
   return (
@@ -16,7 +28,7 @@ const EventGuests = ({ attendees }) => {
           </ListItemAvatar> */}
         <ListItemText
           primaryTypographyProps={{ fontWeight: 500 }}
-          primary={formatGuests(attendees?.length)}
+          primary={formatGuests({ guestCount: attendees?.length, date: date })}
           secondary={"invite other people to this event."}
         />
         <Button size="small" sx={{ textTransform: "capitalize" }}>

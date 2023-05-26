@@ -11,6 +11,7 @@ import "react-toastify/dist/ReactToastify.css";
 import ModalManager from "../../common/modals/ModalManager";
 import { useSelector } from "react-redux";
 import useGoogleMaps from "../../hooks/useGoogleMaps";
+import Confirmation from "../../common/dialogs/Confirmation";
 
 export const drawerWidth = 240;
 
@@ -58,6 +59,7 @@ export default function PersistentDrawerLeft() {
 
   return (
     <Container maxWidth="xl" sx={{ position: "relative" }}>
+      <Confirmation />
       <Box sx={{ position: "relative", display: "flex" }}>
         <ToastContainer />
         <CssBaseline />

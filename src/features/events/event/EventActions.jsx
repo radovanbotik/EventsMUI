@@ -5,8 +5,9 @@ import { leaveEvent } from "../../../store/eventSlice";
 import { joinEvent } from "../../../store/eventSlice";
 import BasicMenu from "../../../common/menus/BasicMenu";
 import { useState } from "react";
+import { setOpen } from "../../../store/confirmationSlice";
 
-const EventActions = ({ id, attendeesId, askForPermission }) => {
+const EventActions = ({ id, attendeesId, cancelled }) => {
   const dispatch = useDispatch();
   const { events } = useSelector(store => store.eventReducer);
   const { currentUser } = useSelector(store => store.authReducer);
@@ -30,14 +31,51 @@ const EventActions = ({ id, attendeesId, askForPermission }) => {
       actionName: "Invite",
       action() {
         handleCloseMenu();
+        dispatch(
+          setOpen({
+            id: id,
+            cancelled: cancelled,
+            open: true,
+            actionType: "invite",
+            title: "invite person",
+            content: "do you want to invite this person?",
+            confirmButtonText: "yes, i want to proceed.",
+            rejectButtonText: "no, take me back.",
+          })
+        );
       },
     },
     {
       id: "b",
       actionName: `${currentEvent.cancelled ? "Activate event" : "Cancel Event"}`,
       action() {
-        askForPermission();
         handleCloseMenu();
+        if (currentEvent.cancelled) {
+          dispatch(
+            setOpen({
+              id: id,
+              cancelled: cancelled,
+              open: true,
+              actionType: "activateEvent",
+              title: "activate event",
+              content: "do you want to activate this event?",
+              confirmButtonText: "yes, i want to proceed.",
+              rejectButtonText: "no, take me back.",
+            })
+          );
+        } else {
+          dispatch(
+            setOpen({
+              id: id,
+              open: true,
+              actionType: "cancelEvent",
+              title: "cancel event",
+              content: "do you want to cancel this event?",
+              confirmButtonText: "yes, i want to proceed.",
+              rejectButtonText: "no, take me back.",
+            })
+          );
+        }
       },
     },
     {
@@ -45,6 +83,17 @@ const EventActions = ({ id, attendeesId, askForPermission }) => {
       actionName: "Delete Event",
       action() {
         handleCloseMenu();
+        dispatch(
+          setOpen({
+            id: id,
+            open: true,
+            actionType: "deleteEvent",
+            title: "delete event",
+            content: "do you want to delete this event?",
+            confirmButtonText: "yes, i want to proceed.",
+            rejectButtonText: "no, take me back.",
+          })
+        );
       },
     },
   ];
