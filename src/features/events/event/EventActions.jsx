@@ -98,46 +98,29 @@ const EventActions = ({ id, attendeesId, cancelled }) => {
     },
   ];
 
+  const buttonProps = { textTransform: "capitalize", fontWeight: 500 };
   const theme = useTheme();
   const md = useMediaQuery(theme.breakpoints.up("md"));
   return (
     <ButtonGroup size="small" variant="outlined" sx={md && { alignSelf: "end", border: "none" }}>
       {isNotCancelledAndIsAttending && (
-        <Button
-          onClick={() => dispatch(leaveEvent(id))}
-          sx={{
-            textTransform: "capitalize",
-            fontWeight: 500,
-          }}
-          startIcon={<PersonRemoveOutlined />}
-        >
+        <Button onClick={() => dispatch(leaveEvent(id))} sx={buttonProps} startIcon={<PersonRemoveOutlined />}>
           Leave event
         </Button>
       )}
 
       {isNotCancelledAndIsNotAttending && (
-        <Button
-          onClick={() => dispatch(joinEvent(id))}
-          sx={{
-            textTransform: "capitalize",
-            fontWeight: 500,
-          }}
-          startIcon={<PersonAddOutlined fontSize="small" />}
-        >
+        <Button onClick={() => dispatch(joinEvent(id))} sx={buttonProps} startIcon={<PersonAddOutlined />}>
           Join Event
         </Button>
       )}
 
       <Button
-        type="button"
         onClick={() => {
           console.log("editing");
         }}
-        sx={{
-          textTransform: "capitalize",
-          fontWeight: 500,
-        }}
-        startIcon={<EditOutlined fontSize="small" />}
+        sx={buttonProps}
+        startIcon={<EditOutlined />}
       >
         Edit
       </Button>
@@ -149,7 +132,7 @@ const EventActions = ({ id, attendeesId, cancelled }) => {
           fontWeight: 500,
           ".MuiButton-startIcon": { m: 0 },
         }}
-        startIcon={<MoreVert fontSize="small" />}
+        startIcon={<MoreVert />}
         onClick={handleClick}
       />
       <BasicMenu menuActions={menuActions} handleClose={handleCloseMenu} anchorEl={anchorEl} />
