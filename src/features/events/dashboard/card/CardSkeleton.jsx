@@ -11,12 +11,7 @@ const CardSkeleton = () => {
         }
       />
       <Divider />
-      <Skeleton
-        animation="wave"
-        width="100%"
-        variant="rectangular"
-        height={240}
-      />
+      <Skeleton animation="wave" width="100%" variant="rectangular" height={240} />
       <Divider />
       <Skeleton animation="wave" height={20} style={{ marginBottom: 6 }} />
       <Skeleton animation="wave" height={20} width="80%" />

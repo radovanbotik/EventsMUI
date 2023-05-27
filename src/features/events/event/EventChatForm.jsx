@@ -2,22 +2,13 @@ import React from "react";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import BasicInput from "../../../common/forms/BasicInput";
-import {
-  Typography,
-  Stack,
-  Button,
-  ButtonGroup,
-  InputAdornment,
-  Avatar,
-} from "@mui/material";
+import { Typography, Stack, Button, ButtonGroup, InputAdornment, Avatar } from "@mui/material";
 import { addCommentToEvent } from "../../../firestore/realtimeDatabase";
 import { AccountCircle } from "@mui/icons-material";
 import { useSelector } from "react-redux";
 
 const validationSchema = Yup.object({
-  comment: Yup.string()
-    .max(1000, "comment cannot exceed 1000 words.")
-    .required("You forgot to write your comment."),
+  comment: Yup.string().max(1000, "comment cannot exceed 1000 words.").required("You forgot to write your comment."),
 });
 const initialValues = {
   comment: "",
@@ -64,10 +55,7 @@ const EventChatForm = ({ handleClose, id }) => {
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
-                  <Avatar
-                    sx={{ width: 24, height: 24 }}
-                    src={currentUser?.photoURL}
-                  />
+                  <Avatar sx={{ width: 24, height: 24 }} src={currentUser?.photoURL} />
                 </InputAdornment>
               ),
             }}

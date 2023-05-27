@@ -4,9 +4,7 @@ import RegisterModal from "../../features/auth/RegisterForm";
 
 const lookUp = { login: LoginModal, register: RegisterModal };
 const ModalManager = () => {
-  const { open, modalType, modalProps } = useSelector(
-    (store) => store.modalReducer
-  );
+  const { open, modalType, modalProps } = useSelector((store) => store.modalReducer);
   //   let renderedModal;
   if (open) {
     const ModalComponent = lookUp[modalType];

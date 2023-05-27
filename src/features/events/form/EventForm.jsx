@@ -1,12 +1,7 @@
 //redux
 import { useDispatch, useSelector } from "react-redux";
 import { createEvent, updateEvent } from "../../../store/eventSlice";
-import {
-  closeForm,
-  editingFalse,
-  resetEvent,
-  resetValues,
-} from "../../../store/formSlice";
+import { closeForm, editingFalse, resetEvent, resetValues } from "../../../store/formSlice";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import dayjs from "dayjs";
@@ -17,15 +12,7 @@ import SelectAutocomplete from "../../../common/forms/SelectAutocomplete";
 import CalendarWithTime from "../../../common/forms/CalendarWithTime";
 import LocationSelectAutocomplete from "../../../common/forms/LocationSelectAutocomplete";
 import { geocodeByPlaceId, getLatLng } from "react-places-autocomplete";
-import {
-  Typography,
-  Button,
-  MenuItem,
-  Checkbox,
-  ListItemText,
-  ButtonGroup,
-  Stack,
-} from "@mui/material";
+import { Typography, Button, MenuItem, Checkbox, ListItemText, ButtonGroup, Stack } from "@mui/material";
 import { Form } from "react-router-dom";
 
 const validationSchema = Yup.object({
@@ -53,9 +40,7 @@ const EventForm = () => {
 
   return (
     <Formik
-      initialValues={
-        Object.keys(event).length > 0 && isEditing ? event : initialValues
-      }
+      initialValues={Object.keys(event).length > 0 && isEditing ? event : initialValues}
       validationSchema={validationSchema}
       onSubmit={async (values, { setSubmitting }) => {
         console.log(values);
@@ -112,9 +97,7 @@ const EventForm = () => {
           // action="new-event"
           onSubmit={formikProps.handleSubmit}
         >
-          <Typography variant="h5">
-            {isEditing ? "Edit event" : "Create new event"}
-          </Typography>
+          <Typography variant="h5">{isEditing ? "Edit event" : "Create new event"}</Typography>
           <BasicInput
             label="Title"
             name="title"
@@ -129,9 +112,7 @@ const EventForm = () => {
             {tags.map((tag) => {
               return (
                 <MenuItem key={tag.id} value={tag.name}>
-                  <Checkbox
-                    checked={formikProps.values.tags.indexOf(tag.name) > -1}
-                  />
+                  <Checkbox checked={formikProps.values.tags.indexOf(tag.name) > -1} />
                   <ListItemText primary={tag.name} />
                 </MenuItem>
               );

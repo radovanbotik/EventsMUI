@@ -50,9 +50,7 @@ const formSlice = createSlice({
       }
       if (action.payload.name === "tags") {
         state.values.tags =
-          typeof action.payload.value === "string"
-            ? action.payload.value.split(",")
-            : action.payload.value;
+          typeof action.payload.value === "string" ? action.payload.value.split(",") : action.payload.value;
       }
     },
     resetValues: (state) => {
@@ -61,14 +59,6 @@ const formSlice = createSlice({
   },
 });
 
-export const {
-  openForm,
-  closeForm,
-  editingTrue,
-  editingFalse,
-  setEvent,
-  resetEvent,
-  setValues,
-  resetValues,
-} = formSlice.actions;
+export const { openForm, closeForm, editingTrue, editingFalse, setEvent, resetEvent, setValues, resetValues } =
+  formSlice.actions;
 export default formSlice.reducer;

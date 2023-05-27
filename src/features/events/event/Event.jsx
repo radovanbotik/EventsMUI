@@ -13,9 +13,7 @@ import { loadEvents } from "../../../store/eventSlice";
 import PageLoader from "../../../common/loaders/PageLoader";
 
 const Event = () => {
-  const { events, status, filterOptions } = useSelector(
-    (store) => store.eventReducer
-  );
+  const { events, status, filterOptions } = useSelector((store) => store.eventReducer);
   const { isEditing } = useSelector((store) => store.formReducer);
   const { id } = useParams();
   const event = events?.find((event) => event.id === id);

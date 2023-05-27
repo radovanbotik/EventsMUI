@@ -27,11 +27,7 @@ const EventsPanel = ({ props }) => {
           <Typography sx={{ mr: "auto" }}>Events</Typography>
         </Toolbar>
       </AppBar>
-      <EventsInnerTabs
-        attendanceType={attendanceType}
-        handleChange={handleChange}
-        events={events}
-      />
+      <EventsInnerTabs attendanceType={attendanceType} handleChange={handleChange} events={events} />
     </div>
   );
 };

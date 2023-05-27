@@ -1,14 +1,5 @@
 import { app, auth } from "../config/firebase";
-import {
-  getDatabase,
-  ref,
-  set,
-  onValue,
-  push,
-  orderByKey,
-  query,
-  limitToLast,
-} from "firebase/database";
+import { getDatabase, ref, set, onValue, push, orderByKey, query, limitToLast } from "firebase/database";
 
 const database = getDatabase(app);
 const user = auth.currentUser;

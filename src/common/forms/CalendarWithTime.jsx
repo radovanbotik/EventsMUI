@@ -21,9 +21,7 @@ export default function CalendarWithTime({ label, ...props }) {
           setFieldValue("date", e);
         }}
       />
-      {meta.touched && meta.error && (
-        <FormHelperText>{meta.touched && Boolean(meta.error)}</FormHelperText>
-      )}
+      {meta.touched && meta.error && <FormHelperText>{meta.touched && Boolean(meta.error)}</FormHelperText>}
     </FormControl>
   );
 }

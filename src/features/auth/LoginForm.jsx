@@ -23,9 +23,7 @@ const LoginForm = () => {
           password: "",
         }}
         validationSchema={Yup.object({
-          email: Yup.string()
-            .email("Please enter a valid email")
-            .required("This field is required."),
+          email: Yup.string().email("Please enter a valid email").required("This field is required."),
           password: Yup.string().password().required("This field is requried."),
         })}
         onSubmit={(values) => {
@@ -40,20 +38,8 @@ const LoginForm = () => {
             component={Form}
             onSubmit={() => formikProps.handleSubmit()}
           >
-            <BasicInput
-              margin="dense"
-              name="email"
-              label="Email"
-              placeholder="poopypants@gmail.com"
-              type="email"
-            />
-            <BasicInput
-              margin="dense"
-              name="password"
-              label="Password"
-              placeholder="StinkyPoop123!"
-              type="password"
-            />
+            <BasicInput margin="dense" name="email" label="Email" placeholder="poopypants@gmail.com" type="email" />
+            <BasicInput margin="dense" name="password" label="Password" placeholder="StinkyPoop123!" type="password" />
             <ButtonGroup fullWidth sx={{ mt: 2 }}>
               <Button
                 type="button"

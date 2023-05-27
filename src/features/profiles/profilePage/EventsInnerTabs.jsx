@@ -53,38 +53,21 @@ function a11yProps(value) {
   };
 }
 
-export default function EventsInnerTabs({
-  attendanceType,
-  handleChange,
-  events,
-}) {
+export default function EventsInnerTabs({ attendanceType, handleChange, events }) {
   return (
     <Box sx={{ width: "100%" }}>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-        <Tabs
-          value={attendanceType}
-          onChange={handleChange}
-          aria-label="basic tabs example"
-        >
+        <Tabs value={attendanceType} onChange={handleChange} aria-label="basic tabs example">
           {/* <Tab label="hosting" value="hosting" {...a11yProps("hosting")} />
           <Tab label="going" value="going" {...a11yProps("going")} />
           <Tab label="past events" value="attended" {...a11yProps("attended")} /> */}
           {lookUp.map((entry) => (
-            <Tab
-              key={entry.id}
-              label={entry.label}
-              value={entry.value}
-              {...a11yProps(entry.value)}
-            />
+            <Tab key={entry.id} label={entry.label} value={entry.value} {...a11yProps(entry.value)} />
           ))}
         </Tabs>
       </Box>
       {lookUp.map((entry) => (
-        <TabPanel
-          key={entry.id}
-          value={entry.value}
-          attendanceType={attendanceType}
-        >
+        <TabPanel key={entry.id} value={entry.value} attendanceType={attendanceType}>
           <EventsInnerTabsContent events={events} />
           {/* {entry.content} */}
           {/* {events?.map(ev => (

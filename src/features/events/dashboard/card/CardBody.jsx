@@ -2,14 +2,7 @@ import { CardContent, List, ListItem, ListItemText } from "@mui/material";
 import DescriptionAlert from "../../../../common/alerts/DescriptionAlert";
 import formatDates from "../../../../common/util/FormatDates";
 
-const CardBody = ({
-  canceled,
-  date,
-  title,
-  hostedBy,
-  attendees,
-  filterOptions,
-}) => {
+const CardBody = ({ canceled, date, title, hostedBy, attendees, filterOptions }) => {
   const isGoingAreGoingNoOneGoing = ({ length, filterOptions }) => {
     switch (filterOptions.attendanceType) {
       case "attended": {
@@ -30,13 +23,7 @@ const CardBody = ({
 
   return (
     <CardContent sx={{ p: 0 }}>
-      {canceled && (
-        <DescriptionAlert
-          severity={"info"}
-          title={"Cancelled"}
-          variant={"filled"}
-        />
-      )}
+      {canceled && <DescriptionAlert severity={"info"} title={"Cancelled"} variant={"filled"} />}
       <List dense>
         <ListItem sx={{ gap: 2, py: 0 }}>
           <ListItemText

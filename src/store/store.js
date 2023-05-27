@@ -1,8 +1,4 @@
-import {
-  configureStore,
-  createListenerMiddleware,
-  getDefaultMiddleware,
-} from "@reduxjs/toolkit";
+import { configureStore, createListenerMiddleware, getDefaultMiddleware } from "@reduxjs/toolkit";
 import eventReducer, { setStatus } from "./eventSlice";
 import formReducer from "./formSlice";
 import modalReducer from "./modalSlice";
@@ -15,7 +11,6 @@ import { onAuthStateChanged } from "firebase/auth";
 import { setUser } from "./authSlice";
 import { doc, onSnapshot, collection, query } from "firebase/firestore";
 import { db } from "../firestore/firestore";
-import { agreededToProceed } from "./confirmationSlice";
 
 // const listener = createListenerMiddleware();
 // listener.startListening({

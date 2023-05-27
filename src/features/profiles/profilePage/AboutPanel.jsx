@@ -32,12 +32,8 @@ const AboutPanel = ({ props }) => {
         <Box>
           <Toolbar disableGutters>
             <Stack>
-              <Typography>
-                Member since:{dayjs(props.creationTime).format("DD/MM/YYYY")}
-              </Typography>
-              <Typography>
-                {props.description || "No info to display"}{" "}
-              </Typography>
+              <Typography>Member since:{dayjs(props.creationTime).format("DD/MM/YYYY")}</Typography>
+              <Typography>{props.description || "No info to display"} </Typography>
             </Stack>
           </Toolbar>
         </Box>

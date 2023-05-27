@@ -19,53 +19,32 @@ const initialState = {
 //actions
 
 //extra reducers
-export const registerUser = createAsyncThunk(
-  "authSlice/registerUser",
-  async (userdata, thunkAPI) => {
-    await createUserWithMail(userdata);
-  }
-);
+export const registerUser = createAsyncThunk("authSlice/registerUser", async (userdata, thunkAPI) => {
+  await createUserWithMail(userdata);
+});
 
-export const logIn = createAsyncThunk(
-  "authSlice/logIn",
-  async (userdata, thunkAPI) => {
-    signInUser(userdata);
-  }
-);
+export const logIn = createAsyncThunk("authSlice/logIn", async (userdata, thunkAPI) => {
+  signInUser(userdata);
+});
 
-export const logOut = createAsyncThunk(
-  "authSlice/logOut",
-  async (_, thunkAPI) => {
-    signOutUser();
-  }
-);
+export const logOut = createAsyncThunk("authSlice/logOut", async (_, thunkAPI) => {
+  signOutUser();
+});
 
-export const updateUser = createAsyncThunk(
-  "authslice/updateUser",
-  async (updates, thunkAPI) => {
-    updateUserProfile;
-  }
-);
+export const updateUser = createAsyncThunk("authslice/updateUser", async (updates, thunkAPI) => {
+  updateUserProfile;
+});
 //sign in google
-export const signInWithGoogle = createAsyncThunk(
-  "authSlice/signInWithGoogle",
-  async (arg, thunkAPI) => {
-    await signWithGoogle();
-  }
-);
+export const signInWithGoogle = createAsyncThunk("authSlice/signInWithGoogle", async (arg, thunkAPI) => {
+  await signWithGoogle();
+});
 //change password
-export const changePassword = createAsyncThunk(
-  "authSlice/changePassword",
-  async (password, thunkAPI) => {
-    updateUserPassword(password);
-  }
-);
-export const retrieveUser = createAsyncThunk(
-  "authSlice/retrieveUser",
-  async (id, thunkAPI) => {
-    await getDocumentOnce({ collectionRef: "users", documentId: id });
-  }
-);
+export const changePassword = createAsyncThunk("authSlice/changePassword", async (password, thunkAPI) => {
+  updateUserPassword(password);
+});
+export const retrieveUser = createAsyncThunk("authSlice/retrieveUser", async (id, thunkAPI) => {
+  await getDocumentOnce({ collectionRef: "users", documentId: id });
+});
 
 const authSlice = createSlice({
   name: "authSlice",

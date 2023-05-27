@@ -34,12 +34,7 @@ const AccountForm = () => {
         <Box component={"form"} onSubmit={formikProps.handleSubmit}>
           <Stack>
             <Typography>Change your password</Typography>
-            <PasswordInput
-              name="password"
-              label="New password"
-              type="password"
-              placeholder="enter new password"
-            />
+            <PasswordInput name="password" label="New password" type="password" placeholder="enter new password" />
             <PasswordInput
               name="password confirmation"
               label="Password confirmation"
@@ -60,11 +55,7 @@ const AccountForm = () => {
                 type="submit"
                 variant="contained"
                 disabled={!formikProps.dirty}
-                color={
-                  formikProps.dirty && !formikProps.isValid
-                    ? "error"
-                    : "primary"
-                }
+                color={formikProps.dirty && !formikProps.isValid ? "error" : "primary"}
               >
                 submit
               </Button>

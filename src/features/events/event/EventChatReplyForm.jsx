@@ -2,23 +2,13 @@ import React from "react";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import BasicInput from "../../../common/forms/BasicInput";
-import {
-  Typography,
-  Stack,
-  Button,
-  ButtonGroup,
-  ListItem,
-  InputAdornment,
-  Avatar,
-} from "@mui/material";
+import { Typography, Stack, Button, ButtonGroup, ListItem, InputAdornment, Avatar } from "@mui/material";
 import { addReplyToEventMessage } from "../../../firestore/realtimeDatabase";
 import { Box } from "@mui/system";
 import { useSelector } from "react-redux";
 
 const validationSchema = Yup.object({
-  reply: Yup.string()
-    .max(1000, "reply cannot exceed 1000 words.")
-    .required("You forgot to write your reply."),
+  reply: Yup.string().max(1000, "reply cannot exceed 1000 words.").required("You forgot to write your reply."),
 });
 const initialValues = {
   reply: "",
@@ -47,11 +37,7 @@ const EventChatReplyForm = ({ setReplyingTo, eventId, commentId }) => {
       }}
     >
       {(formikProps) => (
-        <Stack
-          onSubmit={formikProps.handleSubmit}
-          component="form"
-          sx={{ flex: 1, pl: 4 }}
-        >
+        <Stack onSubmit={formikProps.handleSubmit} component="form" sx={{ flex: 1, pl: 4 }}>
           <BasicInput
             name="reply"
             // label="reply"
@@ -67,10 +53,7 @@ const EventChatReplyForm = ({ setReplyingTo, eventId, commentId }) => {
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
-                  <Avatar
-                    sx={{ width: 24, height: 24 }}
-                    src={currentUser?.photoURL}
-                  />
+                  <Avatar sx={{ width: 24, height: 24 }} src={currentUser?.photoURL} />
                 </InputAdornment>
               ),
             }}
@@ -89,12 +72,7 @@ const EventChatReplyForm = ({ setReplyingTo, eventId, commentId }) => {
             >
               Cancel
             </Button>
-            <Button
-              type="submit"
-              size="small"
-              variant="text"
-              sx={{ fontSize: "caption.fontSize" }}
-            >
+            <Button type="submit" size="small" variant="text" sx={{ fontSize: "caption.fontSize" }}>
               reply
             </Button>
           </ButtonGroup>

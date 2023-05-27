@@ -55,7 +55,7 @@ const PhotosPanel = ({ props }) => {
           <Toolbar disableGutters>
             <Stack>
               {/* <Typography>Number of photos: {photos.current?.length}</Typography> */}
-              <PhotosImageList photos={photos} />
+              <PhotosImageList photos={photos} owner={props.owner} />
             </Stack>
           </Toolbar>
         </Box>

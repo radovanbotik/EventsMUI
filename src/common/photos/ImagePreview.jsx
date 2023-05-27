@@ -1,6 +1,8 @@
+import { Box } from "@mui/material";
+
 const ImagePreview = () => {
   return (
-    <div
+    <Box
       style={{
         height: "200px",
         flex: 1,
@@ -10,7 +12,7 @@ const ImagePreview = () => {
         placeContent: "center",
       }}
     >
-      <div
+      <Box
         className="img-cropped"
         style={{
           height: "200px",
@@ -18,8 +20,8 @@ const ImagePreview = () => {
           overflow: "hidden",
           aspectRatio: 16 / 9,
         }}
-      ></div>
-    </div>
+      ></Box>
+    </Box>
   );
 };
 

@@ -10,12 +10,7 @@ import {
 // import { onSnapshot, collection, Timestamp, query } from "firebase/firestore";
 // import { db } from "../firestore/firestore";
 
-const useSubscribeTocollection = ({
-  filter,
-  collectionRef,
-  action,
-  dependancies,
-}) => {
+const useSubscribeTocollection = ({ filter, collectionRef, action, dependancies }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {

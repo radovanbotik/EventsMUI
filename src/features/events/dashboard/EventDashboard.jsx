@@ -19,12 +19,7 @@ const EventDashboard = () => {
   });
 
   return (
-    <Grid
-      spacing={2}
-      container
-      columns={{ xs: 6, lg: 12 }}
-      sx={{ height: "100%" }}
-    >
+    <Grid spacing={2} container columns={{ xs: 6, lg: 12 }} sx={{ height: "100%" }}>
       <Grid item lg={6} xs={6}>
         <EventList events={events} />
       </Grid>

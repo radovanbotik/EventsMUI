@@ -1,12 +1,5 @@
 import React, { useState } from "react";
-import {
-  AppBar as MuiAppBar,
-  Toolbar,
-  IconButton,
-  Typography,
-  styled,
-  Avatar,
-} from "@mui/material";
+import { AppBar as MuiAppBar, Toolbar, IconButton, Typography, styled, Avatar } from "@mui/material";
 import { MenuOutlined } from "@mui/icons-material";
 import { useSelector, useDispatch } from "react-redux";
 import { logOut } from "../../store/authSlice";
@@ -37,9 +30,7 @@ const AppBar = styled(MuiAppBar, {
 
 const Appbar = ({ handleDrawerOpen, open }) => {
   const [anchorEl, setAnchorEl] = useState(null);
-  const { currentUser, isAuthenticated } = useSelector(
-    (store) => store.authReducer
-  );
+  const { currentUser, isAuthenticated } = useSelector((store) => store.authReducer);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [pathName, setPathName] = useState(null);
@@ -108,27 +99,16 @@ const Appbar = ({ handleDrawerOpen, open }) => {
           <MenuOutlined />
         </IconButton>
         {/* Logo */}
-        <Typography
-          variant="h6"
-          noWrap
-          component="div"
-          sx={{ mr: "auto", textTransform: "capitalize" }}
-        >
+        <Typography variant="h6" noWrap component="div" sx={{ mr: "auto", textTransform: "capitalize" }}>
           {pathName}
         </Typography>
         {/* Auth actions */}
         {!isAuthenticated && (
           <>
-            <BasicButton
-              variant="contained"
-              action={() => openModalType({ modalType: "register" })}
-            >
+            <BasicButton variant="contained" action={() => openModalType({ modalType: "register" })}>
               Register
             </BasicButton>
-            <BasicButton
-              variant="contained"
-              action={() => openModalType({ modalType: "login" })}
-            >
+            <BasicButton variant="contained" action={() => openModalType({ modalType: "login" })}>
               Log In
             </BasicButton>
           </>
@@ -146,18 +126,10 @@ const Appbar = ({ handleDrawerOpen, open }) => {
             >
               <Avatar
                 alt="user name"
-                src={
-                  currentUser.photoURL
-                    ? currentUser.photoURL
-                    : "../../common/images/defaultPhoto.jpg"
-                }
+                src={currentUser.photoURL ? currentUser.photoURL : "../../common/images/defaultPhoto.jpg"}
               />
             </IconButton>
-            <BasicMenu
-              handleClose={handleClose}
-              anchorEl={anchorEl}
-              menuActions={menuActions}
-            />
+            <BasicMenu handleClose={handleClose} anchorEl={anchorEl} menuActions={menuActions} />
           </>
         )}
       </Toolbar>

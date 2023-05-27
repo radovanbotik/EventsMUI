@@ -18,10 +18,7 @@ const AboutProfileForm = ({ email, displayName, description }) => {
     displayName: Yup.string("Please enter your name in correct format")
       .min(4, "Name must be at least 4 characters of length.")
       .required("This field is required."),
-    description: Yup.string().max(
-      1000,
-      "Description cannot exceed 1000 characters."
-    ),
+    description: Yup.string().max(1000, "Description cannot exceed 1000 characters."),
   });
   return (
     <Formik
@@ -34,12 +31,7 @@ const AboutProfileForm = ({ email, displayName, description }) => {
     >
       {(formikProps) => (
         <Stack onSubmit={() => formikProps.handleSubmit()} component={Form}>
-          <BasicInput
-            name="displayName"
-            label="User Name"
-            margin="dense"
-            placeholder="My name is..."
-          />
+          <BasicInput name="displayName" label="User Name" margin="dense" placeholder="My name is..." />
           <BasicInput
             name="description"
             label="About me"

@@ -1,10 +1,4 @@
-import {
-  Stack,
-  Toolbar,
-  Box,
-  CircularProgress,
-  Typography,
-} from "@mui/material";
+import { Stack, Toolbar, Box, CircularProgress, Typography } from "@mui/material";
 import EventCard from "../dashboard/card/EventCard";
 
 const EventList = ({ events }) => {
@@ -29,9 +23,7 @@ const EventList = ({ events }) => {
     return (
       <Box sx={{ display: "flex", flexDirection: "column", height: "100%" }}>
         <Toolbar>
-          <Typography variant="body2">
-            No events matching the criteria.
-          </Typography>
+          <Typography variant="body2">No events matching the criteria.</Typography>
         </Toolbar>
       </Box>
     );

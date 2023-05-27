@@ -14,14 +14,9 @@ import {
   arrayUnion,
   arrayRemove,
   where,
+  getDocs,
 } from "firebase/firestore";
-import {
-  deleteObject,
-  getStorage,
-  ref,
-  uploadBytesResumable,
-  getDownloadURL,
-} from "firebase/storage";
+import { deleteObject, getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { app } from "../config/firebase";
 import {
   createUserWithEmailAndPassword,
@@ -51,37 +46,21 @@ export const createArrayUnion = (array) => {
   return arrayUnion(...array);
 };
 export const createQuery = ({ collectionRef, field, value, operator }) => {
-  if (!field && !operator && !value)
-    return query(collection(db, collectionRef));
-  return query(
-    collection(db, collectionRef),
-    where(field, `${operator}`, value)
-  );
+  if (!field && !operator && !value) return query(collection(db, collectionRef));
+  return query(collection(db, collectionRef), where(field, `${operator}`, value));
 };
 export const createCompoundQuery = ({ collectionRef, constraints }) => {
   if (!constraints) return query(collection(db, collectionRef));
-  let chainedConstraints = constraints.map((obj) =>
-    where(obj.field, obj.operator, obj.value)
-  );
+  let chainedConstraints = constraints.map((obj) => where(obj.field, obj.operator, obj.value));
   return query(collection(db, collectionRef), ...chainedConstraints);
 };
 //general operations
-export const addToArrayDocument = async ({
-  collectionRef,
-  documentRef,
-  array,
-  documentToAdd,
-}) => {
+export const addToArrayDocument = async ({ collectionRef, documentRef, array, documentToAdd }) => {
   await updateDoc(doc(db, collectionRef, documentRef), {
     [array]: arrayUnion(documentToAdd),
   });
 };
-export const removeDocumentFromArray = async ({
-  collectionRef,
-  documentRef,
-  array,
-  documentToRemove,
-}) => {
+export const removeDocumentFromArray = async ({ collectionRef, documentRef, array, documentToRemove }) => {
   await updateDoc(doc(db, collectionRef, documentRef), {
     [array]: arrayRemove(documentToRemove),
   });
@@ -94,11 +73,7 @@ export const getDocumentOnce = async ({ collectionRef, documentId }) => {
 export const addDocumentToCollection = async ({ collectionRef, document }) => {
   await addDoc(collection(db, collectionRef), document);
 };
-export const addDocumentWithIdToCollection = async ({
-  collectionRef,
-  document,
-  documentId,
-}) => {
+export const addDocumentWithIdToCollection = async ({ collectionRef, document, documentId }) => {
   await setDoc(doc(db, collectionRef, documentId), document);
 };
 export const updateDocument = async ({ collectionRef, document }) => {
@@ -128,15 +103,27 @@ export const subscribeToCollection = ({ collectionRef, q, action }) => {
     };
   });
 };
+
+export const subscribeToSubcollection = ({ parentCollection, parentDocument, subCollection, action }) => {
+  return onSnapshot(collection(db, parentCollection, parentDocument, subCollection), (snapshot) => {
+    const docs = [];
+    snapshot.forEach((doc) => {
+      docs.push(doc.data());
+    });
+    action(docs);
+    (error) => {
+      console.log(error);
+    };
+  });
+};
+
 export const deleteDocumentFromSubCollection = async ({
   collectionRef,
   document1,
   subcollectionRef,
   documentToDelete,
 }) => {
-  await deleteDoc(
-    doc(db, collectionRef, document1, subcollectionRef, documentToDelete)
-  );
+  await deleteDoc(doc(db, collectionRef, document1, subcollectionRef, documentToDelete));
   console.log("removed");
 };
 
@@ -207,10 +194,7 @@ export const deleteFileFromStorage = async (filepath) => {
 
 export const uploadFile = async ({ image, filename }) => {
   const storageRef = ref(storage);
-  const imageAndStorageRef = ref(
-    storageRef,
-    `${auth.currentUser.uid}/user_images/${filename}`
-  );
+  const imageAndStorageRef = ref(storageRef, `${auth.currentUser.uid}/user_images/${filename}`);
   const uploadTask = uploadBytesResumable(imageAndStorageRef, image);
   uploadTask.on(
     "state_changed",
@@ -231,4 +215,29 @@ export const uploadFile = async ({ image, filename }) => {
     }
   );
   console.log(uploadTask);
+};
+
+//following
+export const addDocumentToSubcollection = async ({ parentCollection, parentDocument, subCollection, document }) => {
+  await setDoc(doc(db, parentCollection, parentDocument, subCollection, document.id), {
+    ...document,
+  });
+};
+
+export const removeDocumentFromSubcollection = async ({
+  parentCollection,
+  parentDocument,
+  subCollection,
+  documentId,
+}) => {
+  await deleteDoc(doc(db, parentCollection, parentDocument, subCollection, documentId));
+};
+
+export const readSubcollection = async ({ parentCollection, parentDocument, subCollection }) => {
+  const colSnap = await getDocs(collection(db, parentCollection, parentDocument, subCollection));
+  const data = [];
+  colSnap.forEach((doc) => {
+    data.push(doc.data());
+  });
+  return data;
 };

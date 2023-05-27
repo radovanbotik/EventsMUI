@@ -3,6 +3,8 @@ import { Tabs, Tab, Box } from "@mui/material";
 import AboutPanel from "./AboutPanel";
 import PhotosPanel from "./PhotosPanel";
 import EventsPanel from "./EventsPanel";
+import FollowingPanel from "./FollowingPanel";
+import FollowersPanel from "./FollowersPanel";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -66,10 +68,10 @@ const ProfileContent = (props) => {
         <EventsPanel {...props} />
       </TabPanel>
       <TabPanel value={value} index={3}>
-        followers
+        <FollowersPanel {...props} />
       </TabPanel>
       <TabPanel value={value} index={4}>
-        following
+        <FollowingPanel {...props} />
       </TabPanel>
     </>
   );

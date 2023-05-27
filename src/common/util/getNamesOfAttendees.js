@@ -1,6 +1,5 @@
 const getNamesOfAttendees = ({ totalAttendees, attendees, filterOptions }) => {
-  const length =
-    totalAttendees < attendees.length ? attendees.length : totalAttendees;
+  const length = totalAttendees < attendees.length ? attendees.length : totalAttendees;
   const names = attendees
     .slice(0, length)
     .map((attendee) => attendee.name.split(" ")[0])

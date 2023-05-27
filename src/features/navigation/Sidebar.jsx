@@ -53,9 +53,7 @@ const Sidebar = () => {
   };
   const allCount = activeEvents?.length;
   const hostingCount = activeEvents?.filter((ev) => ev.hostId === id).length;
-  const attendingCount = activeEvents?.filter((ev) =>
-    ev.attendeesId.includes(id)
-  ).length;
+  const attendingCount = activeEvents?.filter((ev) => ev.attendeesId.includes(id)).length;
   const expiredEventsCount = expiredEvents?.length;
 
   const eventActions = [
@@ -148,12 +146,7 @@ const Sidebar = () => {
         }
       >
         <ListItem disablePadding>
-          <ListItemButton
-            dense
-            onClick={() => dispatch(openForm())}
-            component={Link}
-            to="/events"
-          >
+          <ListItemButton dense onClick={() => dispatch(openForm())} component={Link} to="/events">
             <ListItemIcon>
               <Create />
             </ListItemIcon>

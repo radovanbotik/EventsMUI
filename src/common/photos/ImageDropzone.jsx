@@ -80,12 +80,8 @@ const ImageDropzone = ({ setFiles, files }) => {
           <Typography>Drop the files here ...</Typography>
         ) : (
           <>
-            <Typography>
-              Drag 'n' drop some files here, or click to select files
-            </Typography>
-            <Typography>
-              (1 files are the maximum number of files you can drop here)
-            </Typography>
+            <Typography>Drag 'n' drop some files here, or click to select files</Typography>
+            <Typography>(1 files are the maximum number of files you can drop here)</Typography>
           </>
         )}
       </Box>
