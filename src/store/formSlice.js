@@ -22,16 +22,16 @@ const formSlice = createSlice({
   name: "formActions",
   initialState,
   reducers: {
-    openForm: state => {
+    openForm: (state) => {
       state.isOpen = true;
     },
-    closeForm: state => {
+    closeForm: (state) => {
       state.isOpen = false;
     },
-    editingTrue: state => {
+    editingTrue: (state) => {
       state.isEditing = true;
     },
-    editingFalse: state => {
+    editingFalse: (state) => {
       state.isEditing = false;
     },
     setEvent: (state, action) => {
@@ -39,7 +39,7 @@ const formSlice = createSlice({
       // state.event = { ...action.payload, date: dayjs(action.payload.date) };
       state.event = action.payload;
     },
-    resetEvent: state => {
+    resetEvent: (state) => {
       state.event = {};
     },
     setValues: (state, action) => {
@@ -50,15 +50,25 @@ const formSlice = createSlice({
       }
       if (action.payload.name === "tags") {
         state.values.tags =
-          typeof action.payload.value === "string" ? action.payload.value.split(",") : action.payload.value;
+          typeof action.payload.value === "string"
+            ? action.payload.value.split(",")
+            : action.payload.value;
       }
     },
-    resetValues: state => {
+    resetValues: (state) => {
       state.values = initialValues;
     },
   },
 });
 
-export const { openForm, closeForm, editingTrue, editingFalse, setEvent, resetEvent, setValues, resetValues } =
-  formSlice.actions;
+export const {
+  openForm,
+  closeForm,
+  editingTrue,
+  editingFalse,
+  setEvent,
+  resetEvent,
+  setValues,
+  resetValues,
+} = formSlice.actions;
 export default formSlice.reducer;

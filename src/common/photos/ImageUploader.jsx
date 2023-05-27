@@ -44,7 +44,9 @@ const ImageUploader = () => {
             size="small"
             endIcon={<FileUploadOutlined />}
             sx={{ textTransform: "none", fontWeight: 700 }}
-            onClick={() => handleUpload({ image: croppedImage, filename: files[0].name })}
+            onClick={() =>
+              handleUpload({ image: croppedImage, filename: files[0].name })
+            }
           >
             Upload
           </Button>
@@ -56,7 +58,9 @@ const ImageUploader = () => {
         spacing={4}
         sx={{ justifyItems: "center" }}
       >
-        {files?.length > 0 && <ImageCropper image={files} setCroppedImage={setCroppedImage} />}
+        {files?.length > 0 && (
+          <ImageCropper image={files} setCroppedImage={setCroppedImage} />
+        )}
         {files?.length > 0 && <ImagePreview />}
       </Stack>
     </Stack>

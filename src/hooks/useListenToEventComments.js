@@ -3,7 +3,10 @@ import { useEffect } from "react";
 
 const useListenToEventComments = ({ eventId, action, dependencies }) => {
   useEffect(() => {
-    listenToLocation({ location: `/events/${eventId}/comments`, action: action });
+    listenToLocation({
+      location: `/events/${eventId}/comments`,
+      action: action,
+    });
   }, dependencies || []);
 };
 

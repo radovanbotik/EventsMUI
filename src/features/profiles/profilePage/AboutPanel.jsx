@@ -19,7 +19,7 @@ const AboutPanel = ({ props }) => {
               size="small"
               sx={{ bgcolor: "primary.light" }}
               // endIcon={<ModeEdit sx={{ width: 16, height: 16 }} />}
-              onClick={() => setEditing(prev => !prev)}
+              onClick={() => setEditing((prev) => !prev)}
             >
               {editing ? "Cancel" : "Edit"}
             </Button>
@@ -32,8 +32,12 @@ const AboutPanel = ({ props }) => {
         <Box>
           <Toolbar disableGutters>
             <Stack>
-              <Typography>Member since:{dayjs(props.creationTime).format("DD/MM/YYYY")}</Typography>
-              <Typography>{props.description || "No info to display"} </Typography>
+              <Typography>
+                Member since:{dayjs(props.creationTime).format("DD/MM/YYYY")}
+              </Typography>
+              <Typography>
+                {props.description || "No info to display"}{" "}
+              </Typography>
             </Stack>
           </Toolbar>
         </Box>

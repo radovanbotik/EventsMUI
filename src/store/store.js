@@ -1,4 +1,8 @@
-import { configureStore, createListenerMiddleware, getDefaultMiddleware } from "@reduxjs/toolkit";
+import {
+  configureStore,
+  createListenerMiddleware,
+  getDefaultMiddleware,
+} from "@reduxjs/toolkit";
 import eventReducer, { setStatus } from "./eventSlice";
 import formReducer from "./formSlice";
 import modalReducer from "./modalSlice";
@@ -33,11 +37,11 @@ const store = configureStore({
   // middleware: getDefaultMiddleware => getDefaultMiddleware().prepend(listener.middleware),
 });
 
-onAuthStateChanged(auth, user => {
+onAuthStateChanged(auth, (user) => {
   // store.dispatch(setStatus("loading"));
   if (user) {
     //find user in user database and store that
-    const unsub = onSnapshot(doc(db, "users", user.uid), doc => {
+    const unsub = onSnapshot(doc(db, "users", user.uid), (doc) => {
       store.dispatch(
         setUser({
           user: {

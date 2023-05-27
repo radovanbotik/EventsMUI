@@ -7,7 +7,7 @@ import CardBody from "./CardBody";
 import CardFooter from "./CardFooter";
 
 const EventCard = ({ event }) => {
-  const { status, filterOptions } = useSelector(store => store.eventReducer);
+  const { status, filterOptions } = useSelector((store) => store.eventReducer);
   if (status === "loading") return <CardSkeleton />;
 
   return (

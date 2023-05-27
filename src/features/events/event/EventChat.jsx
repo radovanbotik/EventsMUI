@@ -28,15 +28,20 @@ const EventChat = ({ id }) => {
   const handleClose = () => {
     setOpen(false);
   };
-  useListenToEventComments({ eventId: id, action: data => setComments(data), dependencies: [id] });
+  useListenToEventComments({
+    eventId: id,
+    action: (data) => setComments(data),
+    dependencies: [id],
+  });
 
-  const hashData = data => {
+  const hashData = (data) => {
     // console.log(data);
     const hashtable = {};
-    data.forEach(entry => (hashtable[entry.id] = { ...entry, replies: [] }));
+    data.forEach((entry) => (hashtable[entry.id] = { ...entry, replies: [] }));
     let dataTree = [];
-    data.forEach(entry => {
-      if (entry.commentId) hashtable[entry.commentId].replies.push(hashtable[entry.id]);
+    data.forEach((entry) => {
+      if (entry.commentId)
+        hashtable[entry.commentId].replies.push(hashtable[entry.id]);
       else dataTree.push(hashtable[entry.id]);
     });
     // console.log(dataTree);
@@ -55,7 +60,7 @@ const EventChat = ({ id }) => {
       {open && <EventChatForm handleClose={handleClose} id={id} />}
       <>
         {comments &&
-          hashData(comments).map(comment => (
+          hashData(comments).map((comment) => (
             <List key={comment.id}>
               <ListItem disableGutters disablePadding>
                 <ListItemAvatar>
@@ -73,7 +78,11 @@ const EventChat = ({ id }) => {
                       <Typography variant="body2" component="span" mr={1}>
                         {comment.displayName}
                       </Typography>
-                      <Typography variant="body2" component="span" color="text.secondary">
+                      <Typography
+                        variant="body2"
+                        component="span"
+                        color="text.secondary"
+                      >
                         {dayjs(comment.createdAt).fromNow()}
                       </Typography>
                     </>
@@ -109,7 +118,7 @@ const EventChat = ({ id }) => {
               <Box sx={{ pl: 4 }}>
                 {comment.replies.length > 0 && (
                   <Box>
-                    {comment.replies.map(reply => (
+                    {comment.replies.map((reply) => (
                       <List key={reply.id}>
                         <ListItem disableGutters disablePadding>
                           <ListItemAvatar>
@@ -124,12 +133,20 @@ const EventChat = ({ id }) => {
                           <ListItemText
                             disableTypography
                             primary={
-                              <Typography variant="body2" component="span" mr={1}>
+                              <Typography
+                                variant="body2"
+                                component="span"
+                                mr={1}
+                              >
                                 {reply.displayName}
                               </Typography>
                             }
                             secondary={
-                              <Typography variant="body2" component="span" color="text.secondary">
+                              <Typography
+                                variant="body2"
+                                component="span"
+                                color="text.secondary"
+                              >
                                 {dayjs(reply.createdAt).fromNow()}
                               </Typography>
                             }
@@ -137,7 +154,9 @@ const EventChat = ({ id }) => {
                         </ListItem>
                         <ListItem disableGutters disablePadding>
                           <ListItemText inset>
-                            <Typography variant="body2">{reply.comment || reply.reply}</Typography>
+                            <Typography variant="body2">
+                              {reply.comment || reply.reply}
+                            </Typography>
                           </ListItemText>
                         </ListItem>
                         <ListItem disableGutters disablePadding>
@@ -145,7 +164,11 @@ const EventChat = ({ id }) => {
                             <ListItemButton
                               dense
                               onClick={() => setReplyingTo(reply.id)}
-                              sx={{ fontSize: "caption.fontSize", fontWeight: 700, p: 0 }}
+                              sx={{
+                                fontSize: "caption.fontSize",
+                                fontWeight: 700,
+                                p: 0,
+                              }}
                             >
                               Reply
                             </ListItemButton>

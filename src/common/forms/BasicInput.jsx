@@ -12,7 +12,7 @@ const BasicInput = ({ submitOnKeyDown, ...props }) => {
       {...props}
       helperText={meta.touched && meta.error}
       error={meta.touched && Boolean(meta.error)}
-      onKeyDown={e => {
+      onKeyDown={(e) => {
         if (submitOnKeyDown === true) {
           if (!e.shiftKey && e.key == "Enter") {
             e.preventDefault();

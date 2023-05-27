@@ -1,12 +1,19 @@
 import React from "react";
-import { FormControl, InputLabel, OutlinedInput, InputAdornment, IconButton, Typography } from "@mui/material";
+import {
+  FormControl,
+  InputLabel,
+  OutlinedInput,
+  InputAdornment,
+  IconButton,
+  Typography,
+} from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useField } from "formik";
 
 const PasswordInput = ({ label, ...props }) => {
   const [showPassword, setShowPassword] = React.useState(false);
-  const handleClickShowPassword = () => setShowPassword(show => !show);
-  const handleMouseDownPassword = event => {
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+  const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
   const [field, meta, helpers] = useField(props);
@@ -34,7 +41,9 @@ const PasswordInput = ({ label, ...props }) => {
         }
         label={label}
       />
-      {meta.touched && Boolean(meta.error) && <Typography color="error">{meta.touched && meta.error}</Typography>}
+      {meta.touched && Boolean(meta.error) && (
+        <Typography color="error">{meta.touched && meta.error}</Typography>
+      )}
     </FormControl>
   );
 };

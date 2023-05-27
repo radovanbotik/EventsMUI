@@ -16,7 +16,7 @@ const EventsPanel = ({ props }) => {
   useSubscribeTocollection({
     filter: { attendanceType: attendanceType, date: new Date(), id: id },
     collectionRef: "events",
-    action: events => setEvents(events),
+    action: (events) => setEvents(events),
     dependancies: [attendanceType, id],
   });
   return (
@@ -27,7 +27,11 @@ const EventsPanel = ({ props }) => {
           <Typography sx={{ mr: "auto" }}>Events</Typography>
         </Toolbar>
       </AppBar>
-      <EventsInnerTabs attendanceType={attendanceType} handleChange={handleChange} events={events} />
+      <EventsInnerTabs
+        attendanceType={attendanceType}
+        handleChange={handleChange}
+        events={events}
+      />
     </div>
   );
 };

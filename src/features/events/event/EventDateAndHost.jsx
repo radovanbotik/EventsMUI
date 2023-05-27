@@ -10,12 +10,18 @@ const EventDateAndHost = ({ date, title, hostedBy }) => {
           secondary={formatDates({ date: date, format: "DD" })}
           sx={{ flexGrow: 0 }}
           primaryTypographyProps={{ color: "red", textAlign: "center" }}
-          secondaryTypographyProps={{ fontSize: "body1.fontSize", textAlign: "center" }}
+          secondaryTypographyProps={{
+            fontSize: "body1.fontSize",
+            textAlign: "center",
+          }}
         />
         <ListItemText
           primary={title}
           secondary={`Hosted by ${hostedBy}`}
-          primaryTypographyProps={{ fontSize: "body1.fontSize", textTransform: "capitalize" }}
+          primaryTypographyProps={{
+            fontSize: "body1.fontSize",
+            textTransform: "capitalize",
+          }}
         />
       </ListItem>
     </List>

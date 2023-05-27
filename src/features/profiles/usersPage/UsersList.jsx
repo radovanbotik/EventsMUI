@@ -12,7 +12,7 @@ export default function UsersList({ users }) {
   console.log(users);
   const [checked, setChecked] = React.useState([1]);
 
-  const handleToggle = value => () => {
+  const handleToggle = (value) => () => {
     const currentIndex = checked.indexOf(value);
     const newChecked = [...checked];
 
@@ -28,8 +28,11 @@ export default function UsersList({ users }) {
   const navigate = useNavigate();
 
   return (
-    <List dense sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
-      {users?.map(value => {
+    <List
+      dense
+      sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
+    >
+      {users?.map((value) => {
         // const labelId = `checkbox-list-secondary-label-${value}`;
         return (
           <ListItem

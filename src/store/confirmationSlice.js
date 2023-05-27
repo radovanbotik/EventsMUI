@@ -18,8 +18,26 @@ const confirmationSlice = createSlice({
   initialState,
   reducers: {
     setOpen: (state, action) => {
-      const { id, open, actionType, title, content, confirmButtonText, rejectButtonText, cancelled } = action.payload;
-      Object.assign(state, { id, open, actionType, title, content, confirmButtonText, rejectButtonText, cancelled });
+      const {
+        id,
+        open,
+        actionType,
+        title,
+        content,
+        confirmButtonText,
+        rejectButtonText,
+        cancelled,
+      } = action.payload;
+      Object.assign(state, {
+        id,
+        open,
+        actionType,
+        title,
+        content,
+        confirmButtonText,
+        rejectButtonText,
+        cancelled,
+      });
     },
     reset: (state, action) => Object.assign(state, { ...initialState }),
   },

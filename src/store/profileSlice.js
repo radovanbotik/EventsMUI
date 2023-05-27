@@ -13,26 +13,37 @@ const initialState = {
   eventTab: "hosting",
 };
 
-export const updateUser = createAsyncThunk("profileSlice/updateProfile", async (updates, thunkAPI) => {
-  const loggedUser = auth.currentUser;
-  const { user } = thunkAPI.getState().profileReducer;
-  console.log(updates);
-  if (loggedUser.uid === user.id) {
-    await updateUserProfile(updates);
-    await updateDocument({ collectionRef: "users", document: { ...updates, id: loggedUser.uid } });
+export const updateUser = createAsyncThunk(
+  "profileSlice/updateProfile",
+  async (updates, thunkAPI) => {
+    const loggedUser = auth.currentUser;
+    const { user } = thunkAPI.getState().profileReducer;
+    console.log(updates);
+    if (loggedUser.uid === user.id) {
+      await updateUserProfile(updates);
+      await updateDocument({
+        collectionRef: "users",
+        document: { ...updates, id: loggedUser.uid },
+      });
+    }
   }
-});
+);
 
-export const deleteImage = createAsyncThunk("profileSlice/deleteImage", async (imageName, thunkAPI) => {
-  await deleteFileFromStorage(`${auth.currentUser.uid}/user_images/${imageName}`);
-  await deleteDocumentFromSubCollection({
-    collectionRef: "users",
-    document1: auth.currentUser.uid,
-    subcollectionRef: "photos",
-    documentToDelete: imageName,
-  });
-  await updateUser({ photoURL: null });
-});
+export const deleteImage = createAsyncThunk(
+  "profileSlice/deleteImage",
+  async (imageName, thunkAPI) => {
+    await deleteFileFromStorage(
+      `${auth.currentUser.uid}/user_images/${imageName}`
+    );
+    await deleteDocumentFromSubCollection({
+      collectionRef: "users",
+      document1: auth.currentUser.uid,
+      subcollectionRef: "photos",
+      documentToDelete: imageName,
+    });
+    await updateUser({ photoURL: null });
+  }
+);
 
 const profileSlice = createSlice({
   name: "profileSlice",
@@ -45,7 +56,7 @@ const profileSlice = createSlice({
       state.eventTab = action.payload;
     },
   },
-  extraReducers: builder => {
+  extraReducers: (builder) => {
     builder.addCase(updateUser.pending, (state, action) => {
       console.log("updating");
     });

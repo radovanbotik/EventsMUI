@@ -3,7 +3,7 @@ import AccountForm from "./AccountForm";
 import { useSelector } from "react-redux";
 
 const Account = () => {
-  const { currentUser } = useSelector(store => store.authReducer);
+  const { currentUser } = useSelector((store) => store.authReducer);
 
   return (
     <Grid container spacing={8} columns={{ xs: 6, lg: 12 }}>

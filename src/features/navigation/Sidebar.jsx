@@ -39,12 +39,12 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 const Sidebar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { id } = useSelector(store => store.authReducer.currentUser);
-  const { events } = useSelector(store => store.eventReducer);
+  const { id } = useSelector((store) => store.authReducer.currentUser);
+  const { events } = useSelector((store) => store.eventReducer);
   const [activeEvents, setActiveEvents] = useState();
   const [expiredEvents, setExpiredEvents] = useState();
 
-  const navigateTo = location => {
+  const navigateTo = (location) => {
     navigate(location);
   };
 
@@ -52,8 +52,10 @@ const Sidebar = () => {
     dispatch(setFilter({ attendanceType, id, date: new Date().getTime() }));
   };
   const allCount = activeEvents?.length;
-  const hostingCount = activeEvents?.filter(ev => ev.hostId === id).length;
-  const attendingCount = activeEvents?.filter(ev => ev.attendeesId.includes(id)).length;
+  const hostingCount = activeEvents?.filter((ev) => ev.hostId === id).length;
+  const attendingCount = activeEvents?.filter((ev) =>
+    ev.attendeesId.includes(id)
+  ).length;
   const expiredEventsCount = expiredEvents?.length;
 
   const eventActions = [
@@ -121,7 +123,7 @@ const Sidebar = () => {
       date: new Date().getTime(),
       id: id,
     },
-    action: events => setActiveEvents(events),
+    action: (events) => setActiveEvents(events),
     dependancies: [],
   });
 
@@ -132,7 +134,7 @@ const Sidebar = () => {
       date: new Date().getTime(),
       id: id,
     },
-    action: events => setExpiredEvents(events),
+    action: (events) => setExpiredEvents(events),
     dependancies: [],
   });
 
@@ -146,7 +148,12 @@ const Sidebar = () => {
         }
       >
         <ListItem disablePadding>
-          <ListItemButton dense onClick={() => dispatch(openForm())} component={Link} to="/events">
+          <ListItemButton
+            dense
+            onClick={() => dispatch(openForm())}
+            component={Link}
+            to="/events"
+          >
             <ListItemIcon>
               <Create />
             </ListItemIcon>
@@ -162,7 +169,7 @@ const Sidebar = () => {
           </ListSubheader>
         }
       >
-        {eventActions.map(action => (
+        {eventActions.map((action) => (
           <ListItem key={action.id} disablePadding>
             <ListItemButton dense onClick={action.action.bind(action)}>
               <ListItemIcon>
@@ -182,7 +189,7 @@ const Sidebar = () => {
           </ListSubheader>
         }
       >
-        {usersActions.map(action => (
+        {usersActions.map((action) => (
           <ListItem key={action.id} disablePadding>
             <ListItemButton dense onClick={action.action.bind(action)}>
               <ListItemIcon>{<action.icon />}</ListItemIcon>

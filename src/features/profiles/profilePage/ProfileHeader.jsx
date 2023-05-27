@@ -13,20 +13,36 @@ const ProfileHeader = ({ props }) => {
         display: "flex",
         alignItems: "center",
         width: 1,
-        border: theme => `1px solid ${theme.palette.divider}`,
+        border: (theme) => `1px solid ${theme.palette.divider}`,
         "& hr": {
           mx: 8,
         },
         // width: "fit-content",
       }}
     >
-      <Grid item xs={12} lg={2} sx={{ display: "grid", placeContent: "center" }}>
+      <Grid
+        item
+        xs={12}
+        lg={2}
+        sx={{ display: "grid", placeContent: "center" }}
+      >
         <Avatar sx={{ width: 100, height: 100 }} src={photoURL}></Avatar>
       </Grid>
-      <Grid item xs={12} lg={5} sx={{ display: "grid", placeContent: "center" }}>
+      <Grid
+        item
+        xs={12}
+        lg={5}
+        sx={{ display: "grid", placeContent: "center" }}
+      >
         <Typography variant="h4">{displayName || email}</Typography>
       </Grid>
-      <Grid item xs={12} lg={5} textAlign="center" sx={{ display: "grid", placeContent: "center" }}>
+      <Grid
+        item
+        xs={12}
+        lg={5}
+        textAlign="center"
+        sx={{ display: "grid", placeContent: "center" }}
+      >
         <Grid container spacing={2}>
           <Grid item xs={6}>
             <Stack>

@@ -13,15 +13,15 @@ const PhotosPanel = ({ props }) => {
   useEffect(() => {
     const unsubscribe = onSnapshot(
       collection(db, "users", props.id, "photos"),
-      snapshot => {
+      (snapshot) => {
         const photos = [];
-        snapshot.forEach(doc => {
+        snapshot.forEach((doc) => {
           const data = doc.data();
           photos.push(data);
         });
         setPhotos(photos);
       },
-      error => {
+      (error) => {
         console.log(error);
       }
     );
@@ -41,7 +41,7 @@ const PhotosPanel = ({ props }) => {
               size="small"
               sx={{ bgcolor: "primary.light" }}
               // endIcon={<ModeEdit sx={{ width: 16, height: 16 }} />}
-              onClick={() => setEditing(prev => !prev)}
+              onClick={() => setEditing((prev) => !prev)}
             >
               {editing ? "Cancel" : "Add photo"}
             </Button>

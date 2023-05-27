@@ -17,11 +17,13 @@ export default function CalendarWithTime({ label, ...props }) {
         {...props}
         disablePast
         value={dayjs(values.date)}
-        onChange={e => {
+        onChange={(e) => {
           setFieldValue("date", e);
         }}
       />
-      {meta.touched && meta.error && <FormHelperText>{meta.touched && Boolean(meta.error)}</FormHelperText>}
+      {meta.touched && meta.error && (
+        <FormHelperText>{meta.touched && Boolean(meta.error)}</FormHelperText>
+      )}
     </FormControl>
   );
 }

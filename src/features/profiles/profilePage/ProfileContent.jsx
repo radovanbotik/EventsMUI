@@ -26,7 +26,7 @@ function a11yProps(index) {
   };
 }
 
-const ProfileContent = props => {
+const ProfileContent = (props) => {
   const [value, setValue] = React.useState(0);
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -34,7 +34,13 @@ const ProfileContent = props => {
 
   return (
     <>
-      <Box sx={{ borderBottom: 1, borderColor: "divider", maxWidth: { xs: 400, sm: 480, md: "100%" } }}>
+      <Box
+        sx={{
+          borderBottom: 1,
+          borderColor: "divider",
+          maxWidth: { xs: 400, sm: 480, md: "100%" },
+        }}
+      >
         <Tabs
           value={value}
           onChange={handleChange}

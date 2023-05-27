@@ -12,7 +12,8 @@ const firebaseConfig = {
   storageBucket: "events-8639b.appspot.com",
   messagingSenderId: "154041916580",
   appId: "1:154041916580:web:5b17247883107505545a31",
-  databaseURL: "https://events-8639b-default-rtdb.europe-west1.firebasedatabase.app",
+  databaseURL:
+    "https://events-8639b-default-rtdb.europe-west1.firebasedatabase.app",
 };
 
 // Initialize Firebase

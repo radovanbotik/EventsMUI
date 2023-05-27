@@ -10,7 +10,12 @@ import {
 // import { onSnapshot, collection, Timestamp, query } from "firebase/firestore";
 // import { db } from "../firestore/firestore";
 
-const useSubscribeTocollection = ({ filter, collectionRef, action, dependancies }) => {
+const useSubscribeTocollection = ({
+  filter,
+  collectionRef,
+  action,
+  dependancies,
+}) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -139,7 +144,11 @@ const useSubscribeTocollection = ({ filter, collectionRef, action, dependancies 
       query = createQuery({ collectionRef: collectionRef });
     }
 
-    const unsubscribe = subscribeToCollection({ collectionRef, q: query, action });
+    const unsubscribe = subscribeToCollection({
+      collectionRef,
+      q: query,
+      action,
+    });
     dispatch(setStatus("idle"));
 
     return () => unsubscribe();

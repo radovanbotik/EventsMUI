@@ -6,20 +6,25 @@ import useSubscribeTocollection from "../../../hooks/useSubscribeTocollection";
 import EventList from "./EventList";
 
 const EventDashboard = () => {
-  const { events } = useSelector(store => store.eventReducer);
-  const { isOpen } = useSelector(store => store.formReducer);
-  const { filterOptions } = useSelector(store => store.eventReducer);
+  const { events } = useSelector((store) => store.eventReducer);
+  const { isOpen } = useSelector((store) => store.formReducer);
+  const { filterOptions } = useSelector((store) => store.eventReducer);
   const dispatch = useDispatch();
 
   useSubscribeTocollection({
     collectionRef: "events",
-    action: events => dispatch(loadEvents(events)),
+    action: (events) => dispatch(loadEvents(events)),
     dependancies: [filterOptions],
     filter: filterOptions,
   });
 
   return (
-    <Grid spacing={2} container columns={{ xs: 6, lg: 12 }} sx={{ height: "100%" }}>
+    <Grid
+      spacing={2}
+      container
+      columns={{ xs: 6, lg: 12 }}
+      sx={{ height: "100%" }}
+    >
       <Grid item lg={6} xs={6}>
         <EventList events={events} />
       </Grid>

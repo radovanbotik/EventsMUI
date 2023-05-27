@@ -1,5 +1,12 @@
 import { useState } from "react";
-import { useMediaQuery, ImageList, ImageListItem, ImageListItemBar, IconButton, Button } from "@mui/material";
+import {
+  useMediaQuery,
+  ImageList,
+  ImageListItem,
+  ImageListItemBar,
+  IconButton,
+  Button,
+} from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { DeleteRounded, CheckCircleOutline } from "@mui/icons-material";
 import Confirmation from "../../../common/dialogs/Confirmation";
@@ -13,7 +20,7 @@ export default function PhotosImageList({ photos }) {
   const handleClose = () => {
     setOpen(false);
   };
-  const setProfilePicture = photo => {
+  const setProfilePicture = (photo) => {
     dispatch(updateUser({ photoURL: photo }));
     setCurrentPhoto(null);
     handleClose();
@@ -44,7 +51,7 @@ export default function PhotosImageList({ photos }) {
         onSubmit={() => setProfilePicture(currentPhoto)}
       />
       <ImageList cols={cols()}>
-        {photos?.map(photo => (
+        {photos?.map((photo) => (
           <ImageListItem key={photo.name}>
             <img src={photo.url} alt={photo.name} loading="lazy" />
             <ImageListItemBar
@@ -69,7 +76,11 @@ export default function PhotosImageList({ photos }) {
                 "& .MuiImageListItemBar-actionIcon": { color: "white" },
               }}
             />
-            <Button size="small" sx={{ alignSelf: "end" }} onClick={() => dispatch(deleteImage(photo.name))}>
+            <Button
+              size="small"
+              sx={{ alignSelf: "end" }}
+              onClick={() => dispatch(deleteImage(photo.name))}
+            >
               delete
             </Button>
           </ImageListItem>

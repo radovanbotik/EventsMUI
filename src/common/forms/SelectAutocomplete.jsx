@@ -1,6 +1,12 @@
 /* eslint-disable react/prop-types */
 import { useField } from "formik";
-import { FormControl, InputLabel, FormHelperText, Select, OutlinedInput } from '@mui/material';
+import {
+  FormControl,
+  InputLabel,
+  FormHelperText,
+  Select,
+  OutlinedInput,
+} from "@mui/material";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -27,10 +33,12 @@ const ComboBox = ({ label, labelId, ...props }) => {
         {...props}
         multiple
         MenuProps={MenuProps}
-        renderValue={selected => selected.join(", ")}
+        renderValue={(selected) => selected.join(", ")}
         input={<OutlinedInput label="Tag" />}
       />
-      {meta.touched && meta.error && <FormHelperText>{meta.touched && Boolean(meta.error)}</FormHelperText>}
+      {meta.touched && meta.error && (
+        <FormHelperText>{meta.touched && Boolean(meta.error)}</FormHelperText>
+      )}
     </FormControl>
   );
 };

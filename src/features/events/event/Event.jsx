@@ -13,20 +13,22 @@ import { loadEvents } from "../../../store/eventSlice";
 import PageLoader from "../../../common/loaders/PageLoader";
 
 const Event = () => {
-  const { events, status, filterOptions } = useSelector(store => store.eventReducer);
-  const { isEditing } = useSelector(store => store.formReducer);
+  const { events, status, filterOptions } = useSelector(
+    (store) => store.eventReducer
+  );
+  const { isEditing } = useSelector((store) => store.formReducer);
   const { id } = useParams();
-  const event = events?.find(event => event.id === id);
+  const event = events?.find((event) => event.id === id);
   const dispatch = useDispatch();
   const [mapOpen, setMapOpen] = useState(false);
   function toggleMap() {
-    setMapOpen(prev => !prev);
+    setMapOpen((prev) => !prev);
   }
 
   useSubscribeTodocument({
     dbcollection: "events",
     documentId: id,
-    data: doc => dispatch(loadEvents([doc])),
+    data: (doc) => dispatch(loadEvents([doc])),
     dependancies: [id],
   });
 

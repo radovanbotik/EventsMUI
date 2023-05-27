@@ -1,4 +1,4 @@
-const isExpired = timestamp => {
+const isExpired = (timestamp) => {
   if (timestamp < new Date().getTime()) {
     return true;
   } else {

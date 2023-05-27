@@ -3,7 +3,14 @@ import * as React from "react";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import parse from "autosuggest-highlight/parse";
 import { useField, useFormikContext } from "formik";
-import { debounce, Box, Autocomplete, Grid, Typography, TextField } from "@mui/material";
+import {
+  debounce,
+  Box,
+  Autocomplete,
+  Grid,
+  Typography,
+  TextField,
+} from "@mui/material";
 
 const autocompleteService = { current: null };
 
@@ -25,7 +32,8 @@ export default function LocationSelectAutocomplete() {
   React.useEffect(() => {
     let active = true;
     if (!autocompleteService.current && window.google) {
-      autocompleteService.current = new window.google.maps.places.AutocompleteService();
+      autocompleteService.current =
+        new window.google.maps.places.AutocompleteService();
     }
     if (!autocompleteService.current) {
       return undefined;
@@ -34,7 +42,7 @@ export default function LocationSelectAutocomplete() {
       setOptions(values.location ? [values.location] : []);
       return undefined;
     }
-    fetch({ input: inputValue }, results => {
+    fetch({ input: inputValue }, (results) => {
       if (active) {
         let newOptions = [];
         if (values.location) {
@@ -56,8 +64,10 @@ export default function LocationSelectAutocomplete() {
       // id="google-map-demo"
       //   sx={{ width: 300 }}
       sx={{ width: 1 }}
-      getOptionLabel={option => (typeof option === "string" ? option : option.description)}
-      filterOptions={x => x}
+      getOptionLabel={(option) =>
+        typeof option === "string" ? option : option.description
+      }
+      filterOptions={(x) => x}
       {...field}
       options={options}
       name="location"
@@ -75,13 +85,21 @@ export default function LocationSelectAutocomplete() {
       onInputChange={(event, newInputValue) => {
         setInputValue(newInputValue);
       }}
-      renderInput={params => <TextField {...params} label="Add a location" fullWidth margin="dense" />}
+      renderInput={(params) => (
+        <TextField
+          {...params}
+          label="Add a location"
+          fullWidth
+          margin="dense"
+        />
+      )}
       renderOption={(props, option) => {
-        const matches = option.structured_formatting.main_text_matched_substrings || [];
+        const matches =
+          option.structured_formatting.main_text_matched_substrings || [];
 
         const parts = parse(
           option.structured_formatting.main_text,
-          matches.map(match => [match.offset, match.offset + match.length])
+          matches.map((match) => [match.offset, match.offset + match.length])
         );
 
         return (
@@ -90,9 +108,16 @@ export default function LocationSelectAutocomplete() {
               <Grid item sx={{ display: "flex", width: 44 }}>
                 <LocationOnIcon sx={{ color: "text.secondary" }} />
               </Grid>
-              <Grid item sx={{ width: "calc(100% - 44px)", wordWrap: "break-word" }}>
+              <Grid
+                item
+                sx={{ width: "calc(100% - 44px)", wordWrap: "break-word" }}
+              >
                 {parts.map((part, index) => (
-                  <Box key={index} component="span" sx={{ fontWeight: part.highlight ? "bold" : "regular" }}>
+                  <Box
+                    key={index}
+                    component="span"
+                    sx={{ fontWeight: part.highlight ? "bold" : "regular" }}
+                  >
                     {part.text}
                   </Box>
                 ))}

@@ -23,94 +23,123 @@ const initialState = {
 //actions
 export const setStatus = createAction("events/setStatus");
 
-export const createEvent = createAsyncThunk("events/createEvent", async (event, thunkAPI) => {
-  const { currentUser } = thunkAPI.getState().authReducer;
-  const attendees = createArrayUnion([
-    {
+export const createEvent = createAsyncThunk(
+  "events/createEvent",
+  async (event, thunkAPI) => {
+    const { currentUser } = thunkAPI.getState().authReducer;
+    const attendees = createArrayUnion([
+      {
+        id: currentUser.id,
+        name: currentUser.displayName,
+        photoURL: currentUser.photoURL || null,
+      },
+    ]);
+    const timestamp = convertDateToTimestamp(event.date);
+    const createdAt = convertDateToTimestamp(new Date());
+    console.table("timestamp:", timestamp, "createdAt:", createdAt);
+    const attendeesId = createArrayUnion([currentUser.id]);
+    const document = {
+      ...event,
+      createdAt: createdAt,
+      date: timestamp,
+      hostedBy: currentUser.displayName,
+      hostId: currentUser.id,
+      hostPhotoURL: currentUser.photoURL || null,
+      attendees: attendees,
+      attendeesId: attendeesId,
+    };
+    try {
+      await addDocumentToCollection({
+        collectionRef: "events",
+        document: document,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+
+export const updateEvent = createAsyncThunk(
+  "events/updateEv",
+  async (event, thunkAPI) => {
+    try {
+      await updateDocument({ collectionRef: "events", document: event });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+
+export const deleteEvent = createAsyncThunk(
+  "events/deleteEv",
+  async (eventId, thunkAPI) => {
+    try {
+      await deleteDocument({ collectionRef: "events", docId: eventId });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+
+export const cancelEv = createAsyncThunk(
+  "events/cancelEv",
+  async (event, thunkAPI) => {
+    try {
+      // const date = event. to timestamp
+      await updateDocument({
+        collectionRef: "events",
+        document: { ...event, cancelled: !event.cancelled },
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+export const joinEvent = createAsyncThunk(
+  "events/joinEvent",
+  async (eventId, thunkAPI) => {
+    const { currentUser } = thunkAPI.getState().authReducer;
+    const attendee = {
       id: currentUser.id,
       name: currentUser.displayName,
       photoURL: currentUser.photoURL || null,
-    },
-  ]);
-  const timestamp = convertDateToTimestamp(event.date);
-  const createdAt = convertDateToTimestamp(new Date());
-  console.table("timestamp:", timestamp, "createdAt:", createdAt);
-  const attendeesId = createArrayUnion([currentUser.id]);
-  const document = {
-    ...event,
-    createdAt: createdAt,
-    date: timestamp,
-    hostedBy: currentUser.displayName,
-    hostId: currentUser.id,
-    hostPhotoURL: currentUser.photoURL || null,
-    attendees: attendees,
-    attendeesId: attendeesId,
-  };
-  try {
-    await addDocumentToCollection({ collectionRef: "events", document: document });
-  } catch (error) {
-    console.log(error);
+    };
+    await addToArrayDocument({
+      collectionRef: "events",
+      documentRef: eventId,
+      array: "attendees",
+      documentToAdd: attendee,
+    });
+    await addToArrayDocument({
+      collectionRef: "events",
+      documentRef: eventId,
+      array: "attendeesId",
+      documentToAdd: currentUser.id,
+    });
   }
-});
+);
 
-export const updateEvent = createAsyncThunk("events/updateEv", async (event, thunkAPI) => {
-  try {
-    await updateDocument({ collectionRef: "events", document: event });
-  } catch (error) {
-    console.log(error);
+export const leaveEvent = createAsyncThunk(
+  "eventSlice/leaveEvent",
+  async (eventId, thunkAPI) => {
+    const { currentUser } = thunkAPI.getState().authReducer;
+    await removeDocumentFromArray({
+      collectionRef: "events",
+      documentRef: eventId,
+      array: "attendeesId",
+      documentToRemove: currentUser.id,
+    });
+    const event = await getDocumentOnce({
+      collectionRef: "events",
+      documentId: eventId,
+    });
+    const attendeesWithoutUser = event.attendees.filter(
+      (attendee) => attendee.id !== currentUser.id
+    );
+    const newEvent = { ...event, attendees: attendeesWithoutUser };
+    await updateDocument({ collectionRef: "events", document: newEvent });
   }
-});
-
-export const deleteEvent = createAsyncThunk("events/deleteEv", async (eventId, thunkAPI) => {
-  try {
-    await deleteDocument({ collectionRef: "events", docId: eventId });
-  } catch (error) {
-    console.log(error);
-  }
-});
-
-export const cancelEv = createAsyncThunk("events/cancelEv", async (event, thunkAPI) => {
-  try {
-    // const date = event. to timestamp
-    await updateDocument({ collectionRef: "events", document: { ...event, cancelled: !event.cancelled } });
-  } catch (error) {
-    console.log(error);
-  }
-});
-export const joinEvent = createAsyncThunk("events/joinEvent", async (eventId, thunkAPI) => {
-  const { currentUser } = thunkAPI.getState().authReducer;
-  const attendee = {
-    id: currentUser.id,
-    name: currentUser.displayName,
-    photoURL: currentUser.photoURL || null,
-  };
-  await addToArrayDocument({
-    collectionRef: "events",
-    documentRef: eventId,
-    array: "attendees",
-    documentToAdd: attendee,
-  });
-  await addToArrayDocument({
-    collectionRef: "events",
-    documentRef: eventId,
-    array: "attendeesId",
-    documentToAdd: currentUser.id,
-  });
-});
-
-export const leaveEvent = createAsyncThunk("eventSlice/leaveEvent", async (eventId, thunkAPI) => {
-  const { currentUser } = thunkAPI.getState().authReducer;
-  await removeDocumentFromArray({
-    collectionRef: "events",
-    documentRef: eventId,
-    array: "attendeesId",
-    documentToRemove: currentUser.id,
-  });
-  const event = await getDocumentOnce({ collectionRef: "events", documentId: eventId });
-  const attendeesWithoutUser = event.attendees.filter(attendee => attendee.id !== currentUser.id);
-  const newEvent = { ...event, attendees: attendeesWithoutUser };
-  await updateDocument({ collectionRef: "events", document: newEvent });
-});
+);
 
 const slice = createSlice({
   name: "eventsActions",
@@ -124,7 +153,7 @@ const slice = createSlice({
       state.filterOptions = action.payload;
     },
   },
-  extraReducers: builder => {
+  extraReducers: (builder) => {
     builder.addCase(setStatus, (state, action) => {
       state.status = action.payload;
     });

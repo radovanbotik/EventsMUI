@@ -6,7 +6,7 @@ import EventDateAndHost from "./EventDateAndHost";
 import EventActions from "./EventActions";
 
 const EventHeader = ({ event, mapOpen }) => {
-  const { events } = useSelector(store => store.eventReducer);
+  const { events } = useSelector((store) => store.eventReducer);
   const [currentEvent] = events;
 
   return (

@@ -34,10 +34,10 @@ const ImageDropzone = ({ setFiles, files }) => {
   };
 
   const onDrop = useCallback(
-    acceptedFiles => {
+    (acceptedFiles) => {
       // console.log(acceptedFiles);s
-      setFiles(prev =>
-        acceptedFiles.map(file =>
+      setFiles((prev) =>
+        acceptedFiles.map((file) =>
           Object.assign(file, {
             preview: URL.createObjectURL(file),
           })
@@ -80,8 +80,12 @@ const ImageDropzone = ({ setFiles, files }) => {
           <Typography>Drop the files here ...</Typography>
         ) : (
           <>
-            <Typography>Drag 'n' drop some files here, or click to select files</Typography>
-            <Typography>(1 files are the maximum number of files you can drop here)</Typography>
+            <Typography>
+              Drag 'n' drop some files here, or click to select files
+            </Typography>
+            <Typography>
+              (1 files are the maximum number of files you can drop here)
+            </Typography>
           </>
         )}
       </Box>
@@ -89,7 +93,7 @@ const ImageDropzone = ({ setFiles, files }) => {
         <Box>
           <Typography variant="body2">Accepted files</Typography>
           {files &&
-            acceptedFiles?.map(file => (
+            acceptedFiles?.map((file) => (
               <Box key={file.name}>
                 <Chip
                   avatar={<Avatar alt="preview" src={file.preview} />}
@@ -113,7 +117,7 @@ const ImageDropzone = ({ setFiles, files }) => {
                   color="success"
                 />
                 <Typography>{file.size} bytes</Typography>
-                {errors.map(e => (
+                {errors.map((e) => (
                   <Typography key={e.code}>{e.message}</Typography>
                 ))}
               </Box>

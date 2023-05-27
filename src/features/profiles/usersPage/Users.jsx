@@ -5,10 +5,14 @@ import { useSelector, useDispatch } from "react-redux";
 
 const Users = () => {
   const [users, setUsers] = useState(null);
-  const { status } = useSelector(store => store.eventReducer);
+  const { status } = useSelector((store) => store.eventReducer);
   const dispatch = useDispatch();
 
-  useSubscribeTocollection({ collectionRef: "users", dependancies: [], action: users => setUsers(users) });
+  useSubscribeTocollection({
+    collectionRef: "users",
+    dependancies: [],
+    action: (users) => setUsers(users),
+  });
   if (status === "loading") return <div>loading...</div>;
   return (
     <>

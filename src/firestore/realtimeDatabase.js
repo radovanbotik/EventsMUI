@@ -1,11 +1,20 @@
 import { app, auth } from "../config/firebase";
-import { getDatabase, ref, set, onValue, push, orderByKey, query, limitToLast } from "firebase/database";
+import {
+  getDatabase,
+  ref,
+  set,
+  onValue,
+  push,
+  orderByKey,
+  query,
+  limitToLast,
+} from "firebase/database";
 
 const database = getDatabase(app);
 const user = auth.currentUser;
 
 //will overwrite data
-export const writeUserData = async user => {
+export const writeUserData = async (user) => {
   set(ref(database, `users/${user.id}`), {
     username: user.username,
     email: user.email,
@@ -13,9 +22,9 @@ export const writeUserData = async user => {
   });
 };
 
-export const listenToEventChat = async eventId => {
+export const listenToEventChat = async (eventId) => {
   const eventRef = ref(database, `events/${eventId}/comments`);
-  onValue(eventRef, snapshot => {
+  onValue(eventRef, (snapshot) => {
     const data = snapshot.val();
     // console.log(Object.values(data));
     console.log(Object.entries(data));
@@ -52,12 +61,12 @@ export const addReplyToEventMessage = async ({ reply, eventId, commentId }) => {
 export const listenToLocation = async ({ location, action }) => {
   // const locationRef = ref(database, location);
   const locationRef = query(ref(database, location), limitToLast(10));
-  onValue(locationRef, snapshot => {
+  onValue(locationRef, (snapshot) => {
     if (!snapshot.exists()) return;
     const data = snapshot.val();
     const comments = Object.entries(snapshot.val())
       .reverse()
-      .map(array => ({ id: array[0], ...array[1] }));
+      .map((array) => ({ id: array[0], ...array[1] }));
     action(comments);
   });
 };

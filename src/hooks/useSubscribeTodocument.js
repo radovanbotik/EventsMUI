@@ -4,14 +4,19 @@ import { onSnapshot, doc, Timestamp } from "firebase/firestore";
 import { db } from "../firestore/firestore";
 import { setStatus } from "../store/eventSlice";
 
-const useSubscribeTodocument = ({ dbcollection, documentId, data, dependancies }) => {
+const useSubscribeTodocument = ({
+  dbcollection,
+  documentId,
+  data,
+  dependancies,
+}) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(setStatus("loading"));
     const unsubscribe = onSnapshot(
       doc(db, dbcollection, documentId),
-      document => {
+      (document) => {
         if (!document.exists()) {
           dispatch(setStatus("error"));
           throw new Error("document doesnt exists");
@@ -26,7 +31,7 @@ const useSubscribeTodocument = ({ dbcollection, documentId, data, dependancies }
         data(doc);
         dispatch(setStatus("idle"));
       },
-      error => {
+      (error) => {
         setStatus("error");
       }
     );

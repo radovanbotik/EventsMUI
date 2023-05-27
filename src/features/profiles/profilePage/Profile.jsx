@@ -11,8 +11,8 @@ import { useEffect, useState } from "react";
 const Profile = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const { user } = useSelector(store => store.profileReducer);
-  const { status } = useSelector(store => store.eventReducer);
+  const { user } = useSelector((store) => store.profileReducer);
+  const { status } = useSelector((store) => store.eventReducer);
 
   const [owner, setOwner] = useState(false);
 
@@ -20,7 +20,7 @@ const Profile = () => {
     dbcollection: "users",
     documentId: id,
     dependancies: [id],
-    data: userData => dispatch(setViewedUser(userData)),
+    data: (userData) => dispatch(setViewedUser(userData)),
   });
 
   const isOwner = () => {
@@ -36,7 +36,14 @@ const Profile = () => {
 
   if (status === "loading")
     return (
-      <Box sx={{ display: "grid", height: "100vh", width: "100%", placeContent: "center" }}>
+      <Box
+        sx={{
+          display: "grid",
+          height: "100vh",
+          width: "100%",
+          placeContent: "center",
+        }}
+      >
         <CircularProgress></CircularProgress>
       </Box>
     );

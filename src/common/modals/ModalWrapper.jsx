@@ -8,7 +8,7 @@ import { Dialog, DialogTitle, Divider } from "@mui/material";
 function ModalWrapper({ props, children, title }) {
   const dispatch = useDispatch();
 
-  const { open } = useSelector(store => store.modalReducer);
+  const { open } = useSelector((store) => store.modalReducer);
   const handleClose = () => {
     dispatch(closeModal());
   };
