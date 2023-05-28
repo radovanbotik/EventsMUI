@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { setStatus } from "../store/eventSlice";
+// import { setStatus } from "../store/eventSlice";
 import {
   convertMillisToTimestamp,
   createCompoundQuery,
@@ -15,7 +15,7 @@ const useSubscribeTocollection = ({ filter, collectionRef, action, dependancies 
 
   useEffect(() => {
     console.log("loading");
-    dispatch(setStatus("loading"));
+    // dispatch(setStatus("loading"));
     // const unsubscribe = onSnapshot(
     //   query(collection(db, collectionRef), q),
     //   snapshot => {
@@ -144,7 +144,7 @@ const useSubscribeTocollection = ({ filter, collectionRef, action, dependancies 
       q: query,
       action,
     });
-    dispatch(setStatus("idle"));
+    // dispatch(setStatus("idle"));
 
     return () => unsubscribe();
     // eslint-disable-next-line react-hooks/exhaustive-deps

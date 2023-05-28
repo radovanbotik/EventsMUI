@@ -15,13 +15,13 @@ const initialState = {
   events: null,
   status: "idle",
   filterOptions: {
-    attendanceType: "all",
+    attendanceType: "active",
     date: new Date().getTime(),
     id: null,
   },
 };
 //actions
-export const setStatus = createAction("events/setStatus");
+// export const setStatus = createAction("events/setStatus");
 
 export const createEvent = createAsyncThunk("events/createEvent", async (event, thunkAPI) => {
   const { currentUser } = thunkAPI.getState().authReducer;
@@ -128,15 +128,17 @@ const slice = createSlice({
     loadEvents: (state, action) => {
       state.events = action.payload;
     },
-
+    setStatus: (state, action) => {
+      state.status = action.payload;
+    },
     setFilter: (state, action) => {
       state.filterOptions = action.payload;
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(setStatus, (state, action) => {
-      state.status = action.payload;
-    });
+    // builder.addCase(setStatus, (state, action) => {
+    //   state.status = action.payload;
+    // });
     //create event
     builder.addCase(createEvent.pending, (state, action) => {
       state.status = "loading";
@@ -179,5 +181,5 @@ const slice = createSlice({
   },
 });
 
-export const { loadEvents, setFilter } = slice.actions;
+export const { loadEvents, setFilter, setStatus } = slice.actions;
 export default slice.reducer;

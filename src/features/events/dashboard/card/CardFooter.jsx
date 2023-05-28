@@ -2,7 +2,7 @@ import { CardActions, ButtonBase, Stack, AvatarGroup, Avatar, Typography } from 
 import getNamesOfAttendees from "../../../../common/util/getNamesOfAttendees";
 import { Link } from "react-router-dom";
 
-const CardFooter = ({ id, attendees, filterOptions }) => {
+const CardFooter = ({ id, attendees, filterOptions, date }) => {
   const AVATAR_MAX = 3;
 
   const avatarGroupStyles = {
@@ -17,6 +17,11 @@ const CardFooter = ({ id, attendees, filterOptions }) => {
     fontSize: "body2.fontSize",
   };
 
+  const attendeesNames = getNamesOfAttendees({
+    totalAttendees: 2,
+    attendees: attendees,
+    date: date,
+  });
   return (
     <CardActions>
       <Stack sx={{ flex: 1 }} direction={{ xs: "column", md: "row" }} alignItems={{ md: "flex-end", xs: "flex-start" }}>
@@ -27,11 +32,7 @@ const CardFooter = ({ id, attendees, filterOptions }) => {
             ))}
           </AvatarGroup>
           <Typography variant="body2" color="text.secondary">
-            {getNamesOfAttendees({
-              totalAttendees: 2,
-              attendees: attendees,
-              filterOptions: filterOptions,
-            })}
+            {attendeesNames}
           </Typography>
         </Stack>
         <ButtonBase component={Link} to={`event/${id}`} sx={buttonStyles} size="regular" variant="text">

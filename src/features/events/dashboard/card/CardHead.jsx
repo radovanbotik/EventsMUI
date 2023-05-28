@@ -13,6 +13,7 @@ const CardHead = ({ hostId, hostPhotoURL, title, hostedBy }) => {
           aria-label="host"
           src={hostPhotoURL}
           imgProps={{ loading: "lazy" }}
+          // sx={{ height: { xs: 32 }, width: { xs: 32 } }}
         />
       }
       title={title}

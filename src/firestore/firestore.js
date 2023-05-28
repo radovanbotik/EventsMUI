@@ -259,10 +259,3 @@ export const subscribeToSubcollectionAndFindDocument = ({
     };
   });
 };
-
-// subscribeToSubcollectionAndFindDocument({
-//   parentCollection: "following",
-//   parentDocument: "Z4TJIaHLwTMJpt5uoAwGZiWzdur1",
-//   subCollection: "followers",
-//   id: "TWqAPKpOT0ZqNcbtpzujRWqO1ij2",
-// });

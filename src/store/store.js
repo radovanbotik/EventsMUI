@@ -1,5 +1,5 @@
 import { configureStore, createListenerMiddleware, getDefaultMiddleware } from "@reduxjs/toolkit";
-import eventReducer, { setStatus } from "./eventSlice";
+import eventReducer from "./eventSlice";
 import formReducer from "./formSlice";
 import modalReducer from "./modalSlice";
 import authReducer, { setInitialized } from "./authSlice";

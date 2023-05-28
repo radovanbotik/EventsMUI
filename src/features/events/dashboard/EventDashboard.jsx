@@ -4,6 +4,7 @@ import { loadEvents } from "../../../store/eventSlice";
 import { Grid } from "@mui/material";
 import useSubscribeTocollection from "../../../hooks/useSubscribeTocollection";
 import EventList from "./EventList";
+import useSubscribeEvents from "../../../hooks/useSubscribeEvents";
 
 const EventDashboard = () => {
   const { events } = useSelector((store) => store.eventReducer);
@@ -11,11 +12,17 @@ const EventDashboard = () => {
   const { filterOptions } = useSelector((store) => store.eventReducer);
   const dispatch = useDispatch();
 
-  useSubscribeTocollection({
-    collectionRef: "events",
+  // useSubscribeTocollection({
+  //   collectionRef: "events",
+  //   action: (events) => dispatch(loadEvents(events)),
+  //   dependancies: [filterOptions],
+  //   filter: filterOptions,
+  // });
+
+  useSubscribeEvents({
+    filterOptions,
     action: (events) => dispatch(loadEvents(events)),
     dependancies: [filterOptions],
-    filter: filterOptions,
   });
 
   return (

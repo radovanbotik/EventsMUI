@@ -42,7 +42,7 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 }));
 
 export default function PersistentDrawerLeft() {
-  const { isInitialized } = useSelector((store) => store.authReducer);
+  const { isInitialized, currentUser } = useSelector((store) => store.authReducer);
   const theme = useTheme();
   const [open, setOpen] = useState(true);
 
@@ -57,7 +57,11 @@ export default function PersistentDrawerLeft() {
   useGoogleMaps();
 
   return (
-    <Container maxWidth="xl" sx={{ position: "relative" }}>
+    <Box
+      //container
+      //  maxWidth="xl"
+      sx={{ position: "relative" }}
+    >
       <Box sx={{ position: "relative", display: "flex" }}>
         <ToastContainer />
         <CssBaseline />
@@ -89,13 +93,13 @@ export default function PersistentDrawerLeft() {
             </IconButton>
           </DrawerHeader>
           <Divider />
-          {isInitialized && <Sidebar />}
+          {isInitialized && currentUser && <Sidebar />}
         </Drawer>
         <Main open={open}>
           <DrawerHeader />
           {isInitialized && <Outlet />}
         </Main>
       </Box>
-    </Container>
+    </Box>
   );
 }

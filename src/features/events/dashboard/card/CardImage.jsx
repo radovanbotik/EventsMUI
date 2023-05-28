@@ -10,8 +10,7 @@ const CardImage = ({ eventPhotoURL, id }) => {
         image={eventPhotoURL || noImage}
         loading="lazy"
         alt="event image"
-        height={240}
-        sx={{ "&.MuiCardMedia-img": { objectFit: "contain" } }}
+        sx={{ height: { xs: 180, sm: 240 }, "&.MuiCardMedia-img": { objectFit: "contain" } }}
       />
     </CardActionArea>
   );
