@@ -12,7 +12,7 @@ const Profile = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const { user } = useSelector((store) => store.profileReducer);
-  const { status } = useSelector((store) => store.eventReducer);
+  const { status } = useSelector((store) => store.profileReducer);
 
   const [owner, setOwner] = useState(false);
 
@@ -34,7 +34,7 @@ const Profile = () => {
     isOwner();
   }, [status, id]);
 
-  if (status === "loading")
+  if (status === "loading" || !user)
     return (
       <Box
         sx={{

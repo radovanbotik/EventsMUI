@@ -1,13 +1,15 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Grid, Avatar, Typography, Stack, Button } from "@mui/material";
 import { followUser, unfollowUser } from "../../../store/profileSlice";
 import { useDispatch } from "react-redux";
-import { readSubcollection } from "../../../firestore/firestore";
+import useIsFollowingThisUser from "../../../hooks/useIsFollowingThisUser";
 
 const ProfileHeader = ({ props }) => {
   const dispatch = useDispatch();
+  const [followsUser, setFollowsUser] = useState(null);
   const { photoURL, displayName, email, owner, id, following, followers } = props;
 
+  console.log(followsUser);
   const handleFollow = () => {
     dispatch(
       followUser({
@@ -26,7 +28,21 @@ const ProfileHeader = ({ props }) => {
     );
   };
 
-  // subscribe to following,  query  array.contains user.id
+  const toggleFollowing = () => {
+    if (followsUser) {
+      return handleUnfollow();
+    } else {
+      return handleFollow();
+    }
+  };
+
+  useIsFollowingThisUser({
+    parentCollection: "following",
+    parentDocument: id,
+    subCollection: "followers",
+    action: (bool) => setFollowsUser(bool),
+    dependancies: [id],
+  });
 
   return (
     <Grid
@@ -67,8 +83,8 @@ const ProfileHeader = ({ props }) => {
           </Grid>
         </Grid>
         {!owner && (
-          <Button variant="contained" onClick={handleFollow}>
-            Follow
+          <Button variant="contained" onClick={toggleFollowing}>
+            {followsUser ? "Unfollow" : "Follow"}
           </Button>
         )}
       </Grid>

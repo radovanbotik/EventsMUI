@@ -241,3 +241,28 @@ export const readSubcollection = async ({ parentCollection, parentDocument, subC
   });
   return data;
 };
+
+export const subscribeToSubcollectionAndFindDocument = ({
+  parentCollection,
+  parentDocument,
+  subCollection,
+  id,
+  action,
+}) => {
+  const uid = auth.currentUser.uid;
+  return onSnapshot(doc(db, parentCollection, parentDocument, subCollection, uid), (snapshot) => {
+    // console.log(snapshot.exists());
+    let result = snapshot.exists();
+    action(result);
+    (error) => {
+      console.log(error);
+    };
+  });
+};
+
+// subscribeToSubcollectionAndFindDocument({
+//   parentCollection: "following",
+//   parentDocument: "Z4TJIaHLwTMJpt5uoAwGZiWzdur1",
+//   subCollection: "followers",
+//   id: "TWqAPKpOT0ZqNcbtpzujRWqO1ij2",
+// });
