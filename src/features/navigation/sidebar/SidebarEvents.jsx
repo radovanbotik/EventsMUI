@@ -16,7 +16,7 @@ import {
   EventBusyOutlined,
   EventRepeatOutlined,
 } from "@mui/icons-material";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setFilter } from "../../../store/eventSlice";
 import useSubscribeEvents from "../../../hooks/useSubscribeEvents";
@@ -40,6 +40,7 @@ const SidebarEvents = () => {
   });
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { currentUser } = useSelector((store) => store.authReducer);
 
   const avaibleFilter = {
     date: new Date().getTime(),
@@ -137,6 +138,7 @@ const SidebarEvents = () => {
     action: (events) => setCount((prev) => ({ ...prev, active: events.length })),
   });
   useSubscribeEvents({
+    userId: currentUser?.id,
     filterOptions: {
       attendanceType: "hosting",
       date: new Date().getTime(),
@@ -144,6 +146,7 @@ const SidebarEvents = () => {
     action: (events) => setCount((prev) => ({ ...prev, hosting: events.length })),
   });
   useSubscribeEvents({
+    userId: currentUser?.id,
     filterOptions: {
       attendanceType: "attending",
       date: new Date().getTime(),
@@ -151,6 +154,7 @@ const SidebarEvents = () => {
     action: (events) => setCount((prev) => ({ ...prev, attending: events.length })),
   });
   useSubscribeEvents({
+    userId: currentUser?.id,
     filterOptions: {
       attendanceType: "attended",
       date: new Date().getTime(),

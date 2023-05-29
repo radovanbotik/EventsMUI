@@ -10,6 +10,7 @@ const EventDashboard = () => {
   const { events } = useSelector((store) => store.eventReducer);
   const { isOpen } = useSelector((store) => store.formReducer);
   const { filterOptions } = useSelector((store) => store.eventReducer);
+  const { currentUser } = useSelector((store) => store.authReducer);
   const dispatch = useDispatch();
 
   // useSubscribeTocollection({
@@ -20,6 +21,7 @@ const EventDashboard = () => {
   // });
 
   useSubscribeEvents({
+    userId: currentUser?.id,
     filterOptions,
     action: (events) => dispatch(loadEvents(events)),
     dependancies: [filterOptions],

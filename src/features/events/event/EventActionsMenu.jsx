@@ -1,19 +1,31 @@
 import { Menu, MenuItem, Button } from "@mui/material";
-import { deleteEvent, cancelEv } from "../../../store/eventSlice";
 import Permission from "../../../common/dialogs/Permission";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setEditing, setOpen } from "../../../store/formSlice";
+import { deleteEvent, cancelEvent } from "../../../firestore/actions";
+import { useNavigate } from "react-router-dom";
 
-const EventActionsMenu = ({ handleClose, anchorEl, id, cancelled }) => {
+const EventActionsMenu = ({ handleClose, anchorEl, id, cancelled, hostId }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
+  const { currentUser } = useSelector((store) => store.authReducer);
   const handleDelete = () => {
-    dispatch(deleteEvent(id));
+    deleteEvent({
+      eventId: id,
+      hostId: hostId,
+      userId: currentUser.id,
+    });
+    navigate("/events");
   };
 
   const handleCancelToggle = () => {
-    handleClose();
-    dispatch(cancelEv({ id: id, cancelled: cancelled }));
+    cancelEvent({
+      eventId: id,
+      cancelled: cancelled,
+      hostId: hostId,
+      userId: currentUser.id,
+    });
   };
 
   return (

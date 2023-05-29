@@ -4,9 +4,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import Permission from "../../../common/dialogs/Permission";
 import EventActionsMenu from "./EventActionsMenu";
-import { joinEvent, leaveEvent } from "../../../store/eventSlice";
+import { joinEvent, leaveEvent } from "../../../firestore/actions";
 
-const EventActions = ({ id, attendeesId, cancelled }) => {
+const EventActions = ({ id, attendeesId, cancelled, hostId }) => {
   const dispatch = useDispatch();
   const { currentUser } = useSelector((store) => store.authReducer);
 
@@ -22,12 +22,12 @@ const EventActions = ({ id, attendeesId, cancelled }) => {
 
   const handleOnLeave = () => {
     console.log("leaving event");
-    dispatch(leaveEvent(id));
+    leaveEvent({ eventId: id, user: currentUser });
   };
 
   const handleOnJoin = () => {
     console.log("joining event");
-    dispatch(joinEvent(id));
+    joinEvent({ eventId: id, user: currentUser });
   };
 
   const theme = useTheme();
@@ -67,7 +67,7 @@ const EventActions = ({ id, attendeesId, cancelled }) => {
         startIcon={<MoreVert sx={{ width: 16, height: 16 }} />}
         onClick={anchorMenu}
       />
-      <EventActionsMenu handleClose={closeMenu} anchorEl={anchorEl} id={id} cancelled={cancelled} />
+      <EventActionsMenu handleClose={closeMenu} anchorEl={anchorEl} id={id} cancelled={cancelled} hostId={hostId} />
     </ButtonGroup>
   );
 };

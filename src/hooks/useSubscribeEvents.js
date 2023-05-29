@@ -4,9 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { db } from "../firestore/firestore";
 import { setStatus } from "../store/eventSlice";
 
-const useSubscribeEvents = ({ filterOptions, action, dependancies }) => {
+const useSubscribeEvents = ({ filterOptions, action, dependancies, userId }) => {
   const dispatch = useDispatch();
-  const { id } = useSelector((store) => store.authReducer.currentUser);
   let q;
 
   if (filterOptions) {
@@ -19,7 +18,7 @@ const useSubscribeEvents = ({ filterOptions, action, dependancies }) => {
         collection(db, "events"),
         orderBy("date", "desc"),
         where("date", ">=", millis),
-        where("hostId", "==", id)
+        where("hostId", "==", userId)
       );
     }
     if (filterOptions.attendanceType === "attending") {
@@ -27,7 +26,7 @@ const useSubscribeEvents = ({ filterOptions, action, dependancies }) => {
         collection(db, "events"),
         orderBy("date", "desc"),
         where("date", ">=", millis),
-        where("attendeesId", "array-contains", id)
+        where("attendeesId", "array-contains", userId)
       );
     }
     if (filterOptions.attendanceType === "attended") {
@@ -35,7 +34,7 @@ const useSubscribeEvents = ({ filterOptions, action, dependancies }) => {
         collection(db, "events"),
         orderBy("date", "desc"),
         where("date", "<=", millis),
-        where("attendeesId", "array-contains", id)
+        where("attendeesId", "array-contains", userId)
       );
     }
     if (filterOptions.attendanceType === "expired") {
