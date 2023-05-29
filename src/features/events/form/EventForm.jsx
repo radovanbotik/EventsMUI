@@ -1,7 +1,6 @@
 //redux
 import { useDispatch, useSelector } from "react-redux";
-import { createEvent, updateEvent } from "../../../store/eventSlice";
-import { closeForm, editingFalse, resetEvent, resetValues } from "../../../store/formSlice";
+import { setOpen, setEditing } from "../../../store/formSlice";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import dayjs from "dayjs";
@@ -14,6 +13,7 @@ import LocationSelectAutocomplete from "../../../common/forms/LocationSelectAuto
 import { geocodeByPlaceId, getLatLng } from "react-places-autocomplete";
 import { Typography, Button, MenuItem, Checkbox, ListItemText, ButtonGroup, Stack } from "@mui/material";
 import { Form } from "react-router-dom";
+import { addEvent, updateEvent } from "../../../firestore/actions";
 
 const validationSchema = Yup.object({
   title: Yup.string("Enter title of your event.")
@@ -28,19 +28,21 @@ const validationSchema = Yup.object({
 
 const initialValues = {
   title: "",
-  date: new Date(),
+  date: new Date().getTime(),
   tags: [],
   description: "",
   location: null,
 };
 
 const EventForm = () => {
-  const { isEditing, event } = useSelector((store) => store.formReducer);
+  const { isEditing } = useSelector((store) => store.formReducer);
+  const [event] = useSelector((store) => store.eventReducer.events);
+  const { currentUser } = useSelector((store) => store.authReducer);
   const dispatch = useDispatch();
 
   return (
     <Formik
-      initialValues={Object.keys(event).length > 0 && isEditing ? event : initialValues}
+      initialValues={event && isEditing ? event : initialValues}
       validationSchema={validationSchema}
       onSubmit={async (values, { setSubmitting }) => {
         console.log(values);
@@ -63,19 +65,20 @@ const EventForm = () => {
 
             if (!isEditing) {
               console.log("new post");
-              // dispatch(createEvent(newValues));
-              dispatch(createEvent(newValues));
-              dispatch(resetEvent());
-              dispatch(closeForm());
+              addEvent({ formdata: newValues, user: currentUser });
+              dispatch(setOpen(false));
               return;
             }
             if (isEditing) {
               // dispatch(updateEvent(newValues));
               console.log("editing post");
-              dispatch(updateEvent(newValues));
-              dispatch(resetEvent());
-              dispatch(editingFalse());
-              dispatch(closeForm());
+              updateEvent({
+                formdata: newValues,
+                eventId: event.id,
+                userId: currentUser.id,
+                hostId: event.hostId,
+              });
+              dispatch(setEditing(false));
 
               return;
             }
@@ -88,15 +91,7 @@ const EventForm = () => {
       }}
     >
       {(formikProps) => (
-        <Stack
-          useFlexGap
-          spacing={1}
-          sx={{ p: 4 }}
-          component={Form}
-          // method="post"
-          // action="new-event"
-          onSubmit={formikProps.handleSubmit}
-        >
+        <Stack useFlexGap spacing={1} sx={{ p: 4 }} component={Form} onSubmit={formikProps.handleSubmit}>
           <Typography variant="h5">{isEditing ? "Edit event" : "Create new event"}</Typography>
           <BasicInput
             label="Title"
@@ -133,10 +128,10 @@ const EventForm = () => {
               type="button"
               variant="contained"
               onClick={() => {
-                dispatch(closeForm());
-                dispatch(editingFalse());
-                dispatch(resetValues());
-                dispatch(resetEvent());
+                if (isEditing) {
+                  dispatch(setEditing(false));
+                }
+                dispatch(setOpen(false));
               }}
             >
               Cancel
@@ -148,7 +143,6 @@ const EventForm = () => {
                 bgcolor: formikProps.isValid ? "primary.main" : "error.main",
               }}
               // disabled={formikProps.isValid ? false : true}
-
               disabled={!formikProps.dirty || formikProps.isSubmitting}
             >
               Submit

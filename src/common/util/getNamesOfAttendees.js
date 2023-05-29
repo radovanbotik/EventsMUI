@@ -6,7 +6,7 @@ const getNamesOfAttendees = ({ totalAttendees, attendees, date }) => {
   const length = totalAttendees < attendees.length ? attendees.length : totalAttendees;
   const names = attendees
     .slice(0, length)
-    .map((attendee) => attendee.name.split(" ")[0])
+    .map((attendee) => attendee.displayName.split(" ")[0])
     .join(" and ");
 
   let adjustVerbToLength;

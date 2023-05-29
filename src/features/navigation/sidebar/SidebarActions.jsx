@@ -1,6 +1,6 @@
 import { List, ListSubheader, ListItem, ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
 import { useDispatch } from "react-redux";
-import { openForm } from "../../../store/formSlice";
+import { setOpen } from "../../../store/formSlice";
 import { Create } from "@mui/icons-material";
 
 const SidebarActions = () => {
@@ -14,7 +14,7 @@ const SidebarActions = () => {
       }
     >
       <ListItem disablePadding>
-        <ListItemButton dense onClick={() => dispatch(openForm())}>
+        <ListItemButton dense onClick={() => dispatch(setOpen(true))}>
           <ListItemIcon>
             <Create />
           </ListItemIcon>

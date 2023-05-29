@@ -2,6 +2,7 @@ import { Menu, MenuItem, Button } from "@mui/material";
 import { deleteEvent, cancelEv } from "../../../store/eventSlice";
 import Permission from "../../../common/dialogs/Permission";
 import { useDispatch } from "react-redux";
+import { setEditing, setOpen } from "../../../store/formSlice";
 
 const EventActionsMenu = ({ handleClose, anchorEl, id, cancelled }) => {
   const dispatch = useDispatch();
@@ -18,7 +19,15 @@ const EventActionsMenu = ({ handleClose, anchorEl, id, cancelled }) => {
   return (
     <Menu anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
       <MenuItem onClick={handleClose}>
-        <Button sx={{ textTransform: "capitalize" }}>Edit</Button>
+        <Button
+          sx={{ textTransform: "capitalize" }}
+          onClick={() => {
+            dispatch(setEditing(true));
+            dispatch(setOpen(true));
+          }}
+        >
+          Edit
+        </Button>
       </MenuItem>
       <MenuItem onClick={handleClose}>
         <Permission

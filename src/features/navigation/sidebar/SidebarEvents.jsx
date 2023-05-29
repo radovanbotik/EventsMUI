@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   List,
   ListSubheader,
@@ -18,6 +19,7 @@ import {
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setFilter } from "../../../store/eventSlice";
+import useSubscribeEvents from "../../../hooks/useSubscribeEvents";
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {
@@ -29,12 +31,15 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 }));
 
 const SidebarEvents = () => {
+  const [count, setCount] = useState({
+    active: 0,
+    hosting: 0,
+    attending: 0,
+    attended: 0,
+    expired: 0,
+  });
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  //add events attending to profile
-  //add events hosting to profile
-  //add events attended to profile
 
   const avaibleFilter = {
     date: new Date().getTime(),
@@ -61,18 +66,13 @@ const SidebarEvents = () => {
     dispatch(setFilter(filter));
   };
 
-  let allCount;
-  let hostingCount;
-  let attendingCount;
-
-  let expiredEventsCount;
   const eventActions = [
     {
       id: "ea1",
       name: "Active",
       location: "/events",
       attendanceType: "all",
-      count: allCount || 0,
+      count: count.active || 0,
       action() {
         navigate(this.location);
         applyFilter(avaibleFilter);
@@ -84,7 +84,7 @@ const SidebarEvents = () => {
       name: "Hosting",
       location: "/events",
       attendanceType: "hosting",
-      count: hostingCount || 0,
+      count: count.hosting || 0,
       action() {
         navigate(this.location);
         applyFilter(hostingFilter);
@@ -96,7 +96,7 @@ const SidebarEvents = () => {
       name: "Attending",
       location: "/events",
       attendanceType: "attending",
-      count: attendingCount || 0,
+      count: count.attending || 0,
       action() {
         navigate(this.location);
         applyFilter(attendingFilter);
@@ -108,7 +108,7 @@ const SidebarEvents = () => {
       name: "Attended",
       location: "/events",
       attendanceType: "attended",
-      count: expiredEventsCount || 0,
+      count: count.attended || 0,
       action() {
         navigate(this.location);
         applyFilter(attendedFilter);
@@ -120,7 +120,7 @@ const SidebarEvents = () => {
       name: "Expired",
       location: "/events",
       attendanceType: "attended",
-      count: expiredEventsCount || 0,
+      count: count.expired || 0,
       action() {
         navigate(this.location);
         applyFilter(expiredFilter);
@@ -128,6 +128,42 @@ const SidebarEvents = () => {
       icon: EventBusyOutlined,
     },
   ];
+
+  useSubscribeEvents({
+    filterOptions: {
+      attendanceType: "active",
+      date: new Date().getTime(),
+    },
+    action: (events) => setCount((prev) => ({ ...prev, active: events.length })),
+  });
+  useSubscribeEvents({
+    filterOptions: {
+      attendanceType: "hosting",
+      date: new Date().getTime(),
+    },
+    action: (events) => setCount((prev) => ({ ...prev, hosting: events.length })),
+  });
+  useSubscribeEvents({
+    filterOptions: {
+      attendanceType: "attending",
+      date: new Date().getTime(),
+    },
+    action: (events) => setCount((prev) => ({ ...prev, attending: events.length })),
+  });
+  useSubscribeEvents({
+    filterOptions: {
+      attendanceType: "attended",
+      date: new Date().getTime(),
+    },
+    action: (events) => setCount((prev) => ({ ...prev, attended: events.length })),
+  });
+  useSubscribeEvents({
+    filterOptions: {
+      attendanceType: "expired",
+      date: new Date().getTime(),
+    },
+    action: (events) => setCount((prev) => ({ ...prev, expired: events.length })),
+  });
 
   return (
     <List

@@ -14,7 +14,7 @@ import PageLoader from "../../../common/loaders/PageLoader";
 
 const Event = () => {
   const { events, status, filterOptions } = useSelector((store) => store.eventReducer);
-  const { isEditing } = useSelector((store) => store.formReducer);
+  const { isEditing, isOpen } = useSelector((store) => store.formReducer);
   const { id } = useParams();
   const event = events?.find((event) => event.id === id);
   const dispatch = useDispatch();
@@ -49,7 +49,7 @@ const Event = () => {
         </Stack>
       </Grid>
       <Grid item xs={6}>
-        {isEditing && <EventForm />}
+        {isEditing && isOpen && <EventForm />}
         hello here
       </Grid>
     </Grid>
