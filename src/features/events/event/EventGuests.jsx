@@ -1,4 +1,4 @@
-import { List, ListItemText, Divider, ListItem, Button } from "@mui/material";
+import { List, ListItemText, ListItem, Button } from "@mui/material";
 import isExpired from "../../../common/util/isExpired";
 
 const EventGuests = ({ attendees, filterOptions, date }) => {

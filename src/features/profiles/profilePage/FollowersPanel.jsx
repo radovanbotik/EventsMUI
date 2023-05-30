@@ -1,5 +1,4 @@
-import React from "react";
-import { Box, AppBar, Toolbar, Typography, List, ListItem, ListItemAvatar, ListItemText, Avatar } from "@mui/material";
+import { AppBar, Toolbar, Typography, List, ListItem, ListItemAvatar, ListItemText, Avatar } from "@mui/material";
 import { Link } from "react-router-dom";
 import { AccountCircle } from "@mui/icons-material";
 import defaultPhoto from "../../../common/images/defaultPhoto.jpg";
@@ -7,8 +6,7 @@ import useSubscribeToSubcollection from "../../../hooks/useSubscribeToSubcollect
 import { setFollowers } from "../../../store/profileSlice";
 import { useDispatch, useSelector } from "react-redux";
 
-const FollowersPanel = ({ props }) => {
-  const { id } = props;
+const FollowersPanel = ({ id }) => {
   const dispatch = useDispatch();
   const { followers, status } = useSelector((store) => store.profileReducer);
 

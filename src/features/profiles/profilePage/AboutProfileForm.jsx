@@ -1,15 +1,11 @@
-import { Stack, Box, Button } from "@mui/material";
+import { Stack, Button } from "@mui/material";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import React from "react";
 import BasicInput from "../../../common/forms/BasicInput";
 import { Form } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { updateUser } from "../../../store/profileSlice";
+import { updateUser } from "../../../firestore/profileActions";
 
-const AboutProfileForm = ({ email, displayName, description }) => {
-  const dispatch = useDispatch();
-
+const AboutProfileForm = ({ email, displayName, description, id }) => {
   const initialValues = {
     displayName: displayName || email,
     description: description || "",
@@ -26,7 +22,7 @@ const AboutProfileForm = ({ email, displayName, description }) => {
       validationSchema={validationSchema}
       onSubmit={(values) => {
         console.log(values);
-        dispatch(updateUser(values));
+        updateUser({ userId: id, updates: values });
       }}
     >
       {(formikProps) => (

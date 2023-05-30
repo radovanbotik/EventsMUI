@@ -9,7 +9,7 @@ import {
   arrayRemove,
   getDoc,
 } from "firebase/firestore";
-import { db } from "./firestore";
+import { db } from "../config/firebase";
 import { toast } from "react-toastify";
 
 export const addEvent = async ({ formdata, user }) => {

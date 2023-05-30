@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { useState } from "react";
 import Permission from "../../../common/dialogs/Permission";
 import EventActionsMenu from "./EventActionsMenu";
-import { joinEvent, leaveEvent } from "../../../firestore/actions";
+import { joinEvent, leaveEvent } from "../../../firestore/eventActions";
 
 const EventActions = ({ id, attendeesId, cancelled, hostId, title }) => {
   const { currentUser } = useSelector((store) => store.authReducer);

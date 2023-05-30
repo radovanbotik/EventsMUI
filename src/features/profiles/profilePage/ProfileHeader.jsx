@@ -1,38 +1,32 @@
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 import { Grid, Avatar, Typography, Stack, Button } from "@mui/material";
-import { followUser, unfollowUser } from "../../../store/profileSlice";
-import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import useIsFollowingThisUser from "../../../hooks/useIsFollowingThisUser";
+import { addFollow, removeFollow } from "../../../firestore/profileActions";
 
-const ProfileHeader = ({ props }) => {
-  const dispatch = useDispatch();
+const ProfileHeader = ({ photoURL, displayName, email, owner, id, following, followers }) => {
+  const { currentUser } = useSelector((store) => store.authReducer);
   const [followsUser, setFollowsUser] = useState(null);
-  const { photoURL, displayName, email, owner, id, following, followers } = props;
-
-  console.log(followsUser);
-  const handleFollow = () => {
-    dispatch(
-      followUser({
-        id: id,
-        displayName: displayName,
-        email: email,
-        photoURL: photoURL || null,
-      })
-    );
-  };
-  const handleUnfollow = () => {
-    dispatch(
-      unfollowUser({
-        id: id,
-      })
-    );
-  };
 
   const toggleFollowing = () => {
     if (followsUser) {
-      return handleUnfollow();
+      removeFollow({
+        userToUnfollow: {
+          id: id,
+          displayName: displayName,
+        },
+        loggedUser: currentUser,
+      });
     } else {
-      return handleFollow();
+      addFollow({
+        userToFollow: {
+          id: id,
+          displayName: displayName,
+          email: email,
+          photoURL: photoURL || null,
+        },
+        loggedUser: currentUser,
+      });
     }
   };
 

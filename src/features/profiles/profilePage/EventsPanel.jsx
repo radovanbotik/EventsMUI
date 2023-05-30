@@ -3,10 +3,8 @@ import { AppBar, Toolbar, Typography } from "@mui/material";
 import { AccountCircle } from "@mui/icons-material";
 import EventsInnerTabs from "./EventsInnerTabs";
 import useSubscribeTocollection from "../../../hooks/useSubscribeTocollection";
-import { useSelector } from "react-redux";
 
-const EventsPanel = ({ props }) => {
-  const { id } = props;
+const EventsPanel = ({ id }) => {
   const [attendanceType, setAttendanceType] = useState("hosting");
   const [events, setEvents] = useState(null);
   const handleChange = (event, newValue) => {

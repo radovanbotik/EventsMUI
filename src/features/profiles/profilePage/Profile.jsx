@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import ProfileHeader from "./ProfileHeader";
 import ProfileContent from "./ProfileContent";
 import { useDispatch, useSelector } from "react-redux";
-import { getFollowers, getFollowing, setViewedUser } from "../../../store/profileSlice";
+import { setViewedUser } from "../../../store/profileSlice";
 import useSubscribeTodocument from "../../../hooks/useSubscribeTodocument";
 import { CircularProgress, Box } from "@mui/material";
 import { auth } from "../../../config/firebase";
@@ -50,8 +50,8 @@ const Profile = () => {
 
   return (
     <Box sx={{ width: "100%" }}>
-      <ProfileHeader props={{ ...user, owner: owner }} />
-      <ProfileContent props={{ ...user, owner: owner }} />
+      <ProfileHeader {...user} owner={owner} />
+      <ProfileContent {...user} owner={owner} />
     </Box>
   );
 };

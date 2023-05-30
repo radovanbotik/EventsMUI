@@ -13,7 +13,7 @@ import LocationSelectAutocomplete from "../../../common/forms/LocationSelectAuto
 import { geocodeByPlaceId, getLatLng } from "react-places-autocomplete";
 import { Typography, Button, MenuItem, Checkbox, ListItemText, ButtonGroup, Stack } from "@mui/material";
 import { Form } from "react-router-dom";
-import { addEvent, updateEvent } from "../../../firestore/actions";
+import { addEvent, updateEvent } from "../../../firestore/eventActions";
 
 const validationSchema = Yup.object({
   title: Yup.string("Enter title of your event.")

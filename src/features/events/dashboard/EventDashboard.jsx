@@ -2,7 +2,6 @@ import { useSelector, useDispatch } from "react-redux";
 import EventForm from "../form/EventForm";
 import { loadEvents } from "../../../store/eventSlice";
 import { Grid } from "@mui/material";
-import useSubscribeTocollection from "../../../hooks/useSubscribeTocollection";
 import EventList from "./EventList";
 import useSubscribeEvents from "../../../hooks/useSubscribeEvents";
 

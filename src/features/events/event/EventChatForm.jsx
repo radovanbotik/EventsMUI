@@ -1,10 +1,8 @@
-import React from "react";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import BasicInput from "../../../common/forms/BasicInput";
-import { Typography, Stack, Button, ButtonGroup, InputAdornment, Avatar } from "@mui/material";
+import { Stack, Button, ButtonGroup, InputAdornment, Avatar } from "@mui/material";
 import { addCommentToEvent } from "../../../firestore/realtimeDatabase";
-import { AccountCircle } from "@mui/icons-material";
 import { useSelector } from "react-redux";
 
 const validationSchema = Yup.object({
@@ -33,13 +31,7 @@ const EventChatForm = ({ handleClose, id }) => {
       }}
     >
       {(formikProps) => (
-        <Stack
-          onSubmit={formikProps.handleSubmit}
-          component="form"
-
-          // onChange={e => console.log(e.target.name, e.target.value)}
-        >
-          {/* <Typography>New post:</Typography> */}
+        <Stack onSubmit={formikProps.handleSubmit} component="form">
           <BasicInput
             name="comment"
             // label="Comment"

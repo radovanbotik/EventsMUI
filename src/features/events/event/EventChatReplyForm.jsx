@@ -1,10 +1,8 @@
-import React from "react";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import BasicInput from "../../../common/forms/BasicInput";
-import { Typography, Stack, Button, ButtonGroup, ListItem, InputAdornment, Avatar } from "@mui/material";
+import { Stack, Button, ButtonGroup, InputAdornment, Avatar } from "@mui/material";
 import { addReplyToEventMessage } from "../../../firestore/realtimeDatabase";
-import { Box } from "@mui/system";
 import { useSelector } from "react-redux";
 
 const validationSchema = Yup.object({

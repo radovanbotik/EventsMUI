@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 import ImageDropzone from "./ImageDropzone";
 import { Stack, Divider, Button, ButtonGroup, Box } from "@mui/material";
 import ImageCropper from "./ImageCropper";
 import ImagePreview from "./ImagePreview";
-import { v4 as uuidv4 } from "uuid";
-import getFileExtension from "../util/getFileExtension";
-import { uploadFile } from "../../firestore/firestore";
 import { FileUploadOutlined, DeleteOutlined } from "@mui/icons-material";
+import { addImage } from "../../firestore/profileActions";
 
 const ImageUploader = () => {
   const [files, setFiles] = useState(null);
@@ -21,8 +19,7 @@ const ImageUploader = () => {
 
   const handleUpload = async ({ image, filename }) => {
     setLoading(true);
-    const uniqueFilename = `${uuidv4()}${getFileExtension(filename)}`;
-    await uploadFile({ image: image, filename: uniqueFilename });
+    addImage({ image: image, filename: filename });
     resetUpload();
   };
 

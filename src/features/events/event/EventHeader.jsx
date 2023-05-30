@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Stack, Divider } from "@mui/material";
 import DescriptionAlert from "../../../common/alerts/DescriptionAlert";
 import EventImageMap from "./EventImageMap";

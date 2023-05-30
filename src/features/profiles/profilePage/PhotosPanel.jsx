@@ -6,13 +6,13 @@ import PhotosImageList from "./PhotosImageList";
 import { onSnapshot, doc, collection, Timestamp } from "firebase/firestore";
 import { db } from "../../../firestore/firestore";
 
-const PhotosPanel = ({ props }) => {
+const PhotosPanel = ({ owner, id }) => {
   const [editing, setEditing] = useState(false);
   const [photos, setPhotos] = useState([]);
 
   useEffect(() => {
     const unsubscribe = onSnapshot(
-      collection(db, "users", props.id, "photos"),
+      collection(db, "users", id, "photos"),
       (snapshot) => {
         const photos = [];
         snapshot.forEach((doc) => {
@@ -26,8 +26,8 @@ const PhotosPanel = ({ props }) => {
       }
     );
 
-    return unsubscribe;
-  }, []);
+    return () => unsubscribe();
+  }, [id]);
 
   return (
     <div>
@@ -35,7 +35,7 @@ const PhotosPanel = ({ props }) => {
         <Toolbar variant="dense" sx={{ display: "flex" }}>
           <AccountCircle sx={{ mr: 2 }} />
           <Typography sx={{ mr: "auto" }}>User photos</Typography>
-          {props.owner && (
+          {owner && (
             <Button
               variant="contained"
               size="small"
@@ -55,7 +55,7 @@ const PhotosPanel = ({ props }) => {
           <Toolbar disableGutters>
             <Stack>
               {/* <Typography>Number of photos: {photos.current?.length}</Typography> */}
-              <PhotosImageList photos={photos} owner={props.owner} />
+              <PhotosImageList photos={photos} owner={owner} />
             </Stack>
           </Toolbar>
         </Box>

@@ -7,9 +7,8 @@ import {
   signOut,
   updatePassword,
 } from "firebase/auth";
-import { auth } from "../config/firebase";
+import { auth, db } from "../config/firebase";
 import { Timestamp, doc, setDoc } from "firebase/firestore";
-import { db } from "./firestore";
 import { toast } from "react-toastify";
 
 export const signUpNewUser = async ({ email, password }) => {

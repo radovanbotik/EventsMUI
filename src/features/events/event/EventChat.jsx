@@ -7,7 +7,6 @@ import {
   AppBar,
   Toolbar,
   Typography,
-  Button,
   Box,
   ListItemButton,
 } from "@mui/material";

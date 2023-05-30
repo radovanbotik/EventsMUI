@@ -10,6 +10,7 @@ import { drawerWidth } from "../../app/layout/Persistent";
 import BasicMenu from "../../common/menus/BasicMenu";
 import BasicButton from "../../common/buttons/BasicButton";
 import useGetPathName from "../../hooks/useGetPathName";
+import ModalWrapper from "../../common/modals/ModalWrapper";
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== "open",
@@ -75,9 +76,6 @@ const Appbar = ({ handleDrawerOpen, open }) => {
     },
   ];
   //Open Modal
-  const openModalType = (type) => {
-    dispatch(openModal(type));
-  };
 
   const location = useLocation();
   useGetPathName({
@@ -105,10 +103,10 @@ const Appbar = ({ handleDrawerOpen, open }) => {
         {/* Auth actions */}
         {!isAuthenticated && (
           <>
-            <BasicButton variant="contained" action={() => openModalType({ modalType: "register" })}>
+            <BasicButton variant="contained" action={() => dispatch(openModal({ modalType: "register" }))}>
               Register
             </BasicButton>
-            <BasicButton variant="contained" action={() => openModalType({ modalType: "login" })}>
+            <BasicButton variant="contained" action={() => dispatch(openModal({ modalType: "register" }))}>
               Log In
             </BasicButton>
           </>

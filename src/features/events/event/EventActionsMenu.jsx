@@ -2,7 +2,7 @@ import { Menu, MenuItem, Button } from "@mui/material";
 import Permission from "../../../common/dialogs/Permission";
 import { useDispatch, useSelector } from "react-redux";
 import { setEditing, setOpen } from "../../../store/formSlice";
-import { deleteEvent, cancelEvent } from "../../../firestore/actions";
+import { deleteEvent, cancelEvent } from "../../../firestore/eventActions";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 

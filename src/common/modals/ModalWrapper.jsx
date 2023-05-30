@@ -14,11 +14,13 @@ function ModalWrapper({ props, children, title }) {
   };
 
   return (
-    <Dialog onClose={handleClose} open={open}>
-      {title && <DialogTitle>{title}</DialogTitle>}
-      <Divider />
-      {children}
-    </Dialog>
+    <>
+      <Dialog onClose={handleClose} open={open}>
+        {title && <DialogTitle>{title}</DialogTitle>}
+        <Divider />
+        {children}
+      </Dialog>
+    </>
   );
 }
 
