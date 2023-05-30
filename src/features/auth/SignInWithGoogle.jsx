@@ -1,15 +1,16 @@
 import { Button } from "@mui/material";
 import { useDispatch } from "react-redux";
-import { signInWithGoogle } from "../../store/authSlice";
 import { closeModal } from "../../store/modalSlice";
+import { signUserWithGoogle } from "../../firestore/userActions";
 
-const LogWithGoogleButton = () => {
+const SignInWithGoogle = () => {
   const dispatch = useDispatch();
   return (
     <Button
       variant="contained"
+      type="button"
       onClick={() => {
-        dispatch(signInWithGoogle());
+        signUserWithGoogle();
         dispatch(closeModal());
       }}
     >
@@ -18,4 +19,4 @@ const LogWithGoogleButton = () => {
   );
 };
 
-export default LogWithGoogleButton;
+export default SignInWithGoogle;

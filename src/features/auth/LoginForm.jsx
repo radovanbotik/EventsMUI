@@ -3,15 +3,12 @@ import * as Yup from "yup";
 import YupPassword from "yup-password";
 YupPassword(Yup); // extend yup
 import { Formik } from "formik";
-
-import { Form } from "react-router-dom";
 import BasicInput from "../../common/forms/BasicInput";
 import { useDispatch } from "react-redux";
 import { closeModal } from "../../store/modalSlice";
-import { logIn } from "../../store/authSlice";
-
+import { signUserIn } from "../../firestore/userActions";
 import { Paper, Button, ButtonGroup, Divider } from "@mui/material";
-import SocialSignIn from "./LogWithGoogleButton";
+import SignInWithGoogle from "./SignInWithGoogle";
 
 const LoginForm = () => {
   const dispatch = useDispatch();
@@ -27,16 +24,18 @@ const LoginForm = () => {
           password: Yup.string().password().required("This field is requried."),
         })}
         onSubmit={(values) => {
-          console.log(values);
-          dispatch(logIn(values));
+          signUserIn({ email: values.email, password: values.password });
           dispatch(closeModal());
         }}
       >
         {(formikProps) => (
           <Paper
             sx={{ display: "flex", flexDirection: "column", p: 2 }}
-            component={Form}
-            onSubmit={() => formikProps.handleSubmit()}
+            component="form"
+            onSubmit={(e) => {
+              e.preventDefault();
+              formikProps.handleSubmit();
+            }}
           >
             <BasicInput margin="dense" name="email" label="Email" placeholder="poopypants@gmail.com" type="email" />
             <BasicInput margin="dense" name="password" label="Password" placeholder="StinkyPoop123!" type="password" />
@@ -49,17 +48,12 @@ const LoginForm = () => {
               >
                 Cancel
               </Button>
-              <Button
-                type="submit"
-                //    disabled={!formikProps.dirty || !formikProps.isValid}
-                variant="contained"
-                // sx={{ bgcolor: !formikProps.dirty || !formikProps.isValid ? "error.light" : "primary.main" }}
-              >
+              <Button type="submit" variant="contained">
                 Submit
               </Button>
             </ButtonGroup>
             <Divider sx={{ my: 4 }} />
-            <SocialSignIn />
+            <SignInWithGoogle />
           </Paper>
         )}
       </Formik>

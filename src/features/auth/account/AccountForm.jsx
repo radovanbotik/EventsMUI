@@ -4,8 +4,7 @@ YupPassword(Yup); // extend yup
 import { Formik } from "formik";
 import { Box, Button, ButtonGroup, Stack, Typography } from "@mui/material";
 import PasswordInput from "../../../common/forms/PasswordInput";
-import { useDispatch } from "react-redux";
-import { changePassword } from "../../../store/authSlice";
+import { updateUsersPassword } from "../../../firestore/userActions";
 
 const validationSchema = Yup.object({
   password: Yup.string().password().required("This field is required."),
@@ -20,18 +19,22 @@ const initialValues = {
 };
 
 const AccountForm = () => {
-  const dispatch = useDispatch();
-
   return (
     <Formik
       initialValues={initialValues}
       validationSchema={validationSchema}
       onSubmit={(values) => {
-        dispatch(changePassword(values.password));
+        updateUsersPassword(values.password);
       }}
     >
       {(formikProps) => (
-        <Box component={"form"} onSubmit={formikProps.handleSubmit}>
+        <Box
+          component={"form"}
+          onSubmit={(e) => {
+            e.preventDefault();
+            formikProps.handleSubmit();
+          }}
+        >
           <Stack>
             <Typography>Change your password</Typography>
             <PasswordInput name="password" label="New password" type="password" placeholder="enter new password" />

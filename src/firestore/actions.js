@@ -5,12 +5,12 @@ import {
   arrayUnion,
   collection,
   updateDoc,
-  increment,
   deleteDoc,
   arrayRemove,
   getDoc,
 } from "firebase/firestore";
 import { db } from "./firestore";
+import { toast } from "react-toastify";
 
 export const addEvent = async ({ formdata, user }) => {
   const date = Timestamp.fromDate(formdata.date);
@@ -34,8 +34,10 @@ export const addEvent = async ({ formdata, user }) => {
 
   try {
     await addDoc(collection(db, "events"), event);
+    toast.success("You have added new event.");
   } catch (error) {
     console.log(error);
+    toast.error(error.message);
   }
 };
 
@@ -46,8 +48,10 @@ export const updateEvent = async ({ formdata, eventId, userId, hostId }) => {
   const date = Timestamp.fromDate(formdata.date);
   try {
     await updateDoc(doc(db, "events", eventId), { ...formdata, date: date });
+    toast.success("You have updated an event.");
   } catch (error) {
     console.log(error);
+    toast.error(error.message);
   }
 };
 
@@ -57,8 +61,10 @@ export const deleteEvent = async ({ eventId, userId, hostId }) => {
   }
   try {
     await deleteDoc(doc(db, "events", eventId));
+    toast.success("You have deleted an event.");
   } catch (error) {
     console.log(error);
+    toast.error(error.message);
   }
 };
 
@@ -68,8 +74,10 @@ export const cancelEvent = async ({ eventId, cancelled, userId, hostId }) => {
   }
   try {
     await updateDoc(doc(db, "events", eventId), { cancelled: !cancelled });
+    toast.success(`You have ${cancelled ? "activated" : "cancelled"} an event.`);
   } catch (error) {
     console.log(error);
+    toast.error(error.message);
   }
 };
 
@@ -83,8 +91,10 @@ export const joinEvent = async ({ eventId, user }) => {
   const attendeesId = arrayUnion(attendee.id);
   try {
     await updateDoc(doc(db, "events", eventId), { attendees: attendees, attendeesId: attendeesId });
+    toast.success("You have joined an event.");
   } catch (error) {
     console.log(error);
+    toast.error(error.message);
   }
 };
 
@@ -96,8 +106,10 @@ export const leaveEvent = async ({ eventId, user }) => {
       event = eventSnapshot.data();
       const attendees = event.attendees.filter((att) => att.id !== user.id);
       await updateDoc(doc(db, "events", eventId), { attendeesId: arrayRemove(user.id), attendees: attendees });
+      toast.success("You have left an event.");
     }
   } catch (error) {
     console.log(error);
+    toast.error(error.message);
   }
 };

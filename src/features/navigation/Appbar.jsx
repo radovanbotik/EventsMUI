@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { AppBar as MuiAppBar, Toolbar, IconButton, Typography, styled, Avatar } from "@mui/material";
 import { MenuOutlined } from "@mui/icons-material";
 import { useSelector, useDispatch } from "react-redux";
-import { logOut } from "../../store/authSlice";
+import { signUserOut } from "../../firestore/userActions";
 import { openModal } from "../../store/modalSlice";
 import { useNavigate, useLocation } from "react-router-dom";
 import defaultPhoto from "../../common/images/defaultPhoto.jpg";
@@ -69,7 +69,7 @@ const Appbar = ({ handleDrawerOpen, open }) => {
       location: `/events`,
       action() {
         navigate(this.location);
-        dispatch(logOut());
+        signUserOut();
         setAnchorEl(null);
       },
     },
@@ -124,10 +124,7 @@ const Appbar = ({ handleDrawerOpen, open }) => {
               aria-haspopup="true"
               onClick={handleMenu}
             >
-              <Avatar
-                alt="user name"
-                src={currentUser.photoURL ? currentUser.photoURL : "../../common/images/defaultPhoto.jpg"}
-              />
+              <Avatar alt="user name" src={currentUser.photoURL ? currentUser.photoURL : defaultPhoto} />
             </IconButton>
             <BasicMenu handleClose={handleClose} anchorEl={anchorEl} menuActions={menuActions} />
           </>

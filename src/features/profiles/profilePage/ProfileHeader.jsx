@@ -16,7 +16,7 @@ const ProfileHeader = ({ props }) => {
         id: id,
         displayName: displayName,
         email: email,
-        photoURL: photoURL,
+        photoURL: photoURL || null,
       })
     );
   };

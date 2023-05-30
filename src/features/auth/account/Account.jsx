@@ -1,10 +1,7 @@
 import { Grid, Paper, Typography } from "@mui/material";
 import AccountForm from "./AccountForm";
-import { useSelector } from "react-redux";
 
 const Account = () => {
-  const { currentUser } = useSelector((store) => store.authReducer);
-
   return (
     <Grid container spacing={8} columns={{ xs: 6, lg: 12 }}>
       {/* <Grid item lg={Number(`${isOpen ? 8 : 12}`)} xs={6}> */}

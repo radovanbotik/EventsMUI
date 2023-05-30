@@ -40,6 +40,25 @@ const EventForm = () => {
   const { currentUser } = useSelector((store) => store.authReducer);
   const dispatch = useDispatch();
 
+  const handleSubmit = ({ isEditing, formdata }) => {
+    if (!isEditing) {
+      addEvent({ formdata: formdata, user: currentUser });
+      dispatch(setOpen(false));
+      return;
+    } else {
+      updateEvent({
+        formdata: formdata,
+        eventId: event.id,
+        userId: currentUser.id,
+        hostId: event.hostId,
+      });
+      dispatch(setEditing(false));
+      dispatch(setOpen(false));
+
+      return;
+    }
+  };
+
   return (
     <Formik
       initialValues={event && isEditing ? event : initialValues}
@@ -62,27 +81,8 @@ const EventForm = () => {
                 latLng: coords,
               },
             };
-
-            if (!isEditing) {
-              console.log("new post");
-              addEvent({ formdata: newValues, user: currentUser });
-              dispatch(setOpen(false));
-              return;
-            }
-            if (isEditing) {
-              // dispatch(updateEvent(newValues));
-              console.log("editing post");
-              updateEvent({
-                formdata: newValues,
-                eventId: event.id,
-                userId: currentUser.id,
-                hostId: event.hostId,
-              });
-              dispatch(setEditing(false));
-
-              return;
-            }
           }
+          handleSubmit({ isEditing: isEditing, formdata: newValues });
           setSubmitting(false);
         } catch (error) {
           setSubmitting(false);

@@ -1,15 +1,13 @@
 import { PersonRemoveOutlined, PersonAddOutlined, MoreVert } from "@mui/icons-material";
-import { ButtonGroup, Button, useMediaQuery, useTheme } from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
+import { ButtonGroup, Button } from "@mui/material";
+import { useSelector } from "react-redux";
 import { useState } from "react";
 import Permission from "../../../common/dialogs/Permission";
 import EventActionsMenu from "./EventActionsMenu";
 import { joinEvent, leaveEvent } from "../../../firestore/actions";
 
-const EventActions = ({ id, attendeesId, cancelled, hostId }) => {
-  const dispatch = useDispatch();
+const EventActions = ({ id, attendeesId, cancelled, hostId, title }) => {
   const { currentUser } = useSelector((store) => store.authReducer);
-
   const isAttending = attendeesId && attendeesId?.includes(currentUser?.id);
 
   const [anchorEl, setAnchorEl] = useState(null);
@@ -20,40 +18,28 @@ const EventActions = ({ id, attendeesId, cancelled, hostId }) => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleOnLeave = () => {
-    console.log("leaving event");
-    leaveEvent({ eventId: id, user: currentUser });
-  };
-
-  const handleOnJoin = () => {
-    console.log("joining event");
-    joinEvent({ eventId: id, user: currentUser });
-  };
-
-  const theme = useTheme();
-  const md = useMediaQuery(theme.breakpoints.up("md"));
   return (
-    <ButtonGroup size="small" variant="outlined" sx={md && { alignSelf: "end", border: "none" }}>
+    <ButtonGroup size="small" variant="outlined" sx={{ md: { alignSelf: "end", border: "none" } }}>
       {!isAttending && (
         <Permission
-          title="join event"
-          content="do you want to join this event"
-          openText="join event"
+          title="Join event"
+          content="Do you want to join this event?"
+          openText="Join event"
           openIcon={<PersonAddOutlined sx={{ width: 16, height: 16 }} />}
-          onSubmit={handleOnJoin}
+          onSubmit={() => joinEvent({ eventId: id, user: currentUser })}
         >
           Join Event
         </Permission>
       )}
       {isAttending && (
         <Permission
-          title="leave event"
-          content="do you want to leave this event"
-          openText="leave event"
+          title="Leave event"
+          content="Do you want to leave this event?"
+          openText="Leave event"
           openIcon={<PersonRemoveOutlined sx={{ width: 16, height: 16 }} />}
-          onSubmit={handleOnLeave}
+          onSubmit={() => leaveEvent({ eventId: id, user: currentUser })}
         >
-          Join Event
+          Leave Event
         </Permission>
       )}
       <Button

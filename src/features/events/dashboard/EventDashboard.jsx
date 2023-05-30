@@ -13,13 +13,6 @@ const EventDashboard = () => {
   const { currentUser } = useSelector((store) => store.authReducer);
   const dispatch = useDispatch();
 
-  // useSubscribeTocollection({
-  //   collectionRef: "events",
-  //   action: (events) => dispatch(loadEvents(events)),
-  //   dependancies: [filterOptions],
-  //   filter: filterOptions,
-  // });
-
   useSubscribeEvents({
     userId: currentUser?.id,
     filterOptions,

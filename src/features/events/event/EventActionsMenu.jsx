@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setEditing, setOpen } from "../../../store/formSlice";
 import { deleteEvent, cancelEvent } from "../../../firestore/actions";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const EventActionsMenu = ({ handleClose, anchorEl, id, cancelled, hostId }) => {
   const dispatch = useDispatch();
@@ -17,15 +18,6 @@ const EventActionsMenu = ({ handleClose, anchorEl, id, cancelled, hostId }) => {
       userId: currentUser.id,
     });
     navigate("/events");
-  };
-
-  const handleCancelToggle = () => {
-    cancelEvent({
-      eventId: id,
-      cancelled: cancelled,
-      hostId: hostId,
-      userId: currentUser.id,
-    });
   };
 
   return (
@@ -55,7 +47,14 @@ const EventActionsMenu = ({ handleClose, anchorEl, id, cancelled, hostId }) => {
             title="cancel event"
             content="do you want to cancel this event"
             openText="cancel event"
-            onSubmit={handleCancelToggle}
+            onSubmit={() =>
+              cancelEvent({
+                eventId: id,
+                cancelled: cancelled,
+                hostId: hostId,
+                userId: currentUser.id,
+              })
+            }
           />
         </MenuItem>
       )}
@@ -65,7 +64,14 @@ const EventActionsMenu = ({ handleClose, anchorEl, id, cancelled, hostId }) => {
             title="activate event"
             content="do you want to activate this event"
             openText="activate event"
-            onSubmit={handleCancelToggle}
+            onSubmit={() =>
+              cancelEvent({
+                eventId: id,
+                cancelled: cancelled,
+                hostId: hostId,
+                userId: currentUser.id,
+              })
+            }
           />
         </MenuItem>
       )}
