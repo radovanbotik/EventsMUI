@@ -8,7 +8,7 @@ import EventGuests from "./EventGuests";
 import EventForm from "../../../features/events/form/EventForm";
 import { useDispatch, useSelector } from "react-redux";
 import { Grid, Box, Stack, Divider, Typography } from "@mui/material";
-import useSubscribeTodocument from "../../../hooks/useSubscribeTodocument";
+import useSubscribeToEvent from "../../../hooks/useSubscribeToEvent";
 import { loadEvents } from "../../../store/eventSlice";
 import PageLoader from "../../../common/loaders/PageLoader";
 
@@ -23,10 +23,9 @@ const Event = () => {
     setMapOpen((prev) => !prev);
   }
 
-  useSubscribeTodocument({
-    dbcollection: "events",
-    documentId: id,
-    data: (doc) => dispatch(loadEvents([doc])),
+  useSubscribeToEvent({
+    eventId: id,
+    action: (doc) => dispatch(loadEvents([doc])),
     dependancies: [id],
   });
 

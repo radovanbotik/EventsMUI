@@ -6,11 +6,10 @@ import authReducer, { setInitialized } from "./authSlice";
 import profileReducer from "./profileSlice";
 import confirmationReducer from "./confirmationSlice";
 
-import { auth } from "../config/firebase";
+import { auth, db } from "../config/firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import { setUser } from "./authSlice";
 import { doc, onSnapshot, collection, query } from "firebase/firestore";
-import { db } from "../firestore/firestore";
 
 // const listener = createListenerMiddleware();
 // listener.startListening({

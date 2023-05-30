@@ -3,7 +3,7 @@ import EventForm from "../form/EventForm";
 import { loadEvents } from "../../../store/eventSlice";
 import { Grid } from "@mui/material";
 import EventList from "./EventList";
-import useSubscribeEvents from "../../../hooks/useSubscribeEvents";
+import useSubscribeToEvents from "../../../hooks/useSubscribeToEvents";
 
 const EventDashboard = () => {
   const { events } = useSelector((store) => store.eventReducer);
@@ -12,7 +12,7 @@ const EventDashboard = () => {
   const { currentUser } = useSelector((store) => store.authReducer);
   const dispatch = useDispatch();
 
-  useSubscribeEvents({
+  useSubscribeToEvents({
     userId: currentUser?.id,
     filterOptions,
     action: (events) => dispatch(loadEvents(events)),

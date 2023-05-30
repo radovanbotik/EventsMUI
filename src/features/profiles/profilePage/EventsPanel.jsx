@@ -1,21 +1,21 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { AppBar, Toolbar, Typography } from "@mui/material";
 import { AccountCircle } from "@mui/icons-material";
 import EventsInnerTabs from "./EventsInnerTabs";
-import useSubscribeTocollection from "../../../hooks/useSubscribeTocollection";
+import useSubscribeToUserEvents from "../../../hooks/useSubscribeToUserEvents";
 
 const EventsPanel = ({ id }) => {
-  const [attendanceType, setAttendanceType] = useState("hosting");
+  const [tab, setTab] = useState("hosting");
   const [events, setEvents] = useState(null);
   const handleChange = (event, newValue) => {
-    setAttendanceType(newValue);
+    setTab(newValue);
   };
 
-  useSubscribeTocollection({
-    filter: { attendanceType: attendanceType, date: new Date(), id: id },
-    collectionRef: "events",
+  useSubscribeToUserEvents({
+    tab: tab,
+    userId: id,
     action: (events) => setEvents(events),
-    dependancies: [attendanceType, id],
+    dependancies: [id, tab],
   });
   return (
     <div>
@@ -25,7 +25,7 @@ const EventsPanel = ({ id }) => {
           <Typography sx={{ mr: "auto" }}>Events</Typography>
         </Toolbar>
       </AppBar>
-      <EventsInnerTabs attendanceType={attendanceType} handleChange={handleChange} events={events} />
+      <EventsInnerTabs tab={tab} handleChange={handleChange} events={events} />
     </div>
   );
 };

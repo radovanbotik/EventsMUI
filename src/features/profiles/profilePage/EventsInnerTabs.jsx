@@ -25,17 +25,17 @@ const lookUp = [
 ];
 
 function TabPanel(props) {
-  const { children, value, attendanceType, ...other } = props;
+  const { children, value, tab, ...other } = props;
 
   return (
     <div
       role="tabpanel"
-      hidden={value !== attendanceType}
+      hidden={value !== tab}
       id={`simple-tabpanel-${value}`}
       aria-labelledby={`simple-tab-${value}`}
       {...other}
     >
-      {value === attendanceType && <Box sx={{ p: 3 }}>{children}</Box>}
+      {value === tab && <Box sx={{ p: 3 }}>{children}</Box>}
     </div>
   );
 }
@@ -53,37 +53,21 @@ function a11yProps(value) {
   };
 }
 
-export default function EventsInnerTabs({ attendanceType, handleChange, events }) {
+export default function EventsInnerTabs({ tab, handleChange, events }) {
   return (
     <Box sx={{ width: "100%" }}>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-        <Tabs value={attendanceType} onChange={handleChange} aria-label="basic tabs example">
-          {/* <Tab label="hosting" value="hosting" {...a11yProps("hosting")} />
-          <Tab label="going" value="going" {...a11yProps("going")} />
-          <Tab label="past events" value="attended" {...a11yProps("attended")} /> */}
+        <Tabs value={tab} onChange={handleChange} aria-label="basic tabs example">
           {lookUp.map((entry) => (
             <Tab key={entry.id} label={entry.label} value={entry.value} {...a11yProps(entry.value)} />
           ))}
         </Tabs>
       </Box>
       {lookUp.map((entry) => (
-        <TabPanel key={entry.id} value={entry.value} attendanceType={attendanceType}>
+        <TabPanel key={entry.id} value={entry.value} tab={tab}>
           <EventsInnerTabsContent events={events} />
-          {/* {entry.content} */}
-          {/* {events?.map(ev => (
-            <div key={ev.id}>{ev.title}</div>
-          ))} */}
         </TabPanel>
       ))}
-      {/* <TabPanel value="hosting" Tab={tab}>
-        Events I am hosting
-      </TabPanel>
-      <TabPanel value="going" Tab={tab}>
-        Events I am going
-      </TabPanel>
-      <TabPanel value="attended" Tab={tab}>
-        Past events
-      </TabPanel> */}
     </Box>
   );
 }

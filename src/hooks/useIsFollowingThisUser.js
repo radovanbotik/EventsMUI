@@ -1,23 +1,26 @@
 import { useEffect } from "react";
-import { subscribeToSubcollectionAndFindDocument } from "../firestore/firestore";
+import { auth, db } from "../config/firebase";
+import { doc, onSnapshot } from "firebase/firestore";
 
-// subscribeToSubcollectionAndFindDocument({
-//   parentCollection: "following",
-//   parentDocument: "Z4TJIaHLwTMJpt5uoAwGZiWzdur1",
-//   subCollection: "followers",
-//   id: "TWqAPKpOT0ZqNcbtpzujRWqO1ij2",
-// });
-
-const useIsFollowingThisUser = ({ parentCollection, parentDocument, subCollection, action, dependancies }) => {
+const useIsFollowingThisUser = ({ userId, action, dependancies }) => {
   useEffect(() => {
-    const unsubscribe = subscribeToSubcollectionAndFindDocument({
-      parentCollection,
-      parentDocument,
-      subCollection,
-      action,
-    });
-    // return () => unsubscribe();
-  }, dependancies || []);
+    const q = doc(db, "following", userId, "followers", auth.currentUser.uid);
+    const unsubscribe = onSnapshot(
+      q,
+      (document) => {
+        if (!document.exists()) {
+          return action(false);
+        }
+        return action(true);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+
+    return () => unsubscribe();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, dependancies);
 };
 
 export default useIsFollowingThisUser;

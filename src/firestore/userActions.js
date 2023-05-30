@@ -10,19 +10,20 @@ import {
 import { auth, db } from "../config/firebase";
 import { Timestamp, doc, setDoc } from "firebase/firestore";
 import { toast } from "react-toastify";
+import dayjs from "dayjs";
 
 export const signUpNewUser = async ({ email, password }) => {
   try {
     const { user: userdata } = await createUserWithEmailAndPassword(auth, email, password);
-    console.log(userdata);
     const user = {
       displayName: userdata.displayName || userdata.email,
       email: userdata.email,
       photoURL: userdata.photoURL,
       phoneNumber: userdata.phoneNumber,
       id: userdata.uid,
-      createdAt: Timestamp.fromDate(new Date(Number(userdata.metadata.createdAt))),
+      createdAt: Timestamp.fromDate(dayjs(userdata.metadata.createdAt).toDate()),
     };
+
     await setDoc(doc(db, "users", userdata.uid), user);
     toast.success("You have succesfully registered.");
   } catch (error) {
@@ -61,7 +62,7 @@ export const signUserWithGoogle = async () => {
         email: result.user.email,
         photoURL: result.user.photoURL || null,
         phoneNumber: result.user.phoneNumber || null,
-        createdAt: Timestamp.fromDate(new Date(Number(result.user.metadata.createdAt))),
+        createdAt: Timestamp.fromDate(dayjs(result.user.metadata.createdAt).toDate()),
       };
       await setDoc(doc(db, "users", result.user.uid), newUser);
     }

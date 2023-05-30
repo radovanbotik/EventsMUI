@@ -3,24 +3,22 @@ import ProfileHeader from "./ProfileHeader";
 import ProfileContent from "./ProfileContent";
 import { useDispatch, useSelector } from "react-redux";
 import { setViewedUser } from "../../../store/profileSlice";
-import useSubscribeTodocument from "../../../hooks/useSubscribeTodocument";
 import { CircularProgress, Box } from "@mui/material";
 import { auth } from "../../../config/firebase";
 import { useEffect, useState } from "react";
+import useSubscribeToUser from "../../../hooks/useSubscribeToUser";
 
 const Profile = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const { user } = useSelector((store) => store.profileReducer);
   const { status } = useSelector((store) => store.profileReducer);
-
   const [owner, setOwner] = useState(false);
 
-  useSubscribeTodocument({
-    dbcollection: "users",
-    documentId: id,
+  useSubscribeToUser({
+    userId: id,
+    action: (user) => dispatch(setViewedUser(user)),
     dependancies: [id],
-    data: (userData) => dispatch(setViewedUser(userData)),
   });
 
   const isOwner = () => {

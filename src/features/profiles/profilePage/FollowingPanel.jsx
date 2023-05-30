@@ -2,18 +2,16 @@ import { AppBar, Toolbar, Typography, List, ListItem, ListItemAvatar, ListItemTe
 import { Link } from "react-router-dom";
 import { AccountCircle } from "@mui/icons-material";
 import defaultPhoto from "../../../common/images/defaultPhoto.jpg";
-import useSubscribeToSubcollection from "../../../hooks/useSubscribeToSubcollection";
 import { useDispatch, useSelector } from "react-redux";
 import { setFollowing } from "../../../store/profileSlice";
+import useSubscribeToFollowing from "../../../hooks/useSubscribeToFollowing";
 
 const FollowingPanel = ({ id }) => {
   const dispatch = useDispatch();
   const { following, status } = useSelector((store) => store.profileReducer);
 
-  useSubscribeToSubcollection({
-    parentCollection: "following",
-    parentDocument: id,
-    subCollection: "following",
+  useSubscribeToFollowing({
+    userId: id,
     action: (following) => dispatch(setFollowing(following)),
     dependancies: [id],
   });

@@ -1,10 +1,10 @@
 import { Timestamp, collection, onSnapshot, query, orderBy, where } from "firebase/firestore";
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { db } from "../firestore/firestore";
+import { useDispatch } from "react-redux";
 import { setStatus } from "../store/eventSlice";
+import { db } from "../config/firebase";
 
-const useSubscribeEvents = ({ filterOptions, action, dependancies, userId }) => {
+const useSubscribeToEvents = ({ filterOptions, action, dependancies, userId }) => {
   const dispatch = useDispatch();
   let q;
 
@@ -66,7 +66,8 @@ const useSubscribeEvents = ({ filterOptions, action, dependancies, userId }) => 
         };
     });
     return () => unsubscribe();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, dependancies || []);
 };
 
-export default useSubscribeEvents;
+export default useSubscribeToEvents;

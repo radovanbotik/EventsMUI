@@ -4,7 +4,7 @@ import { Box, AppBar, Button, Toolbar, Typography, Stack } from "@mui/material";
 import ImageUploader from "../../../common/photos/ImageUploader";
 import PhotosImageList from "./PhotosImageList";
 import { onSnapshot, doc, collection, Timestamp } from "firebase/firestore";
-import { db } from "../../../firestore/firestore";
+import { db } from "../../../config/firebase";
 
 const PhotosPanel = ({ owner, id }) => {
   const [editing, setEditing] = useState(false);

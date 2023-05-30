@@ -31,9 +31,7 @@ const ProfileHeader = ({ photoURL, displayName, email, owner, id, following, fol
   };
 
   useIsFollowingThisUser({
-    parentCollection: "following",
-    parentDocument: id,
-    subCollection: "followers",
+    userId: id,
     action: (bool) => setFollowsUser(bool),
     dependancies: [id],
   });

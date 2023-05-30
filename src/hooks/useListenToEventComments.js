@@ -7,6 +7,7 @@ const useListenToEventComments = ({ eventId, action, dependencies }) => {
       location: `/events/${eventId}/comments`,
       action: action,
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, dependencies || []);
 };
 
