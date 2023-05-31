@@ -32,9 +32,7 @@ const store = configureStore({
 });
 
 onAuthStateChanged(auth, (user) => {
-  // store.dispatch(setStatus("loading"));
   if (user) {
-    //find user in user database and store that
     const unsub = onSnapshot(doc(db, "users", user.uid), (doc) => {
       store.dispatch(
         setUser({
@@ -48,21 +46,8 @@ onAuthStateChanged(auth, (user) => {
           authenticated: true,
         })
       );
-      // store.dispatch(setStatus("idle"));
       store.dispatch(setInitialized(true));
     });
-    // store.dispatch(
-    //   setUser({
-    //     user: {
-    //       email: user.email,
-    //       photoURL: user.photoURL,
-    //       displayName: user.displayName,
-    //       uid: user.uid,
-    //       providerId: user.providerData[0].providerId,
-    //     },
-    //     authenticated: true,
-    //   })
-    // );
   } else {
     console.log("not authenticated");
     store.dispatch(setUser({ user: null, authenticated: false }));

@@ -75,9 +75,9 @@ export const addProfileImage = async ({ photoURL, userId }) => {
 
 export const addFollow = async ({ userToFollow, loggedUser }) => {
   const batch = writeBatch(db);
-  batch.set(doc(db, "following", userToFollow.id, "followers", loggedUser.id), loggedUser);
+  // batch.set(doc(db, "following", userToFollow.id, "followers", loggedUser.id), loggedUser);
   batch.set(doc(db, "following", loggedUser.id, "following", userToFollow.id), userToFollow);
-  batch.update(doc(db, "users", userToFollow.id), { followers: increment(1) });
+  // batch.update(doc(db, "users", userToFollow.id), { followers: increment(1) });
   batch.update(doc(db, "users", loggedUser.id), { following: increment(1) });
   try {
     await batch.commit();
@@ -90,9 +90,9 @@ export const addFollow = async ({ userToFollow, loggedUser }) => {
 
 export const removeFollow = async ({ userToUnfollow, loggedUser }) => {
   const batch = writeBatch(db);
-  batch.delete(doc(db, "following", userToUnfollow.id, "followers", loggedUser.id));
+  // batch.delete(doc(db, "following", userToUnfollow.id, "followers", loggedUser.id));
   batch.delete(doc(db, "following", loggedUser.id, "following", userToUnfollow.id));
-  batch.update(doc(db, "users", userToUnfollow.id), { followers: increment(-1) });
+  // batch.update(doc(db, "users", userToUnfollow.id), { followers: increment(-1) });
   batch.update(doc(db, "users", loggedUser.id), { following: increment(-1) });
   try {
     await batch.commit();
