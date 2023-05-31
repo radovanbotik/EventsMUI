@@ -1,14 +1,16 @@
 import { PersonRemoveOutlined, PersonAddOutlined, MoreVert } from "@mui/icons-material";
 import { ButtonGroup, Button } from "@mui/material";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import Permission from "../../../common/dialogs/Permission";
 import EventActionsMenu from "./EventActionsMenu";
 import { joinEvent, leaveEvent } from "../../../firestore/eventActions";
+// import { join } from "../../../store/profileSlice";
 
 const EventActions = ({ id, attendeesId, cancelled, hostId, title }) => {
   const { currentUser } = useSelector((store) => store.authReducer);
   const isAttending = attendeesId && attendeesId?.includes(currentUser?.id);
+  const dispatch = useDispatch();
 
   const [anchorEl, setAnchorEl] = useState(null);
   const closeMenu = () => {
@@ -27,6 +29,7 @@ const EventActions = ({ id, attendeesId, cancelled, hostId, title }) => {
           openText="Join event"
           openIcon={<PersonAddOutlined sx={{ width: 16, height: 16 }} />}
           onSubmit={() => joinEvent({ eventId: id, user: currentUser })}
+          // onSubmit={() => dispatch(join({ eventId: id, user: currentUser }))}
         >
           Join Event
         </Permission>

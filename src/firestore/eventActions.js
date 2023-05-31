@@ -89,6 +89,7 @@ export const joinEvent = async ({ eventId, user }) => {
   };
   const attendees = arrayUnion(attendee);
   const attendeesId = arrayUnion(attendee.id);
+  // await updateDoc(doc(db, "events", eventId), { attendees: attendees, attendeesId: attendeesId });
   try {
     await updateDoc(doc(db, "events", eventId), { attendees: attendees, attendeesId: attendeesId });
     toast.success("You have joined an event.");

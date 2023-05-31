@@ -5,7 +5,7 @@ const user = auth.currentUser;
 
 //will overwrite data
 export const writeUserData = async (user) => {
-  set(ref(database, `users/${user.id}`), {
+  await set(ref(database, `users/${user.id}`), {
     username: user.username,
     email: user.email,
     photoURL: user.photoURL,
@@ -26,7 +26,7 @@ export const listenToEventChat = async (eventId) => {
 export const addCommentToEvent = async ({ post, id }) => {
   const locationRef = ref(database, `events/${id}/comments`);
   const newPostLocationRef = push(locationRef);
-  set(newPostLocationRef, {
+  await set(newPostLocationRef, {
     ...post,
     displayName: user.displayName,
     photoURL: user.photoURL,
@@ -38,7 +38,7 @@ export const addCommentToEvent = async ({ post, id }) => {
 export const addReplyToEventMessage = async ({ reply, eventId, commentId }) => {
   const locationRef = ref(database, `events/${eventId}/comments`);
   const newPostLocationRef = push(locationRef);
-  set(newPostLocationRef, {
+  await set(newPostLocationRef, {
     ...reply,
     commentId: commentId,
     displayName: user.displayName,

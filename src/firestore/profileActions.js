@@ -1,7 +1,7 @@
 import { updateProfile } from "firebase/auth";
 import { auth, db, storage } from "../config/firebase";
 import { toast } from "react-toastify";
-import { deleteDoc, doc, increment, setDoc, updateDoc } from "firebase/firestore";
+import { deleteDoc, doc, increment, setDoc, updateDoc, writeBatch } from "firebase/firestore";
 import { deleteObject, getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { v4 as uuidv4 } from "uuid";
 import getFileExtension from "../common/util/getFileExtension";
@@ -74,11 +74,13 @@ export const addProfileImage = async ({ photoURL, userId }) => {
 };
 
 export const addFollow = async ({ userToFollow, loggedUser }) => {
+  const batch = writeBatch(db);
+  batch.set(doc(db, "following", userToFollow.id, "followers", loggedUser.id), loggedUser);
+  batch.set(doc(db, "following", loggedUser.id, "following", userToFollow.id), userToFollow);
+  batch.update(doc(db, "users", userToFollow.id), { followers: increment(1) });
+  batch.update(doc(db, "users", loggedUser.id), { following: increment(1) });
   try {
-    await setDoc(doc(db, "following", userToFollow.id, "followers", loggedUser.id), loggedUser);
-    await setDoc(doc(db, "following", loggedUser.id, "following", userToFollow.id), userToFollow);
-    await updateDoc(doc(db, "users", userToFollow.id), { followers: increment(1) });
-    await updateDoc(doc(db, "users", loggedUser.id), { following: increment(1) });
+    await batch.commit();
     toast.success(`You are now following ${userToFollow.displayName}`);
   } catch (error) {
     console.log(error);
@@ -87,11 +89,13 @@ export const addFollow = async ({ userToFollow, loggedUser }) => {
 };
 
 export const removeFollow = async ({ userToUnfollow, loggedUser }) => {
+  const batch = writeBatch(db);
+  batch.delete(doc(db, "following", userToUnfollow.id, "followers", loggedUser.id));
+  batch.delete(doc(db, "following", loggedUser.id, "following", userToUnfollow.id));
+  batch.update(doc(db, "users", userToUnfollow.id), { followers: increment(-1) });
+  batch.update(doc(db, "users", loggedUser.id), { following: increment(-1) });
   try {
-    await deleteDoc(doc(db, "following", userToUnfollow.id, "followers", loggedUser.id));
-    await deleteDoc(doc(db, "following", loggedUser.id, "following", userToUnfollow.id));
-    await updateDoc(doc(db, "users", userToUnfollow.id), { followers: increment(-1) });
-    await updateDoc(doc(db, "users", loggedUser.id), { following: increment(-1) });
+    await batch.commit();
     toast.success(`You unfollowed ${userToUnfollow.displayName}`);
   } catch (error) {
     console.log(error);

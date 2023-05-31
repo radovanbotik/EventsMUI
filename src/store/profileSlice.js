@@ -1,4 +1,6 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { joinEvent } from "../firestore/eventActions";
+import { toast } from "react-toastify";
 
 const initialState = {
   user: null,
@@ -7,6 +9,8 @@ const initialState = {
   followers: [],
   status: "idle",
 };
+
+// export const join = createAsyncThunk("joinEvent", joinEvent);
 
 const profileSlice = createSlice({
   name: "profileSlice",
@@ -28,6 +32,11 @@ const profileSlice = createSlice({
       state.following = action.payload;
     },
   },
+  // extraReducers: (builder) => {
+  //   builder.addCase(join.pending, (state, action) => console.log("success, joined"));
+  //   builder.addCase(join.fulfilled, (state, action) => toast.success("You have joined an event."));
+  //   builder.addCase(join.rejected, (state, action) => console.log("success, joined"));
+  // },
 });
 
 export default profileSlice.reducer;
