@@ -19,7 +19,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setFilter } from "../../../store/eventSlice";
-import useSubscribeEvents from "../../../hooks/useSubscribeEvents";
+import useSubscribeToEvents from "../../../hooks/useSubscribeToEvents";
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {
@@ -130,14 +130,14 @@ const SidebarEvents = () => {
     },
   ];
 
-  useSubscribeEvents({
+  useSubscribeToEvents({
     filterOptions: {
       attendanceType: "active",
       date: new Date().getTime(),
     },
     action: (events) => setCount((prev) => ({ ...prev, active: events.length })),
   });
-  useSubscribeEvents({
+  useSubscribeToEvents({
     userId: currentUser?.id,
     filterOptions: {
       attendanceType: "hosting",
@@ -145,7 +145,7 @@ const SidebarEvents = () => {
     },
     action: (events) => setCount((prev) => ({ ...prev, hosting: events.length })),
   });
-  useSubscribeEvents({
+  useSubscribeToEvents({
     userId: currentUser?.id,
     filterOptions: {
       attendanceType: "attending",
@@ -153,7 +153,7 @@ const SidebarEvents = () => {
     },
     action: (events) => setCount((prev) => ({ ...prev, attending: events.length })),
   });
-  useSubscribeEvents({
+  useSubscribeToEvents({
     userId: currentUser?.id,
     filterOptions: {
       attendanceType: "attended",
@@ -161,7 +161,7 @@ const SidebarEvents = () => {
     },
     action: (events) => setCount((prev) => ({ ...prev, attended: events.length })),
   });
-  useSubscribeEvents({
+  useSubscribeToEvents({
     filterOptions: {
       attendanceType: "expired",
       date: new Date().getTime(),

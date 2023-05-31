@@ -21,7 +21,7 @@ export const signUpNewUser = async ({ email, password }) => {
       photoURL: userdata.photoURL,
       phoneNumber: userdata.phoneNumber,
       id: userdata.uid,
-      createdAt: Timestamp.fromDate(dayjs(userdata.metadata.createdAt).toDate()),
+      createdAt: Timestamp.fromDate(dayjs(Number(userdata.metadata.createdAt)).toDate()),
     };
 
     await setDoc(doc(db, "users", userdata.uid), user);
@@ -62,7 +62,7 @@ export const signUserWithGoogle = async () => {
         email: result.user.email,
         photoURL: result.user.photoURL || null,
         phoneNumber: result.user.phoneNumber || null,
-        createdAt: Timestamp.fromDate(dayjs(result.user.metadata.createdAt).toDate()),
+        createdAt: Timestamp.fromDate(dayjs(Number(result.user.metadata.createdAt)).toDate()),
       };
       await setDoc(doc(db, "users", result.user.uid), newUser);
     }

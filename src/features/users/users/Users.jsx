@@ -1,15 +1,13 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import UsersList from "./UsersList";
-import useSubscribeTocollection from "../../../hooks/useSubscribeTocollection";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import useSubscribeToUsers from "../../../hooks/useSubscribeToUsers";
 
 const Users = () => {
   const [users, setUsers] = useState(null);
   const { status } = useSelector((store) => store.eventReducer);
-  const dispatch = useDispatch();
 
-  useSubscribeTocollection({
-    collectionRef: "users",
+  useSubscribeToUsers({
     dependancies: [],
     action: (users) => setUsers(users),
   });
