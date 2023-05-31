@@ -1,6 +1,6 @@
 import { CardContent, List, ListItem, ListItemText } from "@mui/material";
 import DescriptionAlert from "../../../../common/alerts/DescriptionAlert";
-import formatDates from "../../../../common/util/FormatDates";
+import formatDates from "../../../../common/util/formatDates";
 import isGoingAreGoingNoOneGoing from "../../../../common/util/isGoingAreGoingNoOneGoing";
 
 const CardBody = ({ canceled, date, title, hostedBy, attendees, filterOptions }) => {
