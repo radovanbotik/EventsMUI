@@ -53,10 +53,33 @@ export const listenToLocation = async ({ location, action }) => {
   const locationRef = query(ref(database, location), limitToLast(10));
   onValue(locationRef, (snapshot) => {
     if (!snapshot.exists()) return;
-    const data = snapshot.val();
     const comments = Object.entries(snapshot.val())
       .reverse()
       .map((array) => ({ id: array[0], ...array[1] }));
     action(comments);
   });
+};
+
+export const listenToNewsfeed = async (userId) => {
+  const users = query(ref(database, `posts/${userId}`), orderByKey(), limitToLast(10));
+  onValue(
+    users,
+    (snapshot) => {
+      if (!snapshot.exists()) {
+        console.log("no feed to show");
+        return;
+      }
+      const data = snapshot.val();
+      const dataEntries = Object.entries(data);
+      const posts = dataEntries.map((action) => ({
+        postId: action[0],
+        ...action[1],
+      }));
+      console.log(posts);
+    },
+    (error) => {
+      console.log("hi");
+      console.log(error);
+    }
+  );
 };

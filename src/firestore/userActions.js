@@ -62,6 +62,7 @@ export const signUserWithGoogle = async () => {
         email: result.user.email,
         photoURL: result.user.photoURL || null,
         phoneNumber: result.user.phoneNumber || null,
+        id: result.user.uid,
         createdAt: Timestamp.fromDate(dayjs(Number(result.user.metadata.createdAt)).toDate()),
       };
       await setDoc(doc(db, "users", result.user.uid), newUser);

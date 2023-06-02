@@ -1,25 +1,27 @@
+/* eslint-disable require-jsdoc */
 /* eslint-disable comma-dangle */
 /* eslint-disable indent */
 /* eslint-disable max-len */
 /* eslint-disable no-unused-vars */
 /* eslint-disable object-curly-spacing */
 
+const { logger } = require("firebase-functions");
 const { initializeApp } = require("firebase-admin/app");
+const { getDatabase, ServerValue } = require("firebase-admin/database");
 const { getFirestore, FieldValue } = require("firebase-admin/firestore");
-const { onDocumentCreated, onDocumentDeleted } = require("firebase-functions/v2/firestore");
+const { onDocumentCreated, onDocumentDeleted, onDocumentUpdated } = require("firebase-functions/v2/firestore");
 const app = initializeApp();
 const db = getFirestore(app);
+const database = getDatabase(app);
 
 exports.addFollow = onDocumentCreated("following/{loggedUserId}/following/{userToFollowId}", async (event) => {
   const snapshot = event.data;
   if (!snapshot) {
-    console.log("No data associated with the user");
+    logger.log("No data associated with the user");
     return;
   }
-  const followers = snapshot.data();
-  console.log(followers);
   try {
-    const userToFollow = await db.collection("users").doc(event.params.userToFollowId).get();
+    const loggedUser = await db.collection("users").doc(event.params.loggedUserId).get();
     const batch = db.batch();
     batch.set(
       db
@@ -28,9 +30,9 @@ exports.addFollow = onDocumentCreated("following/{loggedUserId}/following/{userT
         .collection("followers")
         .doc(event.params.loggedUserId),
       {
-        displayName: userToFollow.data().displayName,
-        photoURL: userToFollow.data().photoURL,
-        id: userToFollow.id,
+        displayName: loggedUser.data().displayName,
+        photoURL: loggedUser.data().photoURL,
+        id: loggedUser.id,
       }
     );
     batch.update(db.collection("users").doc(event.params.userToFollowId), {
@@ -38,14 +40,14 @@ exports.addFollow = onDocumentCreated("following/{loggedUserId}/following/{userT
     });
     return await batch.commit();
   } catch (error) {
-    return console.log(error);
+    return logger.log(error);
   }
 });
 
 exports.removeFollow = onDocumentDeleted("following/{loggedUserId}/following/{userToUnfollowId}", async (event) => {
   const snapshot = event.data;
   if (!snapshot) {
-    console.log("No data associated with the user");
+    logger.log("No data associated with the user");
     return;
   }
   try {
@@ -62,6 +64,53 @@ exports.removeFollow = onDocumentDeleted("following/{loggedUserId}/following/{us
     });
     return await batch.commit();
   } catch (error) {
-    return console.log(error);
+    return logger.log(error);
+  }
+});
+
+function newPost(user, action, eventId) {
+  return {
+    photoURL: user.photoURL || null,
+    displayName: user.displayName,
+    userId: user.id,
+    eventId: eventId,
+    date: ServerValue.TIMESTAMP,
+    action: action,
+  };
+}
+
+exports.onJoinAndLeaveEvent = onDocumentUpdated("events/{eventId}", async (event) => {
+  const snapshot = event.data;
+  if (!snapshot) {
+    return;
+  }
+  const before = event.data.before.data();
+  const after = event.data.after.data();
+
+  if (before.attendees.length < after.attendees.length) {
+    const newAttendee = after.attendees.filter((i1) => !before.attendees.some((i2) => i2.id === i1.id))[0];
+    try {
+      const newAttendeeFollowers = await db.collection("following").doc(newAttendee.id).collection("followers").get();
+      newAttendeeFollowers.forEach((follower) => {
+        database.ref(`/posts/${follower.id}`).push(newPost(newAttendee, "user joined event", event.params.eventId));
+      });
+    } catch (error) {
+      logger.log(error);
+    }
+  }
+  if (before.attendees.length > after.attendees.length) {
+    const leavingAttendee = before.attendees.filter((i1) => !after.attendees.some((i2) => i2.id === i1.id))[0];
+    try {
+      const leavingAttendeeFollowers = await db
+        .collection("following")
+        .doc(leavingAttendee.id)
+        .collection("followers")
+        .get();
+      leavingAttendeeFollowers.forEach((follower) => {
+        database.ref(`/posts/${follower.id}`).push(newPost(leavingAttendee, "user left event", event.params.eventId));
+      });
+    } catch (error) {
+      logger.log(error);
+    }
   }
 });

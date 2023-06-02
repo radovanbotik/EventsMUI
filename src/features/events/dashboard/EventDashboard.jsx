@@ -4,6 +4,8 @@ import { loadEvents } from "../../../store/eventSlice";
 import { Grid } from "@mui/material";
 import EventList from "./EventList";
 import useSubscribeToEvents from "../../../hooks/useSubscribeToEvents";
+import NewsFeed from "./NewsFeed";
+import UserSummary from "./UserSummary";
 
 const EventDashboard = () => {
   const { events } = useSelector((store) => store.eventReducer);
@@ -18,17 +20,18 @@ const EventDashboard = () => {
     action: (events) => dispatch(loadEvents(events)),
     dependancies: [filterOptions],
   });
-
   return (
     <Grid spacing={2} container columns={{ xs: 6, lg: 12 }} sx={{ height: "100%" }}>
       <Grid item lg={6} xs={6}>
         <EventList events={events} />
       </Grid>
       <Grid item lg={3} xs={6}>
-        hello hello
-        {isOpen && <EventForm />}
+        <NewsFeed userId={currentUser.id} />
+        {/* {isOpen && <EventForm />} */}
       </Grid>
-      <Grid item>hello 2</Grid>
+      <Grid item lg={3} xs={6}>
+        <UserSummary />
+      </Grid>
     </Grid>
   );
 };
