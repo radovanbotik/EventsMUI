@@ -1,39 +1,45 @@
-import {
-  Stack,
-  Box,
-  Card,
-  CardHeader,
-  Avatar,
-  CardContent,
-  CardMedia,
-  Typography,
-  Divider,
-  List,
-  ListItem,
-  ListItemText,
-} from "@mui/material";
+import { Stack, Box, Avatar, Typography, List, ListItem, ListItemText } from "@mui/material";
 import defaultImage from "../../../common/images/defaultPhoto.jpg";
+import useSubscribeToUser from "../../../hooks/useSubscribeToUser";
+import { useState } from "react";
 
-const UserSummary = () => {
+const UserSummary = ({ userId }) => {
+  const [user, setUser] = useState(null);
+
+  useSubscribeToUser({
+    action: (user) => setUser(user),
+    dependancies: [userId],
+    userId: userId,
+  });
+
+  if (!user) {
+    return <div>loading...</div>;
+  }
+
   return (
     <Box sx={{ width: "100%" }}>
-      <Stack elevation={0}>
+      <Stack>
         <Box mb={4} sx={{ display: "grid", justifyItems: "center", gap: 2 }}>
-          <Avatar src={defaultImage} sx={{ width: 84, height: 84 }} />
+          <Avatar src={user.photoURL || defaultImage} sx={{ width: 84, height: 84 }} />
           <Typography gutterBottom>Radovan Botik</Typography>
         </Box>
         <List>
-          <ListItem divider dense disablePadding sx={{ display: "flex", justifyContent: "space-between" }}>
-            <ListItemText>Attending</ListItemText>
-            <ListItemText>2</ListItemText>
+          {/* <ListItem divider dense disablePadding>
+            <ListItemText primary="Attending" secondary="2" sx={{ display: "flex", justifyContent: "space-between" }} />
+          </ListItem> */}
+          <ListItem divider dense disablePadding>
+            <ListItemText
+              primary="Followers"
+              secondary={user.followers}
+              sx={{ display: "flex", justifyContent: "space-between" }}
+            />
           </ListItem>
           <ListItem divider dense disablePadding>
-            <ListItemText>Followers</ListItemText>
-            <ListItemText>3</ListItemText>
-          </ListItem>
-          <ListItem divider dense disablePadding>
-            <ListItemText>Following</ListItemText>
-            <ListItemText>4</ListItemText>
+            <ListItemText
+              primary="Following"
+              secondary={user.following}
+              sx={{ display: "flex", justifyContent: "space-between" }}
+            />
           </ListItem>
         </List>
       </Stack>

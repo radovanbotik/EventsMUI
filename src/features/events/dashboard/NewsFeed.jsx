@@ -18,24 +18,24 @@ import formatTime from "../../../common/util/formatDateCalendar";
 const NewsFeed = ({ userId }) => {
   const [feed, setFeed] = useState(null);
 
-  const user = {
-    id: 1,
-    image: defaultImage,
-    date: "3 days ago",
-    summary: "Rado has just joined Event Name",
-  };
-  const users = [user, user, user];
-
   useListenToNewsfeed({
     userId: userId,
     action: (posts) => setFeed(posts),
     dependancies: [userId],
   });
 
+  function userAction({ action, displayName, title }) {
+    if (action === "join") {
+      return `${displayName} joined your event ${title}.`;
+    } else {
+      return `${displayName} left your event ${title}. `;
+    }
+  }
+
   console.log(feed);
   if (!feed)
     return (
-      <Box>
+      <Box sx={{ display: "grid", placeContent: "center" }}>
         <Typography>No news to display</Typography>
       </Box>
     );
@@ -47,14 +47,14 @@ const NewsFeed = ({ userId }) => {
           <Typography>News feed:</Typography>
         </Toolbar>
       </AppBar> */}
-      <List subheader={<ListSubheader>News feed</ListSubheader>}>
+      <List>
         {feed.map((post) => (
           <ListItem key={post.userId}>
             <ListItemAvatar>
               <Avatar src={post.photoURL} />
             </ListItemAvatar>
             <ListItemText
-              primary={`${post.displayName} ${post.action}`}
+              primary={userAction({ action: post.action, displayName: post.displayName, title: post.title })}
               secondary={formatTime(post.date).toX}
             ></ListItemText>
           </ListItem>

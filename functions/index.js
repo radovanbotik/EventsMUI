@@ -68,12 +68,13 @@ exports.removeFollow = onDocumentDeleted("following/{loggedUserId}/following/{us
   }
 });
 
-function newPost(user, action, eventId) {
+function newPost(user, action, eventId, title) {
   return {
     photoURL: user.photoURL || null,
     displayName: user.displayName,
     userId: user.id,
     eventId: eventId,
+    title: title,
     date: ServerValue.TIMESTAMP,
     action: action,
   };
@@ -87,15 +88,19 @@ exports.onJoinAndLeaveEvent = onDocumentUpdated("events/{eventId}", async (event
   const before = event.data.before.data();
   const after = event.data.after.data();
 
+  // if (after.name == before.name) {
+  //   return null;
+  // }
+
   if (before.attendees.length < after.attendees.length) {
     const newAttendee = after.attendees.filter((i1) => !before.attendees.some((i2) => i2.id === i1.id))[0];
     try {
       const newAttendeeFollowers = await db.collection("following").doc(newAttendee.id).collection("followers").get();
-      newAttendeeFollowers.forEach((follower) => {
-        database.ref(`/posts/${follower.id}`).push(newPost(newAttendee, "user joined event", event.params.eventId));
+      return newAttendeeFollowers.forEach((follower) => {
+        database.ref(`/posts/${follower.id}`).push(newPost(newAttendee, "join", event.params.eventId, after.title));
       });
     } catch (error) {
-      logger.log(error);
+      return logger.log(error);
     }
   }
   if (before.attendees.length > after.attendees.length) {
@@ -106,11 +111,13 @@ exports.onJoinAndLeaveEvent = onDocumentUpdated("events/{eventId}", async (event
         .doc(leavingAttendee.id)
         .collection("followers")
         .get();
-      leavingAttendeeFollowers.forEach((follower) => {
-        database.ref(`/posts/${follower.id}`).push(newPost(leavingAttendee, "user left event", event.params.eventId));
+      return leavingAttendeeFollowers.forEach((follower) => {
+        database
+          .ref(`/posts/${follower.id}`)
+          .push(newPost(leavingAttendee, "leave", event.params.eventId, after.title));
       });
     } catch (error) {
-      logger.log(error);
+      return logger.log(error);
     }
   }
 });

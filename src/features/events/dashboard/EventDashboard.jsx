@@ -21,16 +21,16 @@ const EventDashboard = () => {
     dependancies: [filterOptions],
   });
   return (
-    <Grid spacing={2} container columns={{ xs: 6, lg: 12 }} sx={{ height: "100%" }}>
-      <Grid item lg={6} xs={6}>
+    <Grid container columns={{ xs: 6, lg: 12 }} sx={{ height: "100%" }}>
+      <Grid item lg={6} xs={6} sx={{ padding: 4 }}>
         <EventList events={events} />
       </Grid>
-      <Grid item lg={3} xs={6}>
-        <NewsFeed userId={currentUser.id} />
+      <Grid item lg={3} xs={6} sx={{ padding: 4 }}>
         {/* {isOpen && <EventForm />} */}
+        <NewsFeed userId={currentUser.id} />
       </Grid>
-      <Grid item lg={3} xs={6}>
-        <UserSummary />
+      <Grid item lg={3} xs={6} sx={{ padding: 4 }}>
+        <UserSummary userId={currentUser.id} />
       </Grid>
     </Grid>
   );
