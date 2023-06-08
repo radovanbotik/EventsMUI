@@ -4,7 +4,7 @@ import formatDates from "../../../common/util/formatDates";
 const EventDateAndHost = ({ date, title, hostedBy }) => {
   return (
     <List>
-      <ListItem sx={{ gap: 3 }}>
+      <ListItem sx={{ gap: 3 }} disableGutters>
         <ListItemText
           primary={formatDates({ date: date, format: "MMM" })}
           secondary={formatDates({ date: date, format: "DD" })}

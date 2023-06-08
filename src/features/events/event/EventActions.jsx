@@ -1,5 +1,5 @@
 import { PersonRemoveOutlined, PersonAddOutlined, MoreVert } from "@mui/icons-material";
-import { ButtonGroup, Button } from "@mui/material";
+import { Button, IconButton, Toolbar, Tooltip } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import Permission from "../../../common/dialogs/Permission";
@@ -7,7 +7,8 @@ import EventActionsMenu from "./EventActionsMenu";
 import { joinEvent, leaveEvent } from "../../../firestore/eventActions";
 // import { join } from "../../../store/profileSlice";
 
-const EventActions = ({ id, attendeesId, cancelled, hostId, title }) => {
+const EventActions = (event) => {
+  const { id, attendeesId, cancelled, hostId, title } = event;
   const { currentUser } = useSelector((store) => store.authReducer);
   const isAttending = attendeesId && attendeesId?.includes(currentUser?.id);
   const dispatch = useDispatch();
@@ -21,7 +22,7 @@ const EventActions = ({ id, attendeesId, cancelled, hostId, title }) => {
   };
 
   return (
-    <ButtonGroup size="small" variant="outlined" sx={{ md: { alignSelf: "end", border: "none" } }}>
+    <Toolbar variant="dense" disableGutters>
       {!isAttending && (
         <Permission
           title="Join event"
@@ -45,19 +46,20 @@ const EventActions = ({ id, attendeesId, cancelled, hostId, title }) => {
           Leave Event
         </Permission>
       )}
-      <Button
-        type="button"
-        sx={{
-          margin: 0,
-          textTransform: "capitalize",
-          fontWeight: 500,
-          ".MuiButton-startIcon": { m: 0 },
-        }}
-        startIcon={<MoreVert sx={{ width: 16, height: 16 }} />}
-        onClick={anchorMenu}
+      <Tooltip title="Click to expand">
+        <IconButton onClick={anchorMenu}>
+          <MoreVert sx={{ width: 16, height: 16, color: "primary.main" }} />
+        </IconButton>
+      </Tooltip>
+      <EventActionsMenu
+        handleClose={closeMenu}
+        anchorEl={anchorEl}
+        id={id}
+        cancelled={cancelled}
+        hostId={hostId}
+        event={event}
       />
-      <EventActionsMenu handleClose={closeMenu} anchorEl={anchorEl} id={id} cancelled={cancelled} hostId={hostId} />
-    </ButtonGroup>
+    </Toolbar>
   );
 };
 

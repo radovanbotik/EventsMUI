@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
-import { fontSize } from "@mui/system";
 
 const Permission = ({ title, content, openText, openIcon, closeText = "no", submitText = "agree", onSubmit }) => {
   const [open, setOpen] = useState(false);
@@ -13,9 +12,6 @@ const Permission = ({ title, content, openText, openIcon, closeText = "no", subm
     onSubmit();
   };
 
-  const buttonProps = {
-    textTransform: "capitalize",
-  };
   return (
     <>
       <Button sx={{ textTransform: "capitalize" }} startIcon={openIcon} onClick={() => setOpen(true)}>

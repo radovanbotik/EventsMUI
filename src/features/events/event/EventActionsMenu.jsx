@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { openModal } from "../../../store/modalSlice";
 
-const EventActionsMenu = ({ handleClose, anchorEl, id, cancelled, hostId }) => {
+const EventActionsMenu = ({ handleClose, anchorEl, id, cancelled, hostId, event }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -25,10 +25,12 @@ const EventActionsMenu = ({ handleClose, anchorEl, id, cancelled, hostId }) => {
     <Menu anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
       <MenuItem onClick={handleClose}>
         <Button
-          sx={{ textTransform: "capitalize" }}
+          sx={{ textTransform: "capitalize", justifyContent: "flex-start", flex: 1, px: 1 }}
+          size="small"
+          variant="text"
           onClick={() => {
             dispatch(setEditing(true));
-            dispatch(openModal({ modalType: "event" }));
+            dispatch(openModal({ modalType: "event", modalProps: event }));
           }}
         >
           Edit

@@ -11,7 +11,8 @@ import SelectAutocomplete from "../../../common/forms/SelectAutocomplete";
 import CalendarWithTime from "../../../common/forms/CalendarWithTime";
 import LocationSelectAutocomplete from "../../../common/forms/LocationSelectAutocomplete";
 import { geocodeByPlaceId, getLatLng } from "react-places-autocomplete";
-import { Typography, Button, MenuItem, Checkbox, ListItemText, ButtonGroup, Stack } from "@mui/material";
+import { Tooltip, Button, MenuItem, Checkbox, ListItemText, IconButton, Stack, Toolbar } from "@mui/material";
+import { DeleteForeverOutlined } from "@mui/icons-material";
 import { addEvent, updateEvent } from "../../../firestore/eventActions";
 import ModalWrapper from "../../../common/modals/ModalWrapper";
 import { closeModal } from "../../../store/modalSlice";
@@ -35,14 +36,12 @@ const initialValues = {
   location: null,
 };
 
-const EventForm = () => {
-  const { isEditing } = useSelector((store) => store.formReducer);
-  const [event] = useSelector((store) => store.eventReducer.events);
+const EventForm = ({ event }) => {
   const { currentUser } = useSelector((store) => store.authReducer);
   const dispatch = useDispatch();
 
-  const handleSubmit = ({ isEditing, formdata }) => {
-    if (!isEditing) {
+  const handleSubmit = ({ update, formdata }) => {
+    if (!update) {
       addEvent({ formdata: formdata, user: currentUser });
       dispatch(closeModal());
       return;
@@ -61,9 +60,9 @@ const EventForm = () => {
   };
 
   return (
-    <ModalWrapper title={isEditing ? "Edit event" : "New event"}>
+    <ModalWrapper title={event ? "Edit event" : "New event"}>
       <Formik
-        initialValues={event && isEditing ? event : initialValues}
+        initialValues={event ? event : initialValues}
         validationSchema={validationSchema}
         onSubmit={async (values, { setSubmitting }) => {
           console.log(values);
@@ -84,7 +83,7 @@ const EventForm = () => {
                 },
               };
             }
-            handleSubmit({ isEditing: isEditing, formdata: newValues });
+            handleSubmit({ update: Boolean(event), formdata: newValues });
             setSubmitting(false);
           } catch (error) {
             setSubmitting(false);
@@ -133,31 +132,16 @@ const EventForm = () => {
               minRows={4}
             />
 
-            <ButtonGroup fullWidth size="medium" sx={{ mt: 4, gap: 2 }}>
-              <Button
-                type="button"
-                variant="contained"
-                onClick={() => {
-                  if (isEditing) {
-                    dispatch(setEditing(false));
-                  }
-                  dispatch(closeModal());
-                }}
-              >
-                Cancel
-              </Button>
-              <Button
-                type="submit"
-                variant="contained"
-                sx={{
-                  bgcolor: formikProps.isValid ? "primary.main" : "error.main",
-                }}
-                // disabled={formikProps.isValid ? false : true}
-                disabled={!formikProps.dirty || formikProps.isSubmitting}
-              >
+            <Toolbar disableGutters variant="dense">
+              <Button type="submit" variant="contained" disabled={!formikProps.dirty || formikProps.isSubmitting}>
                 Submit
               </Button>
-            </ButtonGroup>
+              <Tooltip title="Discard" placement="top">
+                <IconButton onClick={formikProps.resetForm} sx={{ marginLeft: "auto" }}>
+                  <DeleteForeverOutlined />
+                </IconButton>
+              </Tooltip>
+            </Toolbar>
           </Stack>
         )}
       </Formik>

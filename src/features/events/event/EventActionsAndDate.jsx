@@ -1,18 +1,20 @@
-import { useSelector } from "react-redux";
-import { Stack, Divider } from "@mui/material";
 import DescriptionAlert from "../../../common/alerts/DescriptionAlert";
-import EventImageMap from "./EventImageMap";
 import EventDateAndHost from "./EventDateAndHost";
 import EventActions from "./EventActions";
+import { useSelector } from "react-redux";
+import { Toolbar, Stack } from "@mui/material";
 
-const EventHeader = ({ event, mapOpen }) => {
+const EventActionsAndDate = ({ event }) => {
   const { events } = useSelector((store) => store.eventReducer);
   const [currentEvent] = events;
-
   return (
-    <Stack>
-      <EventImageMap {...event} mapOpen={mapOpen} />
-      <Divider />
+    <Stack
+      variant="dense"
+      disableGutters
+      sx={{ justifyContent: "space-between" }}
+      //   direction={{ xs: "column", sm: "row" }}
+      direction="row"
+    >
       <EventDateAndHost {...event} />
       {currentEvent.cancelled && (
         <DescriptionAlert
@@ -23,9 +25,9 @@ const EventHeader = ({ event, mapOpen }) => {
           variant={"filled"}
         />
       )}
-      <EventActions {...event} />
+      <EventActions event={event} />
     </Stack>
   );
 };
 
-export default EventHeader;
+export default EventActionsAndDate;
