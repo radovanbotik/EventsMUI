@@ -1,6 +1,6 @@
 //redux
 import { useDispatch, useSelector } from "react-redux";
-import { setOpen, setEditing } from "../../../store/formSlice";
+import { setEditing } from "../../../store/formSlice";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import dayjs from "dayjs";

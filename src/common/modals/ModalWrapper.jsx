@@ -3,7 +3,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import { closeModal } from "../../store/modalSlice";
 import { CloseOutlined } from "@mui/icons-material";
-import { Dialog, DialogTitle, Divider, IconButton, Toolbar, Tooltip } from "@mui/material";
+import { Dialog, DialogTitle, Divider, IconButton, Toolbar, Tooltip, AppBar } from "@mui/material";
 
 function ModalWrapper({ props, children, title }) {
   const dispatch = useDispatch();
@@ -14,15 +14,17 @@ function ModalWrapper({ props, children, title }) {
   };
 
   return (
-    <Dialog onClose={handleClose} open={open} fullWidth maxWidth="xl">
-      <Toolbar variant="dense" sx={{ justifyContent: "space-between", backgroundColor: "primary.main" }}>
-        {title && title}
-        <Tooltip title="Close">
-          <IconButton onClick={handleClose}>
-            <CloseOutlined />
-          </IconButton>
-        </Tooltip>
-      </Toolbar>
+    <Dialog onClose={handleClose} open={open} fullWidth maxWidth="lg">
+      <AppBar position="static" variant="dense">
+        <Toolbar variant="dense" sx={{ justifyContent: "space-between" }}>
+          {title && title}
+          <Tooltip title="Close" sx={{ color: "inherit" }}>
+            <IconButton onClick={handleClose}>
+              <CloseOutlined />
+            </IconButton>
+          </Tooltip>
+        </Toolbar>
+      </AppBar>
       <Divider />
       {children}
     </Dialog>

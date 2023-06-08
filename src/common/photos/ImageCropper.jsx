@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import Cropper from "react-cropper";
 import "cropperjs/dist/cropper.css";
+import ModalWrapper from "../modals/ModalWrapper";
 
 const ImageCropper = ({ image, setCroppedImage }) => {
   const preview = image[0].preview;
@@ -11,9 +12,10 @@ const ImageCropper = ({ image, setCroppedImage }) => {
   };
 
   return (
+    // <ModalWrapper title="Crop Image">
     <Cropper
       src={preview}
-      style={{ height: "200px", flex: 1, aspectRatio: 16 / 9 }}
+      style={{ height: "200px", flex: 1, aspectRatio: 16 / 9, maxWidth: "400px" }}
       // Cropper.js options
       viewMode={1}
       // initialAspectRatio={16 / 9}
@@ -26,6 +28,7 @@ const ImageCropper = ({ image, setCroppedImage }) => {
       // cropBoxMovable={true}
       // cropBoxResizable={true}
     />
+    // </ModalWrapper>
   );
 };
 export default ImageCropper;

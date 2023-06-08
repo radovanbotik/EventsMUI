@@ -8,6 +8,7 @@ import { Outlet } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { ToastContainer } from "react-toastify";
 import ModalManager from "../../common/modals/ModalManager";
+import "react-toastify/dist/ReactToastify.css";
 
 export const drawerWidth = 240;
 

@@ -1,7 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  isOpen: false,
   isEditing: false,
 };
 
@@ -18,5 +17,5 @@ const formSlice = createSlice({
   },
 });
 
-export const { setOpen, setEditing } = formSlice.actions;
+export const { setEditing } = formSlice.actions;
 export default formSlice.reducer;

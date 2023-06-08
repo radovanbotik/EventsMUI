@@ -47,7 +47,7 @@ export const addImage = async ({ image, filename }) => {
       },
       async () => {
         const url = await getDownloadURL(upload.snapshot.ref);
-        setDoc(doc(db, "users", auth.currentUser.uid, "photos", filename), {
+        setDoc(doc(db, "users", auth.currentUser.uid, "photos", uniqueFilename), {
           name: filename,
           url: url,
         });

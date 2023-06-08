@@ -7,8 +7,8 @@ import EventActionsMenu from "./EventActionsMenu";
 import { joinEvent, leaveEvent } from "../../../firestore/eventActions";
 // import { join } from "../../../store/profileSlice";
 
-const EventActions = (event) => {
-  const { id, attendeesId, cancelled, hostId, title } = event;
+const EventActions = ({ event }) => {
+  const { id, attendeesId, cancelled, hostId } = event;
   const { currentUser } = useSelector((store) => store.authReducer);
   const isAttending = attendeesId && attendeesId?.includes(currentUser?.id);
   const dispatch = useDispatch();
@@ -20,7 +20,6 @@ const EventActions = (event) => {
   const anchorMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };
-
   return (
     <Toolbar variant="dense" disableGutters>
       {!isAttending && (

@@ -101,24 +101,26 @@ const ImageDropzone = ({ setFiles, files }) => {
               </Box>
             ))}
         </Box>
-        <Box>
-          <Typography variant="body2">Rejected files</Typography>
-          {files &&
-            fileRejections.map(({ file, errors }) => (
-              <Box key={file.path}>
-                <Chip
-                  avatar={<Avatar alt="Natacha" src={file.preview} />}
-                  label={file.name}
-                  variant="filled"
-                  color="success"
-                />
-                <Typography>{file.size} bytes</Typography>
-                {errors.map((e) => (
-                  <Typography key={e.code}>{e.message}</Typography>
-                ))}
-              </Box>
-            ))}
-        </Box>
+        {fileRejections.length > 0 && (
+          <Box>
+            <Typography variant="body2">Rejected files</Typography>
+            {files &&
+              fileRejections.map(({ file, errors }) => (
+                <Box key={file.path}>
+                  <Chip
+                    avatar={<Avatar alt="Natacha" src={file.preview} />}
+                    label={file.name}
+                    variant="filled"
+                    color="success"
+                  />
+                  <Typography>{file.size} bytes</Typography>
+                  {errors.map((e) => (
+                    <Typography key={e.code}>{e.message}</Typography>
+                  ))}
+                </Box>
+              ))}
+          </Box>
+        )}
       </Stack>
     </Stack>
   );

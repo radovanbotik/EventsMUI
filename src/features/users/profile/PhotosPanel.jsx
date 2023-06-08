@@ -4,10 +4,12 @@ import { Box, AppBar, Toolbar, Typography, Stack, Tooltip, IconButton } from "@m
 import ImageUploader from "../../../common/photos/ImageUploader";
 import PhotosImageList from "./PhotosImageList";
 import useSubscribeToImages from "../../../hooks/useSubscribeToImages";
+import { useDispatch } from "react-redux";
+import { openModal } from "../../../store/modalSlice";
 
 const PhotosPanel = ({ owner, id }) => {
-  const [editing, setEditing] = useState(false);
   const [photos, setPhotos] = useState([]);
+  const dispatch = useDispatch();
 
   useSubscribeToImages({
     userId: id,
@@ -22,25 +24,24 @@ const PhotosPanel = ({ owner, id }) => {
           <Typography sx={{ mr: "auto" }}>User photos</Typography>
           {owner && (
             <Tooltip title="Add new photo" sx={{ color: "inherit" }}>
-              <IconButton onClick={() => setEditing((prev) => !prev)}>
+              <IconButton
+                onClick={() => {
+                  dispatch(openModal({ modalType: "photo" }));
+                }}
+              >
                 <AddPhotoAlternateOutlined />
               </IconButton>
             </Tooltip>
           )}
         </Toolbar>
       </AppBar>
-      {editing ? (
-        <ImageUploader />
-      ) : (
-        <Box>
-          <Toolbar disableGutters>
-            <Stack>
-              {/* <Typography>Number of photos: {photos.current?.length}</Typography> */}
-              <PhotosImageList photos={photos} owner={owner} />
-            </Stack>
-          </Toolbar>
-        </Box>
-      )}
+      <Box>
+        <Toolbar disableGutters>
+          <Stack>
+            <PhotosImageList photos={photos} owner={owner} />
+          </Stack>
+        </Toolbar>
+      </Box>
     </Box>
   );
 };

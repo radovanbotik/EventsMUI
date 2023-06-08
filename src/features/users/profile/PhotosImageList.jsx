@@ -1,4 +1,4 @@
-import { ImageList, ImageListItem, ImageListItemBar, Button, Stack } from "@mui/material";
+import { ImageList, ImageListItem, ImageListItemBar, Button, Stack, Box, Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { deleteImage } from "../../../firestore/profileActions";
 import { useSelector } from "react-redux";
@@ -9,10 +9,17 @@ export default function PhotosImageList({ photos, owner }) {
   const { user } = useSelector((store) => store.profileReducer);
   const theme = useTheme();
 
+  if (photos.length === 0) {
+    return (
+      <Box>
+        <Typography>User has no images to display</Typography>
+      </Box>
+    );
+  }
+  console.log(photos);
   return (
     <>
       <ImageList
-        // cols={cols()}
         sx={{
           [theme.breakpoints.up("xs")]: {
             gridTemplateColumns: "repeat(2, 1fr) !important",
@@ -53,7 +60,7 @@ export default function PhotosImageList({ photos, owner }) {
                 <Button
                   size="small"
                   sx={{ textTransform: "capitalize" }}
-                  onClick={() => deleteImage({ imageName: photo.name, userId: user.id })}
+                  onClick={() => deleteImage({ imageName: photo.id, userId: user.id })}
                 >
                   delete
                 </Button>

@@ -15,7 +15,6 @@ import EventActionsAndDate from "./EventActionsAndDate";
 
 const Event = () => {
   const { events, status, filterOptions } = useSelector((store) => store.eventReducer);
-  const { isEditing, isOpen } = useSelector((store) => store.formReducer);
   const { id } = useParams();
   const event = events?.find((event) => event.id === id);
   const dispatch = useDispatch();
@@ -50,7 +49,6 @@ const Event = () => {
         </Stack>
       </Grid>
       <Grid item xs={6}>
-        {isEditing && isOpen && <EventForm />}
         hello here
       </Grid>
     </Grid>

@@ -2,7 +2,7 @@ import DescriptionAlert from "../../../common/alerts/DescriptionAlert";
 import EventDateAndHost from "./EventDateAndHost";
 import EventActions from "./EventActions";
 import { useSelector } from "react-redux";
-import { Toolbar, Stack } from "@mui/material";
+import { Stack } from "@mui/material";
 
 const EventActionsAndDate = ({ event }) => {
   const { events } = useSelector((store) => store.eventReducer);
@@ -10,7 +10,6 @@ const EventActionsAndDate = ({ event }) => {
   return (
     <Stack
       variant="dense"
-      disableGutters
       sx={{ justifyContent: "space-between" }}
       //   direction={{ xs: "column", sm: "row" }}
       direction="row"

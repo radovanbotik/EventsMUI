@@ -10,6 +10,7 @@ const useSubscribeToImages = ({ userId, action, dependancies }) => {
         const photos = [];
         snapshot.forEach((doc) => {
           const data = doc.data();
+          data.id = doc.id;
           photos.push(data);
         });
         action(photos);
