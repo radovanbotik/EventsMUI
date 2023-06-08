@@ -2,7 +2,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Landing from "../features/landing/Landing";
 import Error from "../common/errors/Error";
 import React from "react";
-import Persistent from "./layout/Persistent";
+import Layout from "./layout/Layout";
 import PageLoader from "../common/loaders/PageLoader";
 
 const EventDashboard = React.lazy(() => import("../features/events/dashboard/EventDashboard"));
@@ -17,7 +17,7 @@ export const router = createBrowserRouter([
   {
     path: "events",
     // element: <Layout />,
-    element: <Persistent />,
+    element: <Layout />,
     children: [
       {
         errorElement: <Error />,
@@ -44,7 +44,7 @@ export const router = createBrowserRouter([
   },
   {
     path: "users",
-    element: <Persistent />,
+    element: <Layout />,
     children: [
       {
         errorElement: <Error />,
@@ -71,7 +71,7 @@ export const router = createBrowserRouter([
   },
   {
     path: "account",
-    element: <Persistent />,
+    element: <Layout />,
     children: [
       {
         errorElement: <Error />,

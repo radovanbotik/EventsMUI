@@ -107,30 +107,30 @@ const EventForm = ({ event }) => {
               name="title"
               type="text"
               placeholder="e.g Roadtrip around Hungary"
-              margin="dense"
               id="title"
+              variant="standard"
             />
             <LocationSelectAutocomplete />
-            <CalendarWithTime label="Date" name="date" />
-            <SelectAutocomplete label="Tags" name="tags" labelId="tags-label">
+            {/* <SelectAutocomplete label="Tags" name="tags" labelId="tags-label">
               {tags.map((tag) => {
                 return (
                   <MenuItem key={tag.id} value={tag.name}>
-                    <Checkbox checked={formikProps.values.tags.indexOf(tag.name) > -1} />
+                  <Checkbox checked={formikProps.values.tags.indexOf(tag.name) > -1} />
                     <ListItemText primary={tag.name} />
-                  </MenuItem>
-                );
-              })}
-            </SelectAutocomplete>
+                    </MenuItem>
+                    );
+                  })}
+                </SelectAutocomplete> */}
             <BasicInput
               label="Description"
               name="description"
               placeholder="e.g Best Event ever..."
-              margin="dense"
               multiline
               maxRows={4}
               minRows={4}
+              variant="standard"
             />
+            <CalendarWithTime label="Date" name="date" />
 
             <Toolbar disableGutters variant="dense">
               <Button type="submit" variant="contained" disabled={!formikProps.dirty || formikProps.isSubmitting}>

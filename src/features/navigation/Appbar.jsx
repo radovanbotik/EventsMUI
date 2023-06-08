@@ -1,34 +1,17 @@
 import { useState } from "react";
-import { AppBar as MuiAppBar, Toolbar, IconButton, Typography, styled, Avatar } from "@mui/material";
+import { AppBar, Toolbar, IconButton, Typography, Avatar } from "@mui/material";
 import { MenuOutlined } from "@mui/icons-material";
 import { useSelector, useDispatch } from "react-redux";
 import { signUserOut } from "../../firestore/userActions";
 import { openModal } from "../../store/modalSlice";
 import { useNavigate, useLocation } from "react-router-dom";
 import defaultPhoto from "../../common/images/defaultPhoto.jpg";
-import { drawerWidth } from "../../app/layout/Persistent";
+import { drawerWidth } from "../../app/layout/Layout";
 import BasicMenu from "../../common/menus/BasicMenu";
 import BasicButton from "../../common/buttons/BasicButton";
 import useGetPathName from "../../hooks/useGetPathName";
 
-const AppBar = styled(MuiAppBar, {
-  shouldForwardProp: (prop) => prop !== "open",
-})(({ theme, open }) => ({
-  transition: theme.transitions.create(["margin", "width"], {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  ...(open && {
-    width: `calc(100% - ${drawerWidth}px)`,
-    marginLeft: `${drawerWidth}px`,
-    transition: theme.transitions.create(["margin", "width"], {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  }),
-}));
-
-const Appbar = ({ handleDrawerOpen, open }) => {
+const Appbar = ({ handleDrawerToggle }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const { currentUser, isAuthenticated } = useSelector((store) => store.authReducer);
   const dispatch = useDispatch();
@@ -83,15 +66,20 @@ const Appbar = ({ handleDrawerOpen, open }) => {
   });
 
   return (
-    <AppBar position="absolute" open={open}>
-      <Toolbar sx={{ position: "relative", display: "flex" }}>
-        {/* Resize icon */}
+    <AppBar
+      position="fixed"
+      sx={{
+        width: { sm: `calc(100% - ${drawerWidth}px)` },
+        ml: { sm: `${drawerWidth}px` },
+      }}
+    >
+      <Toolbar>
         <IconButton
           color="inherit"
           aria-label="open drawer"
-          onClick={handleDrawerOpen}
+          onClick={handleDrawerToggle}
           edge="start"
-          sx={{ mr: 2, ...(open && { display: "none" }) }}
+          sx={{ mr: 2, display: { sm: "none" } }}
         >
           <MenuOutlined />
         </IconButton>

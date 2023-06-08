@@ -75,7 +75,9 @@ export default function LocationSelectAutocomplete() {
       onInputChange={(event, newInputValue) => {
         setInputValue(newInputValue);
       }}
-      renderInput={(params) => <TextField {...params} label="Add a location" fullWidth margin="dense" />}
+      renderInput={(params) => (
+        <TextField {...params} label="Add a location" fullWidth margin="dense" variant="standard" />
+      )}
       renderOption={(props, option) => {
         const matches = option.structured_formatting.main_text_matched_substrings || [];
 

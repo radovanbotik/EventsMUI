@@ -3,14 +3,14 @@ import SidebarActions from "./sidebar/SidebarActions";
 import SidebarEvents from "./sidebar/SidebarEvents";
 import SidebarUsers from "./sidebar/SidebarUsers";
 
-const Sidebar = () => {
+const Sidebar = ({ setMobileOpen }) => {
   return (
     <>
-      <SidebarActions />
+      <SidebarActions setMobileOpen={setMobileOpen} />
       <Divider />
-      <SidebarEvents />
+      <SidebarEvents setMobileOpen={setMobileOpen} />
       <Divider />
-      <SidebarUsers />
+      <SidebarUsers setMobileOpen={setMobileOpen} />
       <Divider />
     </>
   );

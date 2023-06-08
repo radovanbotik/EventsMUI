@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { Create } from "@mui/icons-material";
 import { openModal } from "../../../store/modalSlice";
 
-const SidebarActions = () => {
+const SidebarActions = ({ setMobileOpen }) => {
   const dispatch = useDispatch();
   return (
     <List
@@ -14,7 +14,13 @@ const SidebarActions = () => {
       }
     >
       <ListItem disablePadding>
-        <ListItemButton dense onClick={() => dispatch(openModal({ modalType: "event" }))}>
+        <ListItemButton
+          dense
+          onClick={() => {
+            dispatch(openModal({ modalType: "event" }));
+            setMobileOpen(false);
+          }}
+        >
           <ListItemIcon>
             <Create />
           </ListItemIcon>

@@ -30,7 +30,7 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
   },
 }));
 
-const SidebarEvents = () => {
+const SidebarEvents = ({ setMobileOpen }) => {
   const [count, setCount] = useState({
     active: 0,
     hosting: 0,
@@ -77,6 +77,7 @@ const SidebarEvents = () => {
       action() {
         navigate(this.location);
         applyFilter(avaibleFilter);
+        setMobileOpen(false);
       },
       icon: EventOutlined,
     },
@@ -89,6 +90,7 @@ const SidebarEvents = () => {
       action() {
         navigate(this.location);
         applyFilter(hostingFilter);
+        setMobileOpen(false);
       },
       icon: TodayOutlined,
     },
@@ -101,6 +103,7 @@ const SidebarEvents = () => {
       action() {
         navigate(this.location);
         applyFilter(attendingFilter);
+        setMobileOpen(false);
       },
       icon: EventAvailableOutlined,
     },
@@ -113,6 +116,7 @@ const SidebarEvents = () => {
       action() {
         navigate(this.location);
         applyFilter(attendedFilter);
+        setMobileOpen(false);
       },
       icon: EventRepeatOutlined,
     },
@@ -125,6 +129,7 @@ const SidebarEvents = () => {
       action() {
         navigate(this.location);
         applyFilter(expiredFilter);
+        setMobileOpen(false);
       },
       icon: EventBusyOutlined,
     },

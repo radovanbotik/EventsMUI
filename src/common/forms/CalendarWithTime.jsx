@@ -15,7 +15,9 @@ export default function CalendarWithTime({ label, ...props }) {
         label={label}
         {...field}
         {...props}
+        formatDensity="dense"
         disablePast
+        views={["day"]}
         value={dayjs(values.date)}
         onChange={(e) => {
           setFieldValue("date", e);
