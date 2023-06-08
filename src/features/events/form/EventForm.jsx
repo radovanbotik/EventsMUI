@@ -1,6 +1,6 @@
 //redux
 import { useDispatch, useSelector } from "react-redux";
-import { setEditing } from "../../../store/formSlice";
+import { setEditing } from "../../../store/eventSlice";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import dayjs from "dayjs";
@@ -11,7 +11,7 @@ import SelectAutocomplete from "../../../common/forms/SelectAutocomplete";
 import CalendarWithTime from "../../../common/forms/CalendarWithTime";
 import LocationSelectAutocomplete from "../../../common/forms/LocationSelectAutocomplete";
 import { geocodeByPlaceId, getLatLng } from "react-places-autocomplete";
-import { Tooltip, Button, MenuItem, Checkbox, ListItemText, IconButton, Stack, Toolbar } from "@mui/material";
+import { Tooltip, Button, IconButton, Stack, Toolbar } from "@mui/material";
 import { DeleteForeverOutlined } from "@mui/icons-material";
 import { addEvent, updateEvent } from "../../../firestore/eventActions";
 import ModalWrapper from "../../../common/modals/ModalWrapper";

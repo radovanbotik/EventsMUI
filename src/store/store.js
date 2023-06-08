@@ -1,6 +1,5 @@
 import { configureStore, createListenerMiddleware, getDefaultMiddleware } from "@reduxjs/toolkit";
 import eventReducer from "./eventSlice";
-import formReducer from "./formSlice";
 import modalReducer from "./modalSlice";
 import authReducer, { setInitialized } from "./authSlice";
 import profileReducer from "./profileSlice";
@@ -22,7 +21,6 @@ import { doc, onSnapshot, collection, query } from "firebase/firestore";
 const store = configureStore({
   reducer: {
     eventReducer: eventReducer,
-    formReducer: formReducer,
     modalReducer: modalReducer,
     authReducer: authReducer,
     profileReducer: profileReducer,

@@ -40,7 +40,7 @@ export default function PhotosImageList({ photos, owner }) {
       >
         {photos?.map((photo) => (
           <ImageListItem key={photo.name}>
-            <img src={photo.url} alt={photo.name} loading="lazy" />
+            <img src={photo.url} alt={photo.name} />
             <ImageListItemBar
               title={photo.name}
               position="top"

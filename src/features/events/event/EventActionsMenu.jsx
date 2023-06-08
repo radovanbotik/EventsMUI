@@ -1,7 +1,7 @@
 import { Menu, MenuItem, Button } from "@mui/material";
 import Permission from "../../../common/dialogs/Permission";
 import { useDispatch, useSelector } from "react-redux";
-import { setEditing } from "../../../store/formSlice";
+import { setEditing } from "../../../store/eventSlice";
 import { deleteEvent, cancelEvent } from "../../../firestore/eventActions";
 import { useNavigate } from "react-router-dom";
 import { openModal } from "../../../store/modalSlice";

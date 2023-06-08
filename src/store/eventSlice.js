@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   events: null,
   status: "idle",
+  editing: false,
   filterOptions: {
     attendanceType: "active",
     date: new Date().getTime(),
@@ -23,8 +24,11 @@ const slice = createSlice({
     setFilter: (state, action) => {
       state.filterOptions = action.payload;
     },
+    setEditing: (state, action) => {
+      state.editing = action.payload;
+    },
   },
 });
 
-export const { loadEvents, setFilter, setStatus } = slice.actions;
+export const { loadEvents, setFilter, setStatus, setEditing } = slice.actions;
 export default slice.reducer;
