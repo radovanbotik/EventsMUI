@@ -12,8 +12,9 @@ import CalendarWithTime from "../../../common/forms/CalendarWithTime";
 import LocationSelectAutocomplete from "../../../common/forms/LocationSelectAutocomplete";
 import { geocodeByPlaceId, getLatLng } from "react-places-autocomplete";
 import { Typography, Button, MenuItem, Checkbox, ListItemText, ButtonGroup, Stack } from "@mui/material";
-import { Form } from "react-router-dom";
 import { addEvent, updateEvent } from "../../../firestore/eventActions";
+import ModalWrapper from "../../../common/modals/ModalWrapper";
+import { closeModal } from "../../../store/modalSlice";
 
 const validationSchema = Yup.object({
   title: Yup.string("Enter title of your event.")
@@ -43,7 +44,7 @@ const EventForm = () => {
   const handleSubmit = ({ isEditing, formdata }) => {
     if (!isEditing) {
       addEvent({ formdata: formdata, user: currentUser });
-      dispatch(setOpen(false));
+      dispatch(closeModal());
       return;
     } else {
       updateEvent({
@@ -53,104 +54,114 @@ const EventForm = () => {
         hostId: event.hostId,
       });
       dispatch(setEditing(false));
-      dispatch(setOpen(false));
+      dispatch(closeModal());
 
       return;
     }
   };
 
   return (
-    <Formik
-      initialValues={event && isEditing ? event : initialValues}
-      validationSchema={validationSchema}
-      onSubmit={async (values, { setSubmitting }) => {
-        console.log(values);
-        try {
-          let coords;
-          const geocode = await geocodeByPlaceId(values.location.place_id);
-          const latLng = await getLatLng(geocode[0]);
-          coords = latLng;
-          let newValues;
-          if (coords) {
-            newValues = {
-              ...values,
-              date: dayjs(values.date).toDate(),
-              location: {
-                place_id: values.location.place_id,
-                description: values.location.description,
-                latLng: coords,
-              },
-            };
+    <ModalWrapper title={isEditing ? "Edit event" : "New event"}>
+      <Formik
+        initialValues={event && isEditing ? event : initialValues}
+        validationSchema={validationSchema}
+        onSubmit={async (values, { setSubmitting }) => {
+          console.log(values);
+          try {
+            let coords;
+            const geocode = await geocodeByPlaceId(values.location.place_id);
+            const latLng = await getLatLng(geocode[0]);
+            coords = latLng;
+            let newValues;
+            if (coords) {
+              newValues = {
+                ...values,
+                date: dayjs(values.date).toDate(),
+                location: {
+                  place_id: values.location.place_id,
+                  description: values.location.description,
+                  latLng: coords,
+                },
+              };
+            }
+            handleSubmit({ isEditing: isEditing, formdata: newValues });
+            setSubmitting(false);
+          } catch (error) {
+            setSubmitting(false);
+            console.log(error);
           }
-          handleSubmit({ isEditing: isEditing, formdata: newValues });
-          setSubmitting(false);
-        } catch (error) {
-          setSubmitting(false);
-          console.log(error);
-        }
-      }}
-    >
-      {(formikProps) => (
-        <Stack useFlexGap spacing={1} sx={{ p: 4 }} component={Form} onSubmit={formikProps.handleSubmit}>
-          <Typography variant="h5">{isEditing ? "Edit event" : "Create new event"}</Typography>
-          <BasicInput
-            label="Title"
-            name="title"
-            type="text"
-            placeholder="e.g Roadtrip around Hungary"
-            margin="dense"
-            id="title"
-          />
-          <LocationSelectAutocomplete />
-          <CalendarWithTime label="Date" name="date" />
-          <SelectAutocomplete label="Tags" name="tags" labelId="tags-label">
-            {tags.map((tag) => {
-              return (
-                <MenuItem key={tag.id} value={tag.name}>
-                  <Checkbox checked={formikProps.values.tags.indexOf(tag.name) > -1} />
-                  <ListItemText primary={tag.name} />
-                </MenuItem>
-              );
-            })}
-          </SelectAutocomplete>
-          <BasicInput
-            label="Description"
-            name="description"
-            placeholder="e.g Best Event ever..."
-            margin="dense"
-            multiline
-            maxRows={4}
-            minRows={4}
-          />
+        }}
+      >
+        {(formikProps) => (
+          <Stack
+            useFlexGap
+            spacing={1}
+            sx={{ p: 4 }}
+            component="form"
+            onSubmit={(e) => {
+              e.preventDefault();
+              formikProps.handleSubmit();
+            }}
+          >
+            <BasicInput
+              label="Title"
+              name="title"
+              type="text"
+              placeholder="e.g Roadtrip around Hungary"
+              margin="dense"
+              id="title"
+            />
+            <LocationSelectAutocomplete />
+            <CalendarWithTime label="Date" name="date" />
+            <SelectAutocomplete label="Tags" name="tags" labelId="tags-label">
+              {tags.map((tag) => {
+                return (
+                  <MenuItem key={tag.id} value={tag.name}>
+                    <Checkbox checked={formikProps.values.tags.indexOf(tag.name) > -1} />
+                    <ListItemText primary={tag.name} />
+                  </MenuItem>
+                );
+              })}
+            </SelectAutocomplete>
+            <BasicInput
+              label="Description"
+              name="description"
+              placeholder="e.g Best Event ever..."
+              margin="dense"
+              multiline
+              maxRows={4}
+              minRows={4}
+            />
 
-          <ButtonGroup fullWidth size="medium" sx={{ mt: 4, gap: 2 }}>
-            <Button
-              type="button"
-              variant="contained"
-              onClick={() => {
-                if (isEditing) {
-                  dispatch(setEditing(false));
-                }
-                dispatch(setOpen(false));
-              }}
-            >
-              Cancel
-            </Button>
-            <Button
-              type="submit"
-              variant="contained"
-              sx={{
-                bgcolor: formikProps.isValid ? "primary.main" : "error.main",
-              }}
-              // disabled={formikProps.isValid ? false : true}
-              disabled={!formikProps.dirty || formikProps.isSubmitting}
-            >
-              Submit
-            </Button>
-          </ButtonGroup>
-        </Stack>
-      )}
-    </Formik>
+            <ButtonGroup fullWidth size="medium" sx={{ mt: 4, gap: 2 }}>
+              <Button
+                type="button"
+                variant="contained"
+                onClick={() => {
+                  if (isEditing) {
+                    dispatch(setEditing(false));
+                  }
+                  dispatch(closeModal());
+                }}
+              >
+                Cancel
+              </Button>
+              <Button
+                type="submit"
+                variant="contained"
+                sx={{
+                  bgcolor: formikProps.isValid ? "primary.main" : "error.main",
+                }}
+                // disabled={formikProps.isValid ? false : true}
+                disabled={!formikProps.dirty || formikProps.isSubmitting}
+              >
+                Submit
+              </Button>
+            </ButtonGroup>
+          </Stack>
+        )}
+      </Formik>
+    </ModalWrapper>
   );
 };
 

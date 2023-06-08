@@ -5,6 +5,7 @@ import { setEditing, setOpen } from "../../../store/formSlice";
 import { deleteEvent, cancelEvent } from "../../../firestore/eventActions";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { openModal } from "../../../store/modalSlice";
 
 const EventActionsMenu = ({ handleClose, anchorEl, id, cancelled, hostId }) => {
   const dispatch = useDispatch();
@@ -27,7 +28,7 @@ const EventActionsMenu = ({ handleClose, anchorEl, id, cancelled, hostId }) => {
           sx={{ textTransform: "capitalize" }}
           onClick={() => {
             dispatch(setEditing(true));
-            dispatch(setOpen(true));
+            dispatch(openModal({ modalType: "event" }));
           }}
         >
           Edit

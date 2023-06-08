@@ -1,50 +1,31 @@
 import React, { useEffect, useState } from "react";
-import { AccountCircle, ModeEdit } from "@mui/icons-material";
-import { Box, AppBar, Button, Toolbar, Typography, Stack } from "@mui/material";
+import { PhotoLibraryOutlined, AddPhotoAlternateOutlined } from "@mui/icons-material";
+import { Box, AppBar, Toolbar, Typography, Stack, Tooltip, IconButton } from "@mui/material";
 import ImageUploader from "../../../common/photos/ImageUploader";
 import PhotosImageList from "./PhotosImageList";
-import { onSnapshot, doc, collection, Timestamp } from "firebase/firestore";
-import { db } from "../../../config/firebase";
+import useSubscribeToImages from "../../../hooks/useSubscribeToImages";
 
 const PhotosPanel = ({ owner, id }) => {
   const [editing, setEditing] = useState(false);
   const [photos, setPhotos] = useState([]);
 
-  useEffect(() => {
-    const unsubscribe = onSnapshot(
-      collection(db, "users", id, "photos"),
-      (snapshot) => {
-        const photos = [];
-        snapshot.forEach((doc) => {
-          const data = doc.data();
-          photos.push(data);
-        });
-        setPhotos(photos);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
-
-    return () => unsubscribe();
-  }, [id]);
-
+  useSubscribeToImages({
+    userId: id,
+    action: (photos) => setPhotos(photos),
+    dependancies: [id],
+  });
   return (
-    <div>
+    <Box>
       <AppBar position="static" sx={{ mb: 2 }}>
         <Toolbar variant="dense" sx={{ display: "flex" }}>
-          <AccountCircle sx={{ mr: 2 }} />
+          <PhotoLibraryOutlined sx={{ mr: 2 }} />
           <Typography sx={{ mr: "auto" }}>User photos</Typography>
           {owner && (
-            <Button
-              variant="contained"
-              size="small"
-              sx={{ bgcolor: "primary.light" }}
-              // endIcon={<ModeEdit sx={{ width: 16, height: 16 }} />}
-              onClick={() => setEditing((prev) => !prev)}
-            >
-              {editing ? "Cancel" : "Add photo"}
-            </Button>
+            <Tooltip title="Add new photo" sx={{ color: "inherit" }}>
+              <IconButton onClick={() => setEditing((prev) => !prev)}>
+                <AddPhotoAlternateOutlined />
+              </IconButton>
+            </Tooltip>
           )}
         </Toolbar>
       </AppBar>
@@ -60,7 +41,7 @@ const PhotosPanel = ({ owner, id }) => {
           </Toolbar>
         </Box>
       )}
-    </div>
+    </Box>
   );
 };
 

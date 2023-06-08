@@ -2,6 +2,7 @@ import { List, ListSubheader, ListItem, ListItemButton, ListItemIcon, ListItemTe
 import { useDispatch } from "react-redux";
 import { setOpen } from "../../../store/formSlice";
 import { Create } from "@mui/icons-material";
+import { openModal } from "../../../store/modalSlice";
 
 const SidebarActions = () => {
   const dispatch = useDispatch();
@@ -14,7 +15,7 @@ const SidebarActions = () => {
       }
     >
       <ListItem disablePadding>
-        <ListItemButton dense onClick={() => dispatch(setOpen(true))}>
+        <ListItemButton dense onClick={() => dispatch(openModal({ modalType: "event" }))}>
           <ListItemIcon>
             <Create />
           </ListItemIcon>

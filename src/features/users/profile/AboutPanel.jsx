@@ -1,12 +1,13 @@
-import { useState } from "react";
-import { AccountCircle } from "@mui/icons-material";
-import { Box, AppBar, Button, Toolbar, Typography, Stack } from "@mui/material";
+import { AccountCircle, EditOutlined } from "@mui/icons-material";
+import { Box, AppBar, Toolbar, Typography, Stack, IconButton, Tooltip } from "@mui/material";
 import dayjs from "dayjs";
-import AboutProfileForm from "./AboutProfileForm";
+import { useDispatch } from "react-redux";
+import { openModal } from "../../../store/modalSlice";
+import formatDates from "../../../common/util/formatDates";
 
 const AboutPanel = (props) => {
   const { owner, createdAt, description } = props;
-  const [editing, setEditing] = useState(false);
+  const dispatch = useDispatch();
   return (
     <>
       <AppBar position="static" sx={{ mb: 2 }}>
@@ -14,30 +15,28 @@ const AboutPanel = (props) => {
           <AccountCircle sx={{ mr: 2 }} />
           <Typography sx={{ mr: "auto" }}>About User</Typography>
           {owner && (
-            <Button
-              variant="contained"
-              size="small"
-              sx={{ bgcolor: "primary.light" }}
-              // endIcon={<ModeEdit sx={{ width: 16, height: 16 }} />}
-              onClick={() => setEditing((prev) => !prev)}
-            >
-              {editing ? "Cancel" : "Edit"}
-            </Button>
+            <Tooltip sx={{ color: "inherit" }} title="Edit this section">
+              <IconButton
+                onClick={() => {
+                  dispatch(openModal({ modalType: "about", modalProps: { content: description } }));
+                }}
+              >
+                <EditOutlined />
+              </IconButton>
+            </Tooltip>
           )}
         </Toolbar>
       </AppBar>
-      {editing ? (
-        <AboutProfileForm {...props} />
-      ) : (
-        <Box>
-          <Toolbar disableGutters>
-            <Stack>
-              <Typography>Member since:{dayjs(createdAt).format("DD/MM/YYYY")}</Typography>
-              <Typography>{description || "No info to display"} </Typography>
-            </Stack>
-          </Toolbar>
-        </Box>
-      )}
+      <Box>
+        <Toolbar disableGutters>
+          <Stack>
+            <Toolbar disableGutters variant="dense" sx={{ color: "text.secondary" }}>
+              <Typography>Member since:{formatDates({ date: createdAt, format: "DD/MM/YYYY" })}</Typography>
+            </Toolbar>
+            <Typography>{description || "No info to display"} </Typography>
+          </Stack>
+        </Toolbar>
+      </Box>
     </>
   );
 };

@@ -6,15 +6,13 @@ import { deleteObject, getDownloadURL, ref, uploadBytesResumable } from "firebas
 import { v4 as uuidv4 } from "uuid";
 import getFileExtension from "../common/util/getFileExtension";
 
-export const updateUser = async ({ updates, userId }) => {
-  if (userId === auth.currentUser.uid) {
-    try {
-      await updateProfile(auth.currentUser, updates);
-      await updateDoc(doc(db, "users", auth.currentUser.uid), updates);
-      toast.success("Your profile has been updated.");
-    } catch (error) {
-      toast.error(`${error.message}`);
-    }
+export const updateUser = async ({ updates }) => {
+  try {
+    await updateProfile(auth.currentUser, updates);
+    await updateDoc(doc(db, "users", auth.currentUser.uid), updates);
+    toast.success("Your profile has been updated.");
+  } catch (error) {
+    toast.error(`${error.message}`);
   }
 };
 
