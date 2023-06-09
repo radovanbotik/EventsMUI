@@ -3,8 +3,8 @@ import YupPassword from "yup-password";
 YupPassword(Yup); // extend yup
 import { Formik } from "formik";
 import { Box, Button, ButtonGroup, Stack, Typography } from "@mui/material";
-import PasswordInput from "../../../common/forms/PasswordInput";
-import { updateUsersPassword } from "../../../firestore/userActions";
+import PasswordInput from "../../common/forms/PasswordInput";
+import { updateUsersPassword } from "../../firestore/userActions";
 
 const validationSchema = Yup.object({
   password: Yup.string().password().required("This field is required."),

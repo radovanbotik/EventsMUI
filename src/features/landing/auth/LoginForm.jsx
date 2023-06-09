@@ -3,14 +3,15 @@ import YupPassword from "yup-password";
 YupPassword(Yup); // extend yup
 import { Formik } from "formik";
 import BasicInput from "../../../common/forms/BasicInput";
-import { useDispatch } from "react-redux";
 import { signUserIn } from "../../../firestore/userActions";
 import { Button, Link, Stack } from "@mui/material";
 import PasswordInput from "../../../common/forms/PasswordInput";
 import { grey } from "@mui/material/colors";
+import { useNavigate } from "react-router-dom";
 
 const RegisterForm = () => {
-  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   return (
     <Formik
       initialValues={{
@@ -22,7 +23,7 @@ const RegisterForm = () => {
         password: Yup.string().password().required("This field is requried."),
       })}
       onSubmit={(values) => {
-        signUserIn({ email: values.email, password: values.password });
+        signUserIn({ email: values.email, password: values.password, action: () => navigate("/events") });
       }}
     >
       {(formikProps) => (

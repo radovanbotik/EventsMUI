@@ -3,12 +3,12 @@ import YupPassword from "yup-password";
 YupPassword(Yup); // extend yup
 import { Formik } from "formik";
 import BasicInput from "../../../common/forms/BasicInput";
-import { useDispatch } from "react-redux";
-import { signUserIn } from "../../../firestore/userActions";
+import { signUpNewUser } from "../../../firestore/userActions";
 import { Button, Stack, Typography } from "@mui/material";
 import PasswordInput from "../../../common/forms/PasswordInput";
 import { grey } from "@mui/material/colors";
 import Popover from "./Popover";
+import { useNavigate } from "react-router-dom";
 
 const tos =
   "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Corrupti numquam excepturi itaque officiis facere ullam, temporibus quia autem repellendus ipsam voluptates vero, maiores, nam corporis modi. Accusantium unde architecto natus, veritatis atque ipsum, minus possimus qui sequi obcaecati sed ab dignissimos error. Qui voluptas dolor dolores est amet quia nostrum.";
@@ -17,7 +17,8 @@ const privacyPolicy =
   "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Corrupti numquam excepturi itaque officiis facere ullam, temporibus quia autem repellendus ipsam voluptates vero, maiores, nam corporis modi. Accusantium unde architecto natus, veritatis atque ipsum, minus possimus qui sequi obcaecati sed ab dignissimos error. Qui voluptas dolor dolores est amet quia nostrum.";
 
 const RegisterForm = () => {
-  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   return (
     <Formik
       initialValues={{
@@ -31,7 +32,7 @@ const RegisterForm = () => {
         password2: Yup.string().oneOf([Yup.ref("password"), null], "Passwords must match."),
       })}
       onSubmit={(values) => {
-        signUserIn({ email: values.email, password: values.password });
+        signUpNewUser({ email: values.email, password: values.password, action: () => navigate("/events") });
       }}
     >
       {(formikProps) => (

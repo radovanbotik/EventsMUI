@@ -21,7 +21,7 @@ const UserSummary = ({ userId }) => {
       <Stack>
         <Box mb={4} sx={{ display: "grid", justifyItems: "center", gap: 2 }}>
           <Avatar src={user.photoURL || defaultImage} sx={{ width: 84, height: 84 }} />
-          <Typography gutterBottom>Radovan Botik</Typography>
+          <Typography gutterBottom>{user.displayName}</Typography>
         </Box>
         <List>
           {/* <ListItem divider dense disablePadding>
@@ -30,14 +30,14 @@ const UserSummary = ({ userId }) => {
           <ListItem divider dense disablePadding>
             <ListItemText
               primary="Followers"
-              secondary={user.followers}
+              secondary={user.followers || 0}
               sx={{ display: "flex", justifyContent: "space-between" }}
             />
           </ListItem>
           <ListItem divider dense disablePadding>
             <ListItemText
               primary="Following"
-              secondary={user.following}
+              secondary={user.following || 0}
               sx={{ display: "flex", justifyContent: "space-between" }}
             />
           </ListItem>

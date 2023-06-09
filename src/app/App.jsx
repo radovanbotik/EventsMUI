@@ -9,7 +9,7 @@ const EventDashboard = React.lazy(() => import("../features/events/dashboard/Eve
 const Event = React.lazy(() => import("../features/events/event/Event"));
 const Users = React.lazy(() => import("../features/users/users/Users"));
 const Profile = React.lazy(() => import("../features/users/profile/Profile"));
-const Account = React.lazy(() => import("../features/auth/account/Account"));
+const Account = React.lazy(() => import("../features/account/Account"));
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const router = createBrowserRouter([

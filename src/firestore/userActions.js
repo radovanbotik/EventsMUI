@@ -12,7 +12,7 @@ import { Timestamp, doc, setDoc } from "firebase/firestore";
 import { toast } from "react-toastify";
 import dayjs from "dayjs";
 
-export const signUpNewUser = async ({ email, password }) => {
+export const signUpNewUser = async ({ email, password, action }) => {
   try {
     const { user: userdata } = await createUserWithEmailAndPassword(auth, email, password);
     const user = {
@@ -25,15 +25,17 @@ export const signUpNewUser = async ({ email, password }) => {
     };
 
     await setDoc(doc(db, "users", userdata.uid), user);
+    action();
     toast.success("You have succesfully registered.");
   } catch (error) {
     toast.error(`${error.message}`);
   }
 };
 
-export const signUserIn = async ({ email, password }) => {
+export const signUserIn = async ({ email, password, action }) => {
   try {
     await signInWithEmailAndPassword(auth, email, password);
+    action();
     toast.success("You have signed in.");
   } catch (error) {
     console.log(error);
@@ -51,7 +53,7 @@ export const signUserOut = async () => {
   }
 };
 
-export const signUserWithGoogle = async () => {
+export const signUserWithGoogle = async ({ action }) => {
   try {
     const provider = new GoogleAuthProvider();
     const result = await signInWithPopup(auth, provider);
@@ -67,6 +69,7 @@ export const signUserWithGoogle = async () => {
       };
       await setDoc(doc(db, "users", result.user.uid), newUser);
     }
+    action();
     toast.success("You have signed in.");
   } catch (error) {
     console.log(error);
