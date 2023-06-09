@@ -6,10 +6,10 @@ const AuthButtons = () => {
   const dispatch = useDispatch();
   return (
     <>
-      <Button variant="contained" action={() => dispatch(openModal({ modalType: "register" }))}>
+      <Button variant="contained" onClick={() => dispatch(openModal({ modalType: "register" }))}>
         Register
       </Button>
-      <Button variant="contained" action={() => dispatch(openModal({ modalType: "login" }))}>
+      <Button variant="contained" onClick={() => dispatch(openModal({ modalType: "login" }))}>
         Log In
       </Button>
     </>

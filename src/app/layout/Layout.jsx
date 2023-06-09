@@ -2,13 +2,14 @@ import * as React from "react";
 import PropTypes from "prop-types";
 import CssBaseline from "@mui/material/CssBaseline";
 import Appbar from "../../features/navigation/appbar/Appbar";
-import Sidebar from "../../features/navigation/Sidebar";
+import Sidebar from "../../features/navigation/sidebar/Sidebar";
 import { Toolbar, Drawer, Box, Divider } from "@mui/material";
 import { Outlet } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import ModalManager from "../../common/modals/ModalManager";
 import "react-toastify/dist/ReactToastify.css";
 import { useSelector } from "react-redux";
+import useGoogleMaps from "../../hooks/useGoogleMaps";
 
 export const drawerWidth = 240;
 
@@ -31,13 +32,12 @@ function ResponsiveDrawer(props) {
   );
 
   const { currentUser } = useSelector((store) => store.authReducer);
-
+  useGoogleMaps();
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
       <ToastContainer />
       <ModalManager />
-
       <Appbar handleDrawerToggle={handleDrawerToggle} />
       <Box component="nav" sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }} aria-label="mailbox folders">
         {currentUser && (

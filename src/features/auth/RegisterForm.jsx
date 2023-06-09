@@ -6,58 +6,59 @@ import { Formik } from "formik";
 import BasicInput from "../../common/forms/BasicInput";
 import { useDispatch } from "react-redux";
 import { closeModal } from "../../store/modalSlice";
-import { Paper, Button, ButtonGroup, Divider } from "@mui/material";
+import { Paper, Button, ButtonGroup, Divider, Stack, Box, Chip, Typography } from "@mui/material";
 import SignInWithGoogle from "./SignInWithGoogle";
 import { signUpNewUser } from "../../firestore/userActions";
+import Join from "../../common/svg/Join";
 
 const RegisterForm = () => {
   const dispatch = useDispatch();
 
   return (
     <ModalWrapper title={"Register your account"}>
-      <Formik
-        initialValues={{
-          email: "",
-          password: "",
-        }}
-        validationSchema={Yup.object({
-          email: Yup.string().email("Please enter a valid email").required("This field is required."),
-          password: Yup.string().password().required("This field is requried."),
-        })}
-        onSubmit={(values) => {
-          signUpNewUser({ email: values.email, password: values.password });
-          dispatch(closeModal());
-        }}
-      >
-        {(formikProps) => (
-          <Paper
-            sx={{ display: "flex", flexDirection: "column", p: 2 }}
-            component="form"
-            onSubmit={(e) => {
-              e.preventDefault();
-              formikProps.handleSubmit();
-            }}
-          >
-            <BasicInput margin="dense" name="email" label="Email" placeholder="poopypants@gmail.com" type="email" />
-            <BasicInput margin="dense" name="password" label="Password" placeholder="StinkyPoop123!" type="password" />
-            <ButtonGroup fullWidth sx={{ mt: 2 }}>
-              <Button
-                type="button"
-                onClick={() => {
-                  dispatch(closeModal());
-                }}
-              >
-                Cancel
-              </Button>
+      <Stack direction={{ xs: "column", md: "row" }} spacing={4} p={2}>
+        <Formik
+          initialValues={{
+            email: "",
+            password: "",
+          }}
+          validationSchema={Yup.object({
+            email: Yup.string().email("Please enter a valid email").required("This field is required."),
+            password: Yup.string().password().required("This field is requried."),
+          })}
+          onSubmit={(values) => {
+            signUpNewUser({ email: values.email, password: values.password });
+            dispatch(closeModal());
+          }}
+        >
+          {(formikProps) => (
+            <Stack
+              sx={{ flex: 1, placeContent: "center" }}
+              spacing={2}
+              component="form"
+              onSubmit={(e) => {
+                e.preventDefault();
+                formikProps.handleSubmit();
+              }}
+            >
+              <Stack>
+                <BasicInput name="email" label="Email" variant="standard" type="email" />
+                <BasicInput name="password" label="Password" variant="standard" type="password" />
+              </Stack>
               <Button type="submit" variant="contained">
-                Submit
+                Register
               </Button>
-            </ButtonGroup>
-            <Divider sx={{ my: 4 }} />
-            <SignInWithGoogle />
-          </Paper>
-        )}
-      </Formik>
+              <Divider>
+                <Chip label="Sign in using Google" />
+              </Divider>
+              <SignInWithGoogle />
+            </Stack>
+          )}
+        </Formik>
+        <Box sx={{ flex: 1 }}>
+          <Join />
+        </Box>
+      </Stack>
     </ModalWrapper>
   );
 };

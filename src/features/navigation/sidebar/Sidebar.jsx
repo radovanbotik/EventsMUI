@@ -1,7 +1,7 @@
 import { Divider } from "@mui/material";
-import SidebarActions from "./sidebar/SidebarActions";
-import SidebarEvents from "./sidebar/SidebarEvents";
-import SidebarUsers from "./sidebar/SidebarUsers";
+import SidebarActions from "./SidebarActions";
+import SidebarEvents from "./SidebarEvents";
+import SidebarUsers from "./SidebarUsers";
 
 const Sidebar = ({ setMobileOpen }) => {
   return (

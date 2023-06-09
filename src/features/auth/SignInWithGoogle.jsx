@@ -8,13 +8,15 @@ const SignInWithGoogle = () => {
   return (
     <Button
       variant="contained"
+      size="large"
+      sx={{ textTransform: "capitalize" }}
       type="button"
       onClick={() => {
         signUserWithGoogle();
         dispatch(closeModal());
       }}
     >
-      Google
+      Sign In With Google
     </Button>
   );
 };
