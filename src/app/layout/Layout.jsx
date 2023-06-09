@@ -10,6 +10,7 @@ import ModalManager from "../../common/modals/ModalManager";
 import "react-toastify/dist/ReactToastify.css";
 import { useSelector } from "react-redux";
 import useGoogleMaps from "../../hooks/useGoogleMaps";
+import PageLoader from "../../common/loaders/PageLoader";
 
 export const drawerWidth = 240;
 
@@ -33,6 +34,10 @@ function ResponsiveDrawer(props) {
 
   const { currentUser } = useSelector((store) => store.authReducer);
   useGoogleMaps();
+
+  if (!currentUser) {
+    return <PageLoader />;
+  }
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />

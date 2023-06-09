@@ -1,6 +1,4 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { joinEvent } from "../firestore/eventActions";
-import { toast } from "react-toastify";
 
 const initialState = {
   user: null,

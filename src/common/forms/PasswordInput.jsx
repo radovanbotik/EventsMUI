@@ -1,5 +1,5 @@
 import React from "react";
-import { FormControl, InputLabel, OutlinedInput, InputAdornment, IconButton, Typography } from "@mui/material";
+import { FormControl, InputLabel, OutlinedInput, InputAdornment, IconButton, FormHelperText } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useField } from "formik";
 
@@ -12,13 +12,12 @@ const PasswordInput = ({ label, ...props }) => {
   const [field, meta, helpers] = useField(props);
 
   return (
-    <FormControl variant="outlined" margin="dense">
+    <FormControl>
       <InputLabel htmlFor="outlined-adornment-password">{label}</InputLabel>
       <OutlinedInput
         {...field}
         {...props}
         type={showPassword ? "text" : "password"}
-        // helperText={meta.touched && meta.error}
         error={meta.touched && Boolean(meta.error)}
         endAdornment={
           <InputAdornment position="end">
@@ -34,7 +33,16 @@ const PasswordInput = ({ label, ...props }) => {
         }
         label={label}
       />
-      {meta.touched && Boolean(meta.error) && <Typography color="error">{meta.touched && meta.error}</Typography>}
+      {meta.touched && Boolean(meta.error) && (
+        <FormHelperText
+          error
+          variant="outlined"
+          margin="dense"
+          sx={{ ":first-letter": { textTransform: "capitalize" } }}
+        >
+          {meta.touched && meta.error}
+        </FormHelperText>
+      )}
     </FormControl>
   );
 };
