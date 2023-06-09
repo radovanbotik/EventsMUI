@@ -11,7 +11,7 @@ const Auth = () => {
   const [member, setMember] = useState(false);
 
   return (
-    <Box sx={{ width: "480px", px: 10, py: 8 }} direction="column">
+    <Box sx={{ width: { xs: "100%", md: "480px" }, px: 10, py: 8 }} direction="column">
       <Logo />
       <Title member={member} setMember={setMember} />
       <SocialLogin />
