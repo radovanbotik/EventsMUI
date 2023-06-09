@@ -29,9 +29,12 @@ const store = configureStore({
   // middleware: getDefaultMiddleware => getDefaultMiddleware().prepend(listener.middleware),
 });
 
-onAuthStateChanged(auth, (user) => {
+onAuthStateChanged(auth, async (user) => {
   if (user) {
-    const unsub = onSnapshot(doc(db, "users", user.uid), (doc) => {
+    console.log(user);
+    // store.dispatch(setUser({ user: user.uid, authenticated: true }));
+
+    onSnapshot(doc(db, "users", user.uid), (doc) => {
       store.dispatch(
         setUser({
           user: {
@@ -39,7 +42,6 @@ onAuthStateChanged(auth, (user) => {
             photoURL: doc.data().photoURL,
             displayName: doc.data().displayName,
             id: user.uid,
-            // providerId: user.providerData[0].providerId,
           },
           authenticated: true,
         })
@@ -49,7 +51,7 @@ onAuthStateChanged(auth, (user) => {
   } else {
     console.log("not authenticated");
     store.dispatch(setUser({ user: null, authenticated: false }));
-    store.dispatch(setInitialized(true));
+    // store.dispatch(setInitialized(true));
   }
 });
 

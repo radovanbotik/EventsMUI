@@ -1,14 +1,14 @@
 import * as React from "react";
 import PropTypes from "prop-types";
 import CssBaseline from "@mui/material/CssBaseline";
-import Appbar from "../../features/navigation/Appbar";
+import Appbar from "../../features/navigation/appbar/Appbar";
 import Sidebar from "../../features/navigation/Sidebar";
 import { Toolbar, Drawer, Box, Divider } from "@mui/material";
 import { Outlet } from "react-router-dom";
-import { useSelector } from "react-redux";
 import { ToastContainer } from "react-toastify";
 import ModalManager from "../../common/modals/ModalManager";
 import "react-toastify/dist/ReactToastify.css";
+import { useSelector } from "react-redux";
 
 export const drawerWidth = 240;
 
@@ -21,7 +21,6 @@ function ResponsiveDrawer(props) {
   };
 
   const container = window !== undefined ? () => window().document.body : undefined;
-  const { isInitialized, currentUser } = useSelector((store) => store.authReducer);
 
   const drawer = (
     <Box>
@@ -31,6 +30,8 @@ function ResponsiveDrawer(props) {
     </Box>
   );
 
+  const { currentUser } = useSelector((store) => store.authReducer);
+
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
@@ -39,36 +40,39 @@ function ResponsiveDrawer(props) {
 
       <Appbar handleDrawerToggle={handleDrawerToggle} />
       <Box component="nav" sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }} aria-label="mailbox folders">
-        {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
-        <Drawer
-          container={container}
-          variant="temporary"
-          open={mobileOpen}
-          onClose={handleDrawerToggle}
-          ModalProps={{
-            keepMounted: true, // Better open performance on mobile.
-          }}
-          sx={{
-            display: { xs: "block", sm: "none" },
-            "& .MuiDrawer-paper": { boxSizing: "border-box", width: drawerWidth },
-          }}
-        >
-          {isInitialized && currentUser && drawer}
-        </Drawer>
-        <Drawer
-          variant="permanent"
-          sx={{
-            display: { xs: "none", sm: "block" },
-            "& .MuiDrawer-paper": { boxSizing: "border-box", width: drawerWidth },
-          }}
-          open
-        >
-          {isInitialized && currentUser && drawer}
-        </Drawer>
+        {currentUser && (
+          <Drawer
+            container={container}
+            variant="temporary"
+            open={mobileOpen}
+            onClose={handleDrawerToggle}
+            ModalProps={{
+              keepMounted: true,
+            }}
+            sx={{
+              display: { xs: "block", sm: "none" },
+              "& .MuiDrawer-paper": { boxSizing: "border-box", width: drawerWidth },
+            }}
+          >
+            {currentUser && drawer}
+          </Drawer>
+        )}
+        {currentUser && (
+          <Drawer
+            variant="permanent"
+            sx={{
+              display: { xs: "none", sm: "block" },
+              "& .MuiDrawer-paper": { boxSizing: "border-box", width: drawerWidth },
+            }}
+            open
+          >
+            {currentUser && drawer}
+          </Drawer>
+        )}
       </Box>
       <Box component="main" sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}>
         <Toolbar />
-        {isInitialized && <Outlet />}
+        {currentUser && <Outlet />}
       </Box>
     </Box>
   );
