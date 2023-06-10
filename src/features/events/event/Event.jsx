@@ -6,7 +6,7 @@ import EventChat from "./EventChat";
 import EventGuests from "./EventGuests";
 import EventForm from "../../../features/events/form/EventForm";
 import { useDispatch, useSelector } from "react-redux";
-import { Grid, Box, Stack, Divider, Typography } from "@mui/material";
+import { Grid, Box, Stack, Divider, Typography, Container } from "@mui/material";
 import useSubscribeToEvent from "../../../hooks/useSubscribeToEvent";
 import { loadEvents } from "../../../store/eventSlice";
 import PageLoader from "../../../common/loaders/PageLoader";
@@ -33,25 +33,20 @@ const Event = () => {
     return <PageLoader />;
   }
   return (
-    <Grid container columns={{ xs: 6, lg: 12 }}>
-      <Grid item xs={6} sx={{ p: 4 }}>
-        <Stack spacing={2}>
-          <EventImageMap {...event} mapOpen={mapOpen} />
-          <Divider />
-          <EventActionsAndDate event={event} />
-          <EventInfo {...event} toggleMap={toggleMap} mapOpen={mapOpen} />
-          <Divider />
-          <EventGuests {...event} filterOptions={filterOptions} />
-          <Divider />
-          <Typography>{event.description}</Typography>
-          <Divider />
-          <EventChat {...event} />
-        </Stack>
-      </Grid>
-      <Grid item xs={6}>
-        hello here
-      </Grid>
-    </Grid>
+    <Container maxWidth="lg">
+      <Stack spacing={2}>
+        <EventImageMap {...event} mapOpen={mapOpen} />
+        <Divider />
+        <EventActionsAndDate event={event} />
+        <EventInfo {...event} toggleMap={toggleMap} mapOpen={mapOpen} />
+        <Divider />
+        <EventGuests {...event} filterOptions={filterOptions} />
+        <Divider />
+        <Typography>{event.description}</Typography>
+        <Divider />
+        <EventChat {...event} />
+      </Stack>
+    </Container>
   );
 };
 

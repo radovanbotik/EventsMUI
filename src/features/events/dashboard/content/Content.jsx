@@ -3,7 +3,7 @@ import Events from "./Events";
 import Column from "./column/Column";
 
 const Content = ({ events }) => {
-  if (!events) {
+  if (!events || events.length <= 1) {
     return <div>loading...</div>;
   }
   return (

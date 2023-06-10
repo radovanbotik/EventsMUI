@@ -3,7 +3,7 @@ import Post from "./Post";
 import PostSmall from "./PostSmall";
 
 const Featured = ({ events }) => {
-  if (!events)
+  if (!events || events.length <= 1)
     return (
       <Box sx={{ display: "flex", flexDirection: "column", height: "100%" }}>
         <Box

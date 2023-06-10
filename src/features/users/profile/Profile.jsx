@@ -3,7 +3,7 @@ import ProfileHeader from "./ProfileHeader";
 import ProfileContent from "./ProfileContent";
 import { useDispatch, useSelector } from "react-redux";
 import { setViewedUser } from "../../../store/profileSlice";
-import { CircularProgress, Box } from "@mui/material";
+import { CircularProgress, Box, Container } from "@mui/material";
 import { auth } from "../../../config/firebase";
 import { useEffect, useState } from "react";
 import useSubscribeToUser from "../../../hooks/useSubscribeToUser";
@@ -47,10 +47,10 @@ const Profile = () => {
     );
 
   return (
-    <Box sx={{ width: "100%" }}>
+    <Container maxWidth="lg">
       <ProfileHeader {...user} owner={owner} />
       <ProfileContent {...user} owner={owner} />
-    </Box>
+    </Container>
   );
 };
 

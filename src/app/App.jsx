@@ -2,7 +2,6 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Landing from "../features/landing/Landing";
 import Error from "../common/errors/Error";
 import React from "react";
-import Layout from "./layout/Layout";
 import Shared from "./layout/Shared";
 import PageLoader from "../common/loaders/PageLoader";
 
@@ -45,7 +44,7 @@ export const router = createBrowserRouter([
   },
   {
     path: "users",
-    element: <Layout />,
+    element: <Shared />,
     children: [
       {
         errorElement: <Error />,
@@ -72,7 +71,7 @@ export const router = createBrowserRouter([
   },
   {
     path: "account",
-    element: <Layout />,
+    element: <Shared />,
     children: [
       {
         errorElement: <Error />,

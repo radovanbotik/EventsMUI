@@ -3,7 +3,7 @@ import Header from "./Header";
 import Content from "./Content";
 
 const Popular = ({ events }) => {
-  if (!events) {
+  if (!events || events.length <= 1) {
     return <div>loading..</div>;
   }
 
