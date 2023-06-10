@@ -42,11 +42,6 @@ const NewsFeed = ({ userId }) => {
 
   return (
     <>
-      {/* <AppBar sx={{ position: "static" }}>
-        <Toolbar variant="dense">
-          <Typography>News feed:</Typography>
-        </Toolbar>
-      </AppBar> */}
       <List>
         {feed.map((post) => (
           <ListItem key={post.userId}>

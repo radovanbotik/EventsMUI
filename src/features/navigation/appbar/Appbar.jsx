@@ -11,11 +11,9 @@ const Appbar = ({ handleDrawerToggle }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const { currentUser, isAuthenticated } = useSelector((store) => store.authReducer);
 
-  //Anchor Menu to element
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };
-  //Close Menu
   const handleClose = () => {
     setAnchorEl(null);
   };

@@ -26,7 +26,18 @@ const Slide = ({ city, photo }) => {
           objectFit: "cover",
           zIndex: 2,
         }}
-        className="gradient-overlay"
+        className="color-gradient-overlay"
+      />
+      <Box
+        sx={{
+          position: "absolute",
+          width: "100%",
+          height: "100%",
+          display: "block",
+          objectFit: "cover",
+          zIndex: 3,
+        }}
+        className="black-gradient-overlay"
       />
       {/* <Typography style={{ zIndex: 3 }} variant="h1" sx={{ mb: 10 }} color={"white"} textTransform="uppercase">
         {city}

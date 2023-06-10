@@ -5,7 +5,7 @@ const Title = ({ member, setMember }) => {
   if (member) {
     return (
       <Stack pt={10} pb={5}>
-        <Typography variant="h3" gutterBottom>
+        <Typography variant="h3" fontWeight={700} gutterBottom>
           Login
         </Typography>
         <Typography variant="body2">
@@ -25,7 +25,7 @@ const Title = ({ member, setMember }) => {
 
   return (
     <Stack pt={10} pb={5}>
-      <Typography variant="h3" gutterBottom>
+      <Typography variant="h3" fontWeight={700} gutterBottom>
         Get Started
       </Typography>
       <Typography variant="body2">

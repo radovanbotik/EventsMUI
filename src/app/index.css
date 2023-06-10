@@ -49,9 +49,17 @@ body {
 
   opacity: 40%;
 } */
-.gradient-overlay {
+.color-gradient-overlay {
   background: #1a2a6c;
   background: -webkit-linear-gradient(to right, #fdbb2d, #b21f1f, #1a2a6c);
   background: linear-gradient(to bottom, #fdbb2d, #b21f1f, #1a2a6c);
   opacity: 40%;
+}
+.black-gradient-overlay {
+  background: rgb(0, 0, 0);
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.7679446778711485) 20%, rgba(255, 255, 255, 0) 65%);
+}
+.shade-gradient-overlay {
+  background: rgb(0, 0, 0);
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.7679446778711485) 10%, rgba(255, 255, 255, 0) 100%);
 }

@@ -3,6 +3,7 @@ import Landing from "../features/landing/Landing";
 import Error from "../common/errors/Error";
 import React from "react";
 import Layout from "./layout/Layout";
+import Shared from "./layout/Shared";
 import PageLoader from "../common/loaders/PageLoader";
 
 const EventDashboard = React.lazy(() => import("../features/events/dashboard/EventDashboard"));
@@ -17,7 +18,7 @@ export const router = createBrowserRouter([
   {
     path: "events",
     // element: <Layout />,
-    element: <Layout />,
+    element: <Shared />,
     children: [
       {
         errorElement: <Error />,

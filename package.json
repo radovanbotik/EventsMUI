@@ -25,6 +25,7 @@
     "firebase": "^9.21.0",
     "formik": "^2.2.9",
     "google-map-react": "^2.2.0",
+    "mui-image": "^1.0.7",
     "react": "^18.2.0",
     "react-cropper": "^2.3.3",
     "react-dom": "^18.2.0",
