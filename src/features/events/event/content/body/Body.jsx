@@ -1,7 +1,8 @@
 import { Divider, Stack, Typography, Box } from "@mui/material";
 import Author from "../../../dashboard/common/Author";
-import { AccessTimeOutlined, PlaceOutlined, PeopleOutlined } from "@mui/icons-material";
+import { AccessTimeOutlined, PlaceOutlined, PeopleOutlined, FavoriteBorderOutlined } from "@mui/icons-material";
 import formatTime from "../../../../../common/util/formatDateCalendar";
+import { pink } from "@mui/material/colors";
 
 const Content = ({ event }) => {
   console.log(event);
@@ -11,8 +12,12 @@ const Content = ({ event }) => {
   return (
     <Stack direction="column" spacing={4}>
       <Stack direction="column" spacing={2}>
-        <Typography variant="overline" color="primary" sx={{ mixBlendMode: "difference", fontWeight: 700 }}>
-          Event
+        <Typography
+          variant="caption"
+          color="primary"
+          sx={{ mixBlendMode: "difference", fontWeight: 600, textTransform: "uppercase" }}
+        >
+          Event Title
         </Typography>
         <Typography variant="h3" sx={{ ":first-letter": { textTransform: "capitalize" } }}>
           {event.title}
@@ -20,7 +25,13 @@ const Content = ({ event }) => {
         <Typography paragraph>{event.description}</Typography>
       </Stack>
       <Stack direction="row">
-        <Stack direction="row">10 likes</Stack>
+        <Stack direction="row" alignItems="center">
+          <FavoriteBorderOutlined fontSize="small" sx={{ color: pink[400] }} />
+          <Typography variant="span" sx={{ fontWeight: 600, mx: 1 }}>
+            10
+          </Typography>
+          <Typography variant="body2">favourited</Typography>
+        </Stack>
         <Divider orientation="vertical" flexItem sx={{ mx: 2 }} />
         <Stack direction="row" alignItems="center">
           <Typography variant="span" sx={{ fontWeight: 600, mr: 1 }}>

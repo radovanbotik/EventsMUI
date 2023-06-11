@@ -10,6 +10,7 @@ import {
   Box,
   ListItemButton,
   Stack,
+  Divider,
 } from "@mui/material";
 import { useState } from "react";
 import EventChatForm from "../EventChatForm";
