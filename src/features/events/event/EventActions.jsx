@@ -21,7 +21,7 @@ const EventActions = ({ event }) => {
     setAnchorEl(event.currentTarget);
   };
   return (
-    <Toolbar variant="dense" disableGutters>
+    <>
       {!isAttending && (
         <Permission
           title="Join event"
@@ -58,7 +58,7 @@ const EventActions = ({ event }) => {
         hostId={hostId}
         event={event}
       />
-    </Toolbar>
+    </>
   );
 };
 

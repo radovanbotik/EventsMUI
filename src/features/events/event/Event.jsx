@@ -1,22 +1,17 @@
 /* eslint-disable no-unused-vars */
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useParams } from "react-router-dom";
-import EventInfo from "./EventInfo";
-import EventChat from "./EventChat";
-import EventGuests from "./EventGuests";
-import EventForm from "../../../features/events/form/EventForm";
 import { useDispatch, useSelector } from "react-redux";
-import { Grid, Box, Stack, Divider, Typography, Container } from "@mui/material";
+import { Grid, Box, Stack, Divider, Typography, Container, Button } from "@mui/material";
 import useSubscribeToEvent from "../../../hooks/useSubscribeToEvent";
 import { loadEvents } from "../../../store/eventSlice";
 import PageLoader from "../../../common/loaders/PageLoader";
-import EventImageMap from "./EventImageMap";
-import EventActionsAndDate from "./EventActionsAndDate";
 import Body from "./content/body/Body";
 import BreadCrumbs from "./BreadCrumbs";
 import Image from "./content/image/Image";
 import Map from "./map/Map";
 import Chat from "./chat/Chat";
+import Summary from "./map_and_actions/Summary";
 
 const Event = () => {
   const { events, status, filterOptions } = useSelector((store) => store.eventReducer);
@@ -27,12 +22,12 @@ const Event = () => {
   function toggleMap() {
     setMapOpen((prev) => !prev);
   }
-
   useSubscribeToEvent({
     eventId: id,
     action: (doc) => dispatch(loadEvents([doc])),
     dependancies: [id],
   });
+
   if (status === "loading" || !event) {
     return <PageLoader />;
   }
@@ -48,9 +43,17 @@ const Event = () => {
             <Image event={event} />
           </Grid>
         </Grid>
-        <Box sx={{ height: "300px" }}>
-          <Map location={event.location} />
-        </Box>
+        <Grid container spacing={10}>
+          <Grid item xs={12} md={8}>
+            <Box sx={{ height: "400px", borderRadius: "10px", overflow: "hidden" }}>
+              <Map location={event.location} />
+            </Box>
+          </Grid>
+          <Grid item xs={12} md={4}>
+            <Summary event={event} />
+          </Grid>
+        </Grid>
+
         <Chat {...event} />
         {/* <EventChat {...event} /> */}
       </Stack>

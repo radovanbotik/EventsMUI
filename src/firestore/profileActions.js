@@ -1,10 +1,24 @@
 import { updateProfile } from "firebase/auth";
 import { auth, db, storage } from "../config/firebase";
 import { toast } from "react-toastify";
-import { deleteDoc, doc, increment, setDoc, updateDoc, writeBatch } from "firebase/firestore";
+import { deleteDoc, doc, getDoc, increment, setDoc, updateDoc, writeBatch } from "firebase/firestore";
 import { deleteObject, getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { v4 as uuidv4 } from "uuid";
 import getFileExtension from "../common/util/getFileExtension";
+
+export const readUser = async ({ id, action }) => {
+  const user = doc(db, "users", id);
+  try {
+    const docSnap = await getDoc(user);
+    if (docSnap.exists()) {
+      action(docSnap.data());
+    } else {
+      throw new Error("no such user, check id");
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 export const updateUser = async ({ updates }) => {
   try {
