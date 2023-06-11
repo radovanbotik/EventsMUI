@@ -12,6 +12,10 @@ import { loadEvents } from "../../../store/eventSlice";
 import PageLoader from "../../../common/loaders/PageLoader";
 import EventImageMap from "./EventImageMap";
 import EventActionsAndDate from "./EventActionsAndDate";
+import Body from "./content/body/Body";
+import BreadCrumbs from "./BreadCrumbs";
+import Image from "./content/image/Image";
+import Map from "./map/Map";
 
 const Event = () => {
   const { events, status, filterOptions } = useSelector((store) => store.eventReducer);
@@ -28,14 +32,28 @@ const Event = () => {
     action: (doc) => dispatch(loadEvents([doc])),
     dependancies: [id],
   });
-
   if (status === "loading" || !event) {
     return <PageLoader />;
   }
   return (
     <Container maxWidth="lg">
-      <Stack spacing={2}>
-        <EventImageMap {...event} mapOpen={mapOpen} />
+      <Stack direction="column" useFlexGap spacing={10}>
+        <BreadCrumbs />
+        <Grid container spacing={10}>
+          <Grid item xs={12} md={7}>
+            <Body event={event} />
+          </Grid>
+          <Grid item xs={12} md={5}>
+            <Image event={event} />
+          </Grid>
+        </Grid>
+        <Box sx={{ height: "300px" }}>
+          <Map location={event.location} />
+        </Box>
+        <EventChat {...event} />
+      </Stack>
+
+      {/* <EventImageMap {...event} mapOpen={mapOpen} />
         <Divider />
         <EventActionsAndDate event={event} />
         <EventInfo {...event} toggleMap={toggleMap} mapOpen={mapOpen} />
@@ -44,8 +62,7 @@ const Event = () => {
         <Divider />
         <Typography>{event.description}</Typography>
         <Divider />
-        <EventChat {...event} />
-      </Stack>
+        <EventChat {...event} /> */}
     </Container>
   );
 };
