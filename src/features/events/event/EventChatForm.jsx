@@ -5,7 +5,7 @@ import { Stack } from "@mui/material";
 import { addCommentToEvent } from "../../../firestore/realtimeDatabase";
 
 const validationSchema = Yup.object({
-  comment: Yup.string().max(1000, "comment cannot exceed 1000 words.").required("You forgot to write your comment."),
+  comment: Yup.string().max(1000, "comment cannot exceed 1000 words."),
 });
 const initialValues = {
   comment: "",
