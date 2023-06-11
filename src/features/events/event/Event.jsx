@@ -16,6 +16,7 @@ import Body from "./content/body/Body";
 import BreadCrumbs from "./BreadCrumbs";
 import Image from "./content/image/Image";
 import Map from "./map/Map";
+import Chat from "./chat/Chat";
 
 const Event = () => {
   const { events, status, filterOptions } = useSelector((store) => store.eventReducer);
@@ -50,7 +51,8 @@ const Event = () => {
         <Box sx={{ height: "300px" }}>
           <Map location={event.location} />
         </Box>
-        <EventChat {...event} />
+        <Chat {...event} />
+        {/* <EventChat {...event} /> */}
       </Stack>
 
       {/* <EventImageMap {...event} mapOpen={mapOpen} />

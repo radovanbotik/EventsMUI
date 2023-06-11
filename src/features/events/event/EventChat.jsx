@@ -9,6 +9,7 @@ import {
   Typography,
   Box,
   ListItemButton,
+  Stack,
 } from "@mui/material";
 import { useState } from "react";
 import EventChatForm from "./EventChatForm";
@@ -46,20 +47,14 @@ const EventChat = ({ id }) => {
     return dataTree;
   };
   return (
-    <>
-      <AppBar position="static">
-        <Toolbar variant="dense">
-          <Typography mr="auto">Comments</Typography>
-          {/* <Button variant="contained" size="small" onClick={() => setOpen(prev => !prev)}>
-            {open ? "close" : "new comment"}
-          </Button> */}
-        </Toolbar>
-      </AppBar>
-      {open && <EventChatForm handleClose={handleClose} id={id} />}
+    <Stack direction="column">
+      {/* Reply */}
+      {/* {open && <EventChatForm handleClose={handleClose} id={id} />} */}
       <>
         {comments &&
           hashData(comments).map((comment) => (
             <List key={comment.id}>
+              {/* Avatar */}
               <ListItem disableGutters disablePadding>
                 <ListItemAvatar>
                   <Avatar
@@ -68,7 +63,7 @@ const EventChat = ({ id }) => {
                     to={`/users/profile/${comment.userId}`}
                   />
                 </ListItemAvatar>
-
+                {/* Name Date Message*/}
                 <ListItemText
                   disableTypography
                   primary={
@@ -88,6 +83,7 @@ const EventChat = ({ id }) => {
                   }
                 />
               </ListItem>
+              {/* Reply */}
               <ListItem disableGutters disablePadding>
                 <ListItemText inset>
                   <ListItemButton
@@ -177,7 +173,7 @@ const EventChat = ({ id }) => {
             </List>
           ))}
       </>
-    </>
+    </Stack>
   );
 };
 

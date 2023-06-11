@@ -1,9 +1,8 @@
 import { Formik } from "formik";
 import * as Yup from "yup";
 import BasicInput from "../../../common/forms/BasicInput";
-import { Stack, Button, ButtonGroup, InputAdornment, Avatar } from "@mui/material";
+import { Stack } from "@mui/material";
 import { addCommentToEvent } from "../../../firestore/realtimeDatabase";
-import { useSelector } from "react-redux";
 
 const validationSchema = Yup.object({
   comment: Yup.string().max(1000, "comment cannot exceed 1000 words.").required("You forgot to write your comment."),
@@ -12,9 +11,7 @@ const initialValues = {
   comment: "",
 };
 
-const EventChatForm = ({ handleClose, id }) => {
-  const { currentUser } = useSelector((store) => store.authReducer);
-
+const EventChatForm = ({ id }) => {
   return (
     <Formik
       validationSchema={validationSchema}
@@ -34,45 +31,19 @@ const EventChatForm = ({ handleClose, id }) => {
         <Stack onSubmit={formikProps.handleSubmit} component="form">
           <BasicInput
             name="comment"
-            // label="Comment"
+            // label="reply"
             size="small"
             variant="standard"
-            margin="dense"
-            placeholder="Enter to submit, SHIFT + Enter for new line"
-            submitOnKeyDown={true}
+            InputProps={{
+              disableUnderline: true,
+            }}
+            placeholder="Write comment..."
+            maxRows={"4"}
             multiline
             fullWidth
-            maxRows={"4"}
+            submitOnKeyDown={true}
             sx={{ mt: 0 }}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <Avatar sx={{ width: 24, height: 24 }} src={currentUser?.photoURL} />
-                </InputAdornment>
-              ),
-            }}
           />
-          <ButtonGroup sx={{ justifyContent: "flex-end" }}>
-            <Button
-              onClick={() => {
-                formikProps.handleReset();
-              }}
-              type="button"
-              size="small"
-              variant="text"
-              sx={{ fontSize: "caption.fontSize", p: 0, textTransform: "none" }}
-            >
-              Cancel
-            </Button>
-            <Button
-              type="submit"
-              size="small"
-              variant="text"
-              sx={{ fontSize: "caption.fontSize", p: 0, textTransform: "none" }}
-            >
-              Post
-            </Button>
-          </ButtonGroup>
         </Stack>
       )}
     </Formik>
