@@ -1,12 +1,11 @@
 import React from "react";
 import { Stack, Badge, Typography } from "@mui/material";
+import HeadingH6 from "../../common/headingH6";
 
 const Filters = () => {
   return (
     <Stack direction="column" spacing={2}>
-      <Typography variant="h6" gutterBottom sx={{ fontWeight: 700 }}>
-        Explore Events:
-      </Typography>
+      <HeadingH6>Explore Events:</HeadingH6>
       <Stack direction="row" spacing={3} alignItems="center">
         <Badge color="primary" variant="dot" sx={{ transform: "translateX(5px)" }} />
         <Typography variant="body2" sx={{ cursor: "pointer", "&:hover": { textDecoration: "underline" } }}>

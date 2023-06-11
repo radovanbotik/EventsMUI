@@ -1,15 +1,14 @@
-import React from "react";
 import { Box } from "@mui/material";
-import Event from "./Event";
+import Card from "./Card";
 
-const Events = ({ events }) => {
+const EventsList = ({ events }) => {
   return (
     <Box sx={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 4 }}>
       {events.map((event) => (
-        <Event key={event.id} event={event} />
+        <Card key={event.id} event={event} />
       ))}
     </Box>
   );
 };
 
-export default Events;
+export default EventsList;

@@ -3,6 +3,7 @@ import useListenToNewsfeed from "../../../../../hooks/useListenToNewsfeed";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import FeedPost from "./FeedPost";
+import HeadingH6 from "../../common/headingH6";
 
 const Feed = () => {
   const [feed, setFeed] = useState(null);
@@ -20,10 +21,7 @@ const Feed = () => {
 
   return (
     <Stack direction="column" spacing={2}>
-      <Typography variant="h6" gutterBottom sx={{ fontWeight: 700 }}>
-        Your feed:
-      </Typography>
-
+      <HeadingH6>Your feed:</HeadingH6>
       {feed.map((feedPost) => (
         <FeedPost key={feedPost.id} feedPost={feedPost} />
       ))}

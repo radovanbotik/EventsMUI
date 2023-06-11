@@ -1,18 +1,14 @@
+/* eslint-disable react/prop-types */
 import { Box, Stack } from "@mui/material";
-import Image from "mui-image";
-import trnava from "../../../../common/images/trnava.webp";
-import Date from "./Date";
-import Title from "./Title";
-import User from "./User";
+import Date from "../common/Date";
+import Title from "../common/Title";
+import Author from "../common/Author";
+import BgImageWithOverlay from "../common/BgImageWithOverlay";
 
 const PostSmall = ({ event }) => {
   return (
     <Box sx={{ borderRadius: "10px", overflow: "hidden", position: "relative" }}>
-      <Image src={trnava} style={{ aspectRatio: 1 / 1 }} />
-      <Box
-        className="shade-gradient-overlay"
-        sx={{ position: "absolute", width: "100%", height: "100%", top: 0, left: 0 }}
-      />
+      <BgImageWithOverlay />
       <Stack
         spacing={1}
         useFlexGap
@@ -20,7 +16,7 @@ const PostSmall = ({ event }) => {
       >
         <Date date={event.date} />
         <Title title={event.title} id={event.id} />
-        <User hostId={event.hostId} hostPhotoURL={event.hostPhotoURL} hostedBy={event.hostedBy} />
+        <Author hostId={event.hostId} hostPhotoURL={event.hostPhotoURL} hostedBy={event.hostedBy} />
       </Stack>
     </Box>
   );

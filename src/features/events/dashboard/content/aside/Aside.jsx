@@ -4,7 +4,7 @@ import Recent from "./Recent";
 import Ad from "./Ad";
 import Feed from "./Feed";
 
-const Column = ({ events }) => {
+const Aside = ({ events }) => {
   return (
     <Stack direction="column" spacing={4}>
       <Filters />
@@ -15,4 +15,4 @@ const Column = ({ events }) => {
   );
 };
 
-export default Column;
+export default Aside;

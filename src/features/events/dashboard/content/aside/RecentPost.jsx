@@ -2,7 +2,7 @@ import { Stack, Typography, Box } from "@mui/material";
 import Image from "mui-image";
 import trnava from "../../../../../common/images/trnava.webp";
 import { Link } from "react-router-dom";
-import Date from "./Date";
+import Date from "../../common/Date";
 
 const RecentPost = ({ event }) => {
   return (
@@ -11,13 +11,13 @@ const RecentPost = ({ event }) => {
         <Image src={trnava} style={{ aspectRatio: 1 / 1 }} />
       </Box>
 
-      <Stack direction="column">
+      <Stack direction="column" sx={{ color: "text.secondary" }}>
         <Typography
           component={Link}
           to={`event/${event.id}`}
           sx={{
             textDecoration: "none",
-            color: "inherit",
+            color: "text.primary",
             ":first-letter": { textTransform: "capitalize" },
             "&:hover": { textDecoration: "underline" },
           }}

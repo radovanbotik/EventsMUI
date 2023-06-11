@@ -1,7 +1,7 @@
+/* eslint-disable react/prop-types */
 import { Box, Stack, Typography } from "@mui/material";
-import Image from "mui-image";
-import trnava from "../../../../common/images/trnava.webp";
 import { Link } from "react-router-dom";
+import BgImageWithOverlay from "../common/BgImageWithOverlay";
 
 const PostPopular = ({ event }) => {
   return (
@@ -10,11 +10,7 @@ const PostPopular = ({ event }) => {
       component={Link}
       to={`event/${event.id}`}
     >
-      <Image src={trnava} style={{ aspectRatio: 1 / 1 }} />
-      <Box
-        className="shade-gradient-overlay"
-        sx={{ position: "absolute", width: "100%", height: "100%", top: 0, left: 0 }}
-      />
+      <BgImageWithOverlay />
       <Stack
         spacing={1}
         useFlexGap

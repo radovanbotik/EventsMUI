@@ -1,6 +1,6 @@
 import { Grid } from "@mui/material";
-import Events from "./Events";
-import Column from "./column/Column";
+import List from "./list/List";
+import Aside from "./aside/Aside";
 
 const Content = ({ events }) => {
   if (!events || events.length <= 1) {
@@ -9,11 +9,11 @@ const Content = ({ events }) => {
   return (
     <Grid container spacing={10}>
       <Grid item xs={12} md={8}>
-        <Events events={events} />
+        <List events={events} />
       </Grid>
       <Grid item xs={12} md={4}>
         {/* search */}
-        <Column events={events} />
+        <Aside events={events} />
       </Grid>
     </Grid>
   );
