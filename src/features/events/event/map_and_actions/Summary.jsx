@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import { Stack, Typography, Button } from "@mui/material";
 import BasicRating from "../BasicRating";
 import Author from "../../dashboard/common/Author";
-import { grey } from "@mui/material/colors";
+import { grey, pink } from "@mui/material/colors";
 import { readUser } from "../../../../firestore/profileActions";
+import { DeleteOutlined, FavoriteBorder, RemoveCircleOutlineOutlined, Share } from "@mui/icons-material";
 
 const Summary = ({ event }) => {
   const [host, setHost] = useState(null);
@@ -17,7 +18,7 @@ const Summary = ({ event }) => {
   }
 
   return (
-    <Stack direction="column" spacing={4}>
+    <Stack direction="column" spacing={2}>
       <Stack direction="column" spacing={2}>
         <Typography
           variant="overline"
@@ -45,10 +46,24 @@ const Summary = ({ event }) => {
             "&:hover": { backgroundColor: grey[800] },
           }}
         >
-          join event
+          {event.cancelled ? "join event" : "leave event"}
         </Button>
       </Stack>
-      <Stack direction="row">edit cancel share</Stack>
+      <Stack direction="row" spacing={2} useFlexGap sx={{ flexWrap: "wrap", justifyContent: "space-between" }}>
+        <Button size="small" startIcon={<RemoveCircleOutlineOutlined />} sx={{ color: "text.primary" }}>
+          Cancel
+        </Button>
+        <Button size="small" startIcon={<DeleteOutlined />} sx={{ color: "text.primary" }}>
+          Delete
+        </Button>
+
+        <Button size="small" startIcon={<FavoriteBorder />} sx={{ color: pink[400] }}>
+          Favourite
+        </Button>
+        <Button size="small" startIcon={<Share />} sx={{ color: "text.primary" }}>
+          Share
+        </Button>
+      </Stack>
     </Stack>
   );
 };
