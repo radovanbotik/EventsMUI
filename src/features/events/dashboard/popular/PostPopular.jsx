@@ -10,7 +10,7 @@ const PostPopular = ({ event }) => {
       component={Link}
       to={`event/${event.id}`}
     >
-      <BgImageWithOverlay />
+      <BgImageWithOverlay image={event.photoURL} />
       <Stack
         spacing={1}
         useFlexGap

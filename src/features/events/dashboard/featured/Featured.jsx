@@ -31,13 +31,13 @@ const Featured = ({ events }) => {
           <PostSmall event={events[1]} />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <PostSmall event={events[1]} />
+          <PostSmall event={events[2]} />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <PostSmall event={events[1]} />
+          <PostSmall event={events[3]} />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <PostSmall event={events[1]} />
+          <PostSmall event={events[3]} />
         </Grid>
       </Grid>
     </Grid>

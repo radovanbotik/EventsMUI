@@ -29,22 +29,22 @@ const Content = ({ events }) => {
       >
         {/* <Swiper className="mySwiper"> */}
         <SwiperSlide>
-          <PostPopular event={events[1]} />
-        </SwiperSlide>
-        <SwiperSlide>
-          <PostPopular event={events[1]} />
-        </SwiperSlide>
-        <SwiperSlide>
-          <PostPopular event={events[1]} />
-        </SwiperSlide>
-        <SwiperSlide>
           <PostPopular event={events[0]} />
         </SwiperSlide>
         <SwiperSlide>
-          <PostPopular event={events[0]} />
+          <PostPopular event={events[1]} />
         </SwiperSlide>
         <SwiperSlide>
-          <PostPopular event={events[0]} />
+          <PostPopular event={events[2]} />
+        </SwiperSlide>
+        <SwiperSlide>
+          <PostPopular event={events[3]} />
+        </SwiperSlide>
+        <SwiperSlide>
+          <PostPopular event={events[2]} />
+        </SwiperSlide>
+        <SwiperSlide>
+          <PostPopular event={events[1]} />
         </SwiperSlide>
       </Swiper>
     </Box>

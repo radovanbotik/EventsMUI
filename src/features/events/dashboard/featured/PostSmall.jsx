@@ -8,7 +8,7 @@ import BgImageWithOverlay from "../common/BgImageWithOverlay";
 const PostSmall = ({ event }) => {
   return (
     <Box sx={{ borderRadius: "10px", overflow: "hidden", position: "relative" }}>
-      <BgImageWithOverlay />
+      <BgImageWithOverlay image={event.photoURL} />
       <Stack
         spacing={1}
         useFlexGap

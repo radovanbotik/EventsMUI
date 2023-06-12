@@ -5,8 +5,14 @@ import BasicRating from "../BasicRating";
 import Author from "../../dashboard/common/Author";
 import { grey, pink } from "@mui/material/colors";
 import { readUser } from "../../../../firestore/profileActions";
-import { DeleteOutlined, FavoriteBorder, RemoveCircleOutlineOutlined, Share } from "@mui/icons-material";
-import { joinEvent, leaveEvent } from "../../../../firestore/eventActions";
+import {
+  RefreshOutlined,
+  DoNotDisturbOutlined,
+  FavoriteBorder,
+  RemoveCircleOutlineOutlined,
+  Share,
+} from "@mui/icons-material";
+import { cancelEvent, deleteEvent, joinEvent, leaveEvent } from "../../../../firestore/eventActions";
 import Permission from "../../../../common/dialogs/Permission";
 
 const Summary = ({ event, user }) => {
@@ -64,18 +70,26 @@ const Summary = ({ event, user }) => {
       </Stack>
       <Stack direction="row" spacing={2} useFlexGap sx={{ flexWrap: "wrap", justifyContent: "space-between" }}>
         <Permission
-          title="Cancel event"
-          content="upon agreeing you will cancel this event, potentially preventing other users from joining."
+          title={`${event.cancelled ? "Activate event" : "Cancel Event"}`}
+          content={`${
+            event.cancelled
+              ? "This action will re-activate the event, do you want to proceed?"
+              : "This action will cancel the event, do you want to proceed?"
+          }`}
           buttonProps={{ color: "text.primary" }}
-          openIcon={<RemoveCircleOutlineOutlined />}
+          openIcon={event.cancelled ? <RefreshOutlined /> : <DoNotDisturbOutlined />}
+          onSubmit={() =>
+            cancelEvent({ eventId: event.id, cancelled: event.cancelled, userId: user.id, hostId: event.hostId })
+          }
         >
-          cancel
+          {event.cancelled ? "activate" : "cancel"}
         </Permission>
         <Permission
           title="Delete event"
           content="By continuing, you will delete this event. This action is permanent and can't be reversed. Are you sure you want to proceed?"
           buttonProps={{ color: "text.primary" }}
           openIcon={<RemoveCircleOutlineOutlined />}
+          onSubmit={() => deleteEvent({ eventId: event.id, hostId: user.id })}
         >
           delete
         </Permission>

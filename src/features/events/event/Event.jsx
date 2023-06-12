@@ -42,7 +42,7 @@ const Event = () => {
             <Body event={event} />
           </Grid>
           <Grid item xs={12} md={5}>
-            <Image event={event} />
+            <Image image={event.photoURL} />
           </Grid>
         </Grid>
         <Grid container spacing={10}>

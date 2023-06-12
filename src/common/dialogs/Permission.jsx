@@ -32,10 +32,10 @@ const Permission = ({
           <DialogContentText id="alert-dialog-description">{content}</DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button size="small" variant="text" onClick={handleClose}>
+          <Button size="small" variant="text" sx={{ color: "text.primary" }} onClick={handleClose}>
             {closeText}
           </Button>
-          <Button size="small" variant="text" autoFocus onClick={handleSubmit}>
+          <Button size="small" variant="text" sx={{ color: "text.primary" }} autoFocus onClick={handleSubmit}>
             {submitText}
           </Button>
         </DialogActions>
