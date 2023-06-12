@@ -1,6 +1,6 @@
 import { Avatar, Button, Divider, Stack, Typography } from "@mui/material";
 import formatDate from "../../../../common/util/formatDate";
-import EventChatReplyForm from "../EventChatReplyForm";
+import NewReply from "./NewReply";
 
 const Comment = ({ comment, setReplyingTo, replyingTo, id }) => {
   return (
@@ -28,12 +28,7 @@ const Comment = ({ comment, setReplyingTo, replyingTo, id }) => {
           Reply
         </Button>
         {replyingTo === comment.id && (
-          <EventChatReplyForm
-            replyingTo={replyingTo}
-            commentId={comment.id}
-            eventId={id}
-            setReplyingTo={setReplyingTo}
-          />
+          <NewReply replyingTo={replyingTo} commentId={comment.id} eventId={id} setReplyingTo={setReplyingTo} />
         )}
         <Divider light flexItem sx={{ width: "100%" }} />
       </Stack>

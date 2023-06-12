@@ -1,26 +1,11 @@
-import {
-  List,
-  ListItem,
-  ListItemAvatar,
-  ListItemText,
-  Avatar,
-  AppBar,
-  Toolbar,
-  Typography,
-  Box,
-  ListItemButton,
-  Stack,
-  Divider,
-} from "@mui/material";
+import { Stack } from "@mui/material";
 import { useState } from "react";
-import EventChatForm from "../EventChatForm";
+import NewComment from "./NewComment";
 import useListenToEventComments from "../../../../hooks/useListenToEventComments";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 dayjs.extend(relativeTime);
-import { Link } from "react-router-dom";
-import defaultPhoto from "../../../../common/images/defaultPhoto.jpg";
-import EventChatReplyForm from "../EventChatReplyForm";
+import NewReply from "./NewReply";
 import HeadingH6 from "../../dashboard/common/headingH6";
 import Comment from "./Comment";
 
@@ -53,7 +38,7 @@ const Chat = ({ id }) => {
     <Stack direction="column" spacing={4}>
       <HeadingH6>Comments:</HeadingH6>
       {/* Reply */}
-      {open && <EventChatForm handleClose={handleClose} id={id} />}
+      {open && <NewComment handleClose={handleClose} id={id} />}
       <>
         {comments &&
           hashData(comments).map((comment) => (

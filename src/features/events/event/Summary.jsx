@@ -1,10 +1,10 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
 import { Stack, Typography, Button } from "@mui/material";
-import BasicRating from "../BasicRating";
-import Author from "../../dashboard/common/Author";
+import BasicRating from "./BasicRating";
+import Author from "../dashboard/common/Author";
 import { grey, pink } from "@mui/material/colors";
-import { readUser } from "../../../../firestore/profileActions";
+import { readUser } from "../../../firestore/profileActions";
 import {
   RefreshOutlined,
   DoNotDisturbOutlined,
@@ -12,8 +12,8 @@ import {
   RemoveCircleOutlineOutlined,
   Share,
 } from "@mui/icons-material";
-import { cancelEvent, deleteEvent, joinEvent, leaveEvent } from "../../../../firestore/eventActions";
-import Permission from "../../../../common/dialogs/Permission";
+import { cancelEvent, deleteEvent, joinEvent, leaveEvent } from "../../../firestore/eventActions";
+import Permission from "../../../common/dialogs/Permission";
 
 const Summary = ({ event, user }) => {
   const [host, setHost] = useState(null);
@@ -33,6 +33,17 @@ const Summary = ({ event, user }) => {
 
   if (!host) {
     return <div>loading...</div>;
+  }
+
+  {
+    /* <Button
+  onClick={() => {
+    dispatch(setEditing(true));
+    dispatch(openModal({ modalType: "event", modalProps: event }));
+  }}
+>
+  edit
+</Button>; */
   }
 
   return (

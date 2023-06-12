@@ -10,8 +10,8 @@ import Body from "./content/body/Body";
 import BreadCrumbs from "./BreadCrumbs";
 import Image from "./content/image/Image";
 import Map from "./map/Map";
-import Chat from "./chat/Chat";
-import Summary from "./map_and_actions/Summary";
+import Chat from "./comments/Comments";
+import Summary from "./Summary";
 
 const Event = () => {
   const { events, status, filterOptions } = useSelector((store) => store.eventReducer);
@@ -46,30 +46,18 @@ const Event = () => {
           </Grid>
         </Grid>
         <Grid container spacing={10}>
-          <Grid item xs={12} md={8}>
-            <Box sx={{ height: "400px", borderRadius: "10px", overflow: "hidden" }}>
+          <Grid item xs={12} md={7}>
+            <Box sx={{ minHeight: "300px", height: "100%", borderRadius: "10px", overflow: "hidden" }}>
               <Map location={event.location} />
             </Box>
           </Grid>
-          <Grid item xs={12} md={4}>
+          <Grid item xs={12} md={5}>
             <Summary event={event} user={currentUser} />
           </Grid>
         </Grid>
 
         <Chat {...event} />
-        {/* <EventChat {...event} /> */}
       </Stack>
-
-      {/* <EventImageMap {...event} mapOpen={mapOpen} />
-        <Divider />
-        <EventActionsAndDate event={event} />
-        <EventInfo {...event} toggleMap={toggleMap} mapOpen={mapOpen} />
-        <Divider />
-        <EventGuests {...event} filterOptions={filterOptions} />
-        <Divider />
-        <Typography>{event.description}</Typography>
-        <Divider />
-        <EventChat {...event} /> */}
     </Container>
   );
 };

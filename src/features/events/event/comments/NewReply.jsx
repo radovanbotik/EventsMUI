@@ -1,36 +1,40 @@
 import { Formik } from "formik";
 import * as Yup from "yup";
-import BasicInput from "../../../common/forms/BasicInput";
+import BasicInput from "../../../../common/forms/BasicInput";
 import { Stack } from "@mui/material";
-import { addCommentToEvent } from "../../../firestore/realtimeDatabase";
+import { addReplyToEventMessage } from "../../../../firestore/realtimeDatabase";
 
 const validationSchema = Yup.object({
-  comment: Yup.string().max(1000, "comment cannot exceed 1000 words."),
+  reply: Yup.string().max(1000, "reply cannot exceed 1000 words.").required("You forgot to write your reply."),
 });
 const initialValues = {
-  comment: "",
+  reply: "",
 };
 
-const EventChatForm = ({ id }) => {
+const EventChatReplyForm = ({ setReplyingTo, eventId, commentId }) => {
   return (
     <Formik
       validationSchema={validationSchema}
       initialValues={initialValues}
-      onSubmit={async (values, { setSubmitting, resetForm }) => {
+      onSubmit={async (values, { setSubmitting }) => {
         console.log(values);
         try {
-          await addCommentToEvent({ post: values, id: id });
+          await addReplyToEventMessage({
+            reply: values,
+            eventId: eventId,
+            commentId: commentId,
+          });
           setSubmitting(false);
-          resetForm();
+          setReplyingTo(null);
         } catch (error) {
           console.log(error);
         }
       }}
     >
       {(formikProps) => (
-        <Stack onSubmit={formikProps.handleSubmit} component="form">
+        <Stack onSubmit={formikProps.handleSubmit} component="form" sx={{ flex: 1, pl: 0 }}>
           <BasicInput
-            name="comment"
+            name="reply"
             // label="reply"
             size="small"
             variant="standard"
@@ -50,4 +54,4 @@ const EventChatForm = ({ id }) => {
   );
 };
 
-export default EventChatForm;
+export default EventChatReplyForm;
