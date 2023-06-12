@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
 import { Stack, Typography, Button } from "@mui/material";
 import BasicRating from "../BasicRating";
@@ -5,13 +6,24 @@ import Author from "../../dashboard/common/Author";
 import { grey, pink } from "@mui/material/colors";
 import { readUser } from "../../../../firestore/profileActions";
 import { DeleteOutlined, FavoriteBorder, RemoveCircleOutlineOutlined, Share } from "@mui/icons-material";
+import { joinEvent, leaveEvent } from "../../../../firestore/eventActions";
+import Permission from "../../../../common/dialogs/Permission";
 
-const Summary = ({ event }) => {
+const Summary = ({ event, user }) => {
   const [host, setHost] = useState(null);
+  const isAttending = event.attendeesId && event.attendeesId?.includes(user.id);
 
   useEffect(() => {
     readUser({ id: event.hostId, action: (host) => setHost(host) });
   }, [event]);
+
+  const willAttend = ({ user, eventId }) => {
+    if (isAttending) {
+      leaveEvent({ user: user, eventId: eventId });
+    } else {
+      joinEvent({ user: user, eventId: eventId });
+    }
+  };
 
   if (!host) {
     return <div>loading...</div>;
@@ -40,23 +52,33 @@ const Summary = ({ event }) => {
           size="large"
           variant="contained"
           disableElevation
+          onClick={() => willAttend({ user: user, eventId: event.id })}
           sx={{
             backgroundColor: grey[900],
             flex: 1,
             "&:hover": { backgroundColor: grey[800] },
           }}
         >
-          {event.cancelled ? "join event" : "leave event"}
+          {isAttending ? "leave event" : "join event"}
         </Button>
       </Stack>
       <Stack direction="row" spacing={2} useFlexGap sx={{ flexWrap: "wrap", justifyContent: "space-between" }}>
-        <Button size="small" startIcon={<RemoveCircleOutlineOutlined />} sx={{ color: "text.primary" }}>
-          Cancel
-        </Button>
-        <Button size="small" startIcon={<DeleteOutlined />} sx={{ color: "text.primary" }}>
-          Delete
-        </Button>
-
+        <Permission
+          title="Cancel event"
+          content="upon agreeing you will cancel this event, potentially preventing other users from joining."
+          buttonProps={{ color: "text.primary" }}
+          openIcon={<RemoveCircleOutlineOutlined />}
+        >
+          cancel
+        </Permission>
+        <Permission
+          title="Delete event"
+          content="By continuing, you will delete this event. This action is permanent and can't be reversed. Are you sure you want to proceed?"
+          buttonProps={{ color: "text.primary" }}
+          openIcon={<RemoveCircleOutlineOutlined />}
+        >
+          delete
+        </Permission>
         <Button size="small" startIcon={<FavoriteBorder />} sx={{ color: pink[400] }}>
           Favourite
         </Button>

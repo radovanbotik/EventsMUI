@@ -15,6 +15,8 @@ import Summary from "./map_and_actions/Summary";
 
 const Event = () => {
   const { events, status, filterOptions } = useSelector((store) => store.eventReducer);
+  const { currentUser } = useSelector((store) => store.authReducer);
+
   const { id } = useParams();
   const event = events?.find((event) => event.id === id);
   const dispatch = useDispatch();
@@ -50,7 +52,7 @@ const Event = () => {
             </Box>
           </Grid>
           <Grid item xs={12} md={4}>
-            <Summary event={event} />
+            <Summary event={event} user={currentUser} />
           </Grid>
         </Grid>
 
