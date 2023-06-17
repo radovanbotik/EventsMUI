@@ -4,7 +4,7 @@ import NewReply from "./NewReply";
 
 const Comment = ({ comment, setReplyingTo, replyingTo, id }) => {
   return (
-    <Stack direction="row" spacing={4} sx>
+    <Stack direction="row" spacing={4}>
       <Avatar sx={{ height: 60, width: 60 }} src={comment.photoURL} />
       <Stack direction="column" spacing={1} useFlexGap sx={{ flex: 1 }}>
         <Typography gutterBottom variant="subtitle2">

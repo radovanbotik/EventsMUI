@@ -1,7 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
 import { Stack, Typography, Button } from "@mui/material";
-import BasicRating from "./BasicRating";
 import Author from "../dashboard/common/Author";
 import { grey, pink } from "@mui/material/colors";
 import { readUser } from "../../../firestore/profileActions";
@@ -9,15 +8,28 @@ import {
   RefreshOutlined,
   DoNotDisturbOutlined,
   FavoriteBorder,
+  Favorite,
   RemoveCircleOutlineOutlined,
   Share,
 } from "@mui/icons-material";
-import { cancelEvent, deleteEvent, joinEvent, leaveEvent } from "../../../firestore/eventActions";
+import {
+  cancelEvent,
+  deleteEvent,
+  favoriteEvent,
+  getFavorites,
+  joinEvent,
+  leaveEvent,
+} from "../../../firestore/eventActions";
 import Permission from "../../../common/dialogs/Permission";
 
 const Summary = ({ event, user }) => {
   const [host, setHost] = useState(null);
+  const [favorited, setFavorited] = useState(false);
   const isAttending = event.attendeesId && event.attendeesId?.includes(user.id);
+
+  useEffect(() => {
+    getFavorites({ event, user, action: (favorited) => setFavorited(favorited) });
+  }, [event, user, favorited]);
 
   useEffect(() => {
     readUser({ id: event.hostId, action: (host) => setHost(host) });
@@ -33,17 +45,6 @@ const Summary = ({ event, user }) => {
 
   if (!host) {
     return <div>loading...</div>;
-  }
-
-  {
-    /* <Button
-  onClick={() => {
-    dispatch(setEditing(true));
-    dispatch(openModal({ modalType: "event", modalProps: event }));
-  }}
->
-  edit
-</Button>; */
   }
 
   return (
@@ -63,7 +64,7 @@ const Summary = ({ event, user }) => {
       </Stack>
 
       <Stack direction="column" spacing={2} sx={{ flexWrap: "wrap" }}>
-        <BasicRating />
+        {/* <BasicRating /> */}
         <Button
           type="submit"
           size="large"
@@ -104,7 +105,15 @@ const Summary = ({ event, user }) => {
         >
           delete
         </Permission>
-        <Button size="small" startIcon={<FavoriteBorder />} sx={{ color: pink[400] }}>
+        <Button
+          size="small"
+          startIcon={favorited ? <Favorite /> : <FavoriteBorder />}
+          sx={{ color: pink[400] }}
+          onClick={() => {
+            setFavorited((prev) => !prev);
+            favoriteEvent({ event, user, favorited: favorited });
+          }}
+        >
           Favourite
         </Button>
         <Button size="small" startIcon={<Share />} sx={{ color: "text.primary" }}>

@@ -21,6 +21,8 @@ const Featured = ({ events }) => {
       </Box>
     );
 
+  console.log(events);
+
   return (
     <Grid container spacing={4}>
       <Grid item xs={12} md={6}>

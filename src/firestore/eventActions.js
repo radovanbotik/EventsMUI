@@ -1,6 +1,9 @@
 import {
   Timestamp,
   addDoc,
+  setDoc,
+  query,
+  getDocs,
   doc,
   arrayUnion,
   collection,
@@ -8,6 +11,7 @@ import {
   deleteDoc,
   arrayRemove,
   getDoc,
+  where,
 } from "firebase/firestore";
 import { db } from "../config/firebase";
 import { toast } from "react-toastify";
@@ -112,5 +116,32 @@ export const leaveEvent = async ({ eventId, user }) => {
   } catch (error) {
     console.log(error);
     toast.error(error.message);
+  }
+};
+
+export const favoriteEvent = async ({ event, user, favorited }) => {
+  console.log(event, user, favorited);
+  try {
+    await setDoc(doc(db, "likes", event.id, "liked", user.id), {
+      id: user.id,
+      displayName: user.displayName,
+      favorited: !favorited,
+    });
+    console.log("ran");
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getFavorites = async ({ event, user, action }) => {
+  const docRef = doc(db, "likes", event.id, "liked", user.id);
+  const docSnap = await getDoc(docRef);
+
+  if (docSnap.exists()) {
+    console.log("Document data:", docSnap.data());
+    action(docSnap.data().favorited);
+  } else {
+    // docSnap.data() will be undefined in this case
+    console.log("No such document!");
   }
 };

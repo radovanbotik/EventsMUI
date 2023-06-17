@@ -15,7 +15,7 @@ const EventDashboard = () => {
 
   useSubscribeToEvents({
     userId: currentUser?.id,
-    filterOptions,
+    // filterOptions,
     action: (events) => dispatch(loadEvents(events)),
     dependancies: [],
   });
