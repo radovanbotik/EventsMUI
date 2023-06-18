@@ -17,10 +17,19 @@ const Comment = ({ comment, setReplyingTo, replyingTo, id }) => {
         <Button
           variant="text"
           size="small"
-          disableElevation
           color="inherit"
+          disableElevation
           disableRipple
-          sx={{ pl: 0, justifyContent: "flex-start", textTransform: "capitalize", mb: 2, width: "fit-content" }}
+          sx={{
+            pl: 0,
+            justifyContent: "flex-start",
+            textTransform: "capitalize",
+            mb: 2,
+            width: "fit-content",
+            ":hover": {
+              backgroundColor: "transparent",
+            },
+          }}
           onClick={() => {
             replyingTo ? setReplyingTo(null) : setReplyingTo(comment.id);
           }}

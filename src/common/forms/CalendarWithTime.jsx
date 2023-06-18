@@ -9,17 +9,30 @@ export default function CalendarWithTime({ label, ...props }) {
   const { values, setValues, setFieldValue } = useFormikContext();
   const [field, meta, helpers] = useField(props);
   return (
-    <FormControl margin="dense">
+    <FormControl>
       <DateTimePicker
         label={label}
         {...field}
         {...props}
-        formatDensity="dense"
+        // formatDensity="dense"
         disablePast
         views={["day"]}
         value={dayjs(values.date)}
         onChange={(e) => {
           setFieldValue("date", e);
+        }}
+        slots={{
+          textField: BasicInput,
+        }}
+        slotProps={{
+          textField: {
+            ...props,
+            // value: dayjs(values.date),
+            // onChange: (e) => {
+            //   setFieldValue("date", e);
+            // },
+            // error: meta.error,
+          },
         }}
       />
       {meta.touched && meta.error && <FormHelperText>{meta.touched && Boolean(meta.error)}</FormHelperText>}

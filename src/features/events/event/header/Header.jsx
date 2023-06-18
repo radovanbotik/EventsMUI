@@ -6,6 +6,7 @@ import Attendees from "./Attendees";
 import Date from "./Date";
 import Guests from "./Guests";
 import Location from "./Location";
+import DescriptionAlert from "../../../../common/alerts/DescriptionAlert";
 
 const Content = ({ event }) => {
   console.log(event);
@@ -34,6 +35,7 @@ const Content = ({ event }) => {
           <Location location={event.location} />
         </Stack>
         <Guests attendees={event.attendees} />
+        {event.cancelled && <DescriptionAlert severity="warning">This event has been cancelled.</DescriptionAlert>}
       </Stack>
     </Stack>
   );

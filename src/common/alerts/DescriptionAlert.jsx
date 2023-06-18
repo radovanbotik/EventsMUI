@@ -1,16 +1,6 @@
-import React from "react";
-import { Alert, AlertTitle } from "@mui/material";
-const DescriptionAlert = ({ variant, severity, title, description, emp }) => {
-  return (
-    <Alert severity={severity} variant={variant}>
-      <AlertTitle>{title}</AlertTitle>
-      {description && (
-        <>
-          <strong>{emp}</strong> — {description}
-        </>
-      )}
-    </Alert>
-  );
+import { Alert } from "@mui/material";
+const DescriptionAlert = ({ severity, children }) => {
+  return <Alert severity={severity}>{children}</Alert>;
 };
 
 export default DescriptionAlert;

@@ -16,7 +16,6 @@ import {
   cancelEvent,
   deleteEvent,
   favoriteEvent,
-  getFavorites,
   joinEvent,
   leaveEvent,
   unFavoriteEvent,
@@ -72,48 +71,53 @@ const Summary = ({ event, user }) => {
         <Typography color="text.secondary">{host.description}</Typography>
       </Stack>
 
-      <Stack direction="column" spacing={2} sx={{ flexWrap: "wrap" }}>
-        {/* <BasicRating /> */}
-        <Button
-          type="submit"
-          size="large"
-          variant="contained"
-          disableElevation
-          onClick={() => willAttend({ user: user, eventId: event.id })}
-          sx={{
-            backgroundColor: grey[900],
-            flex: 1,
-            "&:hover": { backgroundColor: grey[800] },
-          }}
-        >
-          {isAttending ? "leave event" : "join event"}
-        </Button>
-      </Stack>
-      <Stack direction="row" spacing={2} useFlexGap sx={{ flexWrap: "wrap", justifyContent: "space-between" }}>
-        <Permission
-          title={`${event.cancelled ? "Activate event" : "Cancel Event"}`}
-          content={`${
-            event.cancelled
-              ? "This action will re-activate the event, do you want to proceed?"
-              : "This action will cancel the event, do you want to proceed?"
-          }`}
-          buttonProps={{ color: "text.primary" }}
-          openIcon={event.cancelled ? <RefreshOutlined /> : <DoNotDisturbOutlined />}
-          onSubmit={() =>
-            cancelEvent({ eventId: event.id, cancelled: event.cancelled, userId: user.id, hostId: event.hostId })
-          }
-        >
-          {event.cancelled ? "activate" : "cancel"}
-        </Permission>
-        <Permission
-          title="Delete event"
-          content="By continuing, you will delete this event. This action is permanent and can't be reversed. Are you sure you want to proceed?"
-          buttonProps={{ color: "text.primary" }}
-          openIcon={<RemoveCircleOutlineOutlined />}
-          onSubmit={() => deleteEvent({ eventId: event.id, hostId: user.id })}
-        >
-          delete
-        </Permission>
+      {!event.cancelled && (
+        <Stack direction="column" spacing={2} sx={{ flexWrap: "wrap" }}>
+          <Button
+            type="submit"
+            size="large"
+            variant="contained"
+            disableElevation
+            onClick={() => willAttend({ user: user, eventId: event.id })}
+            sx={{
+              backgroundColor: grey[900],
+              flex: 1,
+              "&:hover": { backgroundColor: grey[800] },
+            }}
+          >
+            {isAttending ? "leave event" : "join event"}
+          </Button>
+        </Stack>
+      )}
+      <Stack direction="row" spacing={2} useFlexGap sx={{ flexWrap: "wrap" }}>
+        {event.hostId === user.id && (
+          <Permission
+            title={`${event.cancelled ? "Activate event" : "Cancel Event"}`}
+            content={`${
+              event.cancelled
+                ? "This action will re-activate the event, do you want to proceed?"
+                : "This action will cancel the event, do you want to proceed?"
+            }`}
+            buttonProps={{ color: "text.primary" }}
+            openIcon={event.cancelled ? <RefreshOutlined /> : <DoNotDisturbOutlined />}
+            onSubmit={() =>
+              cancelEvent({ eventId: event.id, cancelled: event.cancelled, userId: user.id, hostId: event.hostId })
+            }
+          >
+            {event.cancelled ? "activate" : "cancel"}
+          </Permission>
+        )}
+        {event.hostId === user.id && (
+          <Permission
+            title="Delete event"
+            content="By continuing, you will delete this event. This action is permanent and can't be reversed. Are you sure you want to proceed?"
+            buttonProps={{ color: "text.primary" }}
+            openIcon={<RemoveCircleOutlineOutlined />}
+            onSubmit={() => deleteEvent({ eventId: event.id, hostId: user.id })}
+          >
+            delete
+          </Permission>
+        )}
         <Button
           size="small"
           startIcon={isFavorite ? <Favorite /> : <FavoriteBorder />}

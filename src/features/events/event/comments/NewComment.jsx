@@ -1,8 +1,8 @@
 import { Formik } from "formik";
 import * as Yup from "yup";
-import BasicInput from "../../../../common/forms/BasicInput";
 import { Stack } from "@mui/material";
 import { addCommentToEvent } from "../../../../firestore/realtimeDatabase";
+import ChatInput from "../../../../common/forms/ChatInput";
 
 const validationSchema = Yup.object({
   comment: Yup.string().max(1000, "comment cannot exceed 1000 words."),
@@ -29,7 +29,7 @@ const NewComment = ({ id }) => {
     >
       {(formikProps) => (
         <Stack onSubmit={formikProps.handleSubmit} component="form">
-          <BasicInput
+          <ChatInput
             name="comment"
             size="small"
             variant="standard"

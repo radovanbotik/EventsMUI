@@ -1,8 +1,8 @@
 import { Formik } from "formik";
 import * as Yup from "yup";
-import BasicInput from "../../../../common/forms/BasicInput";
 import { Stack } from "@mui/material";
 import { addReplyToEventMessage } from "../../../../firestore/realtimeDatabase";
+import ChatInput from "../../../../common/forms/ChatInput";
 
 const validationSchema = Yup.object({
   reply: Yup.string().max(1000, "reply cannot exceed 1000 words.").required("You forgot to write your reply."),
@@ -33,7 +33,7 @@ const EventChatReplyForm = ({ setReplyingTo, eventId, commentId }) => {
     >
       {(formikProps) => (
         <Stack onSubmit={formikProps.handleSubmit} component="form" sx={{ flex: 1, pl: 0 }}>
-          <BasicInput
+          <ChatInput
             name="reply"
             // label="reply"
             size="small"
