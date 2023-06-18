@@ -3,9 +3,8 @@ import Avatar from "@mui/material/Avatar";
 import AvatarGroup from "@mui/material/AvatarGroup";
 
 const Guests = ({ attendees }) => {
-  console.log(attendees);
   return (
-    <Stack direction="row">
+    <Stack direction="row" sx={{ alignItems: "center" }}>
       <AvatarGroup total={attendees.length} sx={{ ".MuiAvatarGroup-avatar": { height: 24, width: 24, fontSize: 10 } }}>
         {attendees.slice(0, 2).map((attendee) => (
           <Avatar key={attendee.id} src={attendee.photoURL} sx={{ height: 24, width: 24 }} />

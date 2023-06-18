@@ -19,17 +19,18 @@ import {
   getFavorites,
   joinEvent,
   leaveEvent,
+  unFavoriteEvent,
 } from "../../../firestore/eventActions";
 import Permission from "../../../common/dialogs/Permission";
 
 const Summary = ({ event, user }) => {
   const [host, setHost] = useState(null);
-  const [favorited, setFavorited] = useState(false);
   const isAttending = event.attendeesId && event.attendeesId?.includes(user.id);
+  const isFavorite = event.likesId && event.likesId?.includes(user.id);
 
-  useEffect(() => {
-    getFavorites({ event, user, action: (favorited) => setFavorited(favorited) });
-  }, [event, user, favorited]);
+  // useEffect(() => {
+  //   getFavorites({ event, user, action: (favorited) => setFavorited(favorited) });
+  // }, [event, user, favorited]);
 
   useEffect(() => {
     readUser({ id: event.hostId, action: (host) => setHost(host) });
@@ -40,6 +41,14 @@ const Summary = ({ event, user }) => {
       leaveEvent({ user: user, eventId: eventId });
     } else {
       joinEvent({ user: user, eventId: eventId });
+    }
+  };
+
+  const handleLikes = ({ user, event }) => {
+    if (isFavorite) {
+      unFavoriteEvent({ userId: user.id, eventId: event.id });
+    } else {
+      favoriteEvent({ userId: user.id, eventId: event.id });
     }
   };
 
@@ -107,11 +116,12 @@ const Summary = ({ event, user }) => {
         </Permission>
         <Button
           size="small"
-          startIcon={favorited ? <Favorite /> : <FavoriteBorder />}
+          startIcon={isFavorite ? <Favorite /> : <FavoriteBorder />}
           sx={{ color: pink[400] }}
           onClick={() => {
-            setFavorited((prev) => !prev);
-            favoriteEvent({ event, user, favorited: favorited });
+            // setFavorited((prev) => !prev);
+            // favoriteEvent({ event, user, favorited: favorited });
+            handleLikes({ user: user, event: event });
           }}
         >
           Favourite

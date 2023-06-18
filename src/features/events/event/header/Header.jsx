@@ -6,15 +6,9 @@ import Attendees from "./Attendees";
 import Date from "./Date";
 import Guests from "./Guests";
 import Location from "./Location";
-import useSubscribeToLikes from "../../../../hooks/useSubscribeToLikes";
-import { useState } from "react";
 
 const Content = ({ event }) => {
-  const [likes, setLikes] = useState(null);
-
-  // useSubscribeToLikes({ event: event, action: (likes) => setLikes(likes), dependancies: [event] });
-
-  console.log(likes);
+  console.log(event);
   if (!event) {
     return <div>loading...</div>;
   }
@@ -25,7 +19,7 @@ const Content = ({ event }) => {
         <Typography paragraph>{event.description}</Typography>
       </Stack>
       <Stack direction="row">
-        <Favourited />
+        <Favourited favorited={event.likesId} />
         <Divider orientation="vertical" flexItem sx={{ mx: 2 }} />
         <Attendees attendees={event.attendees} />
       </Stack>

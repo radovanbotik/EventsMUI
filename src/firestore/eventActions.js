@@ -119,29 +119,31 @@ export const leaveEvent = async ({ eventId, user }) => {
   }
 };
 
-export const favoriteEvent = async ({ event, user, favorited }) => {
-  console.log(event, user, favorited);
+export const favoriteEvent = async ({ eventId, userId }) => {
+  const newLike = {
+    id: userId,
+    status: true,
+  };
+  const likes = arrayUnion(newLike);
+  const likesId = arrayUnion(userId);
   try {
-    await setDoc(doc(db, "likes", event.id, "liked", user.id), {
-      id: user.id,
-      displayName: user.displayName,
-      favorited: !favorited,
-    });
+    await updateDoc(doc(db, "events", eventId), { likes: likes, likesId: likesId });
     console.log("ran");
   } catch (error) {
     console.log(error);
   }
 };
 
-export const getFavorites = async ({ event, user, action }) => {
-  const docRef = doc(db, "likes", event.id, "liked", user.id);
-  const docSnap = await getDoc(docRef);
-
-  if (docSnap.exists()) {
-    console.log("Document data:", docSnap.data());
-    action(docSnap.data().favorited);
-  } else {
-    // docSnap.data() will be undefined in this case
-    console.log("No such document!");
+export const unFavoriteEvent = async ({ eventId, userId }) => {
+  try {
+    let event;
+    const eventSnapshot = await getDoc(doc(db, "events", eventId));
+    if (eventSnapshot.exists()) {
+      event = eventSnapshot.data();
+      const likes = event.likes.filter((ent) => ent.id !== userId);
+      await updateDoc(doc(db, "events", eventId), { likes: likes, likesId: arrayRemove(userId) });
+    }
+  } catch (error) {
+    console.log(error);
   }
 };
