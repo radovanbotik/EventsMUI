@@ -6,9 +6,15 @@ import Attendees from "./Attendees";
 import Date from "./Date";
 import Guests from "./Guests";
 import Location from "./Location";
+import useSubscribeToLikes from "../../../../hooks/useSubscribeToLikes";
+import { useState } from "react";
 
 const Content = ({ event }) => {
-  console.log(event);
+  const [likes, setLikes] = useState(null);
+
+  // useSubscribeToLikes({ event: event, action: (likes) => setLikes(likes), dependancies: [event] });
+
+  console.log(likes);
   if (!event) {
     return <div>loading...</div>;
   }
