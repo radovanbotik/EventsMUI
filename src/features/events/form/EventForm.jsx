@@ -16,6 +16,7 @@ import { DeleteForeverOutlined } from "@mui/icons-material";
 import { addEvent, updateEvent } from "../../../firestore/eventActions";
 import ModalWrapper from "../../../common/modals/ModalWrapper";
 import { closeModal } from "../../../store/modalSlice";
+import { grey } from "@mui/material/colors";
 
 const validationSchema = Yup.object({
   title: Yup.string("Enter title of your event.")
@@ -94,7 +95,7 @@ const EventForm = ({ event }) => {
         {(formikProps) => (
           <Stack
             useFlexGap
-            spacing={1}
+            spacing={2}
             sx={{ p: 4 }}
             component="form"
             onSubmit={(e) => {
@@ -108,19 +109,13 @@ const EventForm = ({ event }) => {
               type="text"
               placeholder="e.g Roadtrip around Hungary"
               id="title"
-              variant="standard"
+              variant="filled"
+              size="small"
+              InputProps={{
+                disableUnderline: true,
+              }}
+              sx={{ borderRadius: "10px", overflow: "hidden" }}
             />
-            <LocationSelectAutocomplete />
-            {/* <SelectAutocomplete label="Tags" name="tags" labelId="tags-label">
-              {tags.map((tag) => {
-                return (
-                  <MenuItem key={tag.id} value={tag.name}>
-                  <Checkbox checked={formikProps.values.tags.indexOf(tag.name) > -1} />
-                    <ListItemText primary={tag.name} />
-                    </MenuItem>
-                    );
-                  })}
-                </SelectAutocomplete> */}
             <BasicInput
               label="Description"
               name="description"
@@ -128,20 +123,43 @@ const EventForm = ({ event }) => {
               multiline
               maxRows={4}
               minRows={4}
-              variant="standard"
+              variant="filled"
+              InputProps={{
+                disableUnderline: true,
+              }}
+              sx={{ borderRadius: "10px", overflow: "hidden" }}
             />
+            <LocationSelectAutocomplete />
             <CalendarWithTime label="Date" name="date" />
-
-            <Toolbar disableGutters variant="dense">
-              <Button type="submit" variant="contained" disabled={!formikProps.dirty || formikProps.isSubmitting}>
-                Submit
+            <Stack direction="row" py={1} spacing={1} alignSelf="flex-end">
+              <Button
+                type="button"
+                onClick={() => dispatch(closeModal())}
+                variant="outlined"
+                disableElevation
+                sx={{
+                  textTransform: "capitalize",
+                  borderRadius: "10px",
+                  backgroundColor: grey[100],
+                  color: "text.primary",
+                }}
+              >
+                cancel
               </Button>
-              <Tooltip title="Discard" placement="top">
-                <IconButton onClick={formikProps.resetForm} sx={{ marginLeft: "auto" }}>
-                  <DeleteForeverOutlined />
-                </IconButton>
-              </Tooltip>
-            </Toolbar>
+              <Button
+                type="submit"
+                variant="contained"
+                disableElevation
+                sx={{
+                  textTransform: "capitalize",
+                  borderRadius: "10px",
+                  backgroundColor: grey[900],
+                  ":hover": { backgroundColor: grey[800] },
+                }}
+              >
+                submit event
+              </Button>
+            </Stack>
           </Stack>
         )}
       </Formik>

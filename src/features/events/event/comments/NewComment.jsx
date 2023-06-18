@@ -31,7 +31,6 @@ const NewComment = ({ id }) => {
         <Stack onSubmit={formikProps.handleSubmit} component="form">
           <BasicInput
             name="comment"
-            // label="reply"
             size="small"
             variant="standard"
             InputProps={{
