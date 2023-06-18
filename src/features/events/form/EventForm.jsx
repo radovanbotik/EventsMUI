@@ -111,10 +111,6 @@ const EventForm = ({ event }) => {
               id="title"
               variant="filled"
               size="small"
-              InputProps={{
-                disableUnderline: true,
-              }}
-              sx={{ borderRadius: "10px", overflow: "hidden" }}
             />
             <BasicInput
               label="Description"

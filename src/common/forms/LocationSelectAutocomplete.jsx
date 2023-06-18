@@ -7,8 +7,8 @@ import { debounce, Box, Autocomplete, Grid, Typography, TextField } from "@mui/m
 
 const autocompleteService = { current: null };
 
-export default function LocationSelectAutocomplete() {
-  const [field, helpers] = useField("location");
+export default function LocationSelectAutocomplete({ ...props }) {
+  const [field, helpers, meta] = useField("location");
   const { values, setFieldValue, setValues } = useFormikContext();
   const [inputValue, setInputValue] = React.useState("");
   const [options, setOptions] = React.useState([]);
@@ -82,9 +82,17 @@ export default function LocationSelectAutocomplete() {
           fullWidth
           margin="dense"
           variant="filled"
+          InputLabelProps={{
+            style: { color: meta.error ? "red" : "grey" },
+          }}
           InputProps={{
             ...params.InputProps,
             disableUnderline: true,
+            style: {
+              backgroundColor: meta.error ? "rgba(255, 0, 0, 0.06)" : "rgba(0, 0, 0, 0.06)",
+              borderRadius: "10px",
+              overflow: "hidden",
+            },
           }}
           sx={{ borderRadius: "10px", overflow: "hidden" }}
         />

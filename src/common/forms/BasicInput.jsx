@@ -14,7 +14,12 @@ const BasicInput = ({ submitOnKeyDown, ...props }) => {
         style: { color: meta.error ? "red" : "grey" },
       }}
       InputProps={{
-        style: { backgroundColor: meta.error ? "rgba(255, 0, 0, 0.06)" : "rgba(0, 0, 0, 0.06)" },
+        disableUnderline: true,
+        style: {
+          backgroundColor: meta.error ? "rgba(255, 0, 0, 0.06)" : "rgba(0, 0, 0, 0.06)",
+          borderRadius: "10px",
+          overflow: "hidden",
+        },
       }}
       helperText={meta.touched && meta.error}
       error={meta.touched && Boolean(meta.error)}
